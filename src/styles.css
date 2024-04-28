@@ -2,3 +2,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.bg-gradient-purple {
+  background: linear-gradient(144.61deg, #4F14A0 3.01%, #8066FF 90.98%);
+}

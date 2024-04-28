@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding, effect, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -10,4 +10,18 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'Lambda_front';
+
+  public isDarkMode = signal<boolean>(
+    JSON.parse(window.localStorage.getItem('darkMode') ?? 'false')
+  );
+
+  @HostBinding('class.dark') get mode() {
+    return this.isDarkMode();
+  }
+
+  constructor() {
+    effect(() => {
+      window.localStorage.setItem('darkMode', JSON.stringify(this.isDarkMode()));
+    });
+  }
 }
