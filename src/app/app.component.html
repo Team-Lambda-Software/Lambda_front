@@ -1,14 +1,3 @@
-<div class="min-h-screen min-w-full bg-custom-light dark:bg-custom-dark flex items-center justify-center gap-2">
-  <h1 class="text-3xl font-bold underline text-custom-black dark:text-white">Front Lambda</h1>
-
-  <button class="flex transition-transform hover:scale-125 align-middle" (click)="isDarkMode.set(!isDarkMode())">
-    @if (isDarkMode()) {
-      <span>🌙</span>
-    } @else {
-      <span>☀️</span>
-    }
-  </button>
-  <div>
-    <router-outlet></router-outlet>
-  </div>
+<div class="bg-custom-light dark:bg-custom-dark" [ngClass]="{ 'overflow-hidden h-screen': sidebarService.isSidebarActive() }">
+  <router-outlet></router-outlet>
 </div>

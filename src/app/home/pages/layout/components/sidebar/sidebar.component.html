@@ -1,0 +1,62 @@
+<div [ngClass]="{'backdrop': this.sidebarService.isSidebarActive()}"></div>
+<div class="sidebar bg-gradient-purple" [ngClass]="{'active': this.sidebarService.isSidebarActive()}">
+  <ul>
+    <div class="flex justify-between">
+      <button 
+        class="pb-8 text-white"
+        (click)="this.sidebarService.setSidebarState(false);">
+        <span class="fa-regular fa-circle-xmark text-xl"></span>
+      </button>
+
+      <button class="flex transition-transform hover:scale-125 align-middle text-xl" (click)="darkModeService.isDarkMode.set(!darkModeService.isDarkMode())">
+        @if (darkModeService.isDarkMode()) {
+          <span>🌙</span>
+        } @else {
+          <span>☀️</span>
+        }
+      </button>
+    </div>
+    <li><a routerLink="">
+        <span class="fas fa-user pr-6"></span>
+        Account
+      </a>
+    </li>
+    <li><a routerLink="">
+        <span class="fas fa-bell pr-6"></span>
+        Notifications
+      </a>
+    </li>
+    <li>
+      <a routerLink="">
+        <span class="fas fa-lock pr-6"></span>
+        Privacy
+      </a>
+    </li>
+    <li><a routerLink="">
+        <span class="fas fa-circle-question pr-6"></span>
+        FAQ
+      </a>
+    </li>
+    <li>
+      <a routerLink="">
+        <span class="fas fa-chart-pie pr-6"></span>
+        Statistics
+      </a>
+    </li>
+    <li>
+      <a routerLink=""><span class="fas fa-language pr-6"></span>
+        Language
+      </a>
+    </li>
+    <li>
+      <a routerLink="/"><span class="fas fa-users pr-6"></span>
+        Rate Us
+      </a>
+    </li>
+    <li>
+      <a routerLink="/"><span class="fas fa-user-group pr-6"></span>
+        About
+      </a>
+    </li>
+  </ul>
+</div>
