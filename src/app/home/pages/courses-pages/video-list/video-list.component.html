@@ -19,7 +19,7 @@
     <div class="grid grid-cols-2 gap-4 px-4">
         @for (video of videos; track video.id) {
             <div class="bg-white rounded-lg shadow-md relative">
-                <img [src]="video.thumbnail" alt="video" [routerLink]="['/home/player-video']" class="w-full h-[150px] object-cover rounded-t-lg">
+                <img [src]="video.thumbnail" alt="video" [routerLink]="['/home/player-video']" class="w-full h-[150px] object-cover rounded-md">
                 <button [routerLink]="['/home/player-video']" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-6xl">
                     <i class="fa-regular fa-circle-play"></i>
                 </button>
