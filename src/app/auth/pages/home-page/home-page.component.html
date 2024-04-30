@@ -1,0 +1,25 @@
+<div class="items-center justify-center ">
+  <div class="w-44 md:w-52 lg:w-60 m-4">
+
+  @if (isDarkMode()) {
+    <img class="w-auto h-max" src="assets/icons/logo-dark.png" alt="logo">
+  } @else {
+    <img class="w-auto h-max" src="assets/icons/logo-ligth.png" alt="logo">
+  }
+  </div>
+
+  <h1 class="text-3xl w-auto font-bold m-4  dark:text-custom-light text-custom-dark">Welcome to yoga Online class</h1>
+
+  <div class="grid-cols-2">
+
+    <button class="btn h-14 w-32 lg:h-16 lg:w-36  align-middle mx-2 ">
+      <a [routerLink]="['/auth/login']">Login</a>
+    </button>
+
+    <button class="btn2 h-14 w-32 lg:h-16 lg:w-36  align-middle mx-2">
+      <a [routerLink]="['/auth/signup']">Signup</a>
+    </button>
+
+  </div>
+
+</div>

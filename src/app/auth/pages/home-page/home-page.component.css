@@ -1,29 +1,15 @@
 .btn{
-  /* Login */
-  width: 136px;
-  height: 54px;
-  left: 38px;
-  top: 515px;
-
   /* Linear */
-  background: linear-gradient(144.61deg, #4F14A0 3.01%, #8066FF 90.98%);
+  /* background: linear-gradient(144.61deg, #4F14A0 3.01%, #8066FF 90.98%); */
   box-shadow: 0px 14px 22px rgba(114, 79, 227, 0.17);
   border-radius: 30px;
-
   /* identical to box height */
   text-align: center;
   letter-spacing: -0.3px;
-  /* #FFFFFF */
-  color: #FFFFFF;
   }
 
   .btn2{
     /* Signup */
-
-  width: 136px;
-  height: 54px;
-  left: 186px;
-  top: 515px;
 
   /* #FFFFFF */
   background: #FFFFFF;
