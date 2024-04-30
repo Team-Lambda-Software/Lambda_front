@@ -11,7 +11,8 @@ module.exports = {
         'custom-light': '#F2F2F2',
         'custom-dark-purple': '#4F14A0',
         'custom-light-purple': '#8066FF',
-        'custom-black': '#222222'
+        'custom-black': '#222222',
+        'custom-light-dark': '#4E546A'
       },
     },
   },
