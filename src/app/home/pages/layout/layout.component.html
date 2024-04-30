@@ -1,4 +1,9 @@
-<!-- <p>layoutPage works!</p> -->
+<app-sidebar></app-sidebar>
 
-<img class="flex items-center justify-center gap-2" src="assets/icons/logo.svg" alt="logo">
-<router-outlet></router-outlet>
+<div id="container">
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+  <app-bottom-bar></app-bottom-bar>
+</div>
+

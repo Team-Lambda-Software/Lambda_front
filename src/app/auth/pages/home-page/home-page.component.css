@@ -1,6 +1,4 @@
 .btn{
-  /* Linear */
-  /* background: linear-gradient(144.61deg, #4F14A0 3.01%, #8066FF 90.98%); */
   box-shadow: 0px 14px 22px rgba(114, 79, 227, 0.17);
   border-radius: 30px;
   /* identical to box height */
@@ -9,17 +7,16 @@
   }
 
   .btn2{
-    /* Signup */
-
-  /* #FFFFFF */
-  background: #FFFFFF;
-  /* Drop Shadow */
   box-shadow: 0px 22px 65px rgba(0, 0, 0, 0.14);
   border-radius: 30px;
 
-  /* Linear */
-  background: linear-gradient(144.61deg, #4F14A0 3.01%, #8066FF 90.98%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  text-align: center;
+  letter-spacing: -0.3px;
+
   }
+
+  /* .logo{
+    position: absolute;
+    top: 18.717%;
+    left: 21.944%
+  } */

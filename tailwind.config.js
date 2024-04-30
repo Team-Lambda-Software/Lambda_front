@@ -14,7 +14,14 @@ module.exports = {
         'custom-black': '#222222'
       },
     },
+    backgroundImage: {
+      'login-ligth': "url('assets/background/login-bg-ligth.png')",
+      'login-dark': "url('assets/background/login-bg-dark.png')",
+      'sign-up': "url('assets/background/signup-bg.png')",
+    }
   },
-  plugins: [],
+  plugins: [
+    // require('@tailwindcss/forms')
+  ],
 }
 

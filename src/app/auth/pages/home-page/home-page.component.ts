@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostBinding, OnChanges, OnInit, SimpleChanges, effect, signal } from '@angular/core';
+import { Component, HostBinding, OnChanges, OnInit, SimpleChanges, effect, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.service';
 
 @Component({
   selector: 'app-home-page',
@@ -12,8 +13,6 @@ import { RouterLink } from '@angular/router';
   styleUrl: './home-page.component.css',
 })
 export class HomePageComponent {
+  public darkModeService = inject(DarkModeService);
 
-  public isDarkMode = signal<boolean>(
-    JSON.parse(window.localStorage.getItem('darkMode') ?? 'false')
-  );
 }

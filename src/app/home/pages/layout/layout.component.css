@@ -1,6 +1,11 @@
-.img {
-left: 21.94%;
-right: 22.24%;
-top: 18.72%;
-bottom: 58.41%;
+#container{
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+main{
+  flex: 1;
+  overflow-y: scroll;
 }

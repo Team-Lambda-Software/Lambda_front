@@ -1,2 +1,33 @@
-<p>register-page works!</p>
-<a class="font-bold underline" [routerLink]="['/auth/login']">go log in</a>
+<div class="flex flex-col  h-screen w-auto items-center justify-center bg-sign-up bg-center bg-cover bg-custom-light">
+
+  <div class="w-28 h-24 md:w-52 lg:w-60 logo ">
+      <img class="w-auto h-max" src="assets/icons/logo-ligth.png" alt="logo">
+  </div>
+
+    <h1 class="text-4xl text-wrap w-auto font-bold text-ce  text-custom-light dark:text-custom-dark mt-56">Sign up</h1>
+
+    <form class="grid grid-cols-1 m-10 mt-10">
+    <input type="email" placeholder="Your name here">
+    <input type="email" placeholder="Your email@gmail.com">
+    <input type="" placeholder="+088 031 420 698">
+    <input type="password" placeholder="******">
+    </form>
+
+    <div class="dark:text-custom-light text-custom-dark-purple">
+      <input type="checkbox" placeholder="******">
+      <span> Yes ! I Agree all </span>
+      <span class="font-bold"> Terms </span>
+      <span class>&</span>
+      <span class="font-bold"> Conditions </span>
+    </div>
+
+    <div class="grid grid-cols-1">
+      <button class="btn w-80 h-16 lg:w-36  align-middle dark:bg-custom-light bg-custom-dark-purple  text-custom-light dark:text-custom-dark-purple ">
+        <a [routerLink]="['/auth/login']">Sign up</a>
+      </button>
+      <a class=" text-custom-dark-purple dark:text-custom-light" [routerLink]="['/auth/login']">Forget your password</a>
+    </div>
+
+
+</div>
+

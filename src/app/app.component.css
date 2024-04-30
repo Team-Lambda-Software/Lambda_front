@@ -1,3 +1,9 @@
 html, body {
   font-family: 'Muli';
 }
+
+.login{
+  background-size: 50% 50%;
+  /* backgroundImage: url('assets/icons/login-bg.png') */
+  background-image: url('../assets/background/login-bg.png');
+}

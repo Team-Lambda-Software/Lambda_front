@@ -1,0 +1,30 @@
+.bottombar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  /* box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1); */
+}
+
+.bottombar span {
+  font-size: 1.75rem;
+}
+
+#thunder {
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+#semicircle {
+  width: 90px;
+  height: 45px;
+  border-top-left-radius: 90px 90px;
+  border-top-right-radius: 90px 90px;
+  transform: translateX(-50%) rotate(180deg);
+  position: absolute;
+  top: 0%;
+  left: 50%;
+}
