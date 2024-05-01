@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.service';
 
 @Component({
   selector: 'app-register-page',
@@ -8,4 +9,6 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [ RouterLink ]
 })
-export class RegisterPageComponent { }
+export class RegisterPageComponent {
+  public darkModeService = inject(DarkModeService);
+}

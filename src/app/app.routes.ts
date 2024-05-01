@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { NotFoundComponent } from './shared/pages/not-found-page/not-found.component';
+import { isAuthenticatedGuard } from './auth/guards/isAuthenticated.guard';
 
 export const routes: Routes = [
   {
@@ -13,6 +14,7 @@ export const routes: Routes = [
   },
   {
     path: 'home',
+    canActivate:[isAuthenticatedGuard],
     loadChildren: ()=> import('./home/home.routes').then((routes) => routes.HomeRoutes)
   },
   {

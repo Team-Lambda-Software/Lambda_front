@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, inject,signal } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { BottomBarComponent } from './components/bottom-bar/bottom-bar.component';
+import { AuthService } from '../../../auth/services/auth.service';
 import { Subscription, filter } from 'rxjs';
 
 const BOTTOM_NAVIGATION_BAR_BLACK_LIST = [
@@ -16,6 +17,8 @@ const BOTTOM_NAVIGATION_BAR_BLACK_LIST = [
 })
 
 export class LayoutComponent {
+  private authService=inject(AuthService);
+  public user= computed(()=>this.authService.currentUser());
   public subscriber?: Subscription;
   public isBottombarActive = signal<boolean>(false);
   constructor(private router: Router) { }
@@ -32,7 +35,7 @@ export class LayoutComponent {
       console.log('The URL changed to: ', currentUrl)
       if(BOTTOM_NAVIGATION_BAR_BLACK_LIST.includes(currentUrl))
         this.isBottombarActive.set(false);
-      else 
+      else
         this.isBottombarActive.set(true)
     });
   }
