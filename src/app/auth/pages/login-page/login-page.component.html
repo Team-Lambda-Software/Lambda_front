@@ -6,17 +6,26 @@
 
     <h1 class="text-4xl text-wrap w-auto font-bold text-ce  dark:text-custom-light text-custom-dark mt-56">Login</h1>
 
-    <form class="grid grid-cols-1 m-10 mt-10">
-    <input type="email" placeholder="your email@gmail.com">
-    <input type="password" placeholder="******">
+    <form class="grid grid-cols-1 m-10 mt-10"
+      autocomplete="off"
+      [formGroup]="loginForm"
+      (submit)="login()">
+      <input type="email" formControlName="email" placeholder="your email@gmail.com">
+      <input type="password" formControlName="password" placeholder="******">
+
+      <div class="grid grid-cols-1">
+        <button class="btn w-80 h-16 lg:w-36  align-middle dark:bg-custom-light bg-custom-dark-purple  text-custom-light dark:text-custom-dark-purple"
+        [disabled]="loginForm.invalid"
+        type="submit"
+        >
+          Login
+        </button>
+        <a class=" text-custom-dark-purple dark:text-custom-light" [routerLink]="['/auth/login']">Forget your password</a>
+      </div>
+
     </form>
 
-    <div class="grid grid-cols-1">
-      <button class="btn w-80 h-16 lg:w-36  align-middle dark:bg-custom-light bg-custom-dark-purple  text-custom-light dark:text-custom-dark-purple ">
-        <a [routerLink]="['/auth/login']">Login</a>
-      </button>
-      <a class=" text-custom-dark-purple dark:text-custom-light" [routerLink]="['/auth/login']">Forget your password</a>
-    </div>
+
 
     <div class="dark:text-custom-light text-custom-dark-purple">
       <span> Don't have an account ? </span>
