@@ -1,0 +1,29 @@
+<header class="bg-gradient-purple rounded-br-[50px] text-white">
+    <div class="py-6 px-4">
+        <span [routerLink]="['/home/main']" class="fas fa-chevron-left pr-4"></span> <span class="font-medium text-lg">Videos</span>
+    </div>
+    <nav class="flex gap-5 mx-2">
+        @for (Links of navOptions; track $index) {
+            <div class="flex items-center py-4">
+                <span class="h-2 w-2 bg-white rounded-full mr-2"></span>
+                <span [routerLink]="['/home/main']" class="font-medium text-sm">{{ Links.name }}</span>
+            </div>
+        }
+    </nav>
+</header>
+
+<section>
+    <div class="mx-4 mt-6 mb-2">
+        <h1 class="text-xl font-bold">Video Course</h1>
+    </div>
+    <div class="grid grid-cols-2 gap-4 px-4">
+        @for (video of videos; track video.id) {
+            <div class="bg-white rounded-lg shadow-md relative">
+                <img [src]="video.thumbnail" alt="video" [routerLink]="['/home/player-video']" class="w-full h-[150px] object-cover rounded-t-lg">
+                <button [routerLink]="['/home/player-video']" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-6xl">
+                    <i class="fa-regular fa-circle-play"></i>
+                </button>
+            </div>
+        }
+    </div>
+</section>
