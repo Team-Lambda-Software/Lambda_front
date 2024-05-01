@@ -19,10 +19,10 @@
 }
 
 #semicircle {
-  width: 90px;
-  height: 45px;
-  border-top-left-radius: 90px 90px;
-  border-top-right-radius: 90px 90px;
+  width: 80px;
+  height: 40px;
+  border-top-left-radius: 80px 80px;
+  border-top-right-radius: 80px 80px;
   transform: translateX(-50%) rotate(180deg);
   position: absolute;
   top: 0%;
