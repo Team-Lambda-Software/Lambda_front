@@ -1,6 +1,7 @@
 import { NgClass, NgStyle } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { BasicHeaderComponent } from '../../../shared/components/basic-header/basic-header.component';
 
 interface SettingsOptions {
   icon: string;
@@ -11,7 +12,7 @@ interface SettingsOptions {
 @Component({
   selector: 'app-settings-page',
   standalone: true,
-  imports: [NgClass, NgStyle, RouterLink],
+  imports: [NgClass, NgStyle, RouterLink, BasicHeaderComponent],
   templateUrl: './settings-page.component.html',
   styleUrl: './settings-page.component.css'
 })
