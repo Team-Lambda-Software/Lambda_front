@@ -1,32 +1,68 @@
-<div class="flex flex-col  h-screen w-auto items-center justify-center bg-sign-up bg-center bg-cover bg-custom-light">
+<div class="flex flex-col  h-screen w-auto items-center justify-center bg-sign-up bg-center bg-cover bg-custom-light dark:bg-custom-dark">
 
-  <div class="w-28 h-24 md:w-52 lg:w-60 logo ">
+  <div class="w-28 h-24 md:w-52 lg:w-60 logo">
       <img class="w-auto h-max" src="assets/icons/logo-ligth.png" alt="logo">
   </div>
 
-    <h1 class="text-4xl text-wrap w-auto font-bold text-ce  text-custom-light dark:text-custom-dark mt-56">Sign up</h1>
+    <h1 class="text-4xl text-wrap w-auto font-bold text-ce  text-custom-light mt-56">Sign up</h1>
 
-    <form class="grid grid-cols-1 m-10 mt-10">
-    <input type="email" placeholder="Your name here">
-    <input type="email" placeholder="Your email@gmail.com">
-    <input type="" placeholder="+088 031 420 698">
-    <input type="password" placeholder="******">
+    <form class="grid grid-cols-1 m-10"
+    [formGroup]="signUpForm"
+    (ngSubmit)="register()"
+    >
+      <input class="mt-1" type="email" formControlName="name" placeholder="Your name here">
+
+      @if (isValidField('name')) {
+        <app-error error="Must have first and last name"></app-error>
+      }
+
+      <input class="mt-1" type="email" formControlName="email" placeholder="Your email@gmail.com">
+
+      @if (isValidField('email')) {
+        <app-error error="Must be acceted email. Ex:email@gmail.com"></app-error>
+      }
+
+      <input class="mt-1" type="tel" formControlName="phone" placeholder="+088 031 420 698">
+
+      @if (isValidField('phone')) {
+        <app-error error="Must be numbers Ex:+088 031 420 698"></app-error>
+      }
+
+      <input class="mt-1" type="password" formControlName="password" placeholder="******">
+
+      @if (isValidField('password')) {
+        <app-error error="Must accept have 6 of length"></app-error>
+      }
+
+      <div class="text-custom-light">
+        <input class="mt-1" type="checkbox" id="flexCheckDefault" formControlName="termsAndConditions">
+        <label for="flexCheckDefault" class="text-custom-light">
+          <span> Yes ! I Agree all </span>
+          <span class="font-bold"> Terms </span>
+          <span class>&</span>
+          <span class="font-bold"> Conditions </span>
+        </label>
+
+        @if (isValidField('termsAndConditions')) {
+          <app-error error="Must accept terms and conditions"></app-error>
+        }
+
+
+        <button class="btn w-80 h-16 lg:w-36  align-middle bg-custom-dark-purple  text-custom-light"
+          [disabled]="signUpForm.invalid"
+          type="submit">
+          Sign up
+        </button>
+
+        <h5>valid</h5>
+        <pre>{{signUpForm.valid}}</pre>
+
+      </div>
     </form>
 
-    <div class="dark:text-custom-light text-custom-dark-purple">
-      <input type="checkbox" placeholder="******">
-      <span> Yes ! I Agree all </span>
-      <span class="font-bold"> Terms </span>
-      <span class>&</span>
-      <span class="font-bold"> Conditions </span>
-    </div>
 
-    <div class="grid grid-cols-1">
-      <button class="btn w-80 h-16 lg:w-36  align-middle dark:bg-custom-light bg-custom-dark-purple  text-custom-light dark:text-custom-dark-purple ">
-        <a [routerLink]="['/auth/login']">Sign up</a>
-      </button>
-      <a class=" text-custom-dark-purple dark:text-custom-light" [routerLink]="['/auth/login']">Forget your password</a>
-    </div>
+
+
 
 
 </div>
