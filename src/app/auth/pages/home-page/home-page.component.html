@@ -1,0 +1,35 @@
+<div class="flex flex-col  h-screen w-auto items-center justify-center gap-4">
+
+  <div class="w-44 md:w-52 lg:w-60 logo ">
+    @if (darkModeService.isDarkMode()) {
+      <img class="w-auto h-max" src="assets/icons/logo-dark.png" alt="logo">
+    } @else {
+      <img class="w-auto h-max" src="assets/icons/logo-ligth.png" alt="logo">
+    }
+  </div>
+
+      <!-- Para el test modo oscuro -->
+      <button class="flex transition-transform hover:scale-125 align-middle text-xl" (click)="darkModeService.isDarkMode.set(!darkModeService.isDarkMode())">
+        @if (darkModeService.isDarkMode()) {
+          <span>🌙</span>
+        } @else {
+          <span>☀️</span>
+        }
+      </button>
+
+      <h1 class="text-3xl text-wrap w-auto font-bold text-center dark:text-custom-light text-custom-dark">Welcome to yoga Online class</h1>
+
+      <div class="grid grid-cols-2 w-72 h-14">
+
+        <button class="btn w-32 lg:h-16 lg:w-36  align-middle dark:bg-custom-light bg-custom-dark-purple  text-custom-light dark:text-custom-dark m-1">
+          <a [routerLink]="['/auth/login']">Login</a>
+        </button>
+
+        <button class="btn2 h-14 w-32 lg:h-16 lg:w-36  align-middle dark:text-custom-light text-custom-dark-purple  border dark:border-white m-1">
+          <a [routerLink]="['/auth/signup']">Signup</a>
+        </button>
+
+      </div>
+
+
+</div>
