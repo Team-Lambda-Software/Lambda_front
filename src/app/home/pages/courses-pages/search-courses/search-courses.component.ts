@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { BasicHeaderComponent } from '../../../../shared/components/basic-header/basic-header.component';
 
 interface ICategory {
   id: number;
@@ -25,7 +26,7 @@ interface IProgram{
 @Component({
   selector: 'app-search-courses',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, BasicHeaderComponent],
   templateUrl: './search-courses.component.html',
   styleUrl: './search-courses.component.css'
 })

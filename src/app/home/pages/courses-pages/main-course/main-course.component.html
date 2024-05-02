@@ -1,9 +1,8 @@
-<app-basic-header [options]="{name:'Yoga for beginners', redirect:'/home/main'}"
-    style="position: relative; z-index: 5;"></app-basic-header>
+<app-basic-header [options]="{name:'Yoga for beginners', redirect:'/home/main'}" class="relative" style="z-index: 1;"/>
 
-<section class="absolute z-[1] -translate-y-14 w-full">
+<section>
     <article class="rounded-br-[50px] shadow-md bg-cover bg-center"
-        [style.background-image]="'url(' + courses.image + ')'">
+        [style.background-image]="'url(' + courses.image + ')'" style="margin-top: -50px;">
         <div class="h-[350px] flex flex-col justify-between z-10">
             <div class="flex flex-row justify-between items-center w-full mt-20">
                 <span class="bg-[#7351e6] text-white text-s px-6 py-2 rounded-full ml-5">New</span>
