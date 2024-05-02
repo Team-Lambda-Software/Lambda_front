@@ -1,35 +1,41 @@
 <div class="flex flex-col  h-screen w-auto items-center justify-center bg-login-ligth dark:bg-login-dark bg-center bg-cover bg-custom-dark-purple">
 
-  <div class="w-44 md:w-52 lg:w-60 logo ">
+  <div class="relative">
+    <div class="w-44 md:w-52 lg:w-60 left-1/4 right-1/4 top-1/5 bottom-3/5">
       <img class="w-auto h-max" src="assets/icons/logo-dark.png" alt="logo">
+    </div>
   </div>
 
-    <h1 class="text-4xl text-wrap w-auto font-bold text-ce  dark:text-custom-light text-custom-dark mt-56">Login</h1>
+  <div class="items-center justify-center mt-28">
 
-    <form class="grid grid-cols-1 m-10 mt-10"
+    <h1 class="text-4xl text-wrap w-auto font-bold text-ce  dark:text-custom-light text-custom-dark text-center">Login</h1>
+
+    <form class="grid grid-cols-1 m-1 mt-10"
       autocomplete="off"
       [formGroup]="loginForm"
       (submit)="login()">
       <input type="email" formControlName="email" placeholder="your email@gmail.com">
-      <input type="password" formControlName="password" placeholder="******">
+      <input class="mt-6" type="password" formControlName="password" placeholder="******">
 
-      <div class="grid grid-cols-1">
-        <button class="btn w-80 h-16 lg:w-36  align-middle dark:bg-custom-light bg-custom-dark-purple  text-custom-light dark:text-custom-dark-purple"
+      <div class="grid grid-cols-1 mt-9">
+        <button class="btn w-80 h-16 lg:w-36  align-middle dark:bg-custom-light bg-custom-dark-purple  text-custom-light dark:text-custom-dark-purple rounded-[50px]"
         [disabled]="loginForm.invalid"
         type="submit"
         >
           Login
         </button>
-        <a class=" text-custom-dark-purple dark:text-custom-light" [routerLink]="['/auth/login']">Forget your password</a>
+
       </div>
 
     </form>
 
+  </div>
 
+    <a class=" text-custom-dark-purple dark:text-custom-light mt-3" [routerLink]="['/auth/login']">Forget your password</a>
 
-    <div class="dark:text-custom-light text-custom-dark-purple">
-      <span> Don't have an account ? </span>
-      <a class="font-bold" [routerLink]="['/auth/signup']">Sign up</a>
+    <div>
+      <span class="dark:text-custom-light text-gray-500 mt-10"> Don't have an account ? </span>
+      <a class=" dark:text-custom-light text-custom-dark-purple mt-10 font-bold" [routerLink]="['/auth/signup']">Sign up</a>
     </div>
 </div>
 
