@@ -12,13 +12,17 @@ module.exports = {
         'custom-dark-purple': '#4F14A0',
         'custom-light-purple': '#8066FF',
         'custom-black': '#222222',
-        'custom-light-dark': '#4E546A'
+        'custom-light-dark': '#4E546A',
+        'custom-ligth-gray': '#677294',
       },
     },
     backgroundImage: {
       'login-ligth': "url('assets/background/login-bg-ligth.png')",
       'login-dark': "url('assets/background/login-bg-dark.png')",
       'sign-up': "url('assets/background/signup-bg.png')",
+      'reset-ligth': "url('assets/background/reset-bg-ligth.png')",
+      'reset-dark': "url('assets/background/reset-bg-dark.png')",
+
     }
   },
   plugins: [
