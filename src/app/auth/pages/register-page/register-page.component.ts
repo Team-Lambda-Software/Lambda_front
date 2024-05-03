@@ -6,6 +6,8 @@ import { AuthService } from '../../services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ValidatorService } from '../../../shared/services/validator/validator.service';
 import { ErrorComponent } from '../../../shared/components/error/error.component';
+import { SignUpUser } from '../../interfaces/signup-user.interface';
+import { SignUpForm } from '../../interfaces/signup-form.interface';
 
 @Component({
   selector: 'app-register-page',
@@ -25,8 +27,12 @@ export class RegisterPageComponent {
   public signUpForm :FormGroup=this.fb.group({
     name:['',[Validators.required,Validators.pattern(this.validatorService.firstNameAndLastnamePattern)]],
     email:['',[Validators.required,Validators.pattern(this.validatorService.emailPattern)]],
-    phone:['',[Validators.required,Validators.pattern(this.validatorService.phoneNumberPattern)]],
+    phone:['',[Validators.required,Validators.minLength(6)]],
+
+    // phone:['',[Validators.required,Validators.pattern(this.validatorService.phoneNumberPattern)]],
     password:['',[Validators.required,Validators.minLength(6)]],
+
+    // password:['',[Validators.required,Validators.pattern(this.validatorService.passwordPattern)]],
     termsAndConditions: [false, Validators.requiredTrue]
   })
 
@@ -34,13 +40,31 @@ export class RegisterPageComponent {
     return this.validatorService.isValidField(this.signUpForm,field)
   }
 
+
+  //TODO: quitarle el any y hacerlo estricto con la separacion de nombres
+  createSignUpUser(loginData:SignUpForm):SignUpUser{
+    let newUser:SignUpUser={
+      firstName:loginData.name,
+      firstLastName:loginData.name,
+      secondLastName:loginData.name,
+      email:loginData.email,
+      password:loginData.password
+    }
+    return newUser
+  }
+
   register(){
 
     console.log(this.signUpForm.value);
 
-
-    if(this.signUpForm.invalid){
-      console.log('error');
-    }
+    const {phone,...loginData}=this.signUpForm.value;
+    let newUser:SignUpUser=this.createSignUpUser(loginData)
+    this.authService.signup(newUser)
+    .subscribe({
+      next:()=> this.router.navigateByUrl('/home'),
+      error:(error)=>{
+        console.log({loginerror:error});
+      }
+    })
   }
 }

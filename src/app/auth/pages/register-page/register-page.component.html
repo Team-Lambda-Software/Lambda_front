@@ -33,7 +33,7 @@
         <app-error error="Must be numbers Ex:+088 031 420 698"></app-error>
       }
 
-      <input class="mt-6 mx-5" type="password" formControlName="password" placeholder="******">
+      <input class="mt-6 mx-5" type="text" formControlName="password" placeholder="******">
 
       @if (isValidField('password')) {
         <app-error error="Must accept have 6 of length"></app-error>
@@ -59,6 +59,8 @@
           type="submit">
           Sign up
         </button>
+
+        <!-- <pre>{{signUpForm.valid}}</pre> -->
 
       </div>
 
