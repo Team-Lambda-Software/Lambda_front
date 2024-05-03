@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { TranslocoModule } from '@jsverse/transloco';
 
 interface navOptions {
   name: string;
@@ -17,7 +18,7 @@ interface IVideo {
 @Component({
   selector: 'app-video-list',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, TranslocoModule],
   templateUrl: './video-list.component.html',
   styleUrl: './video-list.component.css'
 })

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { TranslocoModule } from '@jsverse/transloco';
 
 interface ICategory {
   id: number;
@@ -25,7 +26,7 @@ interface IProgram{
 @Component({
   selector: 'app-search-courses',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, TranslocoModule],
   templateUrl: './search-courses.component.html',
   styleUrl: './search-courses.component.css'
 })
