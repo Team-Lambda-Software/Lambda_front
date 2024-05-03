@@ -20,7 +20,7 @@
   position: absolute;
   background: #0000004f;
   inset: 0;
-  z-index: 2;
+  z-index: 10;
 }
 
 .sidebar ul {

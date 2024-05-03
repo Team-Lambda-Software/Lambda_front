@@ -19,6 +19,7 @@ module.exports = {
       'login-ligth': "url('assets/background/login-bg-ligth.png')",
       'login-dark': "url('assets/background/login-bg-dark.png')",
       'sign-up': "url('assets/background/signup-bg.png')",
+      'main-bg': "url('assets/background/main-bg.png')",
     }
   },
   plugins: [

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { BasicHeaderComponent } from '../../../../shared/components/basic-header/basic-header.component';
 import { TranslocoModule } from '@jsverse/transloco';
 
 interface ICategory {
@@ -26,7 +27,7 @@ interface IProgram{
 @Component({
   selector: 'app-search-courses',
   standalone: true,
-  imports: [RouterLink, TranslocoModule],
+  imports: [RouterLink, BasicHeaderComponent, TranslocoModule],
   templateUrl: './search-courses.component.html',
   styleUrl: './search-courses.component.css'
 })
