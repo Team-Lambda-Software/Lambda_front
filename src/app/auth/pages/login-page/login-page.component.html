@@ -14,6 +14,13 @@
       autocomplete="off"
       [formGroup]="loginForm"
       (submit)="login()">
+
+      <mat-form-field appearance="outline">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-label>Outline form field</mat-label>
+        <input matInput placeholder="Placeholder">
+      </mat-form-field>
+
       <input type="email" formControlName="email" placeholder="your email@gmail.com">
       <input class="mt-6" type="password" formControlName="password" placeholder="******">
 

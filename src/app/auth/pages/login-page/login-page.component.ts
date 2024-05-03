@@ -3,14 +3,20 @@ import { Router, RouterLink } from '@angular/router';
 import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.service';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
+
+
 
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css',
   standalone: true,
-  imports: [ RouterLink,FormsModule,ReactiveFormsModule ,HttpClientModule]
+  imports: [ RouterLink,FormsModule,ReactiveFormsModule ,HttpClientModule,MatFormFieldModule, MatInputModule, MatIconModule]
 })
 export class LoginPageComponent {
 

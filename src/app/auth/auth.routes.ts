@@ -16,13 +16,11 @@ export const AuthRoutes: Routes = [
     component: LayoutComponent,
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
         path: 'login',
         component: LoginPageComponent
       },
       {
-        path: 'signup',
         path: 'signup',
         component: RegisterPageComponent
       },
