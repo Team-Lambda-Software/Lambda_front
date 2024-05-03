@@ -1,9 +1,11 @@
 <app-sidebar></app-sidebar>
 
 <div id="container">
-  <main>
+  <main class="pb-[125px]">
     <router-outlet></router-outlet>
   </main>
-  <app-bottom-bar></app-bottom-bar>
+  @if(isBottombarActive()) {
+    <app-bottom-bar></app-bottom-bar>
+  }
 </div>
 

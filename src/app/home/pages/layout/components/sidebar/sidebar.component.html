@@ -18,44 +18,58 @@
     </div>
     <li><a routerLink="">
         <span class="fas fa-user pr-6"></span>
-        Account
+        {{ 'account' | transloco }}
       </a>
     </li>
     <li><a routerLink="">
         <span class="fas fa-bell pr-6"></span>
-        Notifications
+        {{ 'notifications' | transloco }}
       </a>
     </li>
     <li>
       <a routerLink="">
         <span class="fas fa-lock pr-6"></span>
-        Privacy
+        {{ 'privacy' | transloco }}
       </a>
     </li>
     <li><a routerLink="">
         <span class="fas fa-circle-question pr-6"></span>
-        FAQ
+        {{ 'FAQ' | transloco }}
+        
       </a>
     </li>
     <li>
       <a routerLink="">
         <span class="fas fa-chart-pie pr-6"></span>
-        Statistics
+        {{ 'statistics' | transloco }}
       </a>
     </li>
-    <li>
-      <a routerLink=""><span class="fas fa-language pr-6"></span>
-        Language
+    <li (click)="$event.stopPropagation(); handleAccordion($event)">
+      <a>
+        <div>
+          <span class="fas fa-language pr-6"></span>
+          <span class="pb-10">{{ 'language' | transloco }}</span>
+        </div>
+        <div class="accordion-content">
+          <button [ngClass]="{'bg-purple-900': getActiveLang() === 'en'}" class="bg-purple-900 flex items-center justify-center gap-6" (click)="setLanguage('en'); $event.stopPropagation()">
+            <span>{{'english' | transloco}}</span>
+            <img src="../../../../../../assets/images/en.png" alt="english" width="35">
+          </button>
+          <button [ngClass]="{'bg-purple-900': getActiveLang() === 'es'}" class="flex items-center justify-center gap-6" (click)="setLanguage('es'); $event.stopPropagation()">
+            <span>{{'spanish' | transloco}}</span>
+            <img src="../../../../../../assets/images/es.png" alt="spanish" width="35">
+          </button>
+        </div>
       </a>
     </li>
     <li>
       <a routerLink="/"><span class="fas fa-users pr-6"></span>
-        Rate Us
+        {{ 'rate-us' | transloco }}
       </a>
     </li>
     <li>
       <a routerLink="/"><span class="fas fa-user-group pr-6"></span>
-        About
+        {{ 'about' | transloco }}
       </a>
     </li>
   </ul>

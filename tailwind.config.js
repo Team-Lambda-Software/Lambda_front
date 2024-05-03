@@ -20,9 +20,9 @@ module.exports = {
       'login-ligth': "url('assets/background/login-bg-ligth.png')",
       'login-dark': "url('assets/background/login-bg-dark.png')",
       'sign-up': "url('assets/background/signup-bg.png')",
+      'main-bg': "url('assets/background/main-bg.png')",
       'reset-ligth': "url('assets/background/reset-bg-ligth.png')",
       'reset-dark': "url('assets/background/reset-bg-dark.png')",
-
     }
   },
   plugins: [

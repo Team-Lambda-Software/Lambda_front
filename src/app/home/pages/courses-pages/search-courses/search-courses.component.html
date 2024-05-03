@@ -1,0 +1,52 @@
+<nav class="relative">
+    <app-basic-header  [options]="{redirect: '/home/main', name: 'Popular Search'}" style="position: relative;"/>
+    
+    <div class="absolute top-[80px] left-1/2 transform -translate-x-1/2 w-full">
+        <div class="rounded-lg bg-slate-100 shadow-md p-4 flex items-center mx-5 gap-2">
+            <input type="text" class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none" placeholder="Search">
+            <span class="fas fa-search fa-xl text-gray-400"></span>
+        </div>
+    </div>
+</nav>
+    
+<div class="flex flex-wrap m-4 gap-x-3 gap-y-2 pt-10">
+    @for (item of categories; track item.id) {
+            <div class=" bg-gray-300 hover:bg-purple-700 dark:bg-gray-600 dark:hover:bg-white text-purple-900 hover:text-white dark:text-white dark:hover:text-purple-900 rounded-full shadow-md py-2.5 px-5 flex items-center justify-center ">
+                <span class="text-md font-thin">{{ item.name }}</span>
+            </div>
+    }
+</div>
+
+<section class="my-8 mx-4">
+    <h1 class="text-xl font-bold dark:text-white">{{'popular-courses' | transloco}}</h1>
+    <div class="carrousel mt-4">
+        @for (item of popularCourses; track item.id) {
+            <article class="bg-white dark:bg-slate-600 rounded-lg shadow-md w-[300px]">
+                <img [src]="item.image" alt="course" class="w-full h-48 object-cover rounded-xl">
+                <div class="p-4">
+                    <h1 class="text-lg text-gray-500 text-wrap dark:text-white">{{ item.name }}</h1>
+                    <div class="flex justify-between mt-3">
+                        <p class="text-sm  text-purple-700 dark:text-gray-300">{{ item.category }}</p>
+                        <p class="text-sm  text-gray-500 dark:text-gray-300">{{ item.date }}</p>
+                    </div>
+                </div>
+            </article>
+        }
+    </div>
+</section>
+
+<section class="mt-8 mx-4">
+    <h1 class="text-xl font-bold dark:text-white">{{ 'program-master' | transloco }}</h1>
+    <div class="flex flex-wrap gap-4 mt-4">
+        @for (item of programs; track item.id) {
+            <article class="bg-white dark:bg-slate-600 rounded-lg shadow-md flex justify-between w-full h-[120px]">
+                <div class="p-4">
+                    <h1 class="text-xl text-black font-bold dark:text-white py-2">{{ item.name }}</h1>
+                    <p class=" text-gray-500 text-wrap dark:text-white">{{ item.teacher }}</p>
+                    <p class="text-md  text-purple-700 dark:text-white">{{'level' | transloco}}: {{item.level}}</p>
+                </div>
+                <img [src]="item.image" alt="course" class="rounded-xl w-2/5 ">
+            </article>
+        }
+    </div>
+</section>
