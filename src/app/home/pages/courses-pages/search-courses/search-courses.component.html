@@ -1,6 +1,6 @@
 <div class="bg-gradient-purple rounded-br-[50px] py-10 px-4 text-white relative mb-16">
     <span [routerLink]="['/home/main']" class="fas fa-chevron-left pr-4"></span> <span
-        class="font-medium text-lg">Popular Search</span>
+        class="font-medium text-lg">{{'popular-search' | transloco}}</span>
         <div class="absolute bottom-0 translate-y-10 left-1/2 transform -translate-x-1/2 w-full">
             <div class="rounded-lg bg-slate-100 shadow-md p-4 flex items-center mx-5 gap-2">
                 <input type="text" class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none" placeholder="Search">
@@ -18,7 +18,7 @@
 </div>
 
 <section class="my-8 mx-4">
-    <h1 class="text-xl font-bold dark:text-white">Popular Courses</h1>
+    <h1 class="text-xl font-bold dark:text-white">{{'popular-courses' | transloco}}</h1>
     <div class="carrousel mt-4">
         @for (item of popularCourses; track item.id) {
             <article class="bg-white dark:bg-slate-600 rounded-lg shadow-md w-[300px]">
@@ -36,14 +36,14 @@
 </section>
 
 <section class="mt-8 mx-4 pb-[125px]">
-    <h1 class="text-xl font-bold dark:text-white">Program Master</h1>
+    <h1 class="text-xl font-bold dark:text-white">{{ 'program-master' | transloco }}</h1>
     <div class="flex flex-wrap gap-4 mt-4">
         @for (item of programs; track item.id) {
             <article class="bg-white dark:bg-slate-600 rounded-lg shadow-md flex justify-between w-full h-[120px]">
                 <div class="p-4">
                     <h1 class="text-xl text-black font-bold dark:text-white py-2">{{ item.name }}</h1>
                     <p class=" text-gray-500 text-wrap dark:text-white">{{ item.teacher }}</p>
-                    <p class="text-md  text-purple-700 dark:text-white">Level: {{item.level}}</p>
+                    <p class="text-md  text-purple-700 dark:text-white">{{'level' | transloco}}: {{item.level}}</p>
                 </div>
                 <img [src]="item.image" alt="course" class="rounded-xl w-2/5 ">
             </article>

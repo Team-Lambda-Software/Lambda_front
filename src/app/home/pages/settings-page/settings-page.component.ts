@@ -2,6 +2,7 @@ import { NgClass, NgStyle } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { BasicHeaderComponent } from '../../../shared/components/basic-header/basic-header.component';
+import { TranslocoModule } from '@jsverse/transloco';
 
 interface SettingsOptions {
   icon: string;
@@ -12,7 +13,7 @@ interface SettingsOptions {
 @Component({
   selector: 'app-settings-page',
   standalone: true,
-  imports: [NgClass, NgStyle, RouterLink, BasicHeaderComponent],
+  imports: [NgClass, NgStyle, RouterLink, BasicHeaderComponent, TranslocoModule],
   templateUrl: './settings-page.component.html',
   styleUrl: './settings-page.component.css'
 })
@@ -21,17 +22,17 @@ export class SettingsPageComponent {
     {
       icon: 'fas fa-user',
       color: '#EB5757',
-      optionName: 'Account'
+      optionName: 'account'
     },
     {
       icon: 'fas fa-bell',
       color: '#219653',
-      optionName: 'Notifications'
+      optionName: 'notifications'
     },
     {
       icon: 'fas fa-lock',
       color: '#2F80ED',
-      optionName: 'Privacy'
+      optionName: 'privacy'
     },
     {
       icon: 'fas fa-circle-question',
@@ -41,22 +42,22 @@ export class SettingsPageComponent {
     {
       icon: 'fas fa-chart-pie',
       color: '#F2C94C',
-      optionName: 'Statistics'
+      optionName: 'statistics'
     },
     {
       icon: 'fas fa-language',
       color: '#56CCF2',
-      optionName: 'Language'
+      optionName: 'language'
     },
     {
       icon: 'fas fa-users',
       color: '#2F80ED',
-      optionName: 'Rate Us'
+      optionName: 'rate-us'
     },
     {
       icon: 'fas fa-user-group',
       color: '#F2994A',
-      optionName: 'About'
+      optionName: 'about'
     },
   ]
 }
