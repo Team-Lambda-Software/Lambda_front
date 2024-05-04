@@ -1,6 +1,6 @@
 <header class="bg-gradient-purple rounded-br-[50px] text-white">
    <div class="flex flex-row justify-between items-center w-full">
-      <span class="font-bold text-lg py-6 px-4">Raytory Roxty<br><p class="font-medium text-lg">ID:xxxxxxx</p></span> 
+      <span class="font-bold text-lg py-10 px-4">Raytory Roxty<br><p class="font-medium text-lg">ID:xxxxxxx</p></span> 
       <a class="profile-picture mx-4" [routerLink]="['/home/profile']"><img src="assets/icons/icon.jpg" align="right"/></a>
   </div>
   
@@ -9,14 +9,17 @@
         <button type="submit" class="fas fa-search fa-xl text-gray-400"></button>
     </div>
 
-  <nav class="flex gap-5 mx-2">
-      @for (Links of navOptions; track $index) {
-          <div class="flex items-center py-4">
-              <span class="h-2 w-2 bg-white rounded-full mr-2"></span>
-              <span [routerLink]="['/home/main']" class="font-medium text-sm">{{ Links.name }}</span>
+    <nav class="flex justify-around">
+      @for (item of days; track $index) {
+          <div (click)="onDaySelected(item)">
+              <div class="flex justify-center items-center p-2 text-white">
+                  <span class="h-2 w-2 bg-white rounded-full mr-2"></span>
+                  <span [routerLink]="" class="font-medium text-sm">{{item}}</span>
+              </div>
+              <span [ngClass]="{'selected': item === selectedDays}"></span>
           </div>
       }
-        <span class="flex items-center fas fa-calendar py-4"></span>
+      <span class="flex items-center fas fa-calendar mr-5 py-4"></span>
   </nav>
 </header>
 
@@ -28,26 +31,35 @@
 <div class="border-t border-gray-300 my-4"></div>
 </section>
 
-<section>
-  <div class="mx-4 mt-6 mb-2">
-    <h1 class="text-xl font-bold dark:text-white">Yoga Categories</h1>
-  </div>
+<section class="mx-4">
+  <div class="flex justify-between items-end dark:text-white">
+    <h1 class="text-xl font-bold">{{'Yoga Categories'}}</h1>
+</div>
 </section>
 
-<section>
-  <div class="mx-4 mt-6 mb-2">
-    <h1 class="text-xl font-bold dark:text-white">Popular Processes</h1>
+<section class="mx-4">
+    <div class="flex justify-between items-end dark:text-white">
+      <h1 class="text-xl font-bold">{{'Popular Courses'}}</h1>
+      <div class="flex items-center text-gray-500 pr-2" [routerLink]="['/home/video-list']" >
+          <a  class="text-sm mx-2">See All</a>
+          <span class="fas fa-chevron-right"></span>
+      </div>
   </div>
+  <app-carrusel-bg-img [courses]="popularCourses"/>
 </section>
 
-<section>
-  <div class="mx-4 mt-6 mb-2">
-    <h1 class="text-xl font-bold dark:text-white">Video Courses</h1>
-  </div>
+<section class="mx-4">
+  <div class="flex justify-between items-end dark:text-white">
+    <h1 class="text-xl font-bold">{{'Video Courses'}}</h1>
+    <div class="flex items-center text-gray-500 pr-2" [routerLink]="['/home/video-list']" >
+        <a  class="text-sm mx-2">See All</a>
+        <span class="fas fa-chevron-right"></span>
+    </div>
+</div>
 </section>
 
-<section>
-<div class="mx-4 mt-6 mb-2">
-  <h1 class="text-xl font-bold dark:text-white">Our Latests Blogs</h1>
+<section class="mx-4">
+  <div class="flex justify-between items-end dark:text-white">
+    <h1 class="text-xl font-bold">{{'Our Latest Blogs'}}</h1>
 </div>
 </section>

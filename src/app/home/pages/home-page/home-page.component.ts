@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { RouterLink, Router, ActivatedRoute } from '@angular/router';
+import { CarruselBgImgComponent } from '../../components/carrusel-bg-img/carrusel-bg-img.component';
 
-interface navOptions {
-  name: string;
-  reditect: string;
+interface IPopularCourses {
+  id: number;
+  teacher: string;
+  category: string;
+  image: string;
 }
 
 @Component({
@@ -11,23 +15,36 @@ interface navOptions {
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
   standalone: true,
-  imports: [RouterLink]
+  imports: [RouterLink, CommonModule, CarruselBgImgComponent]
 })
 
 export class HomePageComponent { 
 
-  public navOptions: navOptions[] = [
-    {
-      name: 'Tomorrow',
-      reditect: '/tomorrow'
-    },
-    {
-      name: 'Today',
-      reditect: '/today'
-    },
-    {
-      name: 'Yesterday',
-      reditect: '/yesterday'
-    },
+  public days: string[] = ['Tomorrow', 'Today', 'Yesterday'];
+  public selectedDays: string = 'Today';
+  public popularCourses: IPopularCourses[] = [
+    { id: 1, teacher: 'Eduardo', category: 'Prenatal' , image: 'https://via.placeholder.com/250' },
+    { id: 2, teacher: 'Paul', category: 'Prenatal' , image: 'https://via.placeholder.com/250' },
+    { id: 3, teacher: 'Alfredo', category: 'Prenatal' , image: 'https://via.placeholder.com/250' },
+    { id: 4, teacher: 'Eduardo', category: 'Prenatal' , image: 'https://via.placeholder.com/250' },
+
   ]
+
+  constructor(private router:Router, private route:ActivatedRoute) {
+    this.route.queryParams.subscribe((params: { [key: string]: any }) => {
+      if(params['day']) {
+        this.setSelectedDays(params['day']);
+      }
+    });
+  }
+
+  onDaySelected(days: string) {
+    // console.log('Day selected: ', day);
+    this.router.navigate([] ,{queryParams: {days: days}, queryParamsHandling: 'merge'});
+    this.setSelectedDays(days);
+  }
+
+  setSelectedDays(days: string) {
+    this.selectedDays = days;
+  }
 }
