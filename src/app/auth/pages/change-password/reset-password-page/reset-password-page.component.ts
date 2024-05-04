@@ -27,5 +27,12 @@ export class ResetPasswordPageComponent {
   resetPassword(){
     const {email}=this.resetPasswordForm.value;
     console.log(this.resetPasswordForm.value);
+    this.authService.getCodeUpdatePassword(email)
+    .subscribe({
+      next:()=> this.router.navigateByUrl('/auth/verificationcode'),
+      error:(error)=>{
+        console.log({loginerror:error});
+      }
+    })
   }
 }

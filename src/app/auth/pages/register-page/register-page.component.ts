@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ValidatorService } from '../../../shared/services/validator/validator.service';
 import { ErrorComponent } from '../../../shared/components/error/error.component';
 import { SignUpUser } from '../../interfaces/signup-user.interface';
-import { SignUpForm } from '../../interfaces/signup-form.interface';
+import { SignUpForm } from '../../interfaces/forms/signup-form.interface';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';

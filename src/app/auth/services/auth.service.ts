@@ -4,11 +4,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Optional } from '../helpers/Optional';
 import { Observable, catchError, map, of, tap, throwError } from 'rxjs';
 import { AuthStatus } from '../interfaces/auth-status.enum';
-import { LoginResponse } from '../interfaces/login-response.interface';
+import { LoginResponse } from '../interfaces/response/login-response.interface';
 import { UserState } from '../interfaces/user-state.interface';
-import { UsersResponse } from '../interfaces/users-response.interface';
+import { UsersResponse } from '../interfaces/response/users-response.interface';
 import { SignUpUser } from '../interfaces/signup-user.interface';
-import { SignUpResponse } from '../interfaces/signup-response.interface';
+import { SignUpResponse } from '../interfaces/response/signup-response.interface';
+import { GetCodeResponse } from '../interfaces/response/getCode-response.interface';
+import { SaveLocalStorage } from './SaveLocalStorage';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +22,7 @@ export class AuthService {
   private http= inject(HttpClient)
   private _currentUser=signal <UserState |null>(null)
   private _authStatus= signal<AuthStatus>(AuthStatus.notAuthenticated);
+  private saveLocalStorage:SaveLocalStorage= new SaveLocalStorage('','')
 
   public currentUser=computed(()=>this._currentUser)
   public authStatus=computed(()=>this._authStatus())
@@ -39,9 +42,6 @@ export class AuthService {
     return newUser
   }
 
-  private saveLocalStorage(token:string){
-    localStorage.setItem('token',token)
-  }
 
   login(email:string,password:string):Observable<boolean>{
 
@@ -52,7 +52,7 @@ export class AuthService {
       .pipe(
         map((response)=>{
           let newUser=this.createUser(response);
-          this.saveLocalStorage(response.token)
+          this.saveLocalStorage.SaveLocalStorage('token',response.token)
           return this.setAuthtication(newUser)
           // console.log(response);
         }),
@@ -71,7 +71,7 @@ export class AuthService {
         .pipe(
           map((response)=>{
             let newUser=this.createUser(response);
-            this.saveLocalStorage(response.token)
+            this.saveLocalStorage.SaveLocalStorage('token',response.token)
             return this.setAuthtication(newUser)
             // console.log(response);
           }),
@@ -81,14 +81,25 @@ export class AuthService {
           })
         )
       }
-  checkAuthStatus():Observable<boolean>{
 
-    const url=`${this.baseUrl}/auth/check-token`;
-    const token=localStorage.getItem('token');
 
-    if (!token) return of(false);
+  getCodeUpdatePassword(email:string):Observable<GetCodeResponse>{
 
-    return of(true)
+    const url=`${this.baseUrl}/auth/getcodeupdatepassword`;
+    const body={email}
+
+    return this.http.post<GetCodeResponse>(url,body)
+      .pipe(
+        map((response)=>{
+          this.saveLocalStorage.SaveLocalStorage('code',response.code)
+          this.saveLocalStorage.SaveLocalStorage('date',response.date.toString())
+          return response
+        }),
+        catchError(error=>{
+          console.log(error);
+          return throwError(()=>error.error.message)
+        })
+      )
     // const headers= new HttpHeaders()
     //   .set(`Authorization`,`Bearer ${token}`);
 
