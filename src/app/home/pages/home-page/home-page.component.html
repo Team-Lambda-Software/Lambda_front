@@ -1,4 +1,53 @@
-<p>home-page works!</p>
-<button class="btn">
-  <a class="font-bold underline" [routerLink]="['/home/profile']">go profile</a>
-</button>
+<header class="bg-gradient-purple rounded-br-[50px] text-white">
+   <div class="flex flex-row justify-between items-center w-full">
+      <span class="font-bold text-lg py-6 px-4">Raytory Roxty<br><p class="font-medium text-lg">ID:xxxxxxx</p></span> 
+      <a class="profile-picture mx-4" [routerLink]="['/home/profile']"><img src="assets/icons/icon.jpg" align="right"/></a>
+  </div>
+  
+    <div class="rounded-lg bg-slate-100 shadow-md py-1 p-4 flex items-center mx-4 gap-2">
+        <input type="text" class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none" placeholder="Search">
+        <button type="submit" class="fas fa-search fa-xl text-gray-400"></button>
+    </div>
+
+  <nav class="flex gap-5 mx-2">
+      @for (Links of navOptions; track $index) {
+          <div class="flex items-center py-4">
+              <span class="h-2 w-2 bg-white rounded-full mr-2"></span>
+              <span [routerLink]="['/home/main']" class="font-medium text-sm">{{ Links.name }}</span>
+          </div>
+      }
+        <span class="flex items-center fas fa-calendar py-4"></span>
+  </nav>
+</header>
+
+<section>
+  <div class="mx-4 mt-6 mb-2">
+    <h1 class="text-xl font-bold dark:text-white">Make Your Body Fit And Healthy</h1>
+</div>
+<p class="text-sm text-gray-500 dark:text-white ml-4 ">Last Update 30 Seconds Ago</p>
+<div class="border-t border-gray-300 my-4"></div>
+</section>
+
+<section>
+  <div class="mx-4 mt-6 mb-2">
+    <h1 class="text-xl font-bold dark:text-white">Yoga Categories</h1>
+  </div>
+</section>
+
+<section>
+  <div class="mx-4 mt-6 mb-2">
+    <h1 class="text-xl font-bold dark:text-white">Popular Processes</h1>
+  </div>
+</section>
+
+<section>
+  <div class="mx-4 mt-6 mb-2">
+    <h1 class="text-xl font-bold dark:text-white">Video Courses</h1>
+  </div>
+</section>
+
+<section>
+<div class="mx-4 mt-6 mb-2">
+  <h1 class="text-xl font-bold dark:text-white">Our Latests Blogs</h1>
+</div>
+</section>
