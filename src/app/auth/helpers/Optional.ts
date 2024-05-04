@@ -1,15 +1,15 @@
  export class Optional <T>{
-    private value: T|undefined;
+    private value: T|undefined|null;
     private assigned:boolean;
 
-    constructor( value :T){
+    constructor( value ?:T){
         this.value=value;
         if (value) this.assigned=true
         else this.assigned=false
     }
 
     hasValue():boolean{
-        if (this.value!==undefined) {return this.assigned=true;}
+        if ((this.value!==undefined)&&(this.value!==null)) {return this.assigned=true;}
         else return this.assigned=false;
     }
 

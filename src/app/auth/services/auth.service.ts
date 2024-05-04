@@ -10,7 +10,7 @@ import { UsersResponse } from '../interfaces/response/users-response.interface';
 import { SignUpUser } from '../interfaces/signup-user.interface';
 import { SignUpResponse } from '../interfaces/response/signup-response.interface';
 import { GetCodeResponse } from '../interfaces/response/getCode-response.interface';
-import { SaveLocalStorage } from './SaveLocalStorage';
+import { LocalStorage } from './SaveLocalStorage';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class AuthService {
   private http= inject(HttpClient)
   private _currentUser=signal <UserState |null>(null)
   private _authStatus= signal<AuthStatus>(AuthStatus.notAuthenticated);
-  private saveLocalStorage:SaveLocalStorage= new SaveLocalStorage('','')
+  private saveLocalStorage:LocalStorage= new LocalStorage('','')
 
   public currentUser=computed(()=>this._currentUser)
   public authStatus=computed(()=>this._authStatus())
@@ -87,6 +87,7 @@ export class AuthService {
 
     const url=`${this.baseUrl}/auth/getcodeupdatepassword`;
     const body={email}
+    this.saveLocalStorage.SaveLocalStorage('email',email)
 
     return this.http.post<GetCodeResponse>(url,body)
       .pipe(
