@@ -12,14 +12,3 @@
 .carrousel::-webkit-scrollbar{
     display:none;
 }
-
-.selected::after {
-    content: "";
-    display: block;
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 15px solid white;
-    margin: auto;
-}

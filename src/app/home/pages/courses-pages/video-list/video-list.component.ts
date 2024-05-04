@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { TranslocoModule } from '@jsverse/transloco';
+import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 
-interface navOptions {
+
+interface ICategory {
   name: string;
   reditect: string;
 }
@@ -18,13 +20,13 @@ interface IVideo {
 @Component({
   selector: 'app-video-list',
   standalone: true,
-  imports: [RouterLink, TranslocoModule],
+  imports: [RouterLink, TranslocoModule, CommonModule],
   templateUrl: './video-list.component.html',
   styleUrl: './video-list.component.css'
 })
 export class VideoListComponent {
 
-  public navOptions: navOptions[] = [
+  public categories: ICategory[] = [
     {
       name: 'Most Popular',
       reditect: '/home'
@@ -36,6 +38,18 @@ export class VideoListComponent {
     {
       name: 'Training',
       reditect: '/training'
+    },
+    {
+      name: 'Yoga',
+      reditect: '/yoga'
+    },
+    {
+      name: 'Prenatal',
+      reditect: '/prenatal'
+    },
+    {
+      name:'Otro',
+      reditect: '/otro'
     },
   ]
 
@@ -97,4 +111,23 @@ export class VideoListComponent {
       videoUrl: 'https://www.youtube.com/watch?v=8A89M3nR2oY'
     }
   ];
+
+  public selectedCategory: string = "Most Popular";
+
+  constructor(private router:Router, private route:ActivatedRoute) {
+    this.route.queryParams.subscribe((params: { [key: string]: any }) => {
+      if(params['category']) {
+        this.setSelectedCategory(params['category']);
+      }
+    });
+  }
+
+  onCategorySelected(category : ICategory) {
+    this.router.navigate([] ,{queryParams: {category: category.name}, queryParamsHandling: 'merge'});
+    this.setSelectedCategory(category.name);
+  }
+
+  setSelectedCategory(category : string) {
+    this.selectedCategory = category;
+  }
 }

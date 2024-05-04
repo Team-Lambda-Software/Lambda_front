@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BasicHeaderComponent } from '../../../../shared/components/basic-header/basic-header.component';
+import { BasicHeaderComponent } from '../../../components/basic-header/basic-header.component';
 
 interface ICourse{
   category: string;
@@ -44,6 +44,5 @@ export class MainCourseComponent {
       { id: 1, teacher: 'Eduardo', category: 'Prenatal' , image: 'https://via.placeholder.com/250' },
       { id: 2, teacher: 'Paul', category: 'Prenatal' , image: 'https://via.placeholder.com/250' },
       { id: 3, teacher: 'Alfredo', category: 'Prenatal' , image: 'https://via.placeholder.com/250' },
-      
     ];
 }
