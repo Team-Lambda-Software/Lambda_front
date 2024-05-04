@@ -30,7 +30,6 @@ export class LayoutComponent {
     this.subscriber = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
-      console.log('holaaa')
       const currentUrl =  event.url
       console.log('The URL changed to: ', currentUrl)
       if(BOTTOM_NAVIGATION_BAR_BLACK_LIST.includes(currentUrl))

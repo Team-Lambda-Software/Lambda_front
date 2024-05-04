@@ -1,8 +1,8 @@
 import { NgClass, NgStyle } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { BasicHeaderComponent } from '../../../shared/components/basic-header/basic-header.component';
 import { TranslocoModule } from '@jsverse/transloco';
+import { BasicHeaderComponent } from '../../components/basic-header/basic-header.component';
 
 interface SettingsOptions {
   icon: string;
