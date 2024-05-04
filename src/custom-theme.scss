@@ -21,10 +21,14 @@ $Lambda_front-warn: mat.define-palette(mat.$red-palette);
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
 $Lambda_front-theme: mat.define-light-theme((
-  color: (
-    primary: $Lambda_front-primary,
-    accent: $Lambda_front-accent,
-    warn: $Lambda_front-warn,
+  colors: (
+    custom-dark: '#2D2D3A',
+    custom-light: '#F2F2F2',
+    custom-dark-purple: '#4F14A0',
+    custom-light-purple: '#8066FF',
+    custom-black: '#222222',
+    custom-light-dark: '#4E546A',
+    custom-ligth-gray: '#677294',
   ),
   typography: mat.define-typography-config(),
   density: 0

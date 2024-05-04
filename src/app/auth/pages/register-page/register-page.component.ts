@@ -9,12 +9,16 @@ import { ErrorComponent } from '../../../shared/components/error/error.component
 import { SignUpUser } from '../../interfaces/signup-user.interface';
 import { SignUpForm } from '../../interfaces/signup-form.interface';
 
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
 @Component({
   selector: 'app-register-page',
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.css',
   standalone: true,
-  imports: [ RouterLink,FormsModule,ReactiveFormsModule ,HttpClientModule,ErrorComponent]
+  imports: [ RouterLink,FormsModule,ReactiveFormsModule ,HttpClientModule,ErrorComponent,MatFormFieldModule, MatInputModule, MatIconModule]
 
 })
 export class RegisterPageComponent {
