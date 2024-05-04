@@ -18,13 +18,13 @@
 
 <section class="my-8 p-2">
     <div class="flex justify-between items-end dark:text-white">
-        <h1 class="text-xl font-bold">{{'Most-Popular-Courses'}}</h1>
+        <h1 class="text-xl font-bold">{{'Most-Popular-Courses' | transloco}}</h1>
         <a [routerLink]="['/home/main-course']" class="text-sm text-gray-300 mx-2">View All</a>
     </div>
     
-    <app-carrusel-bg-img [courses]="popularCourses"></app-carrusel-bg-img>
+    <app-carrusel-bg-img [courses]="popularCourses"/>
 </section>
 
 <section class="mt-8 mx-4">
-    <app-programs-tag [programs]="programs"></app-programs-tag>
+    <app-programs-tag [programs]="programs"/>
 </section>

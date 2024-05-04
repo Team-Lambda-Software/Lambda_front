@@ -2,11 +2,14 @@
     <div class="py-6 px-4">
         <span [routerLink]="['/home/main']" class="fas fa-chevron-left pr-4"></span> <span class="font-medium text-lg">Videos</span>
     </div>
-    <nav class="flex gap-5 mx-2">
-        @for (Links of navOptions; track $index) {
-            <div class="flex items-center py-4">
-                <span class="h-2 w-2 bg-white rounded-full mr-2"></span>
-                <span [routerLink]="['/home/main']" class="font-medium text-sm">{{ Links.name }}</span>
+    <nav class="flex gap-5 mx-3 carrusel overflow-auto">
+        @for (item of categories; track $index) {
+            <div (click)="onCategorySelected(item)">
+                <div class="flex justify-center items-center text-nowrap text-white p-2">
+                    <span class="h-2 w-2 bg-white rounded-full mr-2"></span>
+                    <span class="font-medium text-sm">{{item.name}}</span>
+                </div>
+                <span [ngClass]="{'selected': item.name == selectedCategory}"></span>
             </div>
         }
     </nav>
