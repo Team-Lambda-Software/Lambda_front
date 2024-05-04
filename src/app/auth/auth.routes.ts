@@ -9,6 +9,7 @@ import { ResetPasswordPageComponent } from './pages/change-password/reset-passwo
 import { CreatePasswordPageComponent } from './pages/change-password/create-password-page/create-password-page.component';
 import { CreatePasswordConfirmPageComponent } from './pages/change-password/create-password-confirm-page/create-password-confirm-page.component';
 import { VerificationCodePageComponent } from './pages/change-password/verification-code-page/verification-code-page.component';
+import { OnboardingPageComponent } from './pages/onboarding-page/onboarding-page.component';
 
 export const AuthRoutes: Routes = [
   {
@@ -47,6 +48,10 @@ export const AuthRoutes: Routes = [
       {
         path: 'confirmpassword',
         component: CreatePasswordConfirmPageComponent
+      },
+      {
+        path: 'on-boarding',
+        component: OnboardingPageComponent
       },
     ]
   }

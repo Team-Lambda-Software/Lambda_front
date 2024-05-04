@@ -65,7 +65,7 @@ export class RegisterPageComponent {
     let newUser:SignUpUser=this.createSignUpUser(loginData)
     this.authService.signup(newUser)
     .subscribe({
-      next:()=> this.router.navigateByUrl('/home'),
+      next:()=> this.router.navigateByUrl('/auth/on-boarding'),
       error:(error)=>{
         console.log({loginerror:error});
       }
