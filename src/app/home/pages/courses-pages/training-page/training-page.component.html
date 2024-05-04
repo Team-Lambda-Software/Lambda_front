@@ -18,17 +18,13 @@
 
 <section class="my-8 p-2">
     <div class="flex justify-between items-end dark:text-white">
-        <h1 class="text-xl font-bold">Most Popular Courses</h1>
+        <h1 class="text-xl font-bold">{{'Most-Popular-Courses'}}</h1>
         <a [routerLink]="['/home/main-course']" class="text-sm text-gray-300 mx-2">View All</a>
     </div>
     
-    <div class="carrousel mt-4">
-        @for (item of popularCourses; track item.id) {
-            <div class="text-white rounded-lg bg-cover bg-center h-[150px] w-[150px] flex flex-col justify-end p-4"
-                [style.background-image]="'url(' + item.image + ')'">
-                    <h3 class="text-lg font-bold">{{item.teacher}}</h3>
-                    <p class="">{{item.category}}</p>
-            </div>
-            }
-    </div>
+    <app-carrusel-bg-img [courses]="popularCourses"></app-carrusel-bg-img>
+</section>
+
+<section class="mt-8 mx-4">
+    <app-programs-tag [programs]="programs"></app-programs-tag>
 </section>

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { BasicHeaderComponent } from '../../../../shared/components/basic-header/basic-header.component';
-import { ProgramsTagComponent } from '../../../../shared/components/programs-tag/programs-tag.component';
 import { TranslocoModule } from '@jsverse/transloco';
+import { BasicHeaderComponent } from '../../components/basic-header/basic-header.component';
+import { ProgramsTagComponent } from '../../components/programs-tag/programs-tag.component';
+import { CardCarruselComponent } from '../../components/card-carrusel/card-carrusel.component';
 
 interface ICategory {
   id: number;
@@ -26,13 +27,13 @@ interface IProgram{
 }
 
 @Component({
-  selector: 'app-search-courses',
+  selector: 'app-search-page',
   standalone: true,
-  imports: [RouterLink, BasicHeaderComponent, ProgramsTagComponent, TranslocoModule],
-  templateUrl: './search-courses.component.html',
-  styleUrl: './search-courses.component.css'
+  imports: [RouterLink, BasicHeaderComponent, ProgramsTagComponent, CardCarruselComponent, TranslocoModule],
+  templateUrl: './search-page.component.html',
+  styleUrl: './search-page.component.css'
 })
-export class SearchCoursesComponent {
+export class SearchPageComponent {
 
   public categories: ICategory[] = [
     { id: 1, name: 'Prenatal' },

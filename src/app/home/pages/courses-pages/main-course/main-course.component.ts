@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BasicHeaderComponent } from '../../../../shared/components/basic-header/basic-header.component';
+import { BasicHeaderComponent } from '../../../components/basic-header/basic-header.component';
 
 interface ICourse{
   category: string;
