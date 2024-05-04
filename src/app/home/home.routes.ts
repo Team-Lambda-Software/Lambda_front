@@ -7,6 +7,7 @@ import { MainCourseComponent } from './pages/courses-pages/main-course/main-cour
 import { VideoListComponent } from './pages/courses-pages/video-list/video-list.component';
 import { PlayerVideoComponent } from './pages/courses-pages/player-video/player-video.component';
 import { SearchCoursesComponent } from './pages/courses-pages/search-courses/search-courses.component';
+import { TrainingPageComponent } from './pages/courses-pages/training-page/training-page.component';
 
 export const HomeRoutes: Routes = [
   {
@@ -39,9 +40,13 @@ export const HomeRoutes: Routes = [
         component: PlayerVideoComponent
       },
       {
-        path: 'search-courses',
+        path: 'search',
         component: SearchCoursesComponent
       },
+      {
+        path: 'training',
+        component: TrainingPageComponent
+      }
     ]
   }
 ]
