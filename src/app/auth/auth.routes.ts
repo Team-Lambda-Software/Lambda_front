@@ -9,6 +9,8 @@ import { ResetPasswordPageComponent } from './pages/change-password/reset-passwo
 import { CreatePasswordPageComponent } from './pages/change-password/create-password-page/create-password-page.component';
 import { CreatePasswordConfirmPageComponent } from './pages/change-password/create-password-confirm-page/create-password-confirm-page.component';
 import { VerificationCodePageComponent } from './pages/change-password/verification-code-page/verification-code-page.component';
+import { hasCodeGuard } from './guards/hasCode.guard';
+import { hasVerifiedCodeGuard } from './guards/hasVerifiedCode.guard';
 
 export const AuthRoutes: Routes = [
   {
@@ -38,14 +40,17 @@ export const AuthRoutes: Routes = [
       },
       {
         path: 'verificationcode',
+        canActivate:[hasCodeGuard],
         component: VerificationCodePageComponent
       },
       {
         path: 'createpassword',
+        canActivate:[hasVerifiedCodeGuard],
         component: CreatePasswordPageComponent
       },
       {
         path: 'confirmpassword',
+        canActivate:[hasVerifiedCodeGuard],
         component: CreatePasswordConfirmPageComponent
       },
     ]

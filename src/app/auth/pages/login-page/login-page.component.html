@@ -1,4 +1,4 @@
-<div class="flex flex-col h-screen w-auto items-center justify-center bg-login-ligth dark:bg-login-dark bg-center bg-cover bg-custom-dark-purple">
+<div class="flex flex-col  h-screen w-auto items-center justify-center bg-login-ligth dark:bg-login-dark bg-center bg-cover bg-custom-dark-purple md:bg-custom-dark-purple">
 
   <div class="relative">
     <div class="w-44 md:w-52 lg:w-60 left-1/4 right-1/4 top-1/5 bottom-3/5">
@@ -15,7 +15,7 @@
       [formGroup]="loginForm"
       (submit)="login()">
 
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="outline" class="outline-none">
         <mat-label>Email</mat-label>
         <input matInput type="email" formControlName="email" placeholder="your email@gmail.com">
       </mat-form-field>
