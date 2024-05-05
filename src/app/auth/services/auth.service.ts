@@ -1,7 +1,6 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { enviroment } from '../../../env/enviroments';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Optional } from '../helpers/Optional';
 import { Observable, catchError, map, of, tap, throwError } from 'rxjs';
 import { AuthStatus } from '../interfaces/auth-status.enum';
 import { LoginResponse } from '../interfaces/response/login-response.interface';
@@ -10,7 +9,10 @@ import { UsersResponse } from '../interfaces/response/users-response.interface';
 import { SignUpUser } from '../interfaces/signup-user.interface';
 import { SignUpResponse } from '../interfaces/response/signup-response.interface';
 import { GetCodeResponse } from '../interfaces/response/getCode-response.interface';
-import { SaveLocalStorage } from './SaveLocalStorage';
+import { LocalStorage } from './LocalStorage';
+import { VerificationCodeForm } from '../interfaces/forms/verticationCode-form.interface';
+import { FormGroup } from '@angular/forms';
+import { Optional } from '../../shared/helpers/Optional';
 
 @Injectable({
   providedIn: 'root'
@@ -22,9 +24,13 @@ export class AuthService {
   private http= inject(HttpClient)
   private _currentUser=signal <UserState |null>(null)
   private _authStatus= signal<AuthStatus>(AuthStatus.notAuthenticated);
-  private saveLocalStorage:SaveLocalStorage= new SaveLocalStorage('','')
-
+  private localStorage:LocalStorage= new LocalStorage('','')
+  private code=this.localStorage.LoadLocalStorage('code')
   public currentUser=computed(()=>this._currentUser)
+  public _hasCode=(false)
+  public _hasCodeVerified=(false)
+
+
   public authStatus=computed(()=>this._authStatus())
   constructor() { }
 
@@ -37,7 +43,7 @@ export class AuthService {
   private createUser(responseData:LoginResponse):UserState{
     const {token,...response}= responseData
     let newUser:UserState={
-      ...response
+      ...response,
     }
     return newUser
   }
@@ -52,7 +58,7 @@ export class AuthService {
       .pipe(
         map((response)=>{
           let newUser=this.createUser(response);
-          this.saveLocalStorage.SaveLocalStorage('token',response.token)
+          this.localStorage.SaveLocalStorage('token',response.token)
           return this.setAuthtication(newUser)
           // console.log(response);
         }),
@@ -71,7 +77,7 @@ export class AuthService {
         .pipe(
           map((response)=>{
             let newUser=this.createUser(response);
-            this.saveLocalStorage.SaveLocalStorage('token',response.token)
+            this.localStorage.SaveLocalStorage('token',response.token)
             return this.setAuthtication(newUser)
             // console.log(response);
           }),
@@ -87,12 +93,18 @@ export class AuthService {
 
     const url=`${this.baseUrl}/auth/getcodeupdatepassword`;
     const body={email}
+    this.localStorage.SaveLocalStorage('email',email)
 
     return this.http.post<GetCodeResponse>(url,body)
       .pipe(
         map((response)=>{
-          this.saveLocalStorage.SaveLocalStorage('code',response.code)
-          this.saveLocalStorage.SaveLocalStorage('date',response.date.toString())
+          this.localStorage.SaveLocalStorage('code',response.code)
+          this.localStorage.SaveLocalStorage('date',response.date.toString())
+          this._hasCode=true
+          this.code.setValue(response.code);
+
+          console.log(JSON.stringify(this._hasCode));
+
           return response
         }),
         catchError(error=>{
@@ -117,5 +129,21 @@ export class AuthService {
     //               return of(false)
     //             })
     //       )
+  }
+  verificateLocalCode(verificationCodeForm:FormGroup<VerificationCodeForm>):boolean{
+    let data=verificationCodeForm.value
+    let numbers=Object.values(data);
+    let code:string=numbers.join('')
+
+    // console.log(this.code.getValue());
+    // console.log(code);
+
+    if (this.code.hasValue()){
+      if (this.code.getValue()===code){
+        this._hasCodeVerified=true
+        return true
+      }
+    }
+    return false
   }
 }

@@ -23,6 +23,10 @@ module.exports = {
       'main-bg': "url('assets/background/main-bg.png')",
       'reset-ligth': "url('assets/background/reset-bg-ligth.png')",
       'reset-dark': "url('assets/background/reset-bg-dark.png')",
+      'verification-bg': "url('assets/background/verification-bg.png')",
+      'createPassword-ligth': "url('assets/background/createPassword-bg-ligth.png')",
+      'createPassword-dark': "url('assets/background/createPassword-bg-dark.png')",
+      'passwordChange-bg': "url('assets/background/passwordChange-bg.png')",
     }
   },
   plugins: [
