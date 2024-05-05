@@ -1,4 +1,5 @@
 <header class="bg-gradient-purple rounded-br-[50px] text-white">
+  <!REFACTORIZAR USUARIO>
    <div class="flex flex-row justify-between items-center w-full">
       <span class="font-bold text-lg py-10 px-4">Raytory Roxty<br><p class="font-medium text-lg">ID:xxxxxxx</p></span> 
       <a class="profile-picture mx-4" [routerLink]="['/home/profile']"><img src="assets/icons/icon.jpg" align="right"/></a>
@@ -19,7 +20,6 @@
               <span [ngClass]="{'selected': item === selectedDays}"></span>
           </div>
       }
-      <span class="flex items-center fas fa-calendar mr-5 py-4"></span>
   </nav>
 </header>
 
@@ -37,10 +37,10 @@
 </div>
 </section>
 
-<section class="mx-4">
+<section class="mx-4 py-7">
     <div class="flex justify-between items-end dark:text-white">
       <h1 class="text-xl font-bold">{{'Popular Courses'}}</h1>
-      <div class="flex items-center text-gray-500 pr-2" [routerLink]="['/home/video-list']" >
+      <div class="flex items-center text-gray-500 pr-2" [routerLink]="['/home/main-course']" >
           <a  class="text-sm mx-2">See All</a>
           <span class="fas fa-chevron-right"></span>
       </div>
@@ -48,7 +48,7 @@
   <app-carrusel-bg-img [courses]="popularCourses"/>
 </section>
 
-<section class="mx-4">
+<section class="mx-4 py-7">
   <div class="flex justify-between items-end dark:text-white">
     <h1 class="text-xl font-bold">{{'Video Courses'}}</h1>
     <div class="flex items-center text-gray-500 pr-2" [routerLink]="['/home/video-list']" >
@@ -56,10 +56,36 @@
         <span class="fas fa-chevron-right"></span>
     </div>
 </div>
+
+<!CREAR COMPONENTE CARRUSEL VIDEO>
+<div class="carrousel mt-4">
+  @for (item of videoCourses; track item.id) {
+      <div class="text-white rounded-lg bg-cover bg-center h-[150px] w-[200px] flex flex-col justify-end p-4 relative"
+          [routerLink]="['/home/player-video']" [style.background-image]=" 'url(' + item.thumbnail + ')'">
+          <button [routerLink]="['/home/player-video']" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-6xl">
+            <i class="fa-regular fa-circle-play"></i>
+        </button>      
+      </div>
+      }
+</div>
 </section>
 
-<section class="mx-4">
+<section class="mx-4 py-7">
   <div class="flex justify-between items-end dark:text-white">
     <h1 class="text-xl font-bold">{{'Our Latest Blogs'}}</h1>
+</div>
+<!CREAR COMPONENTE CARD CARRUSEL BLOGS>
+<div class="carrousel mt-4">
+  @for (item of latestBlogs; track item.id) {
+      <article class="bg-white dark:bg-slate-600 rounded-lg shadow-md w-[200px]">
+          <img [src]="item.image" alt="course" class="w-full h-48 object-cover rounded-xl">
+          <div class="p-4">
+              <h1 class="text-lg font-bold text-wrap dark:text-white">{{ item.name }}</h1>
+              <div class="flex justify-between mt-3">
+                  <p class="text-sm text-gray-500 text-wrap dark:text-white">{{ item.description }}</p>
+              </div>
+          </div>
+      </article>
+  }
 </div>
 </section>

@@ -1,4 +1,4 @@
-<header class="bg-gradient-purple rounded-br-[50px]">
+<header class="bg-gradient-purple rounded-br-[50px] text-white">
   <div class="py-10 px-4">
     <span [routerLink]="['/home/main']" class="fas fa-chevron-left pr-4"></span> <span class="font-medium text-lg">Profile</span>
 </div>
@@ -10,8 +10,13 @@
   </div>
 </section>
 
-<section>
-  <div class="mx-4 mt-6 mb-2">
-    <h1 class="text-xl font-bold dark:text-white">My Training</h1>
-  </div>
+<section class="mx-4 py-7">
+  <div class="flex justify-between items-end dark:text-white">
+    <h1 class="text-xl font-bold">{{'My Training'}}</h1>
+    <div class="flex items-center text-gray-500 pr-2" [routerLink]="['/home/video-list']" >
+        <a  class="text-sm mx-2">See All</a>
+        <span class="fas fa-chevron-right"></span>
+    </div>
+</div>
+<app-carrusel-bg-img [courses]="popularCourses"/>
 </section>
