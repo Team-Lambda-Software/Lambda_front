@@ -1,29 +1,41 @@
 <header class="bg-gradient-purple rounded-br-[50px] text-white">
   <div class="py-5 px-4 text-white bg-main-bg bg-cover">
-    <span [routerLink]="['/home/main']" class="fas fa-chevron-left pr-4"></span> <span class="font-medium text-lg">Profile</span>
+    <span [routerLink]="['/home/main']" class="fas fa-chevron-left pr-4"></span> <span class="font-medium text-lg">{{'profile' | transloco}}</span>
 </div>
 <div class="flex items-center ml-4">
-  <span class="profile-picture"><img src="assets/icons/icon.jpg" class= "w-[69px] h-[69px] rounded-full" align=left/></span>
-  <div class="container">
-    <div class="ml-1">1470<p class="number">Followers</p></div>
-    <div class="ml-1">730<p class="number">Following</p></div>
-    
-</div>
-</div>
-
+  <span class="profile-picture">
+     <img src="assets/icons/icon.jpg" class="w-[69px] h-[69px] rounded-full" align="left"/>
+  </span>
+  <div class="flex flex-col items-start ml-4">
+     <span class="font-bold">Raytory Roxty</span>
+     <p class=" flex flex-col items-start " style="display:inline">
+       <span class="font-bold text-lg">1,420</span>
+       <span class="font-bold text-lg mx-11">730</span>
+     </p>
+     <p class="follower-counts flex flex-col items-start " style="display:inline">
+      <span class="font-medium">{{'followers' | transloco}}</span>
+      <span class="font-medium mx-5">{{'following' | transloco}}</span>
+    </p>
+  </div>
+ </div>
+<div class="mx-4 py-4"></div>
 </header>
 
-<section>
-  <div class="mx-4 mt-6 mb-2">
-    <h1 class="text-xl font-bold dark:text-white">My Statistics</h1>
-  </div>
+<section class="mx-4 py-7">
+  <div class="flex justify-between items-end dark:text-white">
+    <h1 class="text-xl font-bold">{{'my-statistics' | transloco}}</h1>
+    <div class="flex items-center text-gray-500 pr-2" [routerLink]="['']" >
+        <a  class="text-sm mx-2 dark:text-white">{{'see-all' | transloco}}</a>
+        <span class="fas fa-chevron-right"></span>
+    </div>
+</div>
 </section>
 
 <section class="mx-4 py-7">
   <div class="flex justify-between items-end dark:text-white">
-    <h1 class="text-xl font-bold">{{'My Training'}}</h1>
+    <h1 class="text-xl font-bold">{{'my-training' | transloco}}</h1>
     <div class="flex items-center text-gray-500 pr-2" [routerLink]="['/home/video-list']" >
-        <a  class="text-sm mx-2">See All</a>
+        <a  class="text-sm mx-2 dark:text-white">{{'see-all' | transloco}}</a>
         <span class="fas fa-chevron-right"></span>
     </div>
 </div>

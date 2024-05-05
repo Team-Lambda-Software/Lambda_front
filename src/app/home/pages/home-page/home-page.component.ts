@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, Router, ActivatedRoute } from '@angular/router';
+import { RouterLink } from '@angular/router';
+import { TranslocoModule } from '@jsverse/transloco';
 import { CarruselBgImgComponent } from '../../components/carrusel-bg-img/carrusel-bg-img.component';
 
 interface ICategories {
-  icon: string;
-  color: string;
-  catName: string;
+  id: number;
+  image: string;
 }
 
 interface IPopularCourses {
@@ -36,7 +36,7 @@ interface ILatestBlogs {
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
   standalone: true,
-  imports: [RouterLink, CommonModule, CarruselBgImgComponent]
+  imports: [RouterLink, CommonModule, CarruselBgImgComponent, TranslocoModule]
 })
 
 export class HomePageComponent { 
@@ -81,30 +81,15 @@ export class HomePageComponent {
   ];
 
   public latestBlogs: ILatestBlogs[]  = [
-    { id: 1, name: 'Cesar', description: 'Yoga' , image: 'https://via.placeholder.com/250' },
-    { id: 2, name: 'Carlos', description: 'Cycling' , image: 'https://via.placeholder.com/250' },
+    { id: 1, name: 'New Yoga Exercises', description: 'Yoga' , image: 'https://via.placeholder.com/250' },
+    { id: 2, name: 'Try This New Technique!', description: 'Cycling' , image: 'https://via.placeholder.com/250' },
   ];
 
   public catNames: ICategories[] = [
-    {
-      icon: 'fas fa-user',
-      color: '#EB5757',
-      catName: 'account'
-    },
-    {
-      icon: 'fas fa-user',
-      color: '#EB5757',
-      catName: 'account'
-    },
-    {
-      icon: 'fas fa-user',
-      color: '#EB5757',
-      catName: 'account'
-    },
-    {
-      icon: 'fas fa-user',
-      color: '#EB5757',
-      catName: 'account'
-    },
+    { id: 1,  image: 'https://via.placeholder.com/69' },
+    { id: 2,  image: 'https://via.placeholder.com/69' },
+    { id: 3,  image: 'https://via.placeholder.com/69' },
+    { id: 4,  image: 'https://via.placeholder.com/69' },
+    { id: 5,  image: 'https://via.placeholder.com/69' },
   ];
 }

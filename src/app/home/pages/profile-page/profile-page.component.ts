@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, Router, ActivatedRoute } from '@angular/router';
+import { RouterLink } from '@angular/router';
+import { TranslocoModule } from '@jsverse/transloco';
 import { CarruselBgImgComponent } from '../../components/carrusel-bg-img/carrusel-bg-img.component';
 
 interface IPopularCourses {
@@ -10,13 +11,12 @@ interface IPopularCourses {
   image: string;
 }
 
-
 @Component({
   selector: 'app-profile-page',
   templateUrl: './profile-page.component.html',
   styleUrl: './profile-page.component.css',
   standalone: true,
-  imports: [ RouterLink, CommonModule, CarruselBgImgComponent]
+  imports: [ RouterLink, CommonModule, CarruselBgImgComponent, TranslocoModule]
 })
 export class ProfilePageComponent {
 
@@ -27,5 +27,5 @@ export class ProfilePageComponent {
     { id: 4, teacher: 'Carlos', category: 'Yoga' , image: 'https://via.placeholder.com/250' },
 
   ]
-  
+
  }
