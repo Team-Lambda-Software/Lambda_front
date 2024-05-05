@@ -1,30 +1,20 @@
-<header class="bg-gradient-purple rounded-br-[50px] text-white">
+<header>
   <!REFACTORIZAR USUARIO>
-   <div class="flex flex-row justify-between items-center w-full">
-      <span class="font-bold text-lg py-10 px-4">Raytory Roxty<br><p class="font-medium text-lg">ID:xxxxxxx</p></span> 
-      <a class="profile-picture mx-4" [routerLink]="['/home/profile']"><img src="assets/icons/icon.jpg" align="right"/></a>
-  </div>
-  
-    <div class="rounded-lg bg-slate-100 shadow-md py-1 p-4 flex items-center mx-4 gap-2">
-        <input type="text" class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none" placeholder="Search">
-        <button type="submit" class="fas fa-search fa-xl text-gray-400"></button>
+  <nav class="bg-gradient-purple rounded-br-[50px] text-white">
+    <div class="py-10 px-4 text-white bg-main-bg bg-cover">
+      <a class="profile-picture" [routerLink]="['/home/profile']"><img src="assets/icons/icon.jpg" class= "w-[40px] h-[40px] rounded-full" align=right/></a>
+      <span class="font-bold text-lg">Raytory Roxty<br><p class="font-medium text-lg">ID:xxxxxxx</p></span> 
     </div>
-
-    <nav class="flex justify-around">
-      @for (item of days; track $index) {
-          <div (click)="onDaySelected(item)">
-              <div class="flex justify-center items-center p-2 text-white">
-                  <span class="h-2 w-2 bg-white rounded-full mr-2"></span>
-                  <span [routerLink]="" class="font-medium text-sm">{{item}}</span>
-              </div>
-              <span [ngClass]="{'selected': item === selectedDays}"></span>
-          </div>
-      }
-  </nav>
+    <div class="rounded-lg bg-slate-100 shadow-md py-1 p-4 flex items-center mx-4 gap-2 ">
+      <input type="text" class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none" placeholder="Search">
+      <button type="submit" class="fas fa-search fa-xl text-gray-400"></button>
+    </div>
+   <div class="mx-4 py-4"></div>
+  </nav> 
 </header>
 
 <section>
-  <div class="mx-4 mt-6 mb-2">
+  <div class="mx-4 py-7">
     <h1 class="text-xl font-bold dark:text-white">Make Your Body Fit And Healthy</h1>
 </div>
 <p class="text-sm text-gray-500 dark:text-white ml-4 ">Last Update 30 Seconds Ago</p>
@@ -34,6 +24,20 @@
 <section class="mx-4">
   <div class="flex justify-between items-end dark:text-white">
     <h1 class="text-xl font-bold">{{'Yoga Categories'}}</h1>
+    <div class="flex items-center text-gray-500 pr-2" [routerLink]="['']" >
+      <a  class="text-sm mx-2">See All</a>
+      <span class="fas fa-chevron-right"></span>
+  </div>
+</div>
+<div class="carrousel mt-4">
+  @for (item of catNames; track item.icon) {
+      <article class="bg-white dark:bg-slate-600 rounded-lg shadow-md w-[69px]">
+          <img [src]="item.icon" alt="category" class="object-cover rounded-xl">
+          <div>
+              <h1 class="text-lg font-bold text-wrap dark:text-white">{{ item.catName }}</h1>
+          </div>
+      </article>
+  }
 </div>
 </section>
 
@@ -61,7 +65,7 @@
 <div class="carrousel mt-4">
   @for (item of videoCourses; track item.id) {
       <div class="text-white rounded-lg bg-cover bg-center h-[150px] w-[200px] flex flex-col justify-end p-4 relative"
-          [routerLink]="['/home/player-video']" [style.background-image]=" 'url(' + item.thumbnail + ')'">
+          [routerLink]="['/home/player-video']" [style.background-image]=" 'url(' + item.thumbnail + ')'" >
           <button [routerLink]="['/home/player-video']" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-6xl">
             <i class="fa-regular fa-circle-play"></i>
         </button>      
@@ -74,6 +78,7 @@
   <div class="flex justify-between items-end dark:text-white">
     <h1 class="text-xl font-bold">{{'Our Latest Blogs'}}</h1>
 </div>
+
 <!CREAR COMPONENTE CARD CARRUSEL BLOGS>
 <div class="carrousel mt-4">
   @for (item of latestBlogs; track item.id) {

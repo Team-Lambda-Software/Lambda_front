@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { CarruselBgImgComponent } from '../../components/carrusel-bg-img/carrusel-bg-img.component';
 
-interface IUser {
-  id: string;
-  user: string;
-  image: string;
+interface ICategories {
+  icon: string;
+  color: string;
+  catName: string;
 }
 
 interface IPopularCourses {
@@ -41,8 +41,6 @@ interface ILatestBlogs {
 
 export class HomePageComponent { 
 
-  public days: string[] = ['Tomorrow', 'Today', 'Yesterday'];
-  public selectedDays: string = 'Today';
   public popularCourses: IPopularCourses[] = [
     { id: 1, teacher: 'Cesar', category: 'Yoga' , image: 'https://via.placeholder.com/250' },
     { id: 2, teacher: 'Carlos', category: 'Cycling' , image: 'https://via.placeholder.com/250' },
@@ -87,21 +85,26 @@ export class HomePageComponent {
     { id: 2, name: 'Carlos', description: 'Cycling' , image: 'https://via.placeholder.com/250' },
   ];
 
-  constructor(private router:Router, private route:ActivatedRoute) {
-    this.route.queryParams.subscribe((params: { [key: string]: any }) => {
-      if(params['day']) {
-        this.setSelectedDays(params['day']);
-      }
-    });
-  }
-
-  onDaySelected(days: string) {
-    // console.log('Day selected: ', day);
-    this.router.navigate([] ,{queryParams: {days: days}, queryParamsHandling: 'merge'});
-    this.setSelectedDays(days);
-  }
-
-  setSelectedDays(days: string) {
-    this.selectedDays = days;
-  }
+  public catNames: ICategories[] = [
+    {
+      icon: 'fas fa-user',
+      color: '#EB5757',
+      catName: 'account'
+    },
+    {
+      icon: 'fas fa-user',
+      color: '#EB5757',
+      catName: 'account'
+    },
+    {
+      icon: 'fas fa-user',
+      color: '#EB5757',
+      catName: 'account'
+    },
+    {
+      icon: 'fas fa-user',
+      color: '#EB5757',
+      catName: 'account'
+    },
+  ];
 }
