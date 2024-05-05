@@ -1,6 +1,7 @@
 import { NgClass } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { simpleAnimation } from './animations/simpleAnimation';
 
 interface OnboardingSteps {
   img: string;
@@ -13,13 +14,14 @@ interface OnboardingSteps {
   selector: 'app-onboarding-page',
   standalone: true,
   imports: [NgClass],
+  animations: [simpleAnimation],
   templateUrl: './onboarding-page.component.html',
   styleUrl: './onboarding-page.component.css'
 })
 export class OnboardingPageComponent {
 
   private router = inject(Router);
-
+  public animationState = false;
   public steps : OnboardingSteps[] = [
     {
       img: 'on-boarding-yoga.png',
@@ -45,9 +47,10 @@ export class OnboardingPageComponent {
   public selectedStep = this.steps.at(this.currentStep)!
 
   nextStep() {
-    console.log(this.currentStep)
-    if ( this.currentStep + 1 < this.steps.length )
+    if ( this.currentStep + 1 < this.steps.length ) {
       this.selectedStep = this.steps.at(++this.currentStep)!
+      this.toggleAnimation();
+    }
     else {
       this.router.navigate(['/home'])
     }
@@ -55,6 +58,10 @@ export class OnboardingPageComponent {
 
   skipSteps() {
     this.router.navigate(['/home']);
+  }
+
+  toggleAnimation() {
+    this.animationState = !this.animationState
   }
 
 }
