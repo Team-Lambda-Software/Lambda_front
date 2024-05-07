@@ -12,8 +12,7 @@ module.exports = {
         'custom-dark-purple': '#4F14A0',
         'custom-light-purple': '#8066FF',
         'custom-black': '#222222',
-        'custom-light-dark': '#4E546A',
-        'custom-ligth-gray': '#677294',
+        'custom-light-dark': '#4E546A'
       },
     },
     backgroundImage: {
@@ -21,12 +20,6 @@ module.exports = {
       'login-dark': "url('assets/background/login-bg-dark.png')",
       'sign-up': "url('assets/background/signup-bg.png')",
       'main-bg': "url('assets/background/main-bg.png')",
-      'reset-ligth': "url('assets/background/reset-bg-ligth.png')",
-      'reset-dark': "url('assets/background/reset-bg-dark.png')",
-      'verification-bg': "url('assets/background/verification-bg.png')",
-      'createPassword-ligth': "url('assets/background/createPassword-bg-ligth.png')",
-      'createPassword-dark': "url('assets/background/createPassword-bg-dark.png')",
-      'passwordChange-bg': "url('assets/background/passwordChange-bg.png')",
     }
   },
   plugins: [
