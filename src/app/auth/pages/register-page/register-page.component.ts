@@ -31,12 +31,12 @@ export class RegisterPageComponent {
   public signUpForm :FormGroup=this.fb.group({
     name:['',[Validators.required,Validators.pattern(this.validatorService.firstNameAndLastnamePattern)]],
     email:['',[Validators.required,Validators.pattern(this.validatorService.emailPattern)]],
-    phone:['',[Validators.required,Validators.minLength(6)]],
+    // phone:['',[Validators.required,Validators.minLength(6)]],
 
-    // phone:['',[Validators.required,Validators.pattern(this.validatorService.phoneNumberPattern)]],
-    password:['',[Validators.required,Validators.minLength(6)]],
+    phone:['',[Validators.required,Validators.pattern(this.validatorService.phoneNumberPattern)]],
+    // password:['',[Validators.required,Validators.minLength(6)]],
 
-    // password:['',[Validators.required,Validators.pattern(this.validatorService.passwordPattern)]],
+    password:['',[Validators.required,Validators.pattern(this.validatorService.passwordPattern)]],
     termsAndConditions: [false, Validators.requiredTrue]
   })
 

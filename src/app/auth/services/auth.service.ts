@@ -141,6 +141,7 @@ export class AuthService {
     if (this.code.hasValue()){
       if (this.code.getValue()===code){
         this._hasCodeVerified=true
+        this.localStorage.deleteLocalStorage('code')
         return true
       }
     }

@@ -12,7 +12,9 @@ export class LocalStorage{
     if (load) return new Optional<string>(load)
     return new Optional<string>(undefined)
   }
-
+  deleteLocalStorage(key:string):void{
+    localStorage.removeItem(key);
+  }
   constructor(key:string,value:string){
     this.key=key;
     this.value=value;
