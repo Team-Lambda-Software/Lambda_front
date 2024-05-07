@@ -1,0 +1,31 @@
+/* circular-progress.component.css */
+.svg-indicator {
+    width: 83px;
+    height: 83px;
+   }
+   .svg-indicator-track,
+   .svg-indicator-indication {
+    
+    fill: transparent;
+    stroke-width: 10px;
+   }
+   
+   .svg-indicator-track {
+    stroke: #ddd;
+   }
+   
+   .svg-indicator-indication {
+    stroke: #4F14A0;
+   
+}
+
+.first-line{
+    fill:#4F14A0;
+    font-size: 24px;
+}
+
+.second-line{
+    fill: gray;
+    font-size: 16px;
+}
+   

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { CarruselBgImgComponent } from '../../components/carrusel-bg-img/carrusel-bg-img.component';
+import { CircularProgressComponent } from '../../components/circular-progress/circular-progress.component';
+
 
 interface ICategories {
   id: number;
@@ -36,11 +38,11 @@ interface ILatestBlogs {
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
   standalone: true,
-  imports: [RouterLink, CommonModule, CarruselBgImgComponent, TranslocoModule]
+  imports: [RouterLink, CommonModule, CarruselBgImgComponent, TranslocoModule, CircularProgressComponent]
 })
 
-export class HomePageComponent { 
-
+export class HomePageComponent {
+ 
   public popularCourses: IPopularCourses[] = [
     { id: 1, teacher: 'Cesar', category: 'Yoga' , image: 'https://via.placeholder.com/250' },
     { id: 2, teacher: 'Carlos', category: 'Cycling' , image: 'https://via.placeholder.com/250' },
@@ -92,4 +94,5 @@ export class HomePageComponent {
     { id: 4,  image: 'https://via.placeholder.com/69' },
     { id: 5,  image: 'https://via.placeholder.com/69' },
   ];
+
 }

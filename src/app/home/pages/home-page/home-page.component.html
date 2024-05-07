@@ -1,7 +1,7 @@
 <header>
   <nav class="bg-gradient-purple rounded-br-[50px] text-white">
     <div class="py-10 px-4 text-white bg-main-bg bg-cover">
-      <a class="profile-picture" [routerLink]="['/home/profile']"><img src="assets/icons/icon.jpg" class= "w-[40px] h-[40px] rounded-full" align="right"/></a>
+      <a class="profile-picture" [routerLink]="['/home/profile']"><img src="https://via.placeholder.com/40" class= "w-[40px] h-[40px] rounded-full" align="right"/></a>
       <span class="font-bold text-lg">Raytory Roxty<br><p class="font-medium text-lg">ID:xxxxxxx</p></span> 
     </div>
     <div class="rounded-lg bg-slate-100 shadow-md py-1 p-4 flex items-center mx-4 gap-2 ">
@@ -13,11 +13,14 @@
 </header>
 
 <section>
-  <div class="mx-4 py-7">
-    <h1 class="text-xl font-bold dark:text-white">{{'fitness' | transloco}}</h1>
+  <div class="mx-4 py-7 flex justify-between items-center">
+    <div>
+        <h1 class="text-xl font-bold dark:text-white">{{'fitness' | transloco}}</h1>
+        <p class="text-sm text-gray-500 dark:text-white">{{'update' | transloco}}</p>
+    </div>
+    <app-circular-progress [progress]="76"></app-circular-progress>
 </div>
-<p class="text-sm text-gray-500 dark:text-white ml-4 ">{{'update' | transloco}}</p>
-<div class="border-t border-gray-300 my-4"></div>
+<div class="border-t border-gray-300 my-2"></div>
 </section>
 
 <section class="mx-4">
@@ -76,7 +79,7 @@
 
 <div class="carrousel mt-4">
   @for (item of latestBlogs; track item.id) {
-      <article class="bg-white dark:bg-slate-600 rounded-lg shadow-md w-[200px]">
+      <article class="rounded-lg w-[200px]">
           <img [src]="item.image" alt="course" class="w-full h-48 object-cover rounded-xl">
           <div class="p-4">
               <h1 class="text-lg font-bold text-wrap dark:text-white">{{ item.name }}</h1>
@@ -88,3 +91,4 @@
   }
 </div>
 </section>
+
