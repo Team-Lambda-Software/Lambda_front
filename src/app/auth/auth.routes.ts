@@ -41,17 +41,17 @@ export const AuthRoutes: Routes = [
       },
       {
         path: 'verificationcode',
-        canActivate:[hasCodeGuard],
+        // canActivate:[hasCodeGuard],
         component: VerificationCodePageComponent
       },
       {
         path: 'createpassword',
-        canActivate:[hasVerifiedCodeGuard],
+        // canActivate:[hasVerifiedCodeGuard],
         component: CreatePasswordPageComponent
       },
       {
         path: 'confirmpassword',
-        canActivate:[hasVerifiedCodeGuard],
+        // canActivate:[hasVerifiedCodeGuard],
         component: CreatePasswordConfirmPageComponent
       },
       {

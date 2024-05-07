@@ -16,13 +16,13 @@ animate__animated animate__fadeIn">
       [formGroup]="loginForm"
       (submit)="login()">
 
-      <mat-form-field appearance="fill" class="outline-none">
+      <mat-form-field appearance="outline" class="outline-none">
         <mat-label>Email</mat-label>
         <input matInput type="email" formControlName="email" placeholder="your email@gmail.com">
       </mat-form-field>
 
 
-      <mat-form-field appearance="fill" class="rounded-[50px]">
+      <mat-form-field appearance="outline" class="rounded-[50px]">
       <mat-label>Password</mat-label>
         <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
