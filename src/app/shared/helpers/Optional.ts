@@ -2,7 +2,7 @@
     private value: T|undefined;
     private assigned:boolean;
 
-    constructor( value :T){
+    constructor( value ?:T){
         this.value=value;
         if (value) this.assigned=true
         else this.assigned=false
@@ -16,5 +16,10 @@
     getValue():T{
         if (this.hasValue()) return <T>this.value
         else  throw new Error('Error el tipo de dato es undefiend')
+    }
+    setValue(value:T){
+      this.value=value;
+      if (value) this.assigned=true
+      else this.assigned=false
     }
 }
