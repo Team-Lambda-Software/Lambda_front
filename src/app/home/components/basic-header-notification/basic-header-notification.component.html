@@ -1,0 +1,13 @@
+<nav class="bg-gradient-purple rounded-br-[50px]">
+  <div class="py-10 px-4 text-white bg-main-bg bg-cover contenedor">
+    <div class="izquierda">
+      <span [routerLink]="[options.redirect]" class="fas fa-chevron-left pr-4"></span>
+      <span class="font-medium text-lg" [innerHTML]="options.name | transloco"></span>
+    </div>
+    <div class="derecha">
+      <span class="font-medium text-lg"[innerHTML]="'Inbox' | transloco"></span>
+      <button class="material-symbols-outlined">delete</button>
+    </div>
+  </div>
+  </nav>
+

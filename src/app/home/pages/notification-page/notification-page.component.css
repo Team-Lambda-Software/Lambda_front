@@ -1,0 +1,54 @@
+.boton-volver{
+    width: 323px;
+    height: 54px;
+    position: absolute;
+    top: 430px;
+    left: 25px;
+    border-radius: 30px 30px 30px 30px;
+    opacity: 1; /* Cambiado a 1 para que sea visible */
+    border: none; /* Sin borde */
+    font-size: 16px; /* Tamaño de la letra */
+    cursor: pointer; /* Cambia el cursor a una mano al pasar sobre el botón */
+    font-weight: bold;
+  }
+
+  .boton-volver-dark {
+    width: 323px;
+    height: 54px;
+    position: absolute;
+    top: 430px;
+    left: 25px;
+    border-radius: 30px 30px 30px 30px;
+    opacity: 1; /* Cambiado a 1 para que sea visible */
+    background-color: white;  /*Color morado */
+    color: #4F14A0; /* Color de la letra blanco */
+    border: none; /* Sin borde */
+    font-size: 16px; /* Tamaño de la letra */
+    cursor: pointer; /* Cambia el cursor a una mano al pasar sobre el botón */
+    font-weight: bold;
+  }  
+
+  .label-notificaciones {
+    width: 313px;
+    height: 44px;
+    position: absolute;
+    top: 360px;
+    left: 30px;
+    opacity: 1;
+    text-align: center;
+  }
+  
+
+  .material-symbols-outlined {
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 700,
+      'GRAD' -25,
+      'opsz' 48;
+    font-size: 200px;
+    position: relative;
+    top: 20px;
+    left: 76px;
+    opacity: 15%;
+  }
+

@@ -8,6 +8,7 @@ import { VideoListComponent } from './pages/courses-pages/video-list/video-list.
 import { PlayerVideoComponent } from './pages/courses-pages/player-video/player-video.component';
 import { SearchPageComponent } from './pages/search-page/search-page.component';
 import { TrainingPageComponent } from './pages/courses-pages/training-page/training-page.component';
+import { NotificationPageComponent } from './pages/notification-page/notification-page.component';
 
 export const HomeRoutes: Routes = [
   {
@@ -46,6 +47,10 @@ export const HomeRoutes: Routes = [
       {
         path: 'training',
         component: TrainingPageComponent
+      },
+      {
+        path: 'notification',
+        component: NotificationPageComponent
       }
     ]
   }
