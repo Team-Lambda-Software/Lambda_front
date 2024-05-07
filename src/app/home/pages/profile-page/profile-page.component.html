@@ -1,7 +1,13 @@
 <header class="bg-gradient-purple rounded-br-[50px] text-white">
-  <div class="py-5 px-4 text-white bg-main-bg bg-cover">
-    <span [routerLink]="['/home/main']" class="fas fa-chevron-left pr-4"></span> <span class="font-medium text-lg">{{'profile' | transloco}}</span>
+  <div class="py-5 px-4 text-white bg-main-bg bg-cover flex justify-between items-start">
+    <div class="flex items-center">
+        <h1 class="fas fa-chevron-left pr-4" [routerLink]="['/home/main']"></h1>
+        <p class="font-medium text-lg">{{'profile' | transloco}}</p>
+    </div>
+    <div class="fas fa-edit flex items-center pr-4">
+    </div>
 </div>
+
 <div class="flex items-center ml-4">
   <span class="profile-picture">
      <img src="https://via.placeholder.com/69" class="w-[69px] h-[69px] rounded-full" align="left"/>
@@ -21,14 +27,35 @@
 <div class="mx-4 py-4"></div>
 </header>
 
-<section class="mx-4 py-7">
-  <div class="flex justify-between items-end dark:text-white">
-    <h1 class="text-xl font-bold">{{'my-statistics' | transloco}}</h1>
-    <div class="flex items-center text-gray-500 pr-2" [routerLink]="['']" >
-        <a  class="text-sm mx-2 dark:text-white">{{'see-all' | transloco}}</a>
-        <span class="fas fa-chevron-right"></span>
+<section>
+  <div class="mx-4 py-7 flex justify-between items-center">
+    <div>
+        <h1 class="text-xl font-bold dark:text-white">{{'statistics' | transloco}}</h1>
+        <p class="text-sm text-gray-500 dark:text-white">{{'week' | transloco}}</p>
     </div>
+    <div class="flex items-end text-gray-500 pr-2" [routerLink]="['']" >
+      <a  class="text-sm mx-2 dark:text-white">{{'see-all' | transloco}}</a>
+      <span class="fas fa-chevron-right"></span>
+  </div>
 </div>
+<div class="chart-wrapper w-[328px] h-[126px] mx-4 flex justify-between items-center bg-white dark:text-white dark:bg-gray-500">
+  <div>
+    <h1 class="text-sm mx-2">{{'time' | transloco}}</h1>
+    <p class="text-lg font-bold mx-2">{{'1:03:30'}}</p>
+  </div>
+  <ngx-charts-bar-vertical
+      [view]="[210, 79]"
+      [scheme]="colorScheme"
+      [results]="chartData"
+      [xAxis]="true"
+      [yAxis]="false"
+      [legend]="false"
+      [showXAxisLabel]="false"
+      [showYAxisLabel]="false"
+      [barPadding]="20"
+      (select)="onBarSelect($event)"
+      ></ngx-charts-bar-vertical>
+  </div>  
 </section>
 
 <section class="mx-4 py-7">

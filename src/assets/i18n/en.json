@@ -24,6 +24,7 @@
   "profile":"Profile",
   "followers":"Followers",
   "following":"Following",
-  "my-statistics":"My Statistics",
-  "my-training":"My Training"
+  "my-training":"My Training",
+  "week": "This Week",
+  "time": "Time"
 }

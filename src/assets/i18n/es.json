@@ -24,6 +24,7 @@
   "profile":"Perfil",
   "followers":"Seguidores",
   "following":"Siguiendo",
-  "my-statistics":"Mis Estadísticas",
-  "my-training":"Mi Entrenamiento"
+  "my-training":"Mi Entrenamiento",
+  "week": "Esta Semana",
+  "time": "Tiempo"
 }

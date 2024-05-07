@@ -20,6 +20,7 @@
     "@angular/router": "17.3.0",
     "@angular/service-worker": "17.3.0",
     "@jsverse/transloco": "^7.4.0",
+    "@swimlane/ngx-charts": "^20.5.0",
     "rxjs": "7.8.0",
     "tslib": "2.3.0",
     "zone.js": "0.14.3"
