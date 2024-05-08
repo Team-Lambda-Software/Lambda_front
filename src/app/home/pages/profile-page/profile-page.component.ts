@@ -8,7 +8,7 @@ import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.service';
 import { ILittleCard } from '../../interfaces/ILittleCard';
 import { CourseLitleCardAdapter } from '../../adapters/LitleCardAdapter';
-import { CoursesPopularService } from '../../services/courses/getPopulars/courses-popular.service';
+import { CoursesMyTrainingService } from '../../services/courses/getTraining/courses-mytraining.service';
 
 
 @Component({
@@ -20,10 +20,10 @@ import { CoursesPopularService } from '../../services/courses/getPopulars/course
 })
 export class ProfilePageComponent {
 
-  public popularService = inject(CoursesPopularService);
+  public myTrainingService = inject(CoursesMyTrainingService);
  
-  public getPopulars(): ILittleCard[] {
-    let popular= this.popularService.getPopulars();
+  public getMyTraining(): ILittleCard[] {
+    let popular= this.myTrainingService.getMyTraining();
     return popular.map((course) => CourseLitleCardAdapter(course));
   }
 
