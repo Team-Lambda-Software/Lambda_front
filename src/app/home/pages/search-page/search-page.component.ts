@@ -1,41 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { BasicHeaderComponent } from '../../components/basic-header/basic-header.component';
 import { ProgramsTagComponent } from '../../components/programs-tag/programs-tag.component';
 import { CardCarruselComponent } from '../../components/card-carrusel/card-carrusel.component';
+import { ICard, IProgram } from '../../interfaces/ILittleCard';
+import { CoursesPopularService } from '../../services/courses/getPopulars/courses-popular.service';
+import { CourseLevelService } from '../../services/courses/getByLevel/course-level.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { enviroment } from '../../../../env/enviroments';
+import { LocalStorage } from '../../../auth/services/LocalStorage';
+import { CourseCardAdapter } from '../../adapters/CardAdapter';
+import { CourseTagAdapter } from '../../adapters/TagAdapter';
 
-interface ICategory {
+interface ITag {
   id: number;
   name: string;
-}
-
-interface ICourse {
-  id: number;
-  name: string;
-  category: string;
-  date: string;
-  image: string;
-}
-
-interface IProgram{
-  id: number;
-  name: string;
-  teacher: string;
-  level: number;
-  image: string;
 }
 
 @Component({
   selector: 'app-search-page',
   standalone: true,
-  imports: [RouterLink, BasicHeaderComponent, ProgramsTagComponent, CardCarruselComponent, TranslocoModule],
+  imports: [RouterLink, BasicHeaderComponent, ProgramsTagComponent, CardCarruselComponent, TranslocoModule, FormsModule],
   templateUrl: './search-page.component.html',
   styleUrl: './search-page.component.css'
 })
 export class SearchPageComponent {
 
-  public categories: ICategory[] = [
+  public inputSearch: string = '';
+  public programService = inject(CourseLevelService);
+  public popularService = inject(CoursesPopularService);
+  public http = inject(HttpClient);
+  
+
+  public categories: ITag[] = [
     { id: 1, name: 'Prenatal' },
     { id: 2, name: 'For Women' },
     { id: 3, name: 'Trainning'},
@@ -48,17 +47,26 @@ export class SearchPageComponent {
     { id: 10, name: 'Most Popular'}
   ];
 
-  public popularCourses: ICourse[] = [
-    { id: 1, name: 'Prenatal Yoga Prenatal Yoga Prenatal Yoga', category: 'Prenatal', date:'Feb 17,2020' , image: 'https://via.placeholder.com/250' },
-    { id: 2, name: 'Prenatal Yoga Prenatal Yoga Prenatal Yoga', category: 'Prenatal', date:'Feb 17,2020' , image: 'https://via.placeholder.com/250' },
-    { id: 3, name: 'Prenatal Yoga Prenatal Yoga Prenatal Yoga', category: 'Prenatal', date:'Feb 17,2020' , image: 'https://via.placeholder.com/250' },
-    
-  ];
+  constructor() { }
 
-  public programs: IProgram[] = [
-    { id: 1, name: 'Prenatal Yoga', teacher: 'Megan', level: 1, image: 'https://via.placeholder.com/250' },
-    { id: 2, name: 'Prenatal Yoga', teacher: 'Megan', level: 1, image: 'https://via.placeholder.com/250'},
-    { id: 3, name: 'Prenatal Yoga', teacher: 'Megan', level: 1, image: 'https://via.placeholder.com/250' },
-    { id: 4, name: 'Prenatal Yoga', teacher: 'Megan', level: 1, image: 'https://via.placeholder.com/250' }
-  ];
+  adaptCard(): ICard[]{
+    let cursos = this.popularService.getPopulars();
+    return cursos.map(course => CourseCardAdapter(course));
+  }
+
+  adaptTag(): IProgram[]{
+    let cursos = this.programService.getAll();
+    return cursos.map(course => CourseTagAdapter(course));
+  }
+
+  getBySearch() {
+    const token = new LocalStorage('','').LoadLocalStorage('token');
+    if(!token.hasValue()) return
+    if(this.inputSearch === '') return;
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer '+token.getValue()
+    });
+    this.http.post(enviroment.baseUrl+ "/search", { name: this.inputSearch }, {headers}).subscribe(console.log)
+  }
 }
