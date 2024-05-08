@@ -8,7 +8,7 @@
                 <span class="bg-[#7351e6] text-white text-s px-4 py-2 rounded-full mr-5">3/5</span>
             </div>
             <div class="flex flex-col items-start m-6 ">
-                <h1 class="text-white text-3xl font-bold">{{courses.teacher}}</h1>
+                <h1 class="text-white text-3xl font-bold">{{courses.instructor}}</h1>
                 <h3 class="text-white text-lg font-light">{{courses.category}}</h3>
             </div>
         </div>
@@ -54,11 +54,11 @@
         <h2 class="text-xl font-bold dark:text-white">Most More Popular Courses</h2>
     
         <div class="grid grid-flow-row grid-cols-2 gap-3 md:grid-cols-4 my-5 mx-2">
-            @for (item of popularCourses; track item.id) {
+            @for (item of this.getPopulars(); track item.id) {
                 <div class="text-white rounded-lg bg-cover bg-center h-[175px] w-[175px] flex flex-col justify-end p-4"
-                    [style.background-image]="'url(' + item.image + ')'">
-                        <h3 class="text-lg font-bold">{{item.teacher}}</h3>
-                        <p class="">{{item.category}}</p>
+                    [style.background-image]="'url(' + item.thumbnail + ')'">
+                        <h3 class="text-lg font-bold">{{item.title}}</h3>
+                        <p class="">{{item.description}}</p>
                 </div>
                 }
         </div>
