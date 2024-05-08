@@ -3,11 +3,9 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideServiceWorker } from '@angular/service-worker';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { TranslocoHttpLoader } from './transloco-loader';
 import { provideTransloco } from '@jsverse/transloco';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { authInterceptor } from './shared/interceptors/auth/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,7 +22,7 @@ export const appConfig: ApplicationConfig = {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000'
     }),
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(),
     provideTransloco({
       config: {
         availableLangs: ['en', 'es'],
@@ -34,7 +32,6 @@ export const appConfig: ApplicationConfig = {
         prodMode: !isDevMode(),
       },
       loader: TranslocoHttpLoader
-    }),
-    provideAnimationsAsync()
+    })
   ]
 };
