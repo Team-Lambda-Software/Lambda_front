@@ -1,0 +1,34 @@
+<app-basic-header [options]="{name:'we-are-happy-to-help', redirect:'/home'}" />
+
+<div class="px-4">
+  <h2 class="text-2xl font-bold mt-8 dark:text-white">{{'frequently-asked-questions' | transloco }}</h2>
+
+  <div class="carrousel flex gap-4 mt-4 mb-8 pb-2 items-baseline">
+    @for (item of categories(); track item) {
+    <div
+      (click)="setCategory(item)"
+      [class.tag-selected-dark]="item === categorySelected() && darkModeService.isDarkMode()"
+      [class.bg-gradient-purple]="item === categorySelected() && !darkModeService.isDarkMode()"
+      [class.tag-selected-light]="item === categorySelected() && !darkModeService.isDarkMode()"
+      class="min-w-max cursor-pointer bg-purple-100 text-purple-700 rounded-full shadow-md py-2.5 px-5 text-center dark:bg-white/20 dark:text-white">
+      <span class="text-md font-thin">{{ item }}</span>
+    </div>
+    }
+  </div>
+
+  @for (item of realItems().items; track $index) {
+    <div class="accordion-item" (click)="toggleAccordion(item)">
+      <div class="accordion-label flex items-center justify-between border-b-[1px] border-b-[rgba(0,0,0,.2)] dark:text-white">
+        <span [ngClass]="{'font-bold' : item.expanded}" class="accordion-label text-lg">{{item.label}}</span>
+        <span [class]="'text-gray-400 ' + (item.expanded ? 'fas fa-chevron-down' : 'fas fa-chevron-right')"></span>
+      </div>
+      <div class="accordion-content text-gray-400 text-base dark:text-white/85"
+        [ngStyle]="{marginTop: item.expanded ? '1rem' : '0', height: item.expanded ? 'auto' : '0px', opacity: item.expanded ? '1' : '0' }">
+        {{ item.content }}
+      </div>
+    </div>
+  }
+  @if (this.categorySelected() !== 'All') {
+    <button [class.bg-gradient-purple]="!darkModeService.isDarkMode()" class="dark:bg-white dark:text-purple-700 w-full py-4 px-2 rounded-full text-white text-lg mt-12" (click)="seeAll()">{{'see-all' | transloco}}</button>
+  }
+</div>

@@ -1,5 +1,8 @@
 <nav class="bg-gradient-purple rounded-br-[50px]">
   <div class="py-10 px-4 text-white bg-main-bg bg-cover">
-    <span [routerLink]="[options.redirect]" class="fas fa-chevron-left pr-4"></span> <span class="font-medium text-lg">{{options.name}}</span>
+    <div [routerLink]="[options.redirect]" class="cursor-pointer w-max">
+      <span class="fas fa-chevron-left pr-4"></span>
+      <span class="font-medium text-lg">{{options.name | transloco}}</span>
+    </div>
   </div>
 </nav>
