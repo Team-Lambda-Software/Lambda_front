@@ -32,7 +32,7 @@
           {{ 'privacy' | transloco }}
         </a>
       </li>
-      <li><a routerLink="">
+      <li><a [routerLink]="['/home/faq']" (click)="this.sidebarService.setSidebarState(false)">
           <span class="fas fa-circle-question pr-6"></span>
           {{ 'FAQ' | transloco }}
   
