@@ -13,6 +13,7 @@ import { LocalStorage } from './LocalStorage';
 import { VerificationCodeForm } from '../interfaces/forms/verticationCode-form.interface';
 import { FormGroup } from '@angular/forms';
 import { Optional } from '../../shared/helpers/Optional';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ import { Optional } from '../../shared/helpers/Optional';
 
 export class AuthService {
 
+  private router = inject(Router);
   private readonly baseUrl:string= enviroment.baseUrl
   private http= inject(HttpClient)
   private _currentUser=signal <UserState |null>(null)
@@ -146,5 +148,10 @@ export class AuthService {
       }
     }
     return false
+  }
+
+  logout (): void {
+    this.localStorage.deleteLocalStorage('token');
+    this.router.navigate(['/auth'])
   }
 }
