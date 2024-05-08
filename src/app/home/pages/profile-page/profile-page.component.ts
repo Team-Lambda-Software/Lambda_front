@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
@@ -6,14 +6,9 @@ import { CarruselBgImgComponent } from '../../components/carrusel-bg-img/carruse
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.service';
-
-
-interface IPopularCourses {
-  id: number;
-  teacher: string;
-  category: string;
-  image: string;
-}
+import { ILittleCard } from '../../interfaces/ILittleCard';
+import { CourseLitleCardAdapter } from '../../adapters/LitleCardAdapter';
+import { CoursesPopularService } from '../../services/courses/getPopulars/courses-popular.service';
 
 
 @Component({
@@ -24,6 +19,13 @@ interface IPopularCourses {
     imports: [RouterLink, CommonModule, CarruselBgImgComponent, TranslocoModule, NgxChartsModule]
 })
 export class ProfilePageComponent {
+
+  public popularService = inject(CoursesPopularService);
+ 
+  public getPopulars(): ILittleCard[] {
+    let popular= this.popularService.getPopulars();
+    return popular.map((course) => CourseLitleCardAdapter(course));
+  }
 
   progressValue = 50;
 
@@ -93,13 +95,5 @@ export class ProfilePageComponent {
   onBarSelect(event: any) {
     console.log(event);
   }
-
-  public popularCourses: IPopularCourses[] = [
-    { id: 1, teacher: 'Cesar', category: 'Yoga' , image: 'https://via.placeholder.com/250' },
-    { id: 2, teacher: 'Carlos', category: 'Cycling' , image: 'https://via.placeholder.com/250' },
-    { id: 3, teacher: 'Gustavo', category: 'Yoga' , image: 'https://via.placeholder.com/250' },
-    { id: 4, teacher: 'Carlos', category: 'Yoga' , image: 'https://via.placeholder.com/250' },
-
-  ]
 
  }

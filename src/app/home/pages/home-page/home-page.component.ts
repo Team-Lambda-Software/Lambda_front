@@ -1,20 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { CarruselBgImgComponent } from '../../components/carrusel-bg-img/carrusel-bg-img.component';
 import { CircularProgressComponent } from '../../components/circular-progress/circular-progress.component';
+import { ILittleCard } from '../../interfaces/ILittleCard';
+import { CourseLitleCardAdapter } from '../../adapters/LitleCardAdapter';
+import { CoursesPopularService } from '../../services/courses/getPopulars/courses-popular.service';
 
 
 interface ICategories {
   id: number;
-  image: string;
-}
-
-interface IPopularCourses {
-  id: number;
-  teacher: string;
-  category: string;
   image: string;
 }
 
@@ -42,14 +38,13 @@ interface ILatestBlogs {
 })
 
 export class HomePageComponent {
- 
-  public popularCourses: IPopularCourses[] = [
-    { id: 1, teacher: 'Cesar', category: 'Yoga' , image: 'https://via.placeholder.com/250' },
-    { id: 2, teacher: 'Carlos', category: 'Cycling' , image: 'https://via.placeholder.com/250' },
-    { id: 3, teacher: 'Gustavo', category: 'Yoga' , image: 'https://via.placeholder.com/250' },
-    { id: 4, teacher: 'Carlos', category: 'Yoga' , image: 'https://via.placeholder.com/250' },
 
-  ]
+  public popularService = inject(CoursesPopularService);
+ 
+  public getPopulars(): ILittleCard[] {
+    let popular= this.popularService.getPopulars();
+    return popular.map((course) => CourseLitleCardAdapter(course));
+  }
 
   public videoCourses: IVideoCourses[]  = [
     {
