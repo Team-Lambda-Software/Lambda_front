@@ -42,7 +42,6 @@ export class CreatePasswordPageComponent {
 
   createPassword(){
     console.log(this.createPasswordForm.value);
-    console.log('pepe');
 
   }
 }

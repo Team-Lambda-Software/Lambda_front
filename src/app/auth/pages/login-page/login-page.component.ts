@@ -8,13 +8,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.service';
 import { AuthService } from '../../services/auth.service';
+import { CommonModule } from '@angular/common';
+import { ValidatorService } from '../../../shared/services/validator/validator.service';
 
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css',
   standalone: true,
-  imports: [ RouterLink,FormsModule,ReactiveFormsModule ,HttpClientModule,MatFormFieldModule, MatInputModule, MatIconModule,]
+  imports: [ RouterLink,FormsModule,ReactiveFormsModule ,HttpClientModule,MatFormFieldModule, MatInputModule, MatIconModule,CommonModule]
 })
 export class LoginPageComponent {
 
@@ -23,10 +25,12 @@ export class LoginPageComponent {
   private authService=inject(AuthService)
   private router= inject(Router)
   public hide:boolean=false;
+  public validatorService= inject(ValidatorService)
+
 
   public loginForm :FormGroup=this.fb.group({
-    email:['',[Validators.required,Validators.email]],
-    password:['',[Validators.required,Validators.minLength(6)]]
+    email:['',[Validators.required,Validators.pattern(this.validatorService.emailPattern)]],
+    password:['',[Validators.required]]
   })
 
   login(){

@@ -98,7 +98,6 @@ export class AuthService {
     return this.http.post<GetCodeResponse>(url,body)
       .pipe(
         map((response)=>{
-          this.localStorage.SaveLocalStorage('code',response.code)
           this.localStorage.SaveLocalStorage('date',response.date.toString())
           this._hasCode=true
           this.code.setValue(response.code);

@@ -22,9 +22,23 @@ html, body {
 
 .mdc-text-field--outlined {
   /* Custom Gray of tailwind */
-  color: #677294;
   --mdc-outlined-text-field-container-shape: 45px !important;
   font-size: 16px;
+}
+
+
+.input-ligth:invalid {
+  color: red;
+  background-color: pink;
+
+}
+
+.input-ligth{
+  color: #677294;
+}
+
+.input-dark{
+  color: #F2F2F2
 }
 
 .md-18 {
