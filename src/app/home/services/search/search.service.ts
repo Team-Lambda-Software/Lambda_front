@@ -13,15 +13,9 @@ export class SearchService {
   constructor() {}
 
   getBySearch(input: string) {
-    const token = new LocalStorage('', '').LoadLocalStorage('token');
-    if (!token.hasValue()) return;
     if (input === '') return;
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token.getValue(),
-    });
     this.http
-      .post(enviroment.baseUrl + '/search', { name: input }, { headers })
+      .post(enviroment.baseUrl + '/search', { name: input })
       .subscribe(console.log);
   }
 }
