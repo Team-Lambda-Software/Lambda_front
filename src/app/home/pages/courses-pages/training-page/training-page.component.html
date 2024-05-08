@@ -25,9 +25,9 @@
         </div>
     </div>
     
-    <app-carrusel-bg-img [courses]="popularCourses"/>
+    <app-carrusel-bg-img [items]="getPopulars()"/>
 </section>
 
 <section class="mt-8 mx-4">
-    <app-programs-tag [programs]="programs"/>
+    <app-programs-tag [programs]="getProgramsByLevel()"/>
 </section>

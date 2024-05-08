@@ -1,13 +1,5 @@
 import { Component, Input } from '@angular/core';
-
-
-interface ICourse {
-  id: number;
-  name: string;
-  category: string;
-  date: string;
-  image: string;
-}
+import { ICard } from '../../interfaces/ILittleCard';
 
 @Component({
   selector: 'app-card-carrusel',
@@ -18,5 +10,5 @@ interface ICourse {
 })
 export class CardCarruselComponent {
   
-  @Input({required: true}) public courses!: ICourse[];
+  @Input({required: true}) public courses!: ICard[];
 }
