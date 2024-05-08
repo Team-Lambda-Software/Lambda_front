@@ -1,0 +1,29 @@
+<div class="overflow-x-hidden">
+  <div class="h-[100dvh] flex flex-col justify-between px-4">
+    <div class="flex flex-col items-center gap-4" [@simpleAnimation]="animationState">
+      <img class="block mt-[75px] w-[75%] max-w-[350px] m-auto" src="../../../../assets/images/{{selectedStep.img}}" alt="yoga">
+    
+      <p class="text-purple-700 font-light text-2xl dark:text-white">{{selectedStep.title}}</p>
+    
+      <p class="font-bold text-4xl dark:text-white"> {{selectedStep.subTitle}} </p>
+    
+      <p class="text-center text-gray-500 dark:text-gray-300/80">{{selectedStep.description}}</p>
+    
+      <button class="bg-white p-4 flex items-center gap-6 rounded-full border-none shadow-2xl mt-4" (click)="nextStep()">
+        <span class="font-medium text-lg box">Next</span>
+        <div class="h-[30px] w-[30px] bg-gradient-purple rounded-full text-white grid content-center">
+          <span class="fas fa-chevron-right"></span>
+        </div>
+      </button>
+    </div>
+  
+    <footer class="flex items-center justify-between h-16 border-t border-t-gray-300 px-6 w-full">
+      <span class="text-xl text-gray-500 cursor-pointer dark:text-gray-300" (click)="skipSteps()">Skip</span>
+      <div class="flex gap-1">
+        @for (s of steps; track s.img; let index = $index) {
+          <span [ngClass]="index === currentStep ? 'bg-slate-500' : 'bg-slate-300'" class="h-2 w-2 rounded-full  block"></span>
+        }
+      </div>
+    </footer>
+  </div>
+</div>
