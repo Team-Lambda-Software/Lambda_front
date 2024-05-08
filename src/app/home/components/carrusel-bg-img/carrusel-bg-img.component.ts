@@ -1,11 +1,5 @@
 import { Component, Input } from '@angular/core';
-
-interface IPopularCourse {
-  id: number;
-  teacher: string;
-  category: string;
-  image: string;
-}
+import { ILittleCard } from '../../interfaces/ILittleCard';
 
 @Component({
   selector: 'app-carrusel-bg-img',
@@ -16,5 +10,5 @@ interface IPopularCourse {
 })
 export class CarruselBgImgComponent {
 
-  @Input({ required: true }) public courses!: IPopularCourse[]
+  @Input({ required: true }) public items!: ILittleCard[]
 }

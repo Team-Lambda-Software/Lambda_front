@@ -1,13 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { TranslocoModule } from '@jsverse/transloco';
+import { IProgram } from '../../interfaces/ILittleCard';
 
-interface IProgram{
-  id: number;
-  name: string;
-  teacher: string;
-  level: number;
-  image: string;
-}
 
 @Component({
   selector: 'app-programs-tag',
