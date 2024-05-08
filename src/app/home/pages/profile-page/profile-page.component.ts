@@ -5,6 +5,7 @@ import { TranslocoModule } from '@jsverse/transloco';
 import { CarruselBgImgComponent } from '../../components/carrusel-bg-img/carrusel-bg-img.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
+import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.service';
 
 
 interface IPopularCourses {
@@ -16,15 +17,17 @@ interface IPopularCourses {
 
 
 @Component({
-  selector: 'app-profile-page',
-  templateUrl: './profile-page.component.html',
-  styleUrl: './profile-page.component.css',
-  standalone: true,
-  imports: [ RouterLink, CommonModule, CarruselBgImgComponent, TranslocoModule, NgxChartsModule]
+    selector: 'app-profile-page',
+    templateUrl: './profile-page.component.html',
+    styleUrl: './profile-page.component.css',
+    standalone: true,
+    imports: [RouterLink, CommonModule, CarruselBgImgComponent, TranslocoModule, NgxChartsModule]
 })
 export class ProfilePageComponent {
 
-  chartData = [
+  progressValue = 50;
+
+  chartDataStatistics = [
     {
       name: 'Mon',
       value: 100
@@ -55,12 +58,37 @@ export class ProfilePageComponent {
     }
   ];
 
-  colorScheme: Color = {
-    name: 'myScheme',
+  isDarkMode!: boolean;
+
+  ColorSchemeBar: Color = {
+    name: 'myLightScheme',
+    selectable: true,
+    group: ScaleType.Ordinal,
+    domain: ['#27AE60']
+  };
+
+
+  lightColorSchemeStatistics: Color = {
+    name: 'myLightScheme',
     selectable: true,
     group: ScaleType.Ordinal,
     domain: ['#4F14A0', '#27AE60']
   };
+  
+  darkColorSchemeStatistics: Color = {
+    name: 'myDarkScheme',
+    selectable: true,
+    group: ScaleType.Ordinal,
+    domain: ['#FFFFFF', '#27AE60']
+  };
+
+  constructor(private darkModeService: DarkModeService) {
+    this.isDarkMode = this.darkModeService.isDarkMode();
+  }
+
+  get colorSchemeStatistics(): Color {
+    return this.isDarkMode ? this.darkColorSchemeStatistics : this.lightColorSchemeStatistics;
+  }
 
   onBarSelect(event: any) {
     console.log(event);
@@ -73,7 +101,5 @@ export class ProfilePageComponent {
     { id: 4, teacher: 'Carlos', category: 'Yoga' , image: 'https://via.placeholder.com/250' },
 
   ]
-
-  
 
  }

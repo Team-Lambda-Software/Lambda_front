@@ -4,7 +4,7 @@
         <h1 class="fas fa-chevron-left pr-4" [routerLink]="['/home/main']"></h1>
         <p class="font-medium text-lg">{{'profile' | transloco}}</p>
     </div>
-    <div class="fas fa-edit flex items-center pr-4">
+    <div class="fas fa-edit flex items-center py-2 pr-4">
     </div>
 </div>
 
@@ -25,6 +25,16 @@
   </div>
 </div>
 <div class="mx-4 py-4"></div>
+<div class="bar-wrapper w-[202px] h-[28px] mx-20 flex justify-between items-center" >
+  <h1 class="fas fa-smile"></h1>
+  <span class="font-bold">90hrs</span>
+</div>
+<div class="bar-wrapper w-[202px] h-[28px] mx-20 flex justify-between items-center">
+  
+  <progress  [value]="progressValue" max="100"></progress>
+  
+</div>
+<div class="mx-2 py-2"></div>
 </header>
 
 <section>
@@ -43,19 +53,21 @@
     <h1 class="text-sm mx-2">{{'time' | transloco}}</h1>
     <p class="text-lg font-bold mx-2">{{'1:03:30'}}</p>
   </div>
-  <ngx-charts-bar-vertical
+  <ngx-charts-bar-vertical [ngClass]="{'dark-text': isDarkMode }"
       [view]="[210, 79]"
-      [scheme]="colorScheme"
-      [results]="chartData"
+      [scheme]="colorSchemeStatistics"
+      [results]="chartDataStatistics"
       [xAxis]="true"
       [yAxis]="false"
       [legend]="false"
+      [showGridLines]="false"
       [showXAxisLabel]="false"
       [showYAxisLabel]="false"
       [barPadding]="20"
       (select)="onBarSelect($event)"
       ></ngx-charts-bar-vertical>
   </div>  
+
 </section>
 
 <section class="mx-4 py-7">
