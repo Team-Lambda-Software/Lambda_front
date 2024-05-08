@@ -1,11 +1,14 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { enviroment } from '../../../env/enviroments';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Optional } from '../helpers/Optional';
 import { Observable, catchError, map, of, tap, throwError } from 'rxjs';
 import { AuthStatus } from '../interfaces/auth-status.enum';
 import { LoginResponse } from '../interfaces/login-response.interface';
 import { UserState } from '../interfaces/user-state.interface';
+
+import { FormGroup } from '@angular/forms';
+import { Optional } from '../../shared/helpers/Optional';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +16,7 @@ import { UserState } from '../interfaces/user-state.interface';
 
 export class AuthService {
 
+  private router = inject(Router);
   private readonly baseUrl:string= enviroment.baseUrl
   private http= inject(HttpClient)
   private _currentUser=signal <UserState |null>(null)
@@ -57,5 +61,10 @@ export class AuthService {
     return of(false);
 
     // const headers = new HttpHeaders()
+  }
+
+  logout (): void {
+    this.localStorage.deleteLocalStorage('token');
+    this.router.navigate(['/auth'])
   }
 }
