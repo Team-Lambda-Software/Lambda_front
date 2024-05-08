@@ -13,9 +13,6 @@ import { LocalStorage } from './LocalStorage';
 import { VerificationCodeForm } from '../interfaces/forms/verticationCode-form.interface';
 import { FormGroup } from '@angular/forms';
 import { Optional } from '../../shared/helpers/Optional';
-
-import { FormGroup } from '@angular/forms';
-import { Optional } from '../../shared/helpers/Optional';
 import { Router } from '@angular/router';
 
 @Injectable({
