@@ -1,76 +1,86 @@
-<div [ngClass]="{'backdrop': this.sidebarService.isSidebarActive()}"></div>
+<div [ngClass]="{'backdrop': this.sidebarService.isSidebarActive()}" (click)="clickBackdrop()"></div>
 <div class="sidebar bg-gradient-purple" [ngClass]="{'active': this.sidebarService.isSidebarActive()}">
-  <ul>
-    <div class="flex justify-between">
-      <button 
-        class="pb-8 text-white"
-        (click)="this.sidebarService.setSidebarState(false);">
-        <span class="fa-regular fa-circle-xmark text-xl"></span>
-      </button>
-
-      <button class="flex transition-transform hover:scale-125 align-middle text-xl" (click)="darkModeService.isDarkMode.set(!darkModeService.isDarkMode())">
-        @if (darkModeService.isDarkMode()) {
+  <div class="flex flex-col justify-between h-full">
+    <ul>
+      <div class="flex justify-between">
+        <button class="pb-8 text-white" (click)="this.sidebarService.setSidebarState(false);">
+          <span class="fa-regular fa-circle-xmark text-xl"></span>
+        </button>
+  
+        <button class="flex transition-transform hover:scale-125 align-middle text-xl"
+          (click)="darkModeService.isDarkMode.set(!darkModeService.isDarkMode())">
+          @if (darkModeService.isDarkMode()) {
           <span>🌙</span>
-        } @else {
+          } @else {
           <span>☀️</span>
-        }
+          }
+        </button>
+      </div>
+      <li><a routerLink="">
+          <span class="fas fa-user pr-6"></span>
+          {{ 'account' | transloco }}
+        </a>
+      </li>
+      <li><a routerLink="">
+          <span class="fas fa-bell pr-6"></span>
+          {{ 'notifications' | transloco }}
+        </a>
+      </li>
+      <li>
+        <a routerLink="">
+          <span class="fas fa-lock pr-6"></span>
+          {{ 'privacy' | transloco }}
+        </a>
+      </li>
+      <li><a routerLink="">
+          <span class="fas fa-circle-question pr-6"></span>
+          {{ 'FAQ' | transloco }}
+  
+        </a>
+      </li>
+      <li>
+        <a routerLink="">
+          <span class="fas fa-chart-pie pr-6"></span>
+          {{ 'statistics' | transloco }}
+        </a>
+      </li>
+      <li (click)="$event.stopPropagation(); handleAccordion($event)">
+        <a>
+          <div>
+            <span class="fas fa-language pr-6"></span>
+            <span class="pb-10">{{ 'language' | transloco }}</span>
+          </div>
+          <div class="accordion-content">
+            <button [ngClass]="{'bg-purple-900': getActiveLang() === 'en'}"
+              class="bg-purple-900 flex items-center justify-center gap-6"
+              (click)="setLanguage('en'); $event.stopPropagation()">
+              <span>{{'english' | transloco}}</span>
+              <img src="../../../../../../assets/images/en.png" alt="english" width="35">
+            </button>
+            <button [ngClass]="{'bg-purple-900': getActiveLang() === 'es'}" class="flex items-center justify-center gap-6"
+              (click)="setLanguage('es'); $event.stopPropagation()">
+              <span>{{'spanish' | transloco}}</span>
+              <img src="../../../../../../assets/images/es.png" alt="spanish" width="35">
+            </button>
+          </div>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/"><span class="fas fa-users pr-6"></span>
+          {{ 'rate-us' | transloco }}
+        </a>
+      </li>
+      <li>
+        <a routerLink="/"><span class="fas fa-user-group pr-6"></span>
+          {{ 'about' | transloco }}
+        </a>
+      </li>
+    </ul>
+    <div class="text-white pb-8 w-max" (click)="logout()">
+      <button>
+        <span class="fas fa-right-from-bracket pr-6"></span>
+        {{ 'logout' | transloco }}
       </button>
     </div>
-    <li><a routerLink="">
-        <span class="fas fa-user pr-6"></span>
-        {{ 'account' | transloco }}
-      </a>
-    </li>
-    <li><a routerLink="">
-        <span class="fas fa-bell pr-6"></span>
-        {{ 'notifications' | transloco }}
-      </a>
-    </li>
-    <li>
-      <a routerLink="">
-        <span class="fas fa-lock pr-6"></span>
-        {{ 'privacy' | transloco }}
-      </a>
-    </li>
-    <li><a routerLink="">
-        <span class="fas fa-circle-question pr-6"></span>
-        {{ 'FAQ' | transloco }}
-        
-      </a>
-    </li>
-    <li>
-      <a routerLink="">
-        <span class="fas fa-chart-pie pr-6"></span>
-        {{ 'statistics' | transloco }}
-      </a>
-    </li>
-    <li (click)="$event.stopPropagation(); handleAccordion($event)">
-      <a>
-        <div>
-          <span class="fas fa-language pr-6"></span>
-          <span class="pb-10">{{ 'language' | transloco }}</span>
-        </div>
-        <div class="accordion-content">
-          <button [ngClass]="{'bg-purple-900': getActiveLang() === 'en'}" class="bg-purple-900 flex items-center justify-center gap-6" (click)="setLanguage('en'); $event.stopPropagation()">
-            <span>{{'english' | transloco}}</span>
-            <img src="../../../../../../assets/images/en.png" alt="english" width="35">
-          </button>
-          <button [ngClass]="{'bg-purple-900': getActiveLang() === 'es'}" class="flex items-center justify-center gap-6" (click)="setLanguage('es'); $event.stopPropagation()">
-            <span>{{'spanish' | transloco}}</span>
-            <img src="../../../../../../assets/images/es.png" alt="spanish" width="35">
-          </button>
-        </div>
-      </a>
-    </li>
-    <li>
-      <a routerLink="/"><span class="fas fa-users pr-6"></span>
-        {{ 'rate-us' | transloco }}
-      </a>
-    </li>
-    <li>
-      <a routerLink="/"><span class="fas fa-user-group pr-6"></span>
-        {{ 'about' | transloco }}
-      </a>
-    </li>
-  </ul>
+  </div>
 </div>
