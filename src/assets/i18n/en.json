@@ -1,0 +1,18 @@
+{
+  "account" : "Account",
+  "notifications" : "Notifications",
+  "privacy" : "Privacy",
+  "FAQ" : "FAQ",
+  "statistics" : "Statistics",
+  "language" : "Language",
+  "rate-us" : "Rate Us",
+  "about" : "About",
+  "english": "English",
+  "spanish": "Spanish",
+  "video-course": "Video Course",
+  "popular-search": "Popular Search",
+  "popular-courses": "Popular-Courses",
+  "program-master": "Program-Master",
+  "level": "Level",
+  "logout": "Logout"
+}

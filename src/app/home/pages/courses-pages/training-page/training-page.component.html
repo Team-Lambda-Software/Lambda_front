@@ -1,0 +1,33 @@
+<header class="bg-gradient-purple rounded-br-[50px]">
+    <div class="py-6 px-4 text-white bg-main-bg bg-cover">
+        <span [routerLink]="['/home/main-course']" class="fas fa-chevron-left pr-4"></span> <span class="font-medium text-lg">Trainig</span>
+    </div>
+
+    <nav class="flex justify-around">
+        @for (item of levels; track $index) {
+            <div (click)="onLevelSelected(item)">
+                <div class="flex justify-center items-center p-2 text-white">
+                    <span class="h-2 w-2 bg-white rounded-full mr-2"></span>
+                    <span [routerLink]="" class="font-medium text-sm">{{item}}</span>
+                </div>
+                <span [ngClass]="{'selected': item === selectedLevel}"></span>
+            </div>
+        }
+    </nav>
+</header>
+
+<section class="my-8 p-2">
+    <div class="flex justify-between items-end dark:text-white">
+        <h1 class="text-xl font-bold">{{'Most Popular Courses'}}</h1>
+        <div class="flex items-center text-gray-500 pr-2" [routerLink]="['/home/video-list']" >
+            <a  class="text-sm mx-2">View All</a>
+            <span class="fas fa-chevron-right"></span>
+        </div>
+    </div>
+    
+    <app-carrusel-bg-img [courses]="popularCourses"/>
+</section>
+
+<section class="mt-8 mx-4">
+    <app-programs-tag [programs]="programs"/>
+</section>

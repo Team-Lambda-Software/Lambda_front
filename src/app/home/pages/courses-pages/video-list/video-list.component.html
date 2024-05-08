@@ -1,20 +1,25 @@
-<header class="bg-gradient-purple rounded-br-[50px] text-white">
-    <div class="py-6 px-4">
-        <span [routerLink]="['/home/main']" class="fas fa-chevron-left pr-4"></span> <span class="font-medium text-lg">Videos</span>
+<header class="bg-gradient-purple rounded-br-[50px]">
+    <div class="text-white bg-main-bg bg-cover">
+        <div class="py-6 px-4">
+            <span [routerLink]="['/home/main']" class="fas fa-chevron-left pr-4"></span> <span class="font-medium text-lg">Videos</span>
+        </div>
+        <nav class="flex gap-5 mx-3 carrusel overflow-auto">
+            @for (item of categories; track $index) {
+                <div (click)="onCategorySelected(item)">
+                    <div class="flex justify-center items-center text-nowrap text-white p-2">
+                        <span class="h-2 w-2 bg-white rounded-full mr-2"></span>
+                        <span class="font-medium text-sm">{{item.name}}</span>
+                    </div>
+                    <span [ngClass]="{'selected': item.name == selectedCategory}"></span>
+                </div>
+            }
+        </nav>
     </div>
-    <nav class="flex gap-5 mx-2">
-        @for (Links of navOptions; track $index) {
-            <div class="flex items-center py-4">
-                <span class="h-2 w-2 bg-white rounded-full mr-2"></span>
-                <span [routerLink]="['/home/main']" class="font-medium text-sm">{{ Links.name }}</span>
-            </div>
-        }
-    </nav>
 </header>
 
 <section>
     <div class="mx-4 mt-6 mb-2">
-        <h1 class="text-xl font-bold dark:text-white">Video Course</h1>
+        <h1 class="text-xl font-bold dark:text-white">{{ 'video-course' | transloco}}</h1>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 px-4 mt-4">
         @for (video of videos; track video.id) {
