@@ -9,10 +9,9 @@ import { CoursesPopularService } from '../../services/courses/getPopulars/course
 import { CourseLevelService } from '../../services/courses/getByLevel/course-level.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { enviroment } from '../../../../env/enviroments';
-import { LocalStorage } from '../../../auth/services/LocalStorage';
 import { CourseCardAdapter } from '../../adapters/CardAdapter';
 import { CourseTagAdapter } from '../../adapters/TagAdapter';
+import { SearchService } from '../../services/search/search.service';
 
 interface ITag {
   id: number;
@@ -31,8 +30,7 @@ export class SearchPageComponent {
   public inputSearch: string = '';
   public programService = inject(CourseLevelService);
   public popularService = inject(CoursesPopularService);
-  public http = inject(HttpClient);
-  
+  public searchService = inject(SearchService);  
 
   public categories: ITag[] = [
     { id: 1, name: 'Prenatal' },
@@ -60,13 +58,6 @@ export class SearchPageComponent {
   }
 
   getBySearch() {
-    const token = new LocalStorage('','').LoadLocalStorage('token');
-    if(!token.hasValue()) return
-    if(this.inputSearch === '') return;
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer '+token.getValue()
-    });
-    this.http.post(enviroment.baseUrl+ "/search", { name: this.inputSearch }, {headers}).subscribe(console.log)
+    this.searchService.getBySearch(this.inputSearch);
   }
 }
