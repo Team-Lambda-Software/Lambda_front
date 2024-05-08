@@ -9,6 +9,8 @@ import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.se
 import { ILittleCard } from '../../interfaces/ILittleCard';
 import { CourseLitleCardAdapter } from '../../adapters/LitleCardAdapter';
 import { CoursesMyTrainingService } from '../../services/courses/getTraining/courses-mytraining.service';
+import { IUserInfoProfile } from '../../interfaces/user-info-model';
+import { UserInfoService } from '../../services/user/getUserInfo/user-info.service';
 
 
 @Component({
@@ -25,6 +27,13 @@ export class ProfilePageComponent {
   public getMyTraining(): ILittleCard[] {
     let popular= this.myTrainingService.getMyTraining();
     return popular.map((course) => CourseLitleCardAdapter(course));
+  }
+
+  public userInfoProfile =inject(UserInfoService);
+
+  public getUserInfoProfile(): IUserInfoProfile {
+    let infoProfile = this.userInfoProfile.getUserInfoProfile();
+    return infoProfile;
   }
 
   progressValue = 50;

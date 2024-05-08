@@ -1,8 +1,8 @@
 <header>
   <nav class="bg-gradient-purple rounded-br-[50px] text-white">
     <div class="py-10 px-4 text-white bg-main-bg bg-cover">
-      <a class="profile-picture" [routerLink]="['/home/profile']"><img src="https://via.placeholder.com/40" class= "w-[40px] h-[40px] rounded-full" align="right"/></a>
-      <span class="font-bold text-lg">Raytory Roxty<br><p class="font-medium text-lg">ID:xxxxxxx</p></span> 
+      <a class="profile-picture" [routerLink]="['/home/profile']"><img src="{{userInfo.getUserInfo().image}}" class= "w-[40px] h-[40px] rounded-full" align="right"/></a>
+      <span class="font-bold text-lg">{{userInfo.getUserInfo().name}}<br><p class="font-medium text-lg">{{userInfo.getUserInfo().id}}</p></span> 
     </div>
     <div class="rounded-lg bg-slate-100 shadow-md py-1 p-4 flex items-center mx-4 gap-2 ">
       <input type="text" class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none" placeholder="{{'search' | transloco}}">

@@ -10,13 +10,13 @@
 
 <div class="flex items-center ml-4">
   <span class="profile-picture">
-     <img src="https://via.placeholder.com/69" class="w-[69px] h-[69px] rounded-full" align="left"/>
+     <img src="{{userInfoProfile.getUserInfoProfile().image}}" class="w-[69px] h-[69px] rounded-full" align="left"/>
   </span>
   <div class="flex flex-col items-start ml-4">
-     <span class="font-bold">Raytory Roxty</span>
+     <span class="font-bold">{{userInfoProfile.getUserInfoProfile().name}}</span>
      <p class=" flex flex-col items-start " style="display:inline">
-       <span class="font-bold text-lg">1,420</span>
-       <span class="font-bold text-lg mx-11">730</span>
+       <span class="font-bold text-lg">{{userInfoProfile.getUserInfoProfile().followers}}</span>
+       <span class="font-bold text-lg mx-11">{{userInfoProfile.getUserInfoProfile().following}}</span>
      </p>
      <p class="follower-counts flex flex-col items-start " style="display:inline">
       <span class="font-medium">{{'followers' | transloco}}</span>
@@ -31,7 +31,7 @@
 </div>
 <div class="bar-wrapper w-[202px] h-[28px] mx-20 flex justify-between items-center">
   
-  <progress  [value]="progressValue" max="100"></progress>
+  <progress [value]="progressValue" max="100"></progress>
   
 </div>
 <div class="mx-2 py-2"></div>
