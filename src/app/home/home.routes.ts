@@ -48,7 +48,7 @@ export const HomeRoutes: Routes = [
       {
         path: 'training',
         component: TrainingPageComponent
-      }
+      },
       {
         path: 'main-blogs',
         component: MainBlogsComponent
