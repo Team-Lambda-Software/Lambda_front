@@ -1,10 +1,10 @@
 <nav class="relative">
-    <app-basic-header  [options]="{redirect: '/home/main', name: 'Popular Search'}" style="position: relative;"/>
+    <app-basic-header  [options]="{redirect: '/home/main', name: 'popular-search'}" style="position: relative;"/>
     
     <div class="absolute top-[80px] left-1/2 transform -translate-x-1/2 w-full">
         <div class="rounded-lg bg-slate-100 shadow-md p-4 flex items-center mx-5 gap-2">
-            <input type="text" class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none" placeholder="Search">
-            <span class="fas fa-search fa-xl text-gray-400"></span>
+            <input [(ngModel)]="inputSearch" type="text" class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none" placeholder="Search">
+            <span class="fas fa-search fa-xl text-gray-400" (click)="getBySearch()"></span>
         </div>
     </div>
 </nav>
@@ -20,10 +20,10 @@
 <section class="my-8 mx-4">
     <h1 class="text-xl font-bold dark:text-white">{{'popular-courses' | transloco}}</h1>
 
-    <app-card-carrusel [courses]="popularCourses"/>
+    <app-card-carrusel [courses]="adaptCard()"/>
     
 </section>
 
 <section class="mt-8 mx-4">
-    <app-programs-tag [programs]="programs"/>
+    <app-programs-tag [programs]="adaptTag()"/>
 </section>

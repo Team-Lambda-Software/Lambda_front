@@ -1,23 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { ProgramsTagComponent } from '../../../components/programs-tag/programs-tag.component';
 import { CarruselBgImgComponent } from '../../../components/carrusel-bg-img/carrusel-bg-img.component';
+import { CoursesPopularService } from '../../../services/courses/getPopulars/courses-popular.service';
+import { ILittleCard, IProgram } from '../../../interfaces/ILittleCard';
+import { CourseLevelService } from '../../../services/courses/getByLevel/course-level.service';
+import { CourseLitleCardAdapter } from '../../../adapters/LitleCardAdapter';
+import { CourseTagAdapter } from '../../../adapters/TagAdapter';
 
-interface IPopularCourse {
-  id: number;
-  teacher: string;
-  category: string;
-  image: string;
-}
+type CoursesLevel = 'beginner' | 'skilled' | 'master';
 
-interface IProgram{
-  id: number;
-  name: string;
-  teacher: string;
-  level: number;
-  image: string;
+const coursesLevel = {
+  'beginner': 1, // 'Beginner
+  'skilled': 2,
+  'master': 3
 }
 
 @Component({
@@ -28,22 +26,13 @@ interface IProgram{
   styleUrl: './training-page.component.css'
 })
 export class TrainingPageComponent {
-  
-  public levels: string[] = ['Master', 'Skilled', 'Beginner'];
-  public selectedLevel: string = 'Master';
-  public popularCourses: IPopularCourse[] = [
-    { id: 1, teacher: 'Eduardo', category: 'Prenatal' , image: 'https://via.placeholder.com/250' },
-    { id: 2, teacher: 'Paul', category: 'Prenatal' , image: 'https://via.placeholder.com/250' },
-    { id: 3, teacher: 'Alfredo', category: 'Prenatal' , image: 'https://via.placeholder.com/250' },
-    { id: 4, teacher: 'Eduardo', category: 'Prenatal' , image: 'https://via.placeholder.com/250' },
 
-  ]
-  public programs: IProgram[] = [
-    { id: 1, name: 'Prenatal Yoga', teacher: 'Megan', level: 1, image: 'https://via.placeholder.com/250' },
-    { id: 2, name: 'Prenatal Yoga', teacher: 'Megan', level: 1, image: 'https://via.placeholder.com/250'},
-    { id: 3, name: 'Prenatal Yoga', teacher: 'Megan', level: 1, image: 'https://via.placeholder.com/250' },
-    { id: 4, name: 'Prenatal Yoga', teacher: 'Megan', level: 1, image: 'https://via.placeholder.com/250' }
-  ];
+  public popularService = inject(CoursesPopularService);
+  public programSevice = inject(CourseLevelService);
+
+  
+  public levels: CoursesLevel[] = Object.keys(coursesLevel) as CoursesLevel[];
+  public selectedLevel: CoursesLevel = 'beginner';
 
   constructor(private router:Router, private route:ActivatedRoute) {
     this.route.queryParams.subscribe((params: { [key: string]: any }) => {
@@ -53,13 +42,27 @@ export class TrainingPageComponent {
     });
   }
 
-  onLevelSelected(level: string) {
+  onLevelSelected(level: CoursesLevel) {
     // console.log('Level selected: ', level);
     this.router.navigate([] ,{queryParams: {level: level}, queryParamsHandling: 'merge'});
     this.setSelectedLevel(level);
   }
 
-  setSelectedLevel(level: string) {
+  setSelectedLevel(level: CoursesLevel) {
     this.selectedLevel = level;
+  }
+
+  public getPopulars(): ILittleCard[] {
+    let popular= this.popularService.getPopulars();
+    return popular.map((course) => CourseLitleCardAdapter(course));
+  }
+
+  getLevel(): number {
+    return coursesLevel[this.selectedLevel];
+  }
+
+  getProgramsByLevel(): IProgram[] {
+    let courses = this.programSevice.getByLevel(this.getLevel());
+    return courses.map((course) => CourseTagAdapter(course));
   }
 }

@@ -5,6 +5,7 @@ import { DarkModeService } from '../../../../../shared/services/dark-mode/dark-m
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AvailableLangs } from '../../../../../shared/interfaces/available-lang.model';
 import { AuthService } from '../../../../../auth/services/auth.service';
+import { RouterLink } from '@angular/router';
 
 const LIMIT_TOUCHED_FOR_OPEN_SIDEBAR = 80;
 const SLIP_THRESHOLD = 80;
@@ -12,7 +13,7 @@ const SLIP_THRESHOLD = 80;
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [NgClass, TranslocoModule],
+  imports: [NgClass, TranslocoModule, RouterLink],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })

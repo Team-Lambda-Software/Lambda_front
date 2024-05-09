@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { TranslocoModule } from '@jsverse/transloco';
 
 interface BasicHeaderOptions {
   redirect: string;
@@ -9,7 +10,7 @@ interface BasicHeaderOptions {
 @Component({
   selector: 'app-basic-header',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, TranslocoModule],
   templateUrl: './basic-header.component.html',
   styleUrl: './basic-header.component.css'
 })
