@@ -13,6 +13,7 @@ import { LocalStorage } from './LocalStorage';
 import { VerificationCodeForm } from '../interfaces/forms/verticationCode-form.interface';
 import { FormGroup } from '@angular/forms';
 import { Optional } from '../../shared/helpers/Optional';
+import { UpdatePasswordResponse } from '../interfaces/response/updatePassword-response.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,8 @@ export class AuthService {
   private _currentUser=signal <UserState |null>(null)
   private _authStatus= signal<AuthStatus>(AuthStatus.notAuthenticated);
   private localStorage:LocalStorage= new LocalStorage('','')
-  private code=this.localStorage.LoadLocalStorage('code')
+  private code=new Optional<string>(undefined)
+  private email=''
   public currentUser=computed(()=>this._currentUser)
   public _hasCode=(false)
   public _hasCodeVerified=(false)
@@ -68,6 +70,7 @@ export class AuthService {
         })
       )
     }
+
     signup(user:SignUpUser):Observable<boolean>{
 
       const url=`${this.baseUrl}/auth/signupuser`
@@ -88,7 +91,6 @@ export class AuthService {
         )
       }
 
-
   getCodeUpdatePassword(email:string):Observable<GetCodeResponse>{
 
     const url=`${this.baseUrl}/auth/getcodeupdatepassword`;
@@ -100,9 +102,12 @@ export class AuthService {
         map((response)=>{
           this.localStorage.SaveLocalStorage('date',response.date.toString())
           this._hasCode=true
+          this.email=response.email
           this.code.setValue(response.code);
+          console.log(response.code);
 
-          console.log(JSON.stringify(this._hasCode));
+
+          // console.log(JSON.stringify(this._hasCode));
 
           return response
         }),
@@ -140,10 +145,35 @@ export class AuthService {
     if (this.code.hasValue()){
       if (this.code.getValue()===code){
         this._hasCodeVerified=true
-        this.localStorage.deleteLocalStorage('code')
+        // this.localStorage.deleteLocalStorage('code')
         return true
       }
     }
     return false
   }
+
+  updatePassword(password:string):Observable<boolean>{
+
+    const url=`${this.baseUrl}/auth/updatepassword`
+    const body={
+      email:this.email,
+      password,
+      code:this.code.getValue()
+    }
+
+    console.log(body);
+
+    return this.http.post<UpdatePasswordResponse>(url,body)
+      .pipe(
+        map((response)=>{
+          return true
+        }),
+        catchError(error=>{
+          console.log(error);
+          return throwError(()=>error.error.message)
+        })
+      )
+    }
+
+
 }

@@ -26,15 +26,20 @@ export class CreatePasswordPageComponent {
   private authService=inject(AuthService)
   public darkModeService = inject(DarkModeService);
   private router= inject(Router)
-  private validatorService= inject(ValidatorService)
+  public validatorService= inject(ValidatorService)
   private localStorage= new LocalStorage('','')
   private fb = inject(FormBuilder)
   public hideConfirm = true;
   public hidePassword = true;
   public createPasswordForm :FormGroup<VerificationPasswordForm>=this.fb.group<VerificationPasswordForm>({
     password:new FormControl('',{nonNullable:true, validators:[Validators.pattern(this.validatorService.passwordPattern),Validators.required]}),
-    confirmationPassword:new FormControl('',{nonNullable:true,validators:[Validators.pattern(this.validatorService.passwordPattern),Validators.required]}),
-  })
+    confirmationPassword:new FormControl('',{nonNullable:true,validators:[Validators.pattern(this.validatorService.passwordPattern),Validators.required]})
+  },{
+    validators:[
+      this.validatorService.isFieldEqualToOtherField('password','confirmationPassword')
+    ]
+  }
+)
 
   isValidField(field:string){
     return this.validatorService.isValidField(this.createPasswordForm,field)
@@ -42,6 +47,18 @@ export class CreatePasswordPageComponent {
 
   createPassword(){
     console.log(this.createPasswordForm.value);
-
+    if(this.createPasswordForm.valid)
+      {
+        let {password}=this.createPasswordForm.value
+        if (password){
+          this.authService.updatePassword(password)
+          .subscribe({
+            next:()=> this.router.navigateByUrl('/home/confirmpassword'),
+            error:(error)=>{
+              console.log({createPasswordError:error});
+            }
+          })
+        }
+      }
   }
 }

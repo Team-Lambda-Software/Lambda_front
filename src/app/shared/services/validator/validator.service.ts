@@ -1,5 +1,5 @@
 import { Injectable, inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Optional } from '../../helpers/Optional';
 import { ValidatorPatters } from '../../validators/validators-patterns';
 
@@ -38,7 +38,7 @@ export class ValidatorService{
     if (errors){
 
       for (const error of Object.keys(errors)) {
-        console.log(error);
+        // console.log(error);
 
         switch(error){
           case 'required':{
@@ -62,10 +62,34 @@ export class ValidatorService{
             answer.setValue(`pattern`)
             return answer
           }
+          case 'notEqual':{
+            answer.setValue(`These camps must be the same`)
+            return answer
+          }
         }
       }
     }
     return answer
+  }
 
+  isFieldEqualToOtherField(field:string,field2:string):ValidatorFn{
+    return (formGroup:AbstractControl):ValidationErrors | null =>{
+      const firstField=formGroup.get(field)
+      const secondField=formGroup.get(field2)
+
+      if (!firstField || !secondField){
+        return null
+      }
+
+      const firstFieldValue=firstField.value
+      const secondFieldValue=secondField.value
+
+      if (firstFieldValue!==secondFieldValue){
+        secondField.setErrors({notEqual:true})
+        return {notEqual:true}
+      }
+      secondField.setErrors(null)
+      return null
+    }
   }
 }
