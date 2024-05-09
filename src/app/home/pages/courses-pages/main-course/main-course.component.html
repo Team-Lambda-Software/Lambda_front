@@ -1,6 +1,6 @@
 <app-basic-header [options]="{name:'yoga-for-beginner', redirect:'/home/main'}" class="relative" style="z-index: 1;"/>
 
-    <article class="rounded-br-[50px] shadow-md bg-cover bg-center"
+    <article class="rounded-br-[50px] shadow-md bg-cover bg-center animate__animated animate__fadeIn"
         [style.background-image]="'url(' + courses.image + ')'" style="margin-top: -50px;">
         <div class="h-[350px] flex flex-col justify-between z-10">
             <div class="flex flex-row justify-between items-center w-full mt-20">
@@ -15,7 +15,7 @@
     </article>
 
 
-    <section class="m-3">
+    <section class="m-3 animate__animated animate__fadeIn">
         <p class="text-lg  text-gray-500 dark:text-white ml-5 ">{{courses.description}}</p>
         <div class="border-t border-gray-300 my-4"></div>
         <div class="grid grid-flow-col grid-rows-1 justify-around dark:text-white">
@@ -50,7 +50,7 @@
         </div>
     </section>
     
-    <section class="mx-4 my-6">
+    <section class="mx-4 my-6 animate__animated animate__fadeIn">
         <h2 class="text-xl font-bold dark:text-white">Most More Popular Courses</h2>
     
         <div class="grid grid-flow-row grid-cols-2 gap-3 md:grid-cols-4 my-5 mx-2">

@@ -16,7 +16,7 @@
     </nav>
 </header>
 
-<section class="my-8 p-2">
+<section class="my-8 p-2 animate__animated animate__fadeIn">
     <div class="flex justify-between items-end dark:text-white">
         <h1 class="text-xl font-bold">{{'Most Popular Courses'}}</h1>
         <div class="flex items-center text-gray-500 pr-2" [routerLink]="['/home/video-list']" >
@@ -28,6 +28,6 @@
     <app-carrusel-bg-img [items]="getPopulars()"/>
 </section>
 
-<section class="mt-8 mx-4">
+<section class="mt-8 mx-4 animate__animated animate__fadeIn">
     <app-programs-tag [programs]="getProgramsByLevel()"/>
 </section>
