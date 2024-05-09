@@ -53,7 +53,7 @@ export class CreatePasswordPageComponent {
         if (password){
           this.authService.updatePassword(password)
           .subscribe({
-            next:()=> this.router.navigateByUrl('/home/confirmpassword'),
+            next:()=> this.router.navigateByUrl('/auth/confirmpassword'),
             error:(error)=>{
               console.log({createPasswordError:error});
             }

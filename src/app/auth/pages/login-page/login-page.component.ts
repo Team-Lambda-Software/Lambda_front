@@ -10,6 +10,7 @@ import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.se
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { ValidatorService } from '../../../shared/services/validator/validator.service';
+import { AuthStatus } from '../../interfaces/auth-status.enum';
 
 @Component({
   selector: 'app-login-page',
@@ -25,7 +26,7 @@ export class LoginPageComponent {
   private authService=inject(AuthService)
   private router= inject(Router)
   public hide:boolean=false;
-  public validatorService= inject(ValidatorService)
+  public validatorService= inject(ValidatorService);
 
 
   public loginForm :FormGroup=this.fb.group({

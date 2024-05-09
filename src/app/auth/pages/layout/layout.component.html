@@ -1,3 +1,8 @@
 <div class="w-full h-screen">
-  <router-outlet></router-outlet>
+  @if (!finishedAuthCheck()) {
+    <h1>Cargando</h1>
+  }
+  @else {
+    <router-outlet></router-outlet>
+  }
 </div>
