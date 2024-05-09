@@ -58,6 +58,10 @@ export const HomeRoutes: Routes = [
         path: 'blogs-details',
         component: BlogsDetailsComponent
       },
+      {
+        path: 'faq',
+        component: FaqPageComponent
+      }
     ]
   }
 ]
