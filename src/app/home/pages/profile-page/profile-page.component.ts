@@ -9,7 +9,7 @@ import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.se
 import { ILittleCard } from '../../interfaces/ILittleCard';
 import { CourseLitleCardAdapter } from '../../adapters/LitleCardAdapter';
 import { CoursesMyTrainingService } from '../../services/courses/getTraining/courses-mytraining.service';
-import { IUserInfoProfile } from '../../interfaces/user-info-model';
+import { IUserProfile } from '../../interfaces/user-info-model';
 import { UserInfoService } from '../../services/user/getUserInfo/user-info.service';
 
 
@@ -23,22 +23,11 @@ import { UserInfoService } from '../../services/user/getUserInfo/user-info.servi
 export class ProfilePageComponent {
 
   public myTrainingService = inject(CoursesMyTrainingService);
- 
-  public getMyTraining(): ILittleCard[] {
-    let popular= this.myTrainingService.getMyTraining();
-    return popular.map((course) => CourseLitleCardAdapter(course));
-  }
-
   public userInfoProfile =inject(UserInfoService);
 
-  public getUserInfoProfile(): IUserInfoProfile {
-    let infoProfile = this.userInfoProfile.getUserInfoProfile();
-    return infoProfile;
-  }
+  public progressValue = 50;
 
-  progressValue = 50;
-
-  chartDataStatistics = [
+  public chartDataStatistics = [
     {
       name: 'Mon',
       value: 100
@@ -69,9 +58,9 @@ export class ProfilePageComponent {
     }
   ];
 
-  isDarkMode!: boolean;
+  public isDarkMode!: boolean;
 
-  ColorSchemeBar: Color = {
+  public ColorSchemeBar: Color = {
     name: 'myLightScheme',
     selectable: true,
     group: ScaleType.Ordinal,
@@ -79,22 +68,33 @@ export class ProfilePageComponent {
   };
 
 
-  lightColorSchemeStatistics: Color = {
+  public lightColorSchemeStatistics: Color = {
     name: 'myLightScheme',
     selectable: true,
     group: ScaleType.Ordinal,
     domain: ['#4F14A0', '#27AE60']
   };
   
-  darkColorSchemeStatistics: Color = {
+  public darkColorSchemeStatistics: Color = {
     name: 'myDarkScheme',
     selectable: true,
     group: ScaleType.Ordinal,
     domain: ['#FFFFFF', '#27AE60']
   };
-
+  
   constructor(private darkModeService: DarkModeService) {
     this.isDarkMode = this.darkModeService.isDarkMode();
+  }
+
+
+  public getMyTraining(): ILittleCard[] {
+    let popular= this.myTrainingService.getMyTraining();
+    return popular.map((course) => CourseLitleCardAdapter(course));
+  }
+
+  public getUserInfoProfile(): IUserProfile {
+    let infoProfile = this.userInfoProfile.getUserInfoProfile();
+    return infoProfile;
   }
 
   get colorSchemeStatistics(): Color {
@@ -104,5 +104,4 @@ export class ProfilePageComponent {
   onBarSelect(event: any) {
     console.log(event);
   }
-
- }
+}
