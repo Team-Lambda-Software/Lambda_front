@@ -1,0 +1,50 @@
+<header class="bg-gradient-purple rounded-br-[50px]">
+    <div class="text-white bg-main-bg bg-cover">
+        <div class="py-6 px-4">
+            <span [routerLink]="['/home/main']" class="fas fa-chevron-left pr-4"></span> <span class="font-medium text-lg">Tips & Topic</span>
+        </div>
+        <nav class="flex gap-5 mx-3 carrusel overflow-auto">
+            @for (item of categories; track $index) {
+                <div (click)="onCategorySelected(item)">
+                    <div class="flex justify-center items-center text-nowrap text-white p-2">
+                        <span class="h-2 w-2 bg-white rounded-full mr-2"></span>
+                        <span class="font-medium text-sm">{{item.name}}</span>
+                    </div>
+                    <span [ngClass]="{'selected': item.name == selectedCategory}"></span>
+                </div>
+            }
+        </nav>
+    </div>
+</header>
+
+<section class="my-8 mx-4">
+    <div class="carrousel mt-4">
+        @for (item of selectBlogs; track item.id) {
+            <article class="bg-white dark:bg-slate-600 rounded-lg shadow-md w-[300px]">
+                <img [src]="item.imagenUrl" alt="course" class="w-full h-48 object-cover rounded-xl">
+                <div class="p-4">
+                    <h1 class="text-lg text-gray-500 text-wrap dark:text-white">{{ item.title }}</h1>
+                    <div class="flex justify-between mt-3">
+                        <p class="text-sm  text-purple-700 dark:text-gray-300">{{ item.category }}</p>
+                        <p class="text-sm  text-gray-500 dark:text-gray-300">{{ item.date }}</p>
+                    </div>
+                </div>
+            </article>
+        }
+    </div>
+</section>
+
+<section class="mx-4 my-6">
+    <h2 class="text-xl font-bold dark:text-white">Recent Post</h2>
+    <div class="grid grid-flow-row grid-cols-2 gap-3 md:grid-cols-4 my-5 mx-2">
+        @for (item of recentBlogs; track item.id) {
+            <div class="text-white rounded-lg bg-cover bg-center h-[175px] w-[175px] flex flex-col justify-end p-4"
+                [style.background-image]="'url(' + item.image + ')'">
+                    <h3 class="text-lg font-bold">{{item.teacher}}</h3>
+                    <p class="">{{item.category}}</p>
+            </div>
+            }
+    </div>
+</section>
+
+
