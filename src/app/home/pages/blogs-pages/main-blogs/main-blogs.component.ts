@@ -2,28 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
-
+import { IBlog } from '../../../interfaces/blog-model';
+import { IRecentBlog } from '../../../interfaces/recent-blog-model';
 
 interface ICategory {
   name: string;
   reditect: string;
-}
-
-interface IBlog {
-  id: number;
-  title: string;
-  description: string;
-  thumbnail: string;
-  imagenUrl: string;
-  category: string;
-  date: string;
-}
-
-interface IRecentBlog {
-  id: number;
-  teacher: string;
-  category: string;
-  image: string;
 }
 
 @Component({
