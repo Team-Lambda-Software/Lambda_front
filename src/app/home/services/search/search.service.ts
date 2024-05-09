@@ -1,6 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { LocalStorage } from '../../../auth/services/LocalStorage';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { enviroment } from '../../../../env/enviroments';
 
 @Injectable({
