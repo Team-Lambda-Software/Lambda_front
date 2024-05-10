@@ -149,7 +149,7 @@ export class AuthService {
     const token=this.localStorage.LoadLocalStorage('token')
 
     if (!token.hasValue()) return (
-      this.setNotAuthenticated(),
+      this.logout(),
       of(false))
 
     const headers= new HttpHeaders()
@@ -218,6 +218,7 @@ export class AuthService {
   logout (): void {
     this.localStorage.deleteLocalStorage('token');
     this.setNotAuthenticated()
+    this._currentUser.set(null)
     this.router.navigate(['/auth'])
   }
 }
