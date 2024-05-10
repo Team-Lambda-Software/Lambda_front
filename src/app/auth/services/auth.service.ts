@@ -16,7 +16,6 @@ import { Optional } from '../../shared/helpers/Optional';
 import { UpdatePasswordResponse } from '../interfaces/response/updatePassword-response.interface';
 import { CheckTokenResponse } from '../interfaces/response/checkToken-response.interface';
 import { Router } from '@angular/router';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -218,6 +217,7 @@ export class AuthService {
 
   logout (): void {
     this.localStorage.deleteLocalStorage('token');
+    this.setNotAuthenticated()
     this.router.navigate(['/auth'])
   }
 }
