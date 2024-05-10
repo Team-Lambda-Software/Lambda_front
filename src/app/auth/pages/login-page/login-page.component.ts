@@ -11,13 +11,16 @@ import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { ValidatorService } from '../../../shared/services/validator/validator.service';
 import { AuthStatus } from '../../interfaces/auth-status.enum';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css',
   standalone: true,
-  imports: [ RouterLink,FormsModule,ReactiveFormsModule ,HttpClientModule,MatFormFieldModule, MatInputModule, MatIconModule,CommonModule]
+  imports: [ RouterLink,FormsModule,ReactiveFormsModule ,HttpClientModule,MatFormFieldModule, MatInputModule, MatIconModule,CommonModule,
+    TranslocoModule
+  ]
 })
 export class LoginPageComponent {
 
@@ -28,6 +31,14 @@ export class LoginPageComponent {
   public hide:boolean=false;
   public validatorService= inject(ValidatorService);
 
+  public title="login"
+  public emailLabel='email'
+  public emailPlaceHolder='your email@gmail.com'
+  public passwordLabel='password'
+  public LogInbuttonName="login"
+  public SignInbuttonName='sign up'
+  public ForgetYourPassword="forget your password"
+  public DontHaveAnAccount="Don't have an account ? "
 
   public loginForm :FormGroup=this.fb.group({
     email:['',[Validators.required,Validators.pattern(this.validatorService.emailPattern)]],

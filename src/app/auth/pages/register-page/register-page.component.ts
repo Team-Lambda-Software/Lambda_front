@@ -16,13 +16,14 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { CommonModule } from '@angular/common';
 import { EmailValidatorService } from '../../../shared/validators/email.validators.service';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-register-page',
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.css',
   standalone: true,
-  imports: [ RouterLink,FormsModule,ReactiveFormsModule ,HttpClientModule,ErrorComponent,MatFormFieldModule, MatInputModule, MatIconModule,CommonModule,MatCheckboxModule]
+  imports: [ RouterLink,FormsModule,ReactiveFormsModule ,HttpClientModule,ErrorComponent,MatFormFieldModule, MatInputModule, MatIconModule,CommonModule,MatCheckboxModule,TranslocoModule]
 
 })
 export class RegisterPageComponent {
@@ -32,6 +33,13 @@ export class RegisterPageComponent {
   private authService=inject(AuthService)
   private router= inject(Router)
   public hide:boolean=false
+
+  public title="sign up"
+  public SignUpbuttonName='sign up'
+  public AcceptAll="yes ! I agree all"
+  public terms="terms"
+  public letter="&"
+  public conditions="conditions"
 
   public signUpForm :FormGroup<SignUpForm>=this.fb.group<SignUpForm>({
     name:new FormControl('',{nonNullable:true, validators:[Validators.pattern(this.validatorService.firstNameAndLastnamePattern),Validators.required]}),

@@ -11,7 +11,7 @@ animate__animated animate__fadeIn"
 
   <div class="items-center justify-center mt-28">
 
-    <h1 class="text-4xl text-wrap w-auto font-bold text-center  dark:text-custom-light text-custom-dark">Login</h1>
+    <h1 class="text-4xl text-wrap w-auto font-bold text-center  dark:text-custom-light text-custom-dark">{{title | transloco}}</h1>
 
     <form class="grid grid-cols-1 mt-7"
       autocomplete="off"
@@ -50,7 +50,7 @@ animate__animated animate__fadeIn"
         [disabled]="loginForm.invalid"
         type="submit"
         >
-          Login
+          {{LogInbuttonName | transloco}}
         </button>
 
       </div>
@@ -59,11 +59,11 @@ animate__animated animate__fadeIn"
 
   </div>
 
-    <a class=" text-custom-dark-purple dark:text-custom-light mt-3" [routerLink]="['/auth/resetpassword']">Forget your password</a>
+    <a class=" text-custom-dark-purple dark:text-custom-light mt-3" [routerLink]="['/auth/resetpassword']">{{ForgetYourPassword | transloco}}</a>
 
     <div class="mt-10">
-      <span class="dark:text-custom-light text-gray-500 mt-10"> Don't have an account ? </span>
-      <a class=" dark:text-custom-light text-custom-dark-purple mt-10 font-bold" [routerLink]="['/auth/signup']">Sign up</a>
+      <span class="dark:text-custom-light text-gray-500 mt-10"> {{DontHaveAnAccount | transloco}} </span>
+      <a class=" dark:text-custom-light text-custom-dark-purple mt-10 font-bold" [routerLink]="['/auth/signup']">{{SignInbuttonName | transloco}}</a>
     </div>
 </div>
 

@@ -7,12 +7,13 @@ import { AuthService } from '../../../services/auth.service';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { VerificationCodeForm } from '../../../interfaces/forms/verticationCode-form.interface';
 import { ValidatorService } from '../../../../shared/services/validator/validator.service';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-verification-code-page',
   standalone: true,
   imports: [
-    CommonModule,RouterLink,ReactiveFormsModule
+    CommonModule,RouterLink,ReactiveFormsModule,TranslocoModule
   ],
   templateUrl: './verification-code-page.component.html',
   styleUrl: './verification-code-page.component.css',
@@ -45,8 +46,11 @@ export class VerificationCodePageComponent{
     this.verificateCode()
   );
 
-
-
+  public title="verification code"
+  public subtitle="please type the verification code sent to"
+  public buttonVerificateCode="verificate code"
+  public iDontReceive="I don't receibe a dode!"
+  public pleaseResend="please Resend"
   resendCode(){
     const email=this.email;
     if (email.hasValue())

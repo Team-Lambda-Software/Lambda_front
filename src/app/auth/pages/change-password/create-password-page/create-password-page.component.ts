@@ -10,7 +10,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { VerificationPasswordForm } from '../../../interfaces/forms/createPassword-form.interface';
-import { ErrorComponent } from "../../../../shared/components/error/error.component";
+import { ErrorComponent } from '../../../../shared/components/error/error.component';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
     selector: 'app-create-password-page',
@@ -19,7 +20,7 @@ import { ErrorComponent } from "../../../../shared/components/error/error.compon
     styleUrl: './create-password-page.component.css',
     imports: [
         CommonModule, MatFormFieldModule, MatInputModule, MatIconModule, ReactiveFormsModule,
-        ErrorComponent
+        ErrorComponent,TranslocoModule
     ]
 })
 export class CreatePasswordPageComponent {
@@ -40,6 +41,9 @@ export class CreatePasswordPageComponent {
     ]
   }
 )
+  public title='create Password'
+  public subtitle='create a new password and please never share it with anyone for safe use'
+  public updatePassword='update Password'
 
   isValidField(field:string){
     return this.validatorService.isValidField(this.createPasswordForm,field)
