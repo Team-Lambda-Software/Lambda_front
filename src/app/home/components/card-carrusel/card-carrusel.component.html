@@ -1,14 +1,5 @@
 <div class="carrousel mt-4">
-    @for (item of courses; track item.id) {
-        <article class="bg-white dark:bg-slate-600 rounded-lg shadow-md w-[300px]">
-            <img [src]="item.image" alt="course" class="w-full h-48 object-cover rounded-xl">
-            <div class="p-4">
-                <h1 class="text-lg text-gray-500 text-wrap dark:text-white">{{ item.name }}</h1>
-                <div class="flex justify-between mt-3">
-                    <p class="text-sm  text-purple-700 dark:text-gray-300">{{ item.category }}</p>
-                    <p class="text-sm  text-gray-500 dark:text-gray-300">{{ item.date }}</p>
-                </div>
-            </div>
-        </article>
+    @for (item of items; track item.id) {
+        <app-big-card [item]="item" />
     }
 </div>

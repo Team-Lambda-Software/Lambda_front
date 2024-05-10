@@ -1,59 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslocoModule } from '@jsverse/transloco';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
-
-
-interface ICategory {
-  name: string;
-  reditect: string;
-}
-
-interface IVideo {
-  id: number;
-  title: string;
-  description: string;
-  thumbnail: string;
-  videoUrl: string;
-}
+import { ICategory } from '../../../interfaces/category-model';
+import { IVideoCourses } from '../../../interfaces/video-courses-model';
+import { CategoriesService } from '../../../services/categories/categories.service';
+import { CategoryDataAdapterCourse } from '../../../adapters/CategoryDataAdapter';
+import { PlayerCardAdapter } from '../../../adapters/PlayerCardAdapter';
+import { PlayerCardComponent } from '../../../components/player-card/player-card.component';
 
 @Component({
   selector: 'app-video-list',
   standalone: true,
-  imports: [RouterLink, TranslocoModule, CommonModule],
+  imports: [RouterLink, TranslocoModule, CommonModule, PlayerCardComponent],
   templateUrl: './video-list.component.html',
   styleUrl: './video-list.component.css'
 })
 export class VideoListComponent {
 
-  public categories: ICategory[] = [
-    {
-      name: 'Most Popular',
-      reditect: '/home'
-    },
-    {
-      name: 'Nutrition',
-      reditect: '/nutrition'
-    },
-    {
-      name: 'Training',
-      reditect: '/training'
-    },
-    {
-      name: 'Yoga',
-      reditect: '/yoga'
-    },
-    {
-      name: 'Prenatal',
-      reditect: '/prenatal'
-    },
-    {
-      name:'Otro',
-      reditect: '/otro'
-    },
-  ]
+  public categoriesService = inject(CategoriesService);
+  public fetchedCategories= signal<ICategory[]>([])
 
-  public videos: IVideo[]  = [
+  public videos: IVideoCourses[]  = [
     {
       id: 1,
       title: 'How to get started with a healthy lifestyle',
@@ -112,22 +80,43 @@ export class VideoListComponent {
     }
   ];
 
-  public selectedCategory: string = "Most Popular";
+  public selectedCategory?: ICategory;
+
+  ngOnInit() {
+    this.getCategories();
+  }
 
   constructor(private router:Router, private route:ActivatedRoute) {
-    this.route.queryParams.subscribe((params: { [key: string]: any }) => {
+    this.route.queryParams.subscribe((params: { [key: string ]: string }) => {
       if(params['category']) {
-        this.setSelectedCategory(params['category']);
+        this.fetchedCategories().forEach((category) => {
+          if(category.name === params['category']) {
+            this.setSelectedCategory(category);
+          }
+        });
       }
     });
   }
+  
 
-  onCategorySelected(category : ICategory) {
-    this.router.navigate([] ,{queryParams: {category: category.name}, queryParamsHandling: 'merge'});
-    this.setSelectedCategory(category.name);
+  adaptToPlayerCard(video: IVideoCourses) {
+    return PlayerCardAdapter(video);
   }
 
-  setSelectedCategory(category : string) {
+  getCategories(): void {
+    this.categoriesService.getCategories().subscribe((categories) => {
+      this.fetchedCategories.set(categories.map((category) => CategoryDataAdapterCourse(category)));
+      this.setSelectedCategory(this.fetchedCategories()?.[0]);
+    });
+
+  }
+
+  onCategorySelected(category: ICategory) {
+    this.router.navigate([] ,{queryParams: {category: category.name}, queryParamsHandling: 'merge'});
+    this.setSelectedCategory(category);
+  }
+
+  setSelectedCategory(category : ICategory) {
     this.selectedCategory = category;
   }
 }

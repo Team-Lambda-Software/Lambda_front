@@ -1,6 +1,6 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { BasicHeaderComponent } from '../../components/basic-header/basic-header.component';
 
@@ -8,6 +8,7 @@ interface SettingsOptions {
   icon: string;
   color: string;
   optionName: string;
+  redirect?: string
 }
 
 @Component({
@@ -17,7 +18,10 @@ interface SettingsOptions {
   templateUrl: './settings-page.component.html',
   styleUrl: './settings-page.component.css'
 })
+
 export class SettingsPageComponent {
+
+  private router = inject(Router)
   public options: SettingsOptions[] = [
     {
       icon: 'fas fa-user',
@@ -37,7 +41,8 @@ export class SettingsPageComponent {
     {
       icon: 'fas fa-circle-question',
       color: '#9B51E0',
-      optionName: 'FAQ'
+      optionName: 'FAQ',
+      redirect: '/home/faq'
     },
     {
       icon: 'fas fa-chart-pie',
@@ -60,4 +65,8 @@ export class SettingsPageComponent {
       optionName: 'about'
     },
   ]
+
+  onClick(redirect?: string) {
+    if(redirect) this.router.navigate([redirect])
+  }
 }

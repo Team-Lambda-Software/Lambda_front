@@ -8,6 +8,9 @@ import { VideoListComponent } from './pages/courses-pages/video-list/video-list.
 import { PlayerVideoComponent } from './pages/courses-pages/player-video/player-video.component';
 import { SearchPageComponent } from './pages/search-page/search-page.component';
 import { TrainingPageComponent } from './pages/courses-pages/training-page/training-page.component';
+import { FaqPageComponent } from './pages/faq-page/faq-page.component';
+import { BlogsDetailsComponent } from './pages/blogs-pages/blogs-details/blogs-details.component';
+import { MainBlogsComponent } from './pages/blogs-pages/main-blogs/main-blogs.component';
 import { NotificationPageComponent } from './pages/notification-page/notification-page.component';
 import { StructureNotificationComponent } from './pages/notification-page/structure-notification/structure-notification.component';
 
@@ -48,6 +51,18 @@ export const HomeRoutes: Routes = [
       {
         path: 'training',
         component: TrainingPageComponent
+      },
+      {
+        path: 'main-blogs',
+        component: MainBlogsComponent
+      },
+      {
+        path: 'blogs-details',
+        component: BlogsDetailsComponent
+      },
+      {
+        path: 'faq',
+        component: FaqPageComponent
       },
       {
         path: 'notification',

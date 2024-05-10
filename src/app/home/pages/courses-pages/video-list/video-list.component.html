@@ -4,31 +4,26 @@
             <span [routerLink]="['/home/main']" class="fas fa-chevron-left pr-4"></span> <span class="font-medium text-lg">Videos</span>
         </div>
         <nav class="flex gap-5 mx-3 carrusel overflow-auto">
-            @for (item of categories; track $index) {
+            @for (item of fetchedCategories(); track item.id) {
                 <div (click)="onCategorySelected(item)">
                     <div class="flex justify-center items-center text-nowrap text-white p-2">
                         <span class="h-2 w-2 bg-white rounded-full mr-2"></span>
                         <span class="font-medium text-sm">{{item.name}}</span>
                     </div>
-                    <span [ngClass]="{'selected': item.name == selectedCategory}"></span>
+                    <span [ngClass]="{'selected': item.id == selectedCategory?.id}"></span>
                 </div>
             }
         </nav>
     </div>
 </header>
 
-<section>
+<section class="animate__animated animate__fadeIn">
     <div class="mx-4 mt-6 mb-2">
         <h1 class="text-xl font-bold dark:text-white">{{ 'video-course' | transloco}}</h1>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 px-4 mt-4">
         @for (video of videos; track video.id) {
-            <div class="bg-white rounded-lg shadow-md relative">
-                <img [src]="video.thumbnail" alt="video" [routerLink]="['/home/player-video']" class="w-full h-[150px] object-cover rounded-md">
-                <button [routerLink]="['/home/player-video']" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-6xl">
-                    <i class="fa-regular fa-circle-play"></i>
-                </button>
-            </div>
+            <app-player-card [item]="adaptToPlayerCard(video)"/>
         }
     </div>
 </section>

@@ -1,9 +1,5 @@
 <div class="carrousel mt-4">
-    @for (item of courses; track item.id) {
-        <div class="text-white rounded-lg bg-cover bg-center h-[150px] w-[150px] flex flex-col justify-end p-4"
-            [style.background-image]="'url(' + item.image + ')'">
-                <h3 class="text-lg font-bold">{{item.teacher}}</h3>
-                <p class="">{{item.category}}</p>
-        </div>
-        }
+    @for (item of items; track item.id) {
+        <app-litle-card [item]="item"/>
+    }
 </div>

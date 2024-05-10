@@ -1,9 +1,9 @@
-<app-basic-header [options]="{name: 'Accounts', redirect:'/home/main'}"/>
+<app-basic-header [options]="{name: 'account', redirect:'/home/main'}"/>
 
 <!-- TODO: agregar routerLink -->
-<div class="mt-8 font-medium max-w-[800px] m-auto mb-[175px]">
+<div class="mt-8 font-medium max-w-[800px] m-auto animate__animated animate__fadeIn">
   @for (op of options; track op.optionName) {
-    <div class="px-4 flex justify-between items-center py-6 border-b-[1px] border-b-[rgba(0,0,0,.2)] cursor-pointer hover:bg-white dark:hover:bg-black transition-all duration-300">
+    <div (click)="onClick(op.redirect)" class="px-4 flex justify-between items-center py-6 border-b-[1px] border-b-[rgba(0,0,0,.2)] cursor-pointer hover:bg-white dark:hover:bg-black transition-all duration-300">
       <div class="flex items-center gap-6">
         <span [ngClass]="[op.icon]" [ngStyle]="{'background-color': op.color}" class="fas fa-user w-[32px] h-[32px] rounded-full flex items-center justify-center text-white text-xs"></span>
         <span class="dark:text-white">{{ op.optionName | transloco }}</span>
