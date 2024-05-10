@@ -1,13 +1,69 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
+import { DarkModeService } from '../../../../shared/services/dark-mode/dark-mode.service';
+import { ValidatorService } from '../../../../shared/services/validator/validator.service';
+import { LocalStorage } from '../../../services/LocalStorage';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { VerificationPasswordForm } from '../../../interfaces/forms/createPassword-form.interface';
+import { ErrorComponent } from '../../../../shared/components/error/error.component';
+import { TranslocoModule } from '@jsverse/transloco';
+import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-create-password-page',
-  standalone: true,
-  imports: [
-    CommonModule,
-  ],
-  templateUrl: './create-password-page.component.html',
-  styleUrl: './create-password-page.component.css',
+    selector: 'app-create-password-page',
+    standalone: true,
+    templateUrl: './create-password-page.component.html',
+    styleUrl: './create-password-page.component.css',
+    imports: [
+        CommonModule, MatFormFieldModule, MatInputModule, MatIconModule, ReactiveFormsModule,
+        ErrorComponent,TranslocoModule
+    ]
 })
-export class CreatePasswordPageComponent { }
+export class CreatePasswordPageComponent {
+  private authService=inject(AuthService)
+  public darkModeService = inject(DarkModeService);
+  private router= inject(Router)
+  public validatorService= inject(ValidatorService)
+  private localStorage= new LocalStorage('','')
+  private fb = inject(FormBuilder)
+  public hideConfirm = true;
+  public hidePassword = true;
+  public createPasswordForm :FormGroup<VerificationPasswordForm>=this.fb.group<VerificationPasswordForm>({
+    password:new FormControl('',{nonNullable:true, validators:[Validators.pattern(this.validatorService.passwordPattern),Validators.required]}),
+    confirmationPassword:new FormControl('',{nonNullable:true,validators:[Validators.pattern(this.validatorService.passwordPattern),Validators.required]})
+  },{
+    validators:[
+      this.validatorService.isFieldEqualToOtherField('password','confirmationPassword')
+    ]
+  }
+)
+  public title='create Password'
+  public subtitle='create a new password and please never share it with anyone for safe use'
+  public updatePassword='update Password'
+
+  isValidField(field:string){
+    return this.validatorService.isValidField(this.createPasswordForm,field)
+  }
+
+  createPassword(){
+    console.log(this.createPasswordForm.value);
+    if(this.createPasswordForm.valid)
+      {
+        let {password}=this.createPasswordForm.value
+        if (password){
+          this.authService.updatePassword(password)
+          .subscribe({
+            next:()=> this.router.navigateByUrl('/auth/confirmpassword'),
+            error:(error)=>{
+              Swal.fire('Error',error,'error')
+            }
+          })
+        }
+      }
+  }
+}

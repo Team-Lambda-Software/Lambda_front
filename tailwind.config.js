@@ -28,6 +28,8 @@ module.exports = {
       'createPassword-dark': "url('assets/background/createPassword-bg-dark.png')",
       'passwordChange-bg': "url('assets/background/passwordChange-bg.png')",
       'custom-gradient-purple': 'linear-gradient(144.61deg, #4F14A0 3.01%, #8066FF 90.98%)',
+      'splashScreen': "url('assets/background/splashScreen-bg.png')",
+
     }
   },
   plugins: [

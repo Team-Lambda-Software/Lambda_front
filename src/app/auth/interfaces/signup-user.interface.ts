@@ -1,7 +1,8 @@
-export interface SignUpUser{
-  email: string
-  password: string
-  firstName: string
-  firstLastName: string
-  secondLastName: string
+export interface SignUpUser {
+  email:          string;
+  password:       string;
+  firstName:      string;
+  firstLastName:  string;
+  secondLastName: string;
+  phone:          string;
 }

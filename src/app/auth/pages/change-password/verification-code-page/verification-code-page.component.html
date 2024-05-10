@@ -1,7 +1,7 @@
 <div class="flex flex-col  h-screen w-auto items-center justify-center bg-verification-bg dark:bg-custom-dark bg-custom-light  bg-center bg-cover relative animate__animated animate__fadeIn">
 
   <div class="relative flex-none mt-9">
-    <div class="w-40 h-28 md:w-52 lg:w-60">
+    <div class="w-32 h-28 md:w-52 lg:w-60">
       @if (darkModeService.isDarkMode()) {  <img class="w-auto h-max" src="assets/icons/logo-dark.png" alt="logo">
       }
       @else {
@@ -14,8 +14,8 @@
 
     <div class="grid grid-cols-1 content-center mt-20 m-5">
       <div class="w-72 h-auto text-custom-light">
-        <h1 class="text-3xl text-wrap w-auto font-bold">Verification Code</h1>
-        <p class="text-wrap w-auto mt-4">Please type the verification code sent to</p>
+        <h1 class="text-3xl text-wrap w-auto font-bold">{{title | transloco}}</h1>
+        <p class="text-wrap w-auto mt-4">{{subtitle | transloco}}</p>
         <p class="text-wrap w-auto font-bold">{{email.getValue()}}</p>
       </div>
     </div>
@@ -74,7 +74,7 @@
           type="submit"
           >
           <p class="text-lg">
-            Verificate Code
+            {{buttonVerificateCode | transloco}}
           </p>
           </button>
         </div>
@@ -82,8 +82,8 @@
     </div>
     <div  class="grid grid-cols-1 mt-5 content-center">
      <div>
-        <span class="text-custom-light mt-10">I don't receibe a dode! </span>
-        <a class=" text-custom-light mt-10 font-bold" [routerLink]="" (click)="resendCode()">Please Resend</a>
+        <span class="text-custom-light mt-10">{{iDontReceive | transloco}} </span>
+        <a class=" text-custom-light mt-10 font-bold" [routerLink]="" (click)="resendCode()">{{pleaseResend | transloco}}</a>
       </div>
     </div>
 

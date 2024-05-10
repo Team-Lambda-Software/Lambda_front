@@ -6,10 +6,13 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
-
 import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.service';
 import { AuthService } from '../../services/auth.service';
-
+import { CommonModule } from '@angular/common';
+import { ValidatorService } from '../../../shared/services/validator/validator.service';
+import { AuthStatus } from '../../interfaces/auth-status.enum';
+import { TranslocoModule } from '@jsverse/transloco';
+import Swal from 'sweetalert2'
 
 
 @Component({
@@ -17,7 +20,9 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css',
   standalone: true,
-  imports: [ RouterLink,FormsModule,ReactiveFormsModule ,HttpClientModule,MatFormFieldModule, MatInputModule, MatIconModule]
+  imports: [ RouterLink,FormsModule,ReactiveFormsModule ,HttpClientModule,MatFormFieldModule, MatInputModule, MatIconModule,CommonModule,
+    TranslocoModule
+  ]
 })
 export class LoginPageComponent {
 
@@ -25,15 +30,21 @@ export class LoginPageComponent {
   private fb = inject(FormBuilder)
   private authService=inject(AuthService)
   private router= inject(Router)
-  public hide = true;
+  public hide:boolean=false;
+  public validatorService= inject(ValidatorService);
 
-  private changeHide(){
-    this.hide=!this.hide
-  }
+  public title="login"
+  public emailLabel='email'
+  public emailPlaceHolder='your email@gmail.com'
+  public passwordLabel='password'
+  public LogInbuttonName="login"
+  public SignInbuttonName='sign up'
+  public ForgetYourPassword="forget your password"
+  public DontHaveAnAccount="Don't have an account ? "
 
   public loginForm :FormGroup=this.fb.group({
-    email:['',[Validators.required,Validators.email]],
-    password:['',[Validators.required,Validators.minLength(6)]]
+    email:['',[Validators.required,Validators.pattern(this.validatorService.emailPattern)]],
+    password:['',[Validators.required]]
   })
 
   login(){
@@ -43,6 +54,7 @@ export class LoginPageComponent {
     .subscribe({
       next:()=> this.router.navigateByUrl('/home'),
       error:(error)=>{
+        Swal.fire('Error',error,'error')
         console.log({loginerror:error});
       }
     })

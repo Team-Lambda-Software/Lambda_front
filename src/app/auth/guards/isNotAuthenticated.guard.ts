@@ -4,17 +4,21 @@ import { AuthService } from '../services/auth.service';
 import { AuthStatus } from '../interfaces/auth-status.enum';
 import { enviroment } from '../../../env/enviroments';
 
-export const isAuthenticatedGuard: CanActivateFn = (route, state) => {
+export const isNotAuthenticatedGuard: CanActivateFn = (route, state) => {
 
   const authService=inject(AuthService)
   const router = inject(Router);
   // if (!enviroment.production) {
   //   return true
   // }
+  console.log(authService.authStatus());
 
-  if(authService.authStatus()=== AuthStatus.authenticated) return true
+
+  if(authService.authStatus()=== AuthStatus.authenticated){
+    router.navigateByUrl('/home/main')
+    return false
+  }
   else{
-    router.navigateByUrl('/auth/home')
-    return false;
+    return true;
   }
 };

@@ -5,11 +5,16 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { AuthService } from '../../../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslocoModule } from '@jsverse/transloco';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-reset-password-page',
   standalone: true,
-  imports: [ RouterLink,FormsModule,ReactiveFormsModule ,HttpClientModule,CommonModule],
+  imports: [ RouterLink,FormsModule,ReactiveFormsModule ,HttpClientModule,CommonModule,MatFormFieldModule, MatInputModule, MatIconModule,TranslocoModule],
 
   templateUrl: './reset-password-page.component.html',
   styleUrl: './reset-password-page.component.css',
@@ -24,6 +29,12 @@ export class ResetPasswordPageComponent {
     email:['',[Validators.required,Validators.email]],
   })
 
+  public title="reset Password"
+  public subtitle="please enter your email address. you will get a link to create new password by email."
+  public sendNewPassword="send New Password"
+  public doYouWantToReturn="do you wan't to return to "
+  public logInOption="log in"
+  public sigUnOption="sign up"
   resetPassword(){
     const {email}=this.resetPasswordForm.value;
     console.log(this.resetPasswordForm.value);
@@ -31,7 +42,7 @@ export class ResetPasswordPageComponent {
     .subscribe({
       next:()=> this.router.navigateByUrl('/auth/verificationcode'),
       error:(error)=>{
-        console.log({loginerror:error});
+        Swal.fire('Error',error,'error')
       }
     })
   }

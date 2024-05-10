@@ -1,64 +1,145 @@
 <div class="flex flex-col  h-screen w-auto items-center justify-center bg-sign-up bg-center bg-cover bg-custom-light dark:bg-custom-dark
-animate__animated animate__fadeIn">
+animate__animated animate__fadeIn input-dark
+input-dark"
 
-  <div class="w-28 h-24 md:w-52 lg:w-60 logo -mt-40">
+>
+<!-- [ngClass]="{'input-ligth':!darkModeService.isDarkMode(),'input-dark':darkModeService.isDarkMode()}" -->
+  <div class="relative w-28 h-24 mt-11 md:w-52 lg:w-60 logo">
       <img class="w-auto h-max" src="assets/icons/logo-ligth.png" alt="logo">
   </div>
 
   <!-- NT: es mt-12 abajo pero para design mientras pongo mt-20 -->
 
-  <div class="mt-12">
-    <h1 class="text-4xl text-wrap text-center w-auto font-bold text-ce  text-custom-light">Sign up</h1>
+  <div class="mt-12 m-10 justify-center items-center text-center h-screen w-80">
+    <h1 class="text-4xl mb-4 text-wrap text-center w-auto font-bold text-ce  text-custom-light">{{title | transloco}}</h1>
 
     <div>
 
-    <form class="grid grid-cols-1 mt-6"
+    <form class="grid grid-cols-1 mt-7"
     [formGroup]="signUpForm"
     (ngSubmit)="register()"
     >
-      <input class="mt-6 mx-5" type="email" formControlName="name" placeholder="Your name here">
+
+      <mat-form-field appearance="outline"
+      class="text-base w-80 h-16 mt-5">
+        <mat-label>Full Name</mat-label>
+          <input matInput
+          type="text"
+          formControlName="name"
+          placeholder="Your name here">
+      </mat-form-field>
 
       @if (isValidField('name')) {
-        <app-error error="Must have first and last name"></app-error>
+        @if (validatorService.getFieldError(signUpForm,'name').hasValue()){
+          @if (validatorService.getFieldError(signUpForm,'name').getValue()==='pattern'){
+          <mat-error class="bg-custom-dark-purple border border-red-400 rounded input-error
+          font-bold relative">{{validatorService.firstNameAndLastnamePatternMessage}}</mat-error>
+          }
+          @else {
+            <mat-error class="bg-custom-dark-purple border border-red-400 rounded input-error
+            font-bold relative">{{validatorService.getFieldError(signUpForm,'name').getValue()}}</mat-error>
+          }
+        }
       }
 
-      <input class="mt-6 mx-5" type="email" formControlName="email" placeholder="Your email@gmail.com">
+      <mat-form-field appearance="outline" class="text-base mt-6 w-80 h-16">
+        <mat-icon matPrefix class="material-icons md-18 ml-4">mail</mat-icon>
+        <mat-label>Email</mat-label>
+          <input matInput
+          type="email"
+          formControlName="email"
+          placeholder="your email@gmail.com">
+      </mat-form-field>
 
       @if (isValidField('email')) {
-        <app-error error="Must be acceted email. Ex:email@gmail.com"></app-error>
+        @if (validatorService.getFieldError(signUpForm,'email').hasValue()){
+          @if (validatorService.getFieldError(signUpForm,'email').getValue()==='pattern'){
+            <mat-error class="bg-custom-dark-purple border border-red-400 rounded input-error
+            font-bold relative">{{validatorService.emailPatternMessage}}</mat-error>
+          }
+          @else {
+            <mat-error class="bg-custom-dark-purple border border-red-400 rounded input-error
+            font-bold relative">{{validatorService.getFieldError(signUpForm,'name').getValue()}}</mat-error>
+          }
+        }
       }
 
-      <input class="mt-6 mx-5" type="tel" formControlName="phone" placeholder="+088 031 420 698">
+      <mat-form-field appearance="outline" class="text-base mt-6 w-80 h-16">
+        <mat-label>Phone</mat-label>
+          <input matInput
+          type="tel"
+          formControlName="phone"
+          placeholder="+088 031 420 698">
+      </mat-form-field>
 
       @if (isValidField('phone')) {
-        <app-error error="Must be numbers Ex:+088 031 420 698"></app-error>
+        @if (validatorService.getFieldError(signUpForm,'phone').hasValue()){
+          @if (validatorService.getFieldError(signUpForm,'phone').getValue()==='pattern'){
+            <mat-error class="bg-custom-dark-purple border border-red-400 rounded input-error
+            font-bold relative">{{validatorService.phoneNumberPatternMessage}}</mat-error>
+          }
+          @else {
+            <mat-error class="bg-custom-dark-purple border border-red-400 rounded input-error
+            font-bold relative">{{validatorService.getFieldError(signUpForm,'name').getValue()}}</mat-error>
+          }
+        }
       }
 
-      <input class="mt-6 mx-5" type="text" formControlName="password" placeholder="******">
+      <mat-form-field appearance="outline" class="text-base mt-6 w-80 h-16">
+        <mat-label>Password</mat-label>
+        <mat-icon matPrefix class="material-icons md-18 ml-4">lock</mat-icon>
+          <input matInput
+          [type]="hide ? 'password' : 'text'"
+          formControlName="password"
+          placeholder="•••••••••">
+          <button class="mr-6" mat-icon-button matSuffix type="button" (click)="hide = !hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
 
       @if (isValidField('password')) {
-        <app-error error="Must accept have 6 of length"></app-error>
+        @if (validatorService.getFieldError(signUpForm,'password').hasValue()){
+          @if (validatorService.getFieldError(signUpForm,'password').getValue()==='pattern'){
+            <mat-error class="bg-custom-dark-purple border border-red-400 rounded input-error
+            font-bold relative">{{validatorService.passwordPatternMessage}}</mat-error>
+          }
+          @else {
+            <mat-error class="bg-custom-dark-purple border border-red-400 rounded input-error
+            font-bold relative">{{validatorService.getFieldError(signUpForm,'name').getValue()}}</mat-error>
+          }
+        }
       }
 
       <div class="text-custom-light align-middle">
-        <div class="mt-6 mx-8 ">
-          <input class="text-center mr-2" type="checkbox" id="flexCheckDefault" formControlName="termsAndConditions">
-          <label for="flexCheckDefault" class="text-custom-light">
-             Yes ! I Agree all
-            <span class="font-bold"> Terms </span>
-            &
-            <span class="font-bold"> Conditions </span>
+        <div class="mt-6">
+
+          <mat-checkbox class="text-center align-middle" type="checkbox" id="flexCheckDefault" formControlName="termsAndConditions">
+          </mat-checkbox>
+            <label for="flexCheckDefault" class="text-custom-light">
+              {{AcceptAll | transloco}}
+              <span class="font-bold"> {{terms | transloco}} </span>
+            {{letter}}
+            <span class="font-bold"> {{conditions | transloco}} </span>
           </label>
         </div>
 
         @if (isValidField('termsAndConditions')) {
-          <app-error error="Must accept terms and conditions"></app-error>
+          @if (validatorService.getFieldError(signUpForm,'termsAndConditions').hasValue()){
+            @if (validatorService.getFieldError(signUpForm,'termsAndConditions').getValue()==='pattern'){
+              <mat-error class="bg-custom-dark-purple border border-red-400 rounded input-error
+              font-bold relative">{{validatorService.termsAndCoditionsMessage}}</mat-error>
+            }
+            @else {
+              <mat-error class="bg-custom-dark-purple border border-red-400 rounded input-error
+              font-bold relative">{{validatorService.getFieldError(signUpForm,'name').getValue()}}</mat-error>
+            }
+          }
         }
 
         <button class="btn mt-9 w-80 h-16 lg:w-36  align-middle bg-custom-light  text-custom-dark-purple"
           [disabled]="signUpForm.invalid"
           type="submit">
-          Sign up
+          {{SignUpbuttonName | transloco}}
         </button>
 
         <!-- <pre>{{signUpForm.valid}}</pre> -->
