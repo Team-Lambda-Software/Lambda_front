@@ -27,6 +27,8 @@ module.exports = {
       'createPassword-ligth': "url('assets/background/createPassword-bg-ligth.png')",
       'createPassword-dark': "url('assets/background/createPassword-bg-dark.png')",
       'passwordChange-bg': "url('assets/background/passwordChange-bg.png')",
+      'splashScreen': "url('assets/background/splashScreen-bg.png')",
+
     }
   },
   plugins: [
