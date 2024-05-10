@@ -9,6 +9,7 @@ import { PlayerVideoComponent } from './pages/courses-pages/player-video/player-
 import { SearchPageComponent } from './pages/search-page/search-page.component';
 import { TrainingPageComponent } from './pages/courses-pages/training-page/training-page.component';
 import { NotificationPageComponent } from './pages/notification-page/notification-page.component';
+import { StructureNotificationComponent } from './pages/notification-page/structure-notification/structure-notification.component';
 
 export const HomeRoutes: Routes = [
   {
@@ -51,6 +52,10 @@ export const HomeRoutes: Routes = [
       {
         path: 'notification',
         component: NotificationPageComponent
+      },
+      {
+        path: 'notifications',
+        component: StructureNotificationComponent
       }
     ]
   }
