@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { VerificationPasswordForm } from '../../../interfaces/forms/createPassword-form.interface';
 import { ErrorComponent } from '../../../../shared/components/error/error.component';
 import { TranslocoModule } from '@jsverse/transloco';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-create-password-page',
@@ -59,7 +60,7 @@ export class CreatePasswordPageComponent {
           .subscribe({
             next:()=> this.router.navigateByUrl('/auth/confirmpassword'),
             error:(error)=>{
-              console.log({createPasswordError:error});
+              Swal.fire('Error',error,'error')
             }
           })
         }

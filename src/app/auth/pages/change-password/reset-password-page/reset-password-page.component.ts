@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslocoModule } from '@jsverse/transloco';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-reset-password-page',
@@ -41,7 +42,7 @@ export class ResetPasswordPageComponent {
     .subscribe({
       next:()=> this.router.navigateByUrl('/auth/verificationcode'),
       error:(error)=>{
-        console.log({loginerror:error});
+        Swal.fire('Error',error,'error')
       }
     })
   }

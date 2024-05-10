@@ -17,6 +17,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
 import { EmailValidatorService } from '../../../shared/validators/email.validators.service';
 import { TranslocoModule } from '@jsverse/transloco';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register-page',
@@ -113,7 +114,7 @@ export class RegisterPageComponent {
       .subscribe({
         next:()=> this.router.navigateByUrl('/auth/on-boarding'),
         error:(error)=>{
-          console.log({loginerror:error});
+         Swal.fire('Error',error,'error')
         }
       })
     }

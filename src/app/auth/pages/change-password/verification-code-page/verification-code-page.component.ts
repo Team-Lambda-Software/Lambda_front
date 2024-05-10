@@ -8,6 +8,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { VerificationCodeForm } from '../../../interfaces/forms/verticationCode-form.interface';
 import { ValidatorService } from '../../../../shared/services/validator/validator.service';
 import { TranslocoModule } from '@jsverse/transloco';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-verification-code-page',
@@ -53,11 +54,12 @@ export class VerificationCodePageComponent{
   public pleaseResend="please Resend"
   resendCode(){
     const email=this.email;
+    Swal.fire('Info',`Code resend to ${email.getValue()}`,'info')
     if (email.hasValue())
       this.authService.getCodeUpdatePassword(email.getValue())
     .subscribe({
       error:(error)=>{
-        console.log({loginerror:error});
+        Swal.fire('Error',error,'error')
       }
     })
   }
@@ -71,9 +73,7 @@ export class VerificationCodePageComponent{
         this.router.navigateByUrl('/auth/createpassword')
       }
       else{
-        //TODO Popup error
-        console.log('pepe');
-
+        Swal.fire('Error','Something went wrong','error')
       }
     }
   }

@@ -12,6 +12,8 @@ import { CommonModule } from '@angular/common';
 import { ValidatorService } from '../../../shared/services/validator/validator.service';
 import { AuthStatus } from '../../interfaces/auth-status.enum';
 import { TranslocoModule } from '@jsverse/transloco';
+import Swal from 'sweetalert2'
+
 
 @Component({
   selector: 'app-login-page',
@@ -52,6 +54,7 @@ export class LoginPageComponent {
     .subscribe({
       next:()=> this.router.navigateByUrl('/home'),
       error:(error)=>{
+        Swal.fire('Error',error,'error')
         console.log({loginerror:error});
       }
     })
