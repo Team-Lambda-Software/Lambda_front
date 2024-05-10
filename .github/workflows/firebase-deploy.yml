@@ -18,6 +18,12 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Debug secret
+        run: |
+          echo "Valor de FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}"
+          echo "Valor de VARIABLE: ${{ env.VARIABLE }}"
+
+
       - name: Install Firebase Tools
         run: npm install -g firebase-tools
 
