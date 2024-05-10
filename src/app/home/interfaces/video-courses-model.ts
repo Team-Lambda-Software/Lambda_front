@@ -1,5 +1,5 @@
 export interface IVideoCourses {
-    id: string;
+    id: number|string;
     title: string;
     description: string;
     thumbnail: string;

@@ -10,7 +10,7 @@ import { CoursesPopularService } from '../../services/courses/getPopulars/course
 import { IYogaCategories } from '../../interfaces/yoga-categories-model';
 import { IVideoCourses } from '../../interfaces/video-courses-model';
 import { ILatestBlogs } from '../../interfaces/latest-blogs-model';
-import { IUserInfo } from '../../interfaces/user-info-model';
+import { IUser } from '../../interfaces/user-info-model';
 import { UserInfoService } from '../../services/user/getUserInfo/user-info.service';
 
 @Component({
@@ -24,15 +24,14 @@ import { UserInfoService } from '../../services/user/getUserInfo/user-info.servi
 export class HomePageComponent {
 
   public popularService = inject(CoursesPopularService);
- 
+  public userInfo =inject(UserInfoService);
+
   public getPopulars(): ILittleCard[] {
     let popular = this.popularService.getPopulars();
     return popular.map((course) => CourseLitleCardAdapter(course));
   }
 
-  public userInfo =inject(UserInfoService);
-
-  public getUserInfo(): IUserInfo {
+  public getUserInfo(): IUser {
     let info = this.userInfo.getUserInfo();
     return info;
   }

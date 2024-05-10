@@ -1,10 +1,10 @@
-export interface IUserInfo {
+export interface IUser {
     id:string;
     name:string;
     image:string;
 }
 
-export interface IUserInfoProfile extends IUserInfo {
+export interface IUserProfile extends IUser {
     followers:number;
     following:number;
 }
