@@ -21,9 +21,6 @@ jobs:
       - name: Install Firebase Tools
         run: npm install -g firebase-tools
 
-      - name: Login to Firebase
-        run: firebase login:ci --interactive
-
       - name: Build and Deploy
         run: |
           npm install
