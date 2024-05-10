@@ -1,7 +1,6 @@
-<app-basic-header [options]="{name:'Yoga for beginners', redirect:'/home/main'}" class="relative" style="z-index: 1;"/>
+<app-basic-header [options]="{name:'yoga-for-beginner', redirect:'/home/main'}" class="relative" style="z-index: 1;"/>
 
-<section>
-    <article class="rounded-br-[50px] shadow-md bg-cover bg-center"
+    <article class="rounded-br-[50px] shadow-md bg-cover bg-center animate__animated animate__fadeIn"
         [style.background-image]="'url(' + courses.image + ')'" style="margin-top: -50px;">
         <div class="h-[350px] flex flex-col justify-between z-10">
             <div class="flex flex-row justify-between items-center w-full mt-20">
@@ -9,14 +8,14 @@
                 <span class="bg-[#7351e6] text-white text-s px-4 py-2 rounded-full mr-5">3/5</span>
             </div>
             <div class="flex flex-col items-start m-6 ">
-                <h1 class="text-white text-3xl font-bold">{{courses.teacher}}</h1>
+                <h1 class="text-white text-3xl font-bold">{{courses.instructor}}</h1>
                 <h3 class="text-white text-lg font-light">{{courses.category}}</h3>
             </div>
         </div>
     </article>
 
 
-    <section class="m-3">
+    <section class="m-3 animate__animated animate__fadeIn">
         <p class="text-lg  text-gray-500 dark:text-white ml-5 ">{{courses.description}}</p>
         <div class="border-t border-gray-300 my-4"></div>
         <div class="grid grid-flow-col grid-rows-1 justify-around dark:text-white">
@@ -51,17 +50,16 @@
         </div>
     </section>
     
-    <section class="mx-4 my-6">
+    <section class="mx-4 my-6 animate__animated animate__fadeIn">
         <h2 class="text-xl font-bold dark:text-white">Most More Popular Courses</h2>
     
         <div class="grid grid-flow-row grid-cols-2 gap-3 md:grid-cols-4 my-5 mx-2">
-            @for (item of popularCourses; track item.id) {
+            @for (item of this.getPopulars(); track item.id) {
                 <div class="text-white rounded-lg bg-cover bg-center h-[175px] w-[175px] flex flex-col justify-end p-4"
-                    [style.background-image]="'url(' + item.image + ')'">
-                        <h3 class="text-lg font-bold">{{item.teacher}}</h3>
-                        <p class="">{{item.category}}</p>
+                    [style.background-image]="'url(' + item.thumbnail + ')'">
+                        <h3 class="text-lg font-bold">{{item.title}}</h3>
+                        <p class="">{{item.description}}</p>
                 </div>
                 }
         </div>
     </section>
-</section>

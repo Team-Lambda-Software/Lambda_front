@@ -1,0 +1,31 @@
+<nav class="relative">
+    <app-basic-header  [options]="{redirect: '/home/main', name: 'popular-search'}" style="position: relative;"/>
+    
+    <div class="absolute top-[80px] left-1/2 transform -translate-x-1/2 w-full">
+        <div class="rounded-lg bg-slate-100 shadow-md p-4 flex items-center mx-5 gap-2">
+            <input [(ngModel)]="inputSearch" type="text" class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none" placeholder="Search">
+            <span class="fas fa-search fa-xl text-gray-400" (click)="getBySearch()"></span>
+        </div>
+    </div>
+</nav>
+
+<div class="animate__animated animate__fadeIn">
+  <div class="flex flex-wrap m-4 gap-x-3 gap-y-2 pt-10">
+      @for (item of categories; track item.id) {
+              <div class=" bg-gray-300 hover:bg-purple-700 dark:bg-gray-600 dark:hover:bg-white text-purple-900 hover:text-white dark:text-white dark:hover:text-purple-900 rounded-full shadow-md py-2.5 px-5 flex items-center justify-center ">
+                  <span class="text-md font-thin">{{ item.name }}</span>
+              </div>
+      }
+  </div>
+  
+  <section class="my-8 mx-4">
+      <h1 class="text-xl font-bold dark:text-white">{{'popular-courses' | transloco}}</h1>
+  
+      <app-card-carrusel [courses]="adaptCard()"/>
+      
+  </section>
+  
+  <section class="mt-8 mx-4">
+      <app-programs-tag [programs]="adaptTag()"/>
+  </section>
+</div>

@@ -6,7 +6,11 @@ import { SettingsPageComponent } from './pages/settings-page/settings-page.compo
 import { MainCourseComponent } from './pages/courses-pages/main-course/main-course.component';
 import { VideoListComponent } from './pages/courses-pages/video-list/video-list.component';
 import { PlayerVideoComponent } from './pages/courses-pages/player-video/player-video.component';
-import { SearchCoursesComponent } from './pages/courses-pages/search-courses/search-courses.component';
+import { SearchPageComponent } from './pages/search-page/search-page.component';
+import { TrainingPageComponent } from './pages/courses-pages/training-page/training-page.component';
+import { FaqPageComponent } from './pages/faq-page/faq-page.component';
+import { BlogsDetailsComponent } from './pages/blogs-pages/blogs-details/blogs-details.component';
+import { MainBlogsComponent } from './pages/blogs-pages/main-blogs/main-blogs.component';
 
 export const HomeRoutes: Routes = [
   {
@@ -39,9 +43,25 @@ export const HomeRoutes: Routes = [
         component: PlayerVideoComponent
       },
       {
-        path: 'search-courses',
-        component: SearchCoursesComponent
+        path: 'search',
+        component: SearchPageComponent
       },
+      {
+        path: 'training',
+        component: TrainingPageComponent
+      },
+      {
+        path: 'main-blogs',
+        component: MainBlogsComponent
+      },
+      {
+        path: 'blogs-details',
+        component: BlogsDetailsComponent
+      },
+      {
+        path: 'faq',
+        component: FaqPageComponent
+      }
     ]
   }
 ]

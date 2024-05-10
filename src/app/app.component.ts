@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { SidebarService } from './shared/services/sidebar/sidebar.service';
 import { NgClass } from '@angular/common';
 import { DarkModeService } from './shared/services/dark-mode/dark-mode.service';
+import { SwUpdate } from '@angular/service-worker';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ import { DarkModeService } from './shared/services/dark-mode/dark-mode.service';
 export class AppComponent {
   title = 'Lambda_front';
 
+  private swUpdate = inject(SwUpdate);
   public sidebarService = inject(SidebarService);
   public darkModeService = inject(DarkModeService);
 
@@ -21,4 +23,11 @@ export class AppComponent {
     return this.darkModeService.isDarkMode();
   }
 
+  ngOnInit() {
+    this.swUpdate.versionUpdates.subscribe(event => {
+      if (event.type == 'VERSION_DETECTED' && confirm('New version available. Load New Version?')) {
+        window.location.reload();
+      }
+    });
+  }
 }
