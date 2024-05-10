@@ -11,6 +11,8 @@ import { TrainingPageComponent } from './pages/courses-pages/training-page/train
 import { FaqPageComponent } from './pages/faq-page/faq-page.component';
 import { BlogsDetailsComponent } from './pages/blogs-pages/blogs-details/blogs-details.component';
 import { MainBlogsComponent } from './pages/blogs-pages/main-blogs/main-blogs.component';
+import { NotificationPageComponent } from './pages/notification-page/notification-page.component';
+import { StructureNotificationComponent } from './pages/notification-page/structure-notification/structure-notification.component';
 
 export const HomeRoutes: Routes = [
   {
@@ -61,6 +63,14 @@ export const HomeRoutes: Routes = [
       {
         path: 'faq',
         component: FaqPageComponent
+      },
+      {
+        path: 'notification',
+        component: NotificationPageComponent
+      },
+      {
+        path: 'notifications',
+        component: StructureNotificationComponent
       }
     ]
   }

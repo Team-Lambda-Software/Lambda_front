@@ -1,0 +1,31 @@
+.boton-volver{
+    width: 323px;
+    height: 54px;
+    border-radius: 30px 30px 30px 30px;
+    opacity: 1; /* Cambiado a 1 para que sea visible */
+    border: none; /* Sin borde */
+    font-size: 16px; /* Tamaño de la letra */
+    cursor: pointer; /* Cambia el cursor a una mano al pasar sobre el botón */
+    font-weight: bold;
+    margin-top: 20px;
+  }
+
+
+.label-notificaciones {
+    width: 313px;
+    height: 44px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    opacity: 1;
+    text-align: center;
+  }
+  
+
+  .fa-regular.fa-bell {
+    font-size: 200px; /* Ajusta el valor según el tamaño que desees */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
