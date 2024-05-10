@@ -12,6 +12,7 @@ import { VerificationCodePageComponent } from './pages/change-password/verificat
 import { OnboardingPageComponent } from './pages/onboarding-page/onboarding-page.component';
 import { hasCodeGuard } from './guards/hasCode.guard';
 import { hasVerifiedCodeGuard } from './guards/hasVerifiedCode.guard';
+import { isAuthenticatedGuard } from './guards/isAuthenticated.guard';
 
 export const AuthRoutes: Routes = [
   {
@@ -41,21 +42,22 @@ export const AuthRoutes: Routes = [
       },
       {
         path: 'verificationcode',
-        // canActivate:[hasCodeGuard],
+        canActivate:[hasCodeGuard],
         component: VerificationCodePageComponent
       },
       {
         path: 'createpassword',
-        // canActivate:[hasVerifiedCodeGuard],
+        canActivate:[hasVerifiedCodeGuard],
         component: CreatePasswordPageComponent
       },
       {
         path: 'confirmpassword',
-        // canActivate:[hasVerifiedCodeGuard],
+        canActivate:[hasVerifiedCodeGuard],
         component: CreatePasswordConfirmPageComponent
       },
       {
         path: 'on-boarding',
+        canActivate:[isAuthenticatedGuard],
         component: OnboardingPageComponent
       },
     ]

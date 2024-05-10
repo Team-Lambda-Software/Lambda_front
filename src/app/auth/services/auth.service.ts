@@ -158,7 +158,7 @@ export class AuthService {
       .pipe(
         map((resp)=>{
           if (resp.tokenIsValid) this.setAuthenticaded()
-          this.setNotAuthenticated()
+          else this.setNotAuthenticated()
           return resp.tokenIsValid
         }),
         catchError(()=>of(false))

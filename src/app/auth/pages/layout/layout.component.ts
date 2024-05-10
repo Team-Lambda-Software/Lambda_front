@@ -28,7 +28,6 @@ export class LayoutComponent {
       case AuthStatus.checking:
         return;
       case AuthStatus.authenticated:{
-        this.router.navigateByUrl('/home')
         return
       }
       case AuthStatus.notAuthenticated:
