@@ -6,4 +6,5 @@ export interface IBlog {
     imagenUrl: string;
     category: string;
     date: string;
+    instructor: string;
 }
