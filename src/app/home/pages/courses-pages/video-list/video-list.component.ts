@@ -6,12 +6,13 @@ import { ICategory } from '../../../interfaces/category-model';
 import { IVideoCourses } from '../../../interfaces/video-courses-model';
 import { CategoriesService } from '../../../services/categories/categories.service';
 import { CategoryDataAdapterCourse } from '../../../adapters/CategoryDataAdapter';
-import { map } from 'rxjs/operators';
+import { PlayerCardAdapter } from '../../../adapters/PlayerCardAdapter';
+import { PlayerCardComponent } from '../../../components/player-card/player-card.component';
 
 @Component({
   selector: 'app-video-list',
   standalone: true,
-  imports: [RouterLink, TranslocoModule, CommonModule],
+  imports: [RouterLink, TranslocoModule, CommonModule, PlayerCardComponent],
   templateUrl: './video-list.component.html',
   styleUrl: './video-list.component.css'
 })
@@ -97,6 +98,11 @@ export class VideoListComponent {
     });
   }
   
+
+  adaptToPlayerCard(video: IVideoCourses) {
+    return PlayerCardAdapter(video);
+  }
+
   getCategories(): void {
     this.categoriesService.getCategories().subscribe((categories) => {
       this.fetchedCategories.set(categories.map((category) => CategoryDataAdapterCourse(category)));

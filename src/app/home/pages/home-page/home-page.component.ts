@@ -12,13 +12,16 @@ import { IVideoCourses } from '../../interfaces/video-courses-model';
 import { ILatestBlogs } from '../../interfaces/latest-blogs-model';
 import { IUser } from '../../interfaces/user-info-model';
 import { UserInfoService } from '../../services/user/getUserInfo/user-info.service';
+import { PlayerCardComponent } from '../../components/player-card/player-card.component';
+import { PlayerCardAdapter } from '../../adapters/PlayerCardAdapter';
+import { IPlayerCard } from '../../interfaces/IPlayerCard';
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
   standalone: true,
-  imports: [RouterLink, CommonModule, CarruselBgImgComponent, TranslocoModule, CircularProgressComponent]
+  imports: [RouterLink, CommonModule, CarruselBgImgComponent, TranslocoModule, CircularProgressComponent, PlayerCardComponent]
 })
 
 export class HomePageComponent {
@@ -26,16 +29,7 @@ export class HomePageComponent {
   public popularService = inject(CoursesPopularService);
   public userInfo =inject(UserInfoService);
 
-  public getPopulars(): ILittleCard[] {
-    let popular = this.popularService.getPopulars();
-    return popular.map((course) => CourseLitleCardAdapter(course));
-  }
-
-  public getUserInfo(): IUser {
-    let info = this.userInfo.getUserInfo();
-    return info;
-  }
-
+  
   public videoCourses: IVideoCourses[]  = [
     {
       id: '555661cv-dddsb',
@@ -79,5 +73,19 @@ export class HomePageComponent {
     { id: '555661cv-dddsk',  image: 'https://via.placeholder.com/69' },
     { id: '555661cv-dddsl',  image: 'https://via.placeholder.com/69' },
   ];
+
+  public getPopulars(): ILittleCard[] {
+    let popular = this.popularService.getPopulars();
+    return popular.map((course) => CourseLitleCardAdapter(course));
+  }
+
+  public getUserInfo(): IUser {
+    let info = this.userInfo.getUserInfo();
+    return info;
+  }
+
+  public adaptToPlayerCard(data: IVideoCourses): IPlayerCard {
+    return PlayerCardAdapter(data)
+  }
 
 }

@@ -3,12 +3,13 @@ import { BasicHeaderComponent } from '../../../components/basic-header/basic-hea
 import { CoursesPopularService } from '../../../services/courses/getPopulars/courses-popular.service';
 import { ICourse } from '../../../interfaces/course-model';
 import { ILittleCard } from '../../../interfaces/ILittleCard';
+import { LitleCardComponent } from '../../../components/litle-card/litle-card.component';
 import { CourseLitleCardAdapter } from '../../../adapters/LitleCardAdapter';
 
 @Component({
   selector: 'app-main-course',
   standalone: true,
-  imports: [BasicHeaderComponent],
+  imports: [BasicHeaderComponent, LitleCardComponent],
   templateUrl: './main-course.component.html',
   styleUrl: './main-course.component.css'
 })
@@ -18,11 +19,11 @@ export class MainCourseComponent implements OnInit {
 
   public logoPath = 'assets/icons/app-logo.svg'
 
-  public courses: ICourse = {
+  public course: ICourse = {
       id: '1',
       category: 'Yoga for beginners',
       description: 'Learn the basics of yoga and improve your health. No previous experience required.',
-      image: 'https://via.placeholder.com/250/0',
+      image: 'https://th.bing.com/th/id/OIP.SnvRMcxWJe_FhErVZHtB2QHaEo?rs=1&pid=ImgDetMain',
       level: 1,
       weeks: 4,
       mins: 16,
@@ -36,6 +37,10 @@ export class MainCourseComponent implements OnInit {
     public getPopulars(): ILittleCard[] {
       let populars = this.popularService.getPopulars();
       return populars.map((course) => CourseLitleCardAdapter(course));
+    }
+
+    adaptCourseToLittleCard(course: ICourse): ILittleCard {
+      return CourseLitleCardAdapter(course);
     }
 
 }
