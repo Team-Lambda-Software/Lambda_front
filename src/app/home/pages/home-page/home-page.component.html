@@ -10,7 +10,7 @@
     <div class="rounded-lg bg-slate-100 shadow-md py-1 p-4 flex items-center mx-4 gap-2 ">
       <input type="text" class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
         placeholder="{{'search' | transloco}}">
-      <button type="submit" class="fas fa-search fa-xl text-gray-400"></button>
+      <button type="submit" class="fas fa-search fa-xl text-gray-400" [routerLink]="['/home/search']"></button>
     </div>
     <div class="mx-4 py-4"></div>
   </nav>
@@ -74,6 +74,10 @@
   <section class="mx-4 py-7">
     <div class="flex justify-between items-end dark:text-white">
       <h1 class="text-xl font-bold">{{'our-latest-blogs'| transloco}}</h1>
+      <div class="flex items-center text-gray-500 pr-2" [routerLink]="['/home/main-blogs']">
+        <a class="text-sm mx-2 dark:text-white">{{'see-all' | transloco}}</a>
+        <span class="fas fa-chevron-right"></span>
+      </div>
     </div>
 
     <div class="grid grid-cols-2 mt-4 gap-2 justify-center">

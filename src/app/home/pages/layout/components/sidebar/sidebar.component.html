@@ -21,7 +21,7 @@
           {{ 'account' | transloco }}
         </a>
       </li>
-      <li><a routerLink="/home/notification">
+      <li><a [routerLink]="['/home/notification']" (click)="this.sidebarService.setSidebarState(false)">
           <span class="fas fa-bell pr-6"></span>
           {{ 'notifications' | transloco }}
         </a>
