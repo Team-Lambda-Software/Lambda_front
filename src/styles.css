@@ -2,6 +2,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
 
 body {
   --bottom-bar-height: 75px;
@@ -14,6 +15,34 @@ body {
 html, body {
   font-family:'PT Sans';
 }
+/* NT asi se resuelve el problema del borde con material y tailwind */
+.mdc-notched-outline__notch {
+  border-right: none !important;
+}
 
+.mdc-text-field--outlined {
+  /* Custom Gray of tailwind */
+  --mdc-outlined-text-field-container-shape: 45px !important;
+  font-size: 16px;
+}
+
+
+.input-ligth:invalid {
+  color: red;
+  background-color: pink;
+
+}
+
+.input-ligth{
+  color: #677294;
+}
+
+.input-dark{
+  color: #F2F2F2
+}
+
+.md-18 {
+  font-size: 18px !important;
+}
 /* html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */

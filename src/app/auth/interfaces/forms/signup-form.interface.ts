@@ -1,7 +1,10 @@
+import { FormControl } from "@angular/forms";
+
 export interface SignUpForm{
-  name:string
-  email:string
-  phone:string
-  password:string
-  termsAndConditions:boolean
+  name:FormControl<string>;
+  email:FormControl<string>;
+  phone:FormControl<string>;
+  password:FormControl<string>;
+  termsAndConditions:FormControl<boolean>;
 }
+
