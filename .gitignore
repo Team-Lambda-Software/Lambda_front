@@ -2,6 +2,7 @@
 
 .vscode
 .env
+.firebase
 
 # Compiled output
 /dist
