@@ -2,13 +2,14 @@ import { Component, computed, effect, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { AuthStatus } from '../../interfaces/auth-status.enum';
+import { LoaderComponent } from '../../components/loader/loader.component';
 
 @Component({
   selector: 'app-layout-page',
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',
   standalone: true,
-  imports: [ RouterOutlet ]
+  imports: [ RouterOutlet ,LoaderComponent]
 })
 
 export class LayoutComponent {
