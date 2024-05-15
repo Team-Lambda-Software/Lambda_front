@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { Router, type CanActivateFn } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { AuthStatus } from '../interfaces/auth-status.enum';
-import { enviroment } from '../../../env/enviroments';
+import { enviroment } from '../../../environments/environment';
 
 export const isAuthenticatedGuard: CanActivateFn = (route, state) => {
 

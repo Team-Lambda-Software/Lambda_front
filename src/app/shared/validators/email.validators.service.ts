@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { AbstractControl, AsyncValidator, ValidationErrors } from '@angular/forms';
 import { Observable, delay, map } from 'rxjs';
-import { enviroment } from '../../../env/enviroments';
+import { enviroment } from '../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 

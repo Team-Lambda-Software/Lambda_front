@@ -1,11 +1,10 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { enviroment } from '../../../env/enviroments';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, map, of, tap, throwError } from 'rxjs';
+import { enviroment } from '../../../environments/environment';
+import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { AuthStatus } from '../interfaces/auth-status.enum';
 import { LoginResponse } from '../interfaces/response/login-response.interface';
 import { UserState } from '../interfaces/user-state.interface';
-import { UsersResponse } from '../interfaces/response/users-response.interface';
 import { SignUpUser } from '../interfaces/signup-user.interface';
 import { SignUpResponse } from '../interfaces/response/signup-response.interface';
 import { GetCodeResponse } from '../interfaces/response/getCode-response.interface';
