@@ -1,14 +1,25 @@
 import { Component, HostBinding, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SidebarService } from './shared/services/sidebar/sidebar.service';
+import { SidebarService } from './presentation/shared/services/sidebar/sidebar.service';
 import { NgClass } from '@angular/common';
-import { DarkModeService } from './shared/services/dark-mode/dark-mode.service';
+import { DarkModeService } from './presentation/shared/services/dark-mode/dark-mode.service';
 import { SwUpdate } from '@angular/service-worker';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
+  template: `
+    <div 
+      class="bg-custom-light dark:bg-custom-dark" 
+      [ngClass]="{ 'overflow-hidden h-screen': sidebarService.isSidebarActive() }"
+    >
+      <router-outlet></router-outlet>
+    </div>
+  `,
+  styles: [`
+    html, body {
+      font-family: 'Muli';
+    }
+  `],
   standalone: true,
   imports: [RouterOutlet, NgClass]
 })

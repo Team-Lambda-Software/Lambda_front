@@ -7,7 +7,8 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { TranslocoHttpLoader } from './transloco-loader';
 import { provideTransloco } from '@jsverse/transloco';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { authInterceptor } from './shared/interceptors/auth/auth.interceptor';
+import { authInterceptor } from './presentation/shared/interceptors/auth/auth.interceptor';
+import { COURSE_API_PROVIDER } from './core/course/infrastructure/providers/course-api-provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -35,6 +36,7 @@ export const appConfig: ApplicationConfig = {
       },
       loader: TranslocoHttpLoader
     }),
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    COURSE_API_PROVIDER
   ]
 };

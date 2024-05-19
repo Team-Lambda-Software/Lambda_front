@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { NotFoundComponent } from './shared/pages/not-found-page/not-found.component';
-import { isAuthenticatedGuard } from './auth/guards/isAuthenticated.guard';
-import { isNotAuthenticatedGuard } from './auth/guards/isNotAuthenticated.guard';
+import { NotFoundComponent } from './presentation/shared/pages/not-found-page/not-found.component';
+import { isAuthenticatedGuard } from './presentation/auth/guards/isAuthenticated.guard';
+import { isNotAuthenticatedGuard } from './presentation/auth/guards/isNotAuthenticated.guard';
 
 export const routes: Routes = [
   {
@@ -12,12 +12,12 @@ export const routes: Routes = [
   {
     path: 'auth',
     canActivate:[isNotAuthenticatedGuard],
-    loadChildren: ()=> import('./auth/auth.routes').then((routes) => routes.AuthRoutes)
+    loadChildren: ()=> import('./presentation/auth/auth.routes').then((routes) => routes.AuthRoutes)
   },
   {
     path: 'home',
     canActivate:[isAuthenticatedGuard],
-    loadChildren: ()=> import('./home/home.routes').then((routes) => routes.HomeRoutes)
+    loadChildren: ()=> import('./presentation/home/home.routes').then((routes) => routes.HomeRoutes)
   },
   {
     path: '404-not-found',
