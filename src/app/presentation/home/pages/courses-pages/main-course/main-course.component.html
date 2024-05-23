@@ -1,7 +1,8 @@
 <app-basic-header [options]="{name:'yoga-for-beginner', redirect:'/home/main'}" class="relative" style="z-index: 1;" />
 
 <article class="rounded-br-[50px] shadow-md bg-cover bg-center animate__animated animate__fadeIn"
-  [style.background-image]="'linear-gradient(45deg, #00000044, #00000044), url(' + fullCourse?.course?.image?.id + ')'"
+  [style.background-image]="'linear-gradient(45deg, #00000044, #00000044), url(' + course?.image + ')'"
+  style="margin-top: -50px;"
 >
   <div class="h-[350px] flex flex-col justify-between z-10">
     <div class="flex flex-row justify-between items-center w-full mt-20">
@@ -9,14 +10,14 @@
       <span class="bg-[#7351e6] text-white text-s px-4 py-2 rounded-full mr-5">3/5</span>
     </div>
     <div class="flex flex-col items-start m-6 ">
-      <h1 class="text-white text-3xl font-bold">{{fullCourse?.course?.trainer?.firstName}} {{ fullCourse?.course?.trainer?.firstLastName }}</h1>
-      <h3 class="text-white text-lg font-light">{{fullCourse?.course?.name}}</h3>
+      <h1 class="text-white text-3xl font-bold">{{course?.trainer?.name}}</h1>
+      <h3 class="text-white text-lg font-light">{{course?.title}}</h3>
     </div>
   </div>
 </article>
 
 <section class="m-3 animate__animated animate__fadeIn">
-  <p class="text-lg  text-gray-500 dark:text-white ml-5 ">{{fullCourse?.course?.description}}</p>
+  <p class="text-lg  text-gray-500 dark:text-white ml-5 ">{{course?.description}}</p>
   <div class="border-t border-gray-300 my-4"></div>
   <div class="grid grid-flow-col grid-rows-1 justify-around dark:text-white">
     <div class="flex items-center gap-3">
@@ -25,7 +26,7 @@
       </div>
       <div class="flex flex-col">
         <span class="text-gray-500 dark:text-white font-semibold">Level</span>
-        <span class="text-lg font-bold">{{fullCourse?.course?.level}}</span>
+        <span class="text-lg font-bold">{{course?.level}}</span>
       </div>
     </div>
     <div class="flex items-center gap-3">
@@ -34,7 +35,7 @@
       </div>
       <div class="flex flex-col">
         <span class="text-gray-500 dark:text-white font-semibold ">Weeks</span>
-        <span class="text-lg font-bold">{{fullCourse?.course?.weeksDuration}}</span>
+        <span class="text-lg font-bold">{{course?.durationWeeks}}</span>
       </div>
     </div>
     <div class="flex items-center gap-3">
@@ -43,7 +44,7 @@
       </div>
       <div class="flex flex-col">
         <span class="text-gray-500 dark:text-white font-semibold">Mins</span>
-        <span class="text-lg font-bold">{{fullCourse?.course?.minutesPerSection}}</span>
+        <span class="text-lg font-bold">{{course?.durationMinutes}}</span>
       </div>
     </div>
 
@@ -52,12 +53,6 @@
 
 <section class="mx-4 my-6 animate__animated animate__fadeIn">
   <h2 class="text-xl font-bold dark:text-white">Most More Popular Courses</h2>
-
-  <!-- <div class="grid grid-flow-row grid-cols-2 gap-3 md:grid-cols-4 my-5 mx-2">
-    @for (item of this.getPopulars(); track item.id) {
-      <app-litle-card [item]="item"></app-litle-card>
-    }
-  </div> -->
 
   <section class="mx-4 py-7">
     <div class="flex justify-between items-end dark:text-white">

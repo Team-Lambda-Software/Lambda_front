@@ -3,14 +3,14 @@ import { BasicHeaderComponent } from '../../../components/basic-header/basic-hea
 import { ICourse } from '../../../interfaces/course-model';
 import { ILittleCard } from '../../../interfaces/ILittleCard';
 import { LitleCardComponent } from '../../../components/litle-card/litle-card.component';
-import { CourseLitleCardAdapter, CourseToILittleCard } from '../../../adapters/LitleCardAdapter';
-import { CourseUseCaseService } from '../../../../../core/course/application/course-use-case.service';
+import { CourseLitleCardAdapter, PartialCourseToILittleCard } from '../../../adapters/LitleCardAdapter';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { FullCourse } from '../../../../../core/course/domain/course.model';
 import { Observable, map, of } from 'rxjs';
 import { CarruselBgImgComponent } from '../../../components/carrusel-bg-img/carrusel-bg-img.component';
 import { TranslocoModule } from '@jsverse/transloco';
 import { AsyncPipe } from '@angular/common';
+import { CourseUsecaseProvider } from '../../../../../core/course/infrastructure/providers/course-usecase-provider';
+import { Course } from '../../../../../core/course/domain/course.model';
 
 @Component({
   selector: 'app-main-course',
@@ -26,25 +26,22 @@ import { AsyncPipe } from '@angular/common';
   templateUrl: './main-course.component.html',
   styleUrl: './main-course.component.css'
 })
-export class MainCourseComponent implements OnInit {
+export class MainCourseComponent {
 
   private id?: string;
-  public courseUseCaseService = inject(CourseUseCaseService);
+  public courseUseCaseService = inject(CourseUsecaseProvider);
   public logoPath = 'assets/icons/app-logo.svg'
-  public fullCourse?: FullCourse;
+  public course?: Course;
   public popularCourses$ = of<ILittleCard[]>([]);
 
   constructor(private router:Router, private route:ActivatedRoute) {
     this.route.queryParams.subscribe((params) => {
       if(params['id']) {
         this.id = params['id'];
+        this.getById();
+        this.popularCourses$ = this.getPopulars();
       } else this.router.navigate(['/home'])
     });
-  }
-
-  ngOnInit(): void {
-    this.getById();
-    this.popularCourses$ = this.getPopulars();
   }
 
   adaptCourseToLittleCard(course: ICourse): ILittleCard {
@@ -52,13 +49,13 @@ export class MainCourseComponent implements OnInit {
   }
 
   getById() {
-    this.courseUseCaseService.getById(this.id!)
-      .subscribe( course => this.fullCourse = course)
+    this.courseUseCaseService.usecase.getById(this.id!)
+      .subscribe( course => this.course = course)
   }
 
   public getPopulars(): Observable<ILittleCard[]> {
-    return this.courseUseCaseService.getPopularCourses()
-      .pipe(map(courses => courses.map(CourseToILittleCard)))
+    return this.courseUseCaseService.usecase.getCoursesByParams('?filter=POPULAR')
+      .pipe(map(courses => courses.map(PartialCourseToILittleCard)))
   }
 
 }

@@ -1,4 +1,4 @@
-import { Course } from '../../../core/course/domain/course.model';
+import { Course, PartialCourse } from '../../../core/course/domain/course.model';
 import { ILittleCard } from '../interfaces/ILittleCard';
 import { IBlog } from '../interfaces/blog-model';
 import { ICourse } from '../interfaces/course-model';
@@ -14,10 +14,18 @@ export const CourseLitleCardAdapter = (data: ICourse): ILittleCard => {
 
 export const CourseToILittleCard = (course: Course): ILittleCard => {
   return {
-    id: course.id,
-    title: course.name,
+    title: course.title,
     description: course.description,
-    thumbnail: course.image.id
+    thumbnail: course.image
+  }
+}
+
+export const PartialCourseToILittleCard = (course: PartialCourse): ILittleCard => {
+  return {
+    id: course.id,
+    title: course.title,
+    description: course.category,
+    thumbnail: course.image
   }
 }
 

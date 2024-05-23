@@ -1,5 +1,5 @@
 import { InjectionToken, Provider } from '@angular/core';
-import { ICourseApiService } from '../interfaces/course-api.interface';
+import { ICourseApiService } from '../../domain/interfaces/course-api.interface';
 import { CourseApiService } from '../services/course-api.service';
 
 export const HTTP_COURSE_SERVICE = new InjectionToken<ICourseApiService>('CourseApiService');

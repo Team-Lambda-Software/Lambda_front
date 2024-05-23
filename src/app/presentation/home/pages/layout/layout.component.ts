@@ -24,14 +24,12 @@ export class LayoutComponent {
   constructor(private router: Router) { }
 
   ngOnInit() {
-    console.log(BOTTOM_NAVIGATION_BAR_BLACK_LIST.includes(this.router.url))
     this.isBottombarActive.set(!BOTTOM_NAVIGATION_BAR_BLACK_LIST.includes(this.router.url))
 
     this.subscriber = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
       const currentUrl =  event.url
-      console.log('The URL changed to: ', currentUrl)
       if(BOTTOM_NAVIGATION_BAR_BLACK_LIST.includes(currentUrl))
         this.isBottombarActive.set(false);
       else

@@ -1,5 +1,5 @@
 export interface ILittleCard {
-    id: string | number;
+    id?: string | number;
     thumbnail: string;
     title: string;
     description: string;

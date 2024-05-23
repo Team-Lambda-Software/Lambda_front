@@ -20,6 +20,10 @@
   scrollbar-width: none;
 }
 
+.carrousel::-webkit-scrollbar {
+  display: none;
+}
+
 .tag-selected-dark {
   background-color: white !important;
   color: rgb(126,34,206) !important;

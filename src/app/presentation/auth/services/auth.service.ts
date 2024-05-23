@@ -72,7 +72,7 @@ export class AuthService {
 
   login(email:string,password:string):Observable<boolean>{
 
-    const url=`${this.baseUrl}/auth/loginuser`
+    const url=`${this.baseUrl}/auth/login`
     const body={email,password}
     this.setChecking();
 

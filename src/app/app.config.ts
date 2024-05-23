@@ -1,14 +1,17 @@
 import { ApplicationConfig, isDevMode } from '@angular/core';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
+import { provideServiceWorker } from '@angular/service-worker';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideTransloco } from '@jsverse/transloco';
 
 import { routes } from './app.routes';
-import { provideServiceWorker } from '@angular/service-worker';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { TranslocoHttpLoader } from './transloco-loader';
-import { provideTransloco } from '@jsverse/transloco';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { authInterceptor } from './presentation/shared/interceptors/auth/auth.interceptor';
 import { COURSE_API_PROVIDER } from './core/course/infrastructure/providers/course-api-provider';
+import { CATEGORY_API_PROVIDER } from './core/categories/infrastructure/providers/category-api-provider';
+import { TRAINER_API_PROVIDER } from './core/trainer/infrastructure/providers/category-api-provider';
+import { BLOG_API_PROVIDER } from './core/blog/infrastructure/providers/blog-api-provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -37,6 +40,9 @@ export const appConfig: ApplicationConfig = {
       loader: TranslocoHttpLoader
     }),
     provideAnimationsAsync(),
-    COURSE_API_PROVIDER
+    COURSE_API_PROVIDER,
+    CATEGORY_API_PROVIDER,
+    BLOG_API_PROVIDER,
+    TRAINER_API_PROVIDER
   ]
 };

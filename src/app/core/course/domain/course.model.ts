@@ -1,54 +1,28 @@
 import { Trainer } from "../../trainer/domain/trainer.model"
 
 export interface Course {
-  id: string
+  title: string
+  description: string
+  category: string
+  image: string
   trainer: Trainer
-  name: string
-  description: string
-  weeksDuration: number
-  minutesPerSection: number
-  level: number
-  sections: CourseSection[]
-  categoryId: string
-  image: Image
+  level: string
+  durationWeeks: number
+  durationMinutes: number
   tags: string[]
+  date: string
+  lessons: Lesson[]
 }
 
-export interface CourseSection {
+export interface Lesson {
   id: string
-  name: string
-  description: string
-  videos: any[]
-  images: any[]
-  paragraph: any
+  title: string
+  content: string
+  video: any
+  image: string
 }
 
-export interface Image {
-  id: string
-  url: string
-}
-
-export interface Progress<T> {
-  progress: T
-  completionPercent: number
-}
-
-export interface CourseProgress {
-  sections: any
-  userId: string
-  courseId: string
-  isCompleted: boolean
-}
-
-export interface SectionProgress {
-  videos: any
-  userId: string
-  sectionId: string
-  isCompleted: boolean
-}
-
-export interface FullCourse {
-  course: Course,
-  courseProgress: Progress<CourseProgress>,
-  sectionsProgress: Progress<SectionProgress>[]
-}
+export type PartialCourse = Pick<Course, "title" | "image" | "date" | "category"> & {
+  id: string;
+  trainer: string
+};
