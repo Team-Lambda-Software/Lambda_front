@@ -27,52 +27,9 @@
     <div class="border-t border-gray-300 my-2"></div>
   </section>
 
-  <section class="mx-4">
-    <div class="flex justify-between items-end dark:text-white">
-      <h1 class="text-xl font-bold">{{'yoga-categories' | transloco}}</h1>
-      <div class="flex items-center text-gray-500 pr-2" [routerLink]="['']">
-        <a class="text-sm mx-2 dark:text-white">{{'see-all' | transloco}}</a>
-        <span class="fas fa-chevron-right"></span>
-      </div>
-    </div>
-    <div class="carrousel mt-4 flex gap-5">
-      @if (isLoadingCategories) {
-        @for (i of [1,2,3,4,5,6,7,8,9]; track $index) {
-          <app-square-skeleton [dimensions]="{width: '69px', heigth: '69px'}"/>
-        }
-      } @else {
-        <div class="carrousel mt-4 flex gap-5">
-          @for (c of categories; track c.id) {
-            <article class="bg-purple-200 dark:bg-slate-600 rounded-lg shadow-md w-[100px]">
-              <div class="flex gap-1 flex-col items-center justify-center py-2">
-                <img [src]="c.icon" alt="category" class="object-cover rounded-xl w-[30px] m-auto" style="fill: red">
-                <span class="block">{{c.name}}</span>
-              </div>
-            </article>
-          }
-        </div>
-      }
-    </div>
-  </section>
+  <app-categories/>
 
-  <section class="mx-4 py-7">
-    <div class="flex justify-between items-end dark:text-white">
-      <h1 class="text-xl font-bold">{{'popular-courses'| transloco}}</h1>
-      <div class="flex items-center text-gray-500 pr-2" [routerLink]="['/home/main-course']">
-        <a class="text-sm mx-2 dark:text-white">{{'see-all' | transloco}}</a>
-        <span class="fas fa-chevron-right"></span>
-      </div>
-    </div>
-    @if (isLoadingPopulars) {
-      <div class="carrousel flex gap-5 mt-4">
-        @for (item of [1,2,3,4]; track $index) {
-          <app-square-skeleton [dimensions]="{width: '164px', heigth: '150px'}" />
-        }
-      </div>
-    } @else {
-      <app-carrusel-bg-img [items]="popularCourses" />
-    }
-  </section>
+  <app-popular-courses/>
 
   <section class="mx-4 py-7">
     <div class="flex justify-between items-end dark:text-white">
@@ -90,33 +47,5 @@
     </div>
   </section>
 
-  <section class="mx-4 py-7">
-    <div class="flex justify-between items-end dark:text-white">
-      <h1 class="text-xl font-bold">{{'our-latest-blogs'| transloco}}</h1>
-      <div class="flex items-center text-gray-500 pr-2" [routerLink]="['/home/main-blogs']">
-        <a class="text-sm mx-2 dark:text-white">{{'see-all' | transloco}}</a>
-        <span class="fas fa-chevron-right"></span>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-2 mt-4 gap-4 justify-center">
-      @if (isLoadingBlogs) {
-        @for (item of [1,2,3,4]; track $index) {
-          <app-square-skeleton [dimensions]="{width: '175px', heigth: '175px'}" />
-        }
-      } @else {
-        @for (blog of latestBlogs; track blog.id) {
-          <article class="rounded-lg w-[190px] p-2 ">
-            <img [src]="blog.image" alt="course" class="w-full h-36 object-cover rounded-xl">
-            <div class="p-4">
-              <h1 class="text-lg font-bold text-wrap dark:text-white">{{ blog.name }}</h1>
-              <div class="flex justify-between mt-3">
-                <p class="text-sm text-gray-500 text-wrap dark:text-white">{{ blog.description }}</p>
-              </div>
-            </div>
-          </article>
-        }
-      }
-    </div>
-  </section>
+  <app-blogs/>
 </div>

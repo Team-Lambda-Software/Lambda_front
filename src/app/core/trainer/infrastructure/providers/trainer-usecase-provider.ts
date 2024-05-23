@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@angular/core";
 import { ICategoryApiService } from "../../../categories/domain/interfaces/category-api.interface";
-import { HTTP_TRAINER_SERVICE } from "./category-api-provider";
+import { HTTP_TRAINER_SERVICE } from "./trainer-api-provider";
 import { TrainerUseCaseService } from "../../application/trainer-use-case.service";
 import { ITrainerApiService } from "../../domain/interfaces/trainer-api.interface.";
 

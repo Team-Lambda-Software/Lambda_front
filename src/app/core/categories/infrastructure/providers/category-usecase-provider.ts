@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@angular/core";
-import { CategoryUseCaseService } from "../../application/course-use-case.service";
+import { CategoryUseCaseService } from "../../application/category-use-case.service";
 import { HTTP_CATEGORY_SERVICE } from "./category-api-provider";
 import { ICategoryApiService } from "../../domain/interfaces/category-api.interface";
 

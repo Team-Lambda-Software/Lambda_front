@@ -1,0 +1,18 @@
+<section class="mx-4 py-7">
+  <div class="flex justify-between items-end dark:text-white">
+    <h1 class="text-xl font-bold">{{'popular-courses'| transloco}}</h1>
+    <div class="flex items-center text-gray-500 pr-2" [routerLink]="['/home/main-course']">
+      <a class="text-sm mx-2 dark:text-white">{{'see-all' | transloco}}</a>
+      <span class="fas fa-chevron-right"></span>
+    </div>
+  </div>
+  @if (isLoadingPopularCourses) {
+    <div class="carrousel flex gap-5 mt-4">
+      @for (item of [1,2,3,4]; track $index) {
+        <app-square-skeleton [dimensions]="{width: '164px', heigth: '150px'}" />
+      }
+    </div>
+  } @else {
+    <app-carrusel-bg-img [items]="popularCourses" />
+  }
+</section>

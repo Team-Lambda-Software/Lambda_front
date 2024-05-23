@@ -1,0 +1,29 @@
+<section class="mx-4 py-7">
+  <div class="flex justify-between items-end dark:text-white">
+    <h1 class="text-xl font-bold">{{'our-latest-blogs'| transloco}}</h1>
+    <div class="flex items-center text-gray-500 pr-2" [routerLink]="['/home/main-blogs']">
+      <a class="text-sm mx-2 dark:text-white">{{'see-all' | transloco}}</a>
+      <span class="fas fa-chevron-right"></span>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 mt-4 gap-4 justify-center">
+    @if (isLoadingBlogs) {
+      @for (item of [1,2,3,4]; track $index) {
+        <app-square-skeleton [dimensions]="{width: '175px', heigth: '175px'}" />
+      }
+    } @else {
+      @for (blog of latestBlogs; track blog.id) {
+        <article class="rounded-lg w-[190px] p-2 ">
+          <img [src]="blog.image" alt="course" class="w-full h-36 object-cover rounded-xl">
+          <div class="p-4">
+            <h1 class="text-lg font-bold text-wrap dark:text-white">{{ blog.name }}</h1>
+            <div class="flex justify-between mt-3">
+              <p class="text-sm text-gray-500 text-wrap dark:text-white">{{ blog.description }}</p>
+            </div>
+          </div>
+        </article>
+      }
+    }
+  </div>
+</section>

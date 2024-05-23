@@ -10,7 +10,7 @@ import { TranslocoHttpLoader } from './transloco-loader';
 import { authInterceptor } from './presentation/shared/interceptors/auth/auth.interceptor';
 import { COURSE_API_PROVIDER } from './core/course/infrastructure/providers/course-api-provider';
 import { CATEGORY_API_PROVIDER } from './core/categories/infrastructure/providers/category-api-provider';
-import { TRAINER_API_PROVIDER } from './core/trainer/infrastructure/providers/category-api-provider';
+import { TRAINER_API_PROVIDER } from './core/trainer/infrastructure/providers/trainer-api-provider';
 import { BLOG_API_PROVIDER } from './core/blog/infrastructure/providers/blog-api-provider';
 
 export const appConfig: ApplicationConfig = {
