@@ -12,7 +12,6 @@ import { COURSE_API_PROVIDER } from './core/course/infrastructure/providers/cour
 import { CATEGORY_API_PROVIDER } from './core/categories/infrastructure/providers/category-api-provider';
 import { TRAINER_API_PROVIDER } from './core/trainer/infrastructure/providers/trainer-api-provider';
 import { BLOG_API_PROVIDER } from './core/blog/infrastructure/providers/blog-api-provider';
-import { provideAngularSvgIcon } from 'angular-svg-icon';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -44,7 +43,6 @@ export const appConfig: ApplicationConfig = {
     COURSE_API_PROVIDER,
     CATEGORY_API_PROVIDER,
     BLOG_API_PROVIDER,
-    TRAINER_API_PROVIDER,
-    provideAngularSvgIcon()
-  ],
+    TRAINER_API_PROVIDER
+  ]
 };

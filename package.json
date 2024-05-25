@@ -23,7 +23,6 @@
     "@angular/service-worker": "17.3.0",
     "@jsverse/transloco": "^7.4.0",
     "@swimlane/ngx-charts": "^20.5.0",
-    "angular-svg-icon": "^17.0.0",
     "animate.css": "^4.1.1",
     "rxjs": "7.8.0",
     "sweetalert2": "^11.10.8",

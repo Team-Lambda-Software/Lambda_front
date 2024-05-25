@@ -5,18 +5,11 @@ import { SquareSkeletonComponent } from '../../../../../shared/components/square
 import { CategoyUsecaseProvider } from '../../../../../../core/categories/infrastructure/providers/category-usecase-provider';
 import { finalize } from 'rxjs';
 import { Category } from '../../../../../../core/categories/domain/category.model';
-import { AngularSvgIconModule, SvgIconComponent, provideAngularSvgIcon  } from 'angular-svg-icon';
 
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [
-    RouterLink,
-    TranslocoModule,
-    SquareSkeletonComponent,
-    SvgIconComponent
-  ],
-  // providers: [AngularSvgIconModule],
+  imports: [RouterLink, TranslocoModule, SquareSkeletonComponent],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css'
 })
