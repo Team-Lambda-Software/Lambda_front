@@ -1,4 +1,4 @@
-export class Result<T> {
+class Result<T> {
   private value: T;
   private _error: Error;
   private _isError: boolean;

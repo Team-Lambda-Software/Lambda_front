@@ -1,0 +1,67 @@
+.sidebar {
+  width: 312.5px;
+  padding: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100dvh;
+  border-radius: 0px 0px 82px 0px;
+  transform: translateX(-101%);
+  transition: all 300ms;
+  z-index: 15;
+  overflow-y: scroll;
+}
+
+.sidebar.active {
+  transform: translateX(0);
+}
+
+.backdrop {
+  position: absolute;
+  background: #0000004f;
+  inset: 0;
+  z-index: 10;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+}
+
+.sidebar ul li:not(:first-child) {
+  border-bottom: 2px solid rgba(255, 255, 255, .2);
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 15px;
+}
+
+.sidebar ul li a span {
+  width: 50px;
+}
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.accordion-content button {
+  width: 100%;
+  padding: 1rem 0;
+}
+
+.accordion-content button:not(:last-child) {
+  border-bottom: solid 1px rgba(255, 255, 255, .2);
+}
+
+.accordion-content.max-h-max {
+  max-height: max-content;
+}

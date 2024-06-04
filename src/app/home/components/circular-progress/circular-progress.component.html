@@ -1,0 +1,10 @@
+<svg class="svg-indicator" viewBox="0 0 100 100" width="83" height="83">
+  <circle class="svg-indicator-track dark-mode-fill" cx="50" cy="50" r="40"></circle>
+  <circle class="svg-indicator-indication" cx="50" cy="50" r="40" 
+           [attr.stroke-dasharray]="getCircumference()" [attr.stroke-dashoffset]="getStrokeDashoffset()"
+           transform="rotate(90 50 50)"></circle>
+  <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-size="20">
+    <tspan class="first-line" x="50%" dy="-0.3em">{{ progress }}%</tspan>
+    <tspan class="second-line" x="50%" dy="1.4em">Done</tspan> 
+  </text>
+</svg>
