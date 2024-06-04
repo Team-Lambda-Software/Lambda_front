@@ -9,9 +9,13 @@ import { CoursesPopularService } from '../../services/courses/getPopulars/course
 import { CourseLevelService } from '../../services/courses/getByLevel/course-level.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { CourseCardAdapter } from '../../adapters/CardAdapter';
+import { CourseCardAdapter, PopularCourseCardAdapter } from '../../adapters/CardAdapter';
 import { CourseTagAdapter } from '../../adapters/TagAdapter';
 import { SearchService } from '../../services/search/search.service';
+import { SearchUsecaseProvider } from '../../../../core/search/infraestructure/providers/search-api-usecase-provider';
+import { SearchModel } from '../../../../core/search/domain/search-model';
+import { CourseUsecaseProvider } from '../../../../core/course/infrastructure/providers/course-usecase-provider';
+import { finalize, map } from 'rxjs';
 
 interface ITag {
   id: number;
@@ -28,9 +32,11 @@ interface ITag {
 export class SearchPageComponent {
 
   public inputSearch: string = '';
-  public programService = inject(CourseLevelService);
-  public popularService = inject(CoursesPopularService);
-  public searchService = inject(SearchService);  
+  public program: SearchModel = {blogs: [], courses: []};
+  public popularService = inject(CourseUsecaseProvider);
+  public searchService = inject(SearchUsecaseProvider);
+  public popularCourses: ICard[] = [];
+  public isLoading = false;  
 
   public categories: ITag[] = [
     { id: 1, name: 'Prenatal' },
@@ -47,17 +53,29 @@ export class SearchPageComponent {
 
   constructor() { }
 
-  adaptCard(): ICard[]{
-    let cursos = this.popularService.getPopulars();
-    return cursos.map(course => CourseCardAdapter(course));
+  ngOnInit(): void {
+    this.getPopulars();
   }
 
-  adaptTag(): IProgram[]{
-    let cursos = this.programService.getAll();
-    return cursos.map(course => CourseTagAdapter(course));
+  public getPopulars(): void {
+    this.isLoading = true
+    this.popularService.usecase.getCoursesByParams('?filter=POPULAR')
+      .pipe(
+        map(courses => courses.map(PopularCourseCardAdapter)),
+        finalize(() => this.isLoading = false),
+      ).subscribe(pc => this.popularCourses = pc)
   }
+
 
   getBySearch() {
-    this.searchService.getBySearch(this.inputSearch);
+    this.isLoading = true;
+    let response =this.searchService.usecase.getBySearch(this.inputSearch)
+      if(response.isError()){
+        
+      }
+      response.getValue()
+      .subscribe((data) => console.log(data)
+    )
+    this.isLoading = false;
   }
 }

@@ -1,0 +1,30 @@
+.accordion-item {
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.accordion-label {
+  padding: 10px 0;
+}
+
+.accordion-content {
+  overflow: hidden;
+  transition: height 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+.carrousel{
+  scroll-behavior: auto;
+  overflow-y: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.tag-selected-dark {
+  background-color: white !important;
+  color: rgb(126,34,206) !important;
+}
+
+.tag-selected-light {
+  color: white !important;
+}

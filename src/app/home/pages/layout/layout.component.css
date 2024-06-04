@@ -1,0 +1,11 @@
+#container{
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+main{
+  flex: 1;
+  overflow-y: scroll;
+}
