@@ -11,6 +11,7 @@ import { TranslocoModule } from '@jsverse/transloco';
 import { AsyncPipe } from '@angular/common';
 import { CourseUsecaseProvider } from '../../../../../core/course/infrastructure/providers/course-usecase-provider';
 import { Course } from '../../../../../core/course/domain/course.model';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-main-course',
@@ -21,7 +22,8 @@ import { Course } from '../../../../../core/course/domain/course.model';
     CarruselBgImgComponent,
     TranslocoModule,
     RouterLink,
-    AsyncPipe
+    AsyncPipe,
+    MatExpansionModule,
   ],
   templateUrl: './main-course.component.html',
   styleUrl: './main-course.component.css'
@@ -44,9 +46,9 @@ export class MainCourseComponent {
     });
   }
 
-  adaptCourseToLittleCard(course: ICourse): ILittleCard {
-    return CourseLitleCardAdapter(course);
-  }
+  // adaptCourseToLittleCard(course: ICourse): ILittleCard {
+  //   return CourseLitleCardAdapter(course);
+  // }
 
   getById() {
     this.courseUseCaseService.usecase.getById(this.id!)
@@ -54,7 +56,7 @@ export class MainCourseComponent {
   }
 
   public getPopulars(): Observable<ILittleCard[]> {
-    return this.courseUseCaseService.usecase.getCoursesByParams('?filter=POPULAR')
+    return this.courseUseCaseService.usecase.getCoursesByParams('?filter=POPULAR&perPage=5')
       .pipe(map(courses => courses.map(PartialCourseToILittleCard)))
   }
 

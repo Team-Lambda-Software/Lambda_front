@@ -47,8 +47,28 @@
         <span class="text-lg font-bold">{{course?.durationMinutes}}</span>
       </div>
     </div>
-
   </div>
+</section>
+
+<section class="my-8 mx-4">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <div class="flex flex-1 justify-between items-center">
+        <h1 class="text-xl dark:text-white font-bold">
+          {{'sections' | transloco}}
+        </h1>
+        <span class="text-purple-600 font-semibold px-4">({{course?.lessons?.length}})</span>
+      </div>
+    </mat-expansion-panel-header>
+    <ol class="grid grid-cols-1 gap-2">
+      @for (item of course?.lessons; track $index) {
+        <li class="flex justify-between items-center my-2 text-gray-500 hover:bg-violet-300 hover:text-purple-700 py-2 px-4 rounded-md">
+          <div class="text-lg font-semibold dark:text-white  ">{{item.title}}</div>
+          <span class="fa-solid fa-play text-lg dark:text-white"></span>
+        </li>
+      }
+    </ol>
+  </mat-expansion-panel>
 </section>
 
 <section class="mx-4 my-6 animate__animated animate__fadeIn">
