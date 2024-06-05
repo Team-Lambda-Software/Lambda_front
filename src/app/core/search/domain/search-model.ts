@@ -3,7 +3,7 @@ export interface SearchModel {
     courses: Body[];
 }
 
-interface Body {
+export interface Body {
     id:       string;
     title:    string;
     image:    string;

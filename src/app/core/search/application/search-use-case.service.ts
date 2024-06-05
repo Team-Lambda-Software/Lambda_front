@@ -9,7 +9,7 @@ export class SearchUseCaseService implements ISearchUseCase{
     
     getBySearch(terms?: string): Result<Observable<SearchModel>>{
         if (!terms) {
-            return Result.makeError(new Error('No search terms provided'));
+            return Result.makeError(new Error('Terms are required'));
         }
         return Result.makeResult(this._searchApiService.getBySearch(terms));
     }
