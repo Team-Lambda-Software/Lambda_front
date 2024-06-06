@@ -15,6 +15,7 @@ export class ProxyCourseUseCase implements ICourseUseCase {
         if (!this._popularCourses) {
             this._popularCourses = this._courseUseCaseService.getCoursesByParams('?filter=POPULAR&perPage=5');
         }
+        console.log('ProxyCourseUseCase: fetching popular courses');
         return this._popularCourses;
     }
 
