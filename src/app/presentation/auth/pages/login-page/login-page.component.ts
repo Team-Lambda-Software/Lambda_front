@@ -40,7 +40,7 @@ export class LoginPageComponent {
   public LogInbuttonName="login"
   public SignInbuttonName='sign up'
   public ForgetYourPassword="forget your password"
-  public DontHaveAnAccount="Don't have an account ? "
+  public DontHaveAnAccount="don't have an account ?"
 
   public loginForm :FormGroup=this.fb.group({
     email:['',[Validators.required,Validators.pattern(this.validatorService.emailPattern)]],

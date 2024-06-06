@@ -1,6 +1,7 @@
-export interface UserState {
-  email:          string;
-  firstLastName:  string;
-  firstName:      string;
-  secondLastName: string;
+export interface User {
+  id:    string;
+  email: string;
+  name:  string;
+  phone: string;
+  photo?: string;
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, Signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
@@ -15,6 +15,8 @@ import { IVideoCourses } from '../../interfaces/video-courses-model';
 import { IUser } from '../../interfaces/user-info-model';
 import { IPlayerCard } from '../../interfaces/IPlayerCard';
 import { PlayerCardAdapter } from '../../adapters/PlayerCardAdapter';
+import { AuthService } from '../../../auth/services/auth.service';
+import { User } from '../../../auth/interfaces/user-state.interface';
 
 @Component({
   selector: 'app-home-page',
@@ -39,6 +41,7 @@ export class HomePageComponent implements OnInit {
 
   public popularService = inject(CoursesPopularService);
   public userInfo = inject(UserInfoService);
+  public auth= inject(AuthService)
 
 
   public videoCourses: IVideoCourses[] = [
@@ -76,8 +79,8 @@ export class HomePageComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public getUserInfo(): IUser {
-    let info = this.userInfo.getUserInfo();
+  public getUserInfo(): Signal<User | null> {
+    let info = this.auth.currentUser()
     return info;
   }
 

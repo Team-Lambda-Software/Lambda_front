@@ -4,7 +4,7 @@ import { enviroment } from '../../../../environments/environment';
 import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { AuthStatus } from '../interfaces/auth-status.enum';
 import { LoginResponse } from '../interfaces/response/login-response.interface';
-import { UserState } from '../interfaces/user-state.interface';
+import { User } from '../interfaces/user-state.interface';
 import { SignUpUser } from '../interfaces/signup-user.interface';
 import { SignUpResponse } from '../interfaces/response/signup-response.interface';
 import { GetCodeResponse } from '../interfaces/response/getCode-response.interface';
@@ -25,7 +25,7 @@ export class AuthService {
   private router = inject(Router);
   private readonly baseUrl:string= enviroment.baseUrl
   private http= inject(HttpClient)
-  private _currentUser=signal <UserState |null>(null)
+  private _currentUser=signal <User |null>(null)
   private _authStatus= signal<AuthStatus>(AuthStatus.notAuthenticated);
   private localStorage:LocalStorage= new LocalStorage('','');
   private code=new Optional<string>(undefined);
@@ -44,9 +44,10 @@ export class AuthService {
   private changeError(){
     this._hasError=!this._hasError
   }
-  private setAuthtication(newUser:UserState):boolean{
+  private setAuthtication(newUser:User):boolean{
     this._currentUser.set(newUser)
     this.setAuthenticaded()
+    console.log(this._currentUser());
     return true
   }
 
@@ -61,12 +62,29 @@ export class AuthService {
     this._authStatus.set(AuthStatus.notAuthenticated)
   }
 
-  private createUser(responseData:LoginResponse):UserState{
-    const {token,...response}= responseData
-    let newUser:UserState={
-      ...response,
+  private createUser(responseData:LoginResponse):User{
+    const {token,type,...response}= responseData
+    let newUser:User={
+      ...response.user
     }
     return newUser
+  }
+
+  current():Observable<boolean>{
+    const url=`${this.baseUrl}/auth/current`
+    const token=this.localStorage.LoadLocalStorage('token')
+
+    if( !token.hasValue()) return (of(false))
+
+    const headers= new HttpHeaders()
+    .set('Authorization',`Bearer ${token.getValue()}`)
+
+    return this.http.get<User>(url,{headers})
+      .pipe(
+        map((response)=>{
+          return true
+        })
+      )
   }
 
 
@@ -95,16 +113,17 @@ export class AuthService {
 
     signup(user:SignUpUser):Observable<boolean>{
 
-      const url=`${this.baseUrl}/auth/signupuser`
-      const body={...user,}
+      const url=`${this.baseUrl}/auth/register`
+      const body={...user}
       this.setChecking();
 
       return this.http.post<SignUpResponse>(url,body)
         .pipe(
           map((response)=>{
-            let newUser=this.createUser(response);
-            this.localStorage.SaveLocalStorage('token',response.token)
-            return this.setAuthtication(newUser)
+            this.login(user.email,user.password)
+            this.setAuthenticaded();
+
+            return true
             // console.log(response);
           }),
           catchError(error=>{
