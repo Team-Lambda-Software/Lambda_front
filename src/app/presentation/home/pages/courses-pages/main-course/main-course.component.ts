@@ -10,9 +10,10 @@ import { CarruselBgImgComponent } from '../../../components/carrusel-bg-img/carr
 import { TranslocoModule } from '@jsverse/transloco';
 import { AsyncPipe } from '@angular/common';
 import { CourseUsecaseProvider } from '../../../../../core/course/infrastructure/providers/course-usecase-provider';
-import { Course } from '../../../../../core/course/domain/course.model';
+import { Course, Lesson } from '../../../../../core/course/domain/course.model';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { PlayerVideoComponent } from '../player-video/player-video.component';
+import { NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-main-course',
@@ -46,6 +47,11 @@ export class MainCourseComponent {
         this.popularCourses$ = this.getPopulars();
       } else this.router.navigate(['/home'])
     });
+  }
+
+  goToPlayer(lesson: Lesson){
+    const data: NavigationExtras = {state: {lesson, courseId: this.id}}
+    this.router.navigate(['/home/player-video'], data);
   }
 
   // adaptCourseToLittleCard(course: ICourse): ILittleCard {

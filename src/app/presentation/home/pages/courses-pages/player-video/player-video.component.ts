@@ -1,6 +1,7 @@
-import { Component, inject, Input } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Component, OnInit, Input } from '@angular/core';
+import { Router, ActivatedRoute,RouterLink } from '@angular/router';
 import { BasicHeaderComponent } from '../../../components/basic-header/basic-header.component';
+import { Lesson } from '../../../../../core/course/domain/course.model';
 
 interface PlayerOptions {
   redirect?: string;
@@ -17,6 +18,19 @@ interface PlayerOptions {
   styleUrl: './player-video.component.css'
 })
 export class PlayerVideoComponent {
-  @Input({ required: true }) public options!: PlayerOptions
+  lesson: Lesson | undefined;
+  courseId: string | undefined;
   
+  constructor(private route: ActivatedRoute, private router: Router) {
+    this.lesson = this.router.getCurrentNavigation()?.extras?.state?.['lesson'];
+    this.courseId = this.router.getCurrentNavigation()?.extras?.state?.['courseId'];
+    if (!this.lesson && this.courseId) {
+      this.router.navigate(['/home/main-course'], { queryParams: { id: this.courseId } });
+    } else if (!this.lesson) {
+      this.router.navigate(['/home']);
+    }
+    console.log(this.lesson);
+    console.log(this.courseId);
+    
+  }
 }
