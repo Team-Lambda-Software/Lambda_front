@@ -7,10 +7,11 @@
         <p class="font-medium text-lg">{{userInfo.getUserInfo().id}}</p>
       </span>
     </div>
-    <div class="rounded-lg bg-slate-100 shadow-md py-1 p-4 flex items-center mx-4 gap-2 ">
-      <input type="text" class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
-        placeholder="{{'search' | transloco}}">
-      <button type="submit" class="fas fa-search fa-xl text-gray-400" [routerLink]="['/home/search']"></button>
+    <div class="rounded-lg bg-slate-100 shadow-md p-3 flex items-center mx-4 gap-2 " [routerLink]="['/home/search']">
+      <input  type="text"
+              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
+              placeholder="Search">
+      <button type="submit" class="fas fa-search fa-xl text-gray-400"></button>
     </div>
     <div class="mx-4 py-4"></div>
   </nav>

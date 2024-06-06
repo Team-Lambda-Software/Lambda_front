@@ -33,7 +33,11 @@ export class PopularCoursesComponent implements OnInit {
 
   public getPopulars(): void {
     this.isLoadingPopularCourses = true
+<<<<<<< HEAD
     this.courseUseCaseService.usecase.getPopularCourses()
+=======
+    this.courseUseCaseService.usecase.getCoursesByParams('?filter=POPULAR&perPage=5')
+>>>>>>> 089ac98da2957ee8b1291a8fe445cb8bbe6a3658
       .pipe(
         map(courses => courses.map(PartialCourseToILittleCard)),
         finalize(() => this.isLoadingPopularCourses = false),
