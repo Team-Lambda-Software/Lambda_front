@@ -12,6 +12,7 @@ import { AsyncPipe } from '@angular/common';
 import { CourseUsecaseProvider } from '../../../../../core/course/infrastructure/providers/course-usecase-provider';
 import { Course } from '../../../../../core/course/domain/course.model';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { PlayerVideoComponent } from '../player-video/player-video.component';
 
 @Component({
   selector: 'app-main-course',
@@ -24,6 +25,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     RouterLink,
     AsyncPipe,
     MatExpansionModule,
+    PlayerVideoComponent
   ],
   templateUrl: './main-course.component.html',
   styleUrl: './main-course.component.css'

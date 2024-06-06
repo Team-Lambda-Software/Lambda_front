@@ -25,7 +25,7 @@
         <span class="fas fa-bars text-purple-700 dark:text-white"></span>
       </div>
       <div class="flex flex-col">
-        <span class="text-gray-500 dark:text-white font-semibold">Level</span>
+        <span class="text-gray-500 dark:text-white font-semibold">{{'level' | transloco}}</span>
         <span class="text-lg font-bold">{{course?.level}}</span>
       </div>
     </div>
@@ -34,7 +34,7 @@
         <span class="fa-regular fa-calendar-days text-purple-700 dark:text-white text-lg"></span>
       </div>
       <div class="flex flex-col">
-        <span class="text-gray-500 dark:text-white font-semibold ">Weeks</span>
+        <span class="text-gray-500 dark:text-white font-semibold ">{{"weeks" | transloco}}</span>
         <span class="text-lg font-bold">{{course?.durationWeeks}}</span>
       </div>
     </div>
@@ -63,6 +63,7 @@
     <ol class="grid grid-cols-1 gap-2">
       @for (item of course?.lessons; track $index) {
         <li class="flex justify-between items-center my-2 text-gray-500 hover:bg-violet-300 hover:text-purple-700 py-2 px-4 rounded-md">
+
           <div class="text-lg font-semibold dark:text-white  ">{{item.title}}</div>
           <span class="fa-solid fa-play text-lg dark:text-white"></span>
         </li>
@@ -70,13 +71,10 @@
     </ol>
   </mat-expansion-panel>
 </section>
-
-<section class="mx-4 my-6 animate__animated animate__fadeIn">
-  <h2 class="text-xl font-bold dark:text-white">Most More Popular Courses</h2>
-
+  
   <section class="mx-4 py-7">
     <div class="flex justify-between items-end dark:text-white">
-      <h1 class="text-xl font-bold">{{'popular-courses'| transloco}}</h1>
+      <h2 class="text-xl font-bold dark:text-white">{{'most-more-popular-courses' | transloco}}</h2>
       <div class="flex items-center text-gray-500 pr-2" [routerLink]="['/home/main-course']">
         <a class="text-sm mx-2 dark:text-white">{{'see-all' | transloco}}</a>
         <span class="fas fa-chevron-right"></span>
@@ -84,5 +82,3 @@
     </div>
     <app-carrusel-bg-img [items]="(popularCourses$ | async) || []" />
   </section>
-
-</section>

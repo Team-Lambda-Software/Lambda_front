@@ -62,5 +62,8 @@
   "update Password":"Actualizar Contraseña",
   "password Changed":"Contraseña ha cambiado",
   "congratulations You have successfully changed your password":"Felcitaciones Usted ha cambiado exitosamente su contraseña",
-  "back to login":"Regresar a Iniciar Sesion"
+  "back to login":"Regresar a Iniciar Sesion",
+  "sections":"Secciones",
+  "weeks": "Semanas",
+  "most-more-popular-courses": "Cursos mas populares"
 }
