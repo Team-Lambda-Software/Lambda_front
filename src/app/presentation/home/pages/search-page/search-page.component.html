@@ -43,7 +43,7 @@
                                 <h2 class=" font-semibold text-gray-400 dark:text:white px-5">{{"found: " | transloco}}( {{this.program.courses.length}} )</h2>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
-                    <app-programs-tag [programs]="adaptToTag(this.program.courses)"/>
+                    <app-programs-tag [programs]="adaptToTag(this.program.courses)" [redirect]="'/home/main-course'"/>
                 </mat-expansion-panel>
             }
             @else {
@@ -63,7 +63,7 @@
                                 <h2 class=" font-semibold text-gray-400 dark:text:white px-5">{{"found: " | transloco}}( {{this.program.courses.length}} )</h2>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
-                    <app-programs-tag [programs]="adaptToTag(this.program.blogs)"/>
+                    <app-programs-tag [programs]="adaptToTag(this.program.blogs)" [redirect]="'/home/main-blogs'"/>
                 </mat-expansion-panel>
             }
             @else {

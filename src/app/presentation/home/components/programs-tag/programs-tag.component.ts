@@ -13,7 +13,8 @@ import { IProgram } from '../../interfaces/ILittleCard';
 })
 export class ProgramsTagComponent {
 
-  @Input({ required: true }) public programs!: IProgram[]
+  @Input({ required: true }) public programs!: IProgram[];
+  @Input({ required: false }) public redirect?: string;
 
   constructor() {}
 }
