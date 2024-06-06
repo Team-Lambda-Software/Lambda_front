@@ -55,7 +55,7 @@ export class SearchPageComponent {
 
   public getPopulars(): void {
     this.isLoading = true
-    this.popularService.usecase.getCoursesByParams('?filter=POPULAR&perPage=5')
+    this.popularService.usecase.getPopularCourses()
       .pipe(
         map(courses => courses.map(PopularCourseCardAdapter)),
         finalize(() => this.isLoading = false),

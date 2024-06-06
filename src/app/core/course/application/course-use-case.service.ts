@@ -10,6 +10,10 @@ export class CourseUseCaseService implements ICourseUseCase {
 		return this._courseApiService.getCoursesByParams(params);
 	}
 
+  getPopularCourses(): Observable<PartialCourse[]> {
+    return this._courseApiService.getCoursesByParams('?filter=POPULAR&perPage=5');
+  }
+
   searchCourse(valueToSearch: string): Observable<Course[]> {
     return this._courseApiService.searchCourse(valueToSearch);
   }
