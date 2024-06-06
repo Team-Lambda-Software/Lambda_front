@@ -37,8 +37,8 @@
   "I don't receibe a dode!":"I don't receibe a dode!",
   "please resend":"Please Resend",
   "create Password":"Create Password",
-  "Create a new password and please never share it with anyone for safe use":"Create a new password and please never share it with anyone for safe use",
-  "update Password":"Update Password",
+  "create a new password and please never share it with anyone for safe use":"Create a new password and please never share it with anyone for safe use",
+  "update password":"Update Password",
   "password Changed":"Password Changed",
   "congratulations You have successfully changed your password":"Congratulations You have successfully changed your password",
   "back to login":"Back to login",
@@ -62,6 +62,6 @@
   "Back to feed": "Back to feed",
   "Cant find notifications": "Cant find notifications",
   "Lets explore more content around you": "Lets explore more content around you",
-  "Inbox": "Inbox" 
+  "Inbox": "Inbox"
 }
 

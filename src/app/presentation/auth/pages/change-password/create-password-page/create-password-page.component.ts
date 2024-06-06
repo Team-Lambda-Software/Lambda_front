@@ -44,7 +44,7 @@ export class CreatePasswordPageComponent {
 )
   public title='create Password'
   public subtitle='create a new password and please never share it with anyone for safe use'
-  public updatePassword='update Password'
+  public updatePassword='update password'
 
   isValidField(field:string){
     return this.validatorService.isValidField(this.createPasswordForm,field)
@@ -58,8 +58,9 @@ export class CreatePasswordPageComponent {
         if (password){
           this.authService.updatePassword(password)
           .subscribe({
-            next:()=> this.router.navigateByUrl('/auth/confirmpassword'),
+            next:(value)=> value.status==200 ? this.router.navigateByUrl('/auth/confirmpassword') : Swal.fire('Error','The status response is not 200','error'),
             error:(error)=>{
+              console.log(error);
               Swal.fire('Error',error,'error')
             }
           })

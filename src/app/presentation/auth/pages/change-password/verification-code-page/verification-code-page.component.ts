@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject,ElementRef,viewChild, ViewChild, signal } from '@angular/core';
+import { Component, inject, ElementRef, viewChild, ViewChild, signal, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { DarkModeService } from '../../../../shared/services/dark-mode/dark-mode.service';
 import { LocalStorage } from '../../../services/LocalStorage';
@@ -21,7 +21,8 @@ import Swal from 'sweetalert2';
 })
 
 
-export class VerificationCodePageComponent{
+export class VerificationCodePageComponent implements OnInit{
+
   private authService=inject(AuthService)
   public darkModeService = inject(DarkModeService);
   private router= inject(Router)
@@ -51,11 +52,40 @@ export class VerificationCodePageComponent{
   public subtitle="please type the verification code sent to"
   public buttonVerificateCode="verificate code"
   public iDontReceive="I don't receibe a dode!"
-  public pleaseResend="please Resend"
+  public pleaseResend="please resend"
+
+  ngOnInit(): void {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "bottom",
+      showConfirmButton: false,
+      timer: 5000,
+      timerProgressBar: true,
+    });
+    Toast.fire({
+      icon: "info",
+      title: "Code was send successfully, the code sent is valid for 5 minutes",
+      showClass: {
+        popup: `
+          animate__animated
+          animate__fadeInUp
+          animate__faster
+        `
+      },
+      hideClass: {
+        popup: `
+          animate__animated
+          animate__fadeOutDown
+          animate__faster
+        `
+      }
+    });
+  }
+
   resendCode(){
     const email=this.email;
-    Swal.fire('Info',`Code resend to ${email.getValue()}`,'info')
     if (email.hasValue())
+      Swal.fire('Info',`Code resend to ${email.getValue()}`,'info')
       this.authService.getCodeUpdatePassword(email.getValue())
     .subscribe({
       error:(error)=>{
@@ -66,15 +96,13 @@ export class VerificationCodePageComponent{
 
   verificateCode(){
     if (this.verificationCodeForm.valid){
-      const answer=this.authService.verificateLocalCode(this.verificationCodeForm)
-      console.log(answer);
-
-      if (answer){
-        this.router.navigateByUrl('/auth/createpassword')
-      }
-      else{
-        Swal.fire('Error','Something went wrong','error')
-      }
+      this.authService.verificateLocalCode(this.verificationCodeForm).subscribe({
+        next:(value)=> value.status==201 ? this.router.navigateByUrl('/auth/createpassword') : Swal.fire('Error','The status response is not 201','error'),
+        error:(error)=>{
+          console.log(error);
+          Swal.fire('Error',error,'error')
+        }
+      })
     }
   }
 }

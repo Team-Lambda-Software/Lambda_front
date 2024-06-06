@@ -1,5 +1,5 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
 import { enviroment } from '../../../../environments/environment';
 import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { AuthStatus } from '../interfaces/auth-status.enum';
@@ -136,7 +136,7 @@ export class AuthService {
 
   getCodeUpdatePassword(email:string):Observable<GetCodeResponse>{
 
-    const url=`${this.baseUrl}/auth/getcodeupdatepassword`;
+    const url=`${this.baseUrl}/auth/forget/password`;
     const body={email}
     this.localStorage.SaveLocalStorage('email',email)
     this.setChecking();
@@ -146,12 +146,10 @@ export class AuthService {
         map((response)=>{
           this.localStorage.SaveLocalStorage('date',response.date.toString())
           this._hasCode=true
-          this.email=response.email
-          this.code.setValue(response.code);
-          console.log(response.code);
+          console.log(response.date);
+          console.log(new Date( response.date + 1000 * (60 * 5) )
+        )
           this.setNotAuthenticated();
-
-          // console.log(JSON.stringify(this._hasCode));
           return response
         }),
         catchError(error=>{
@@ -184,44 +182,49 @@ export class AuthService {
       )
   }
 
-  verificateLocalCode(verificationCodeForm:FormGroup<VerificationCodeForm>):boolean{
+  verificateLocalCode(verificationCodeForm:FormGroup<VerificationCodeForm>):Observable<HttpResponseBase>{
     let data=verificationCodeForm.value
     let numbers=Object.values(data);
     let code:string=numbers.join('')
+    let email:string=this.email
+    const url=`${this.baseUrl}/auth/code/validate`
     this.setChecking();
+    const body={email,code}
 
-    // console.log(this.code.getValue());
-    // console.log(code);
+    return this.http.post<HttpResponseBase>(url,body,{ observe: 'response' })
+      .pipe(
+        map((response)=>{
+          this.setNotAuthenticated();
+          console.log(response);
+          this._hasCodeVerified=(true);
+          this.code=new Optional(code)
+          return response
+        }),
+        catchError(error=>{
+          this.setNotAuthenticated();
+          console.log(error);
+          return throwError(()=>error.error.message)
+        })
+      )
 
-    if (this.code.hasValue()){
-      if (this.code.getValue()===code){
-        this.setNotAuthenticated();
-        this._hasCodeVerified=true
-        // this.localStorage.deleteLocalStorage('code')
-        return true
-      }
-    }
-    this.setNotAuthenticated();
-    return false
   }
 
-  updatePassword(password:string):Observable<boolean>{
+  updatePassword(password:string):Observable<HttpResponseBase>{
 
-    const url=`${this.baseUrl}/auth/updatepassword`
+    const url=`${this.baseUrl}/auth/change/password`
     const body={
       email:this.email,
       password,
       code:this.code.getValue()
     }
     this.setChecking();
-
     console.log(body);
 
-    return this.http.post<UpdatePasswordResponse>(url,body)
+    return this.http.put<HttpResponseBase>(url,body,{ observe: 'response' })
       .pipe(
         map((response)=>{
           this.setNotAuthenticated()
-          return true
+          return response
         }),
         catchError(error=>{
           this.setNotAuthenticated()
