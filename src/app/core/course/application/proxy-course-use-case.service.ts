@@ -13,7 +13,7 @@ export class ProxyCourseUseCase implements ICourseUseCase {
 
     getPopularCourses(): Observable<PartialCourse[]> {
         if (!this._popularCourses) {
-            this._popularCourses = this._courseUseCaseService.getCoursesByParams('?filter=POPULAR&perPage=5');
+            this._popularCourses = this._courseUseCaseService.getPopularCourses();
         }
         console.log('ProxyCourseUseCase: fetching popular courses');
         return this._popularCourses;
