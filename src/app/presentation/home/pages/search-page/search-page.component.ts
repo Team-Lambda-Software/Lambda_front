@@ -62,7 +62,6 @@ export class SearchPageComponent {
       ).subscribe(pc => this.popularCourses = pc)
   }
 
-
   getBySearch() {
     this.isLoading = true;
     let response =this.searchService.usecase.getBySearch(this.inputSearch)
@@ -88,8 +87,5 @@ export class SearchPageComponent {
       )
       return res;
   }
-}
-function signal<T>(arg0: { blogs: never[]; courses: never[]; }): SearchModel {
-  throw new Error('Function not implemented.');
 }
 
