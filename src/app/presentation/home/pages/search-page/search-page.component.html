@@ -1,31 +1,78 @@
 <nav class="relative">
-    <app-basic-header  [options]="{redirect: '/home/main', name: 'popular-search'}" style="position: relative;"/>
-    
+    <app-basic-header [options]="{redirect: '/home/main', name: 'popular-search'}" style="position: relative;" />
+
     <div class="absolute top-[80px] left-1/2 transform -translate-x-1/2 w-full">
         <div class="rounded-lg bg-slate-100 shadow-md p-4 flex items-center mx-5 gap-2">
-            <input [(ngModel)]="inputSearch" type="text" class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none" placeholder="Search">
+            <input [(ngModel)]="inputSearch" type="text"
+                class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
+                placeholder="Search">
             <span class="fas fa-search fa-xl text-gray-400" (click)="getBySearch()"></span>
         </div>
     </div>
 </nav>
 
 <div class="animate__animated animate__fadeIn">
-  <div class="flex flex-wrap m-4 gap-x-3 gap-y-2 pt-10">
-      @for (item of categories; track item.id) {
-              <div class=" bg-gray-300 hover:bg-purple-700 dark:bg-gray-600 dark:hover:bg-white text-purple-900 hover:text-white dark:text-white dark:hover:text-purple-900 rounded-full shadow-md py-2.5 px-5 flex items-center justify-center ">
-                  <span class="text-md font-thin">{{ item.name }}</span>
-              </div>
-      }
-  </div>
-  
-  <section class="my-8 mx-4">
-      <h1 class="text-xl font-bold dark:text-white">{{'popular-courses' | transloco}}</h1>
-  
-      <app-card-carrusel [items]="adaptCard()"/>
-      
-  </section>
-  
-  <section class="mt-8 mx-4">
-      <app-programs-tag [programs]="adaptTag()"/>
-  </section>
+    <div class="flex flex-wrap m-4 gap-x-3 gap-y-2 pt-10">
+        @for (item of categories; track item.id) {
+        <div
+            class="bg-violet-100 hover:bg-purple-700 dark:bg-gray-600 dark:hover:bg-white text-purple-900 hover:text-white dark:text-white dark:hover:text-purple-900 rounded-full shadow-md flex items-center justify-center ">
+            <span class="text-sm font-extralight py-2 px-6">{{ item.name }}</span>
+        </div>
+        }
+    </div>
+
+    <section class="my-8 mx-4">
+        <h1 class="text-xl font-bold dark:text-white">{{'popular-courses' | transloco}}</h1>
+
+        <app-card-carrusel [items]="this.popularCourses" />
+
+    </section>
+
+    @if(this.isLoading){
+        <div class="flex justify-center items-center h-16">
+            <span class="fas fa-spinner fa-spin fa-2x text-gray-400"></span>
+            <span class="text-gray-400 text-lg ml-2">{{'loading' | transloco}}</span>
+        </div>
+    }@else {
+        <section class="mt-8 mx-4">
+            <h1 class="text-xl font-bold dark:text-white">{{'courses' | transloco}}</h1>
+            @if(this.program.courses.length > 0){
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                                <h2 class=" font-semibold text-gray-400 dark:text:white px-5">{{"found: " | transloco}}( {{this.program.courses.length}} )</h2>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <app-programs-tag [programs]="adaptToTag(this.program.courses)" [redirect]="'/home/main-course'"/>
+                </mat-expansion-panel>
+            }
+            @else {
+                <div class="flex justify-center items-center h-16">
+                    <span class="fas fa-exclamation-triangle fa-2x text-gray-400"></span>
+                    <span class="text-gray-400 text-lg ml-2">{{'nothing-found yet' | transloco}}</span>
+                </div>
+            }
+        </section>
+    
+        <section class="mt-8 mx-4">
+            <h1 class="text-xl font-bold dark:text-white">{{'blogs' | transloco}}</h1>
+            @if(this.program.blogs.length > 0){
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                                <h2 class=" font-semibold text-gray-400 dark:text:white px-5">{{"found: " | transloco}}( {{this.program.courses.length}} )</h2>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <app-programs-tag [programs]="adaptToTag(this.program.blogs)" [redirect]="'/home/main-blogs'"/>
+                </mat-expansion-panel>
+            }
+            @else {
+                <div class="flex justify-center items-center h-16">
+                    <span class="fas fa-exclamation-triangle fa-2x text-gray-400"></span>
+                    <span class="text-gray-400 text-lg ml-2">{{'nothing-found yet' | transloco}}</span>
+                </div>
+            }
+        </section>
+    }
+
 </div>

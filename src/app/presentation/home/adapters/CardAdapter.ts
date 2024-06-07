@@ -1,3 +1,4 @@
+import { PartialCourse } from '../../../core/course/domain/course.model';
 import { ICard } from '../interfaces/ILittleCard';
 import { IBlog } from '../interfaces/blog-model';
 import { ICourse } from '../interfaces/course-model';
@@ -11,6 +12,16 @@ export const CourseCardAdapter = (course: ICourse): ICard => {
     date: 'Feb 17, 2020',
   };
 };
+
+export const PopularCourseCardAdapter = (course: PartialCourse): ICard => {
+  return {
+    id: course.id,
+    title: course.title,
+    description: course.trainer,
+    thumbnail: course.image,
+    date: new Date(course.date).toLocaleDateString(),
+  };
+}
 
 
 //TODO: Aqui iria el adapter de un Post si quiere usar un Card para mostrar los post

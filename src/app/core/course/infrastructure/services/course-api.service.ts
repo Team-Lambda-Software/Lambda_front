@@ -20,7 +20,5 @@ export class CourseApiService implements ICourseApiService {
   }
   getById(id: string): Observable<Course> {
     return this._httpClient.get<CourseResponse>(`${this.BASE_URL}/one/${id}`).pipe(map(convertCourseResponseToCourse));
-  }
-
-	
+  }	
 }

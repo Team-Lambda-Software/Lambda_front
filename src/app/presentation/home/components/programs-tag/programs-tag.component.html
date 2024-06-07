@@ -1,13 +1,13 @@
-<h1 class="text-xl font-bold dark:text-white">{{'program-master' | transloco }}</h1>
-    <div class="flex flex-wrap gap-4 mt-4">
-        @for (item of programs; track item.id) {
-            <article class="bg-white dark:bg-slate-600 rounded-lg shadow-md flex justify-between w-full h-[120px]">
-                <div class="p-4">
-                    <h1 class="text-xl text-black font-bold dark:text-white py-2">{{ item.title }}</h1>
-                    <p class=" text-gray-500 text-wrap dark:text-white">{{ item.description}}</p>
-                    <p class="text-md  text-purple-700 dark:text-white">{{'level'}}: {{item.level}}</p>
-                </div>
-                <img [src]="item.thumbnail" alt="course" class="rounded-xl w-2/5 ">
-            </article>
-        }
-    </div>
+<div class="flex flex-wrap gap-4 mt-4">
+    @for (item of programs; track item.id) {
+    <article class="bg-white dark:bg-slate-600 rounded-lg shadow-md flex justify-between w-full h-[120px]"
+        [routerLink]="[redirect]" [queryParams]="{id: item.id}">
+        <div class="p-4 ">
+            <h1 class="text-xl line-clamp-1 text-black font-bold dark:text-white pt-2">{{ item.title }}</h1>
+            <p class=" text-gray-500 line-clamp-1 text-wrap dark:text-white">{{ item.description}}</p>
+            <p class="text-md  text-purple-700 dark:text-white">{{item.level}}</p>
+        </div>
+        <img [src]="item.thumbnail" alt="course" class="rounded-xl w-2/5 ">
+    </article>
+    }
+</div>
