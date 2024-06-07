@@ -2,12 +2,16 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslocoModule } from '@jsverse/transloco';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
-import { ICategory } from '../../../interfaces/category-model';
 import { IVideoCourses } from '../../../interfaces/video-courses-model';
-import { CategoriesService } from '../../../services/categories/categories.service';
 import { CategoryDataAdapterCourse } from '../../../adapters/CategoryDataAdapter';
-import { PlayerCardAdapter } from '../../../adapters/PlayerCardAdapter';
+import { PartialCourseToPlayerCard, PlayerCardAdapter } from '../../../adapters/PlayerCardAdapter';
 import { PlayerCardComponent } from '../../../components/player-card/player-card.component';
+import { Category } from '../../../../../core/categories/domain/category.model';
+import { CategoyUsecaseProvider } from '../../../../../core/categories/infrastructure/providers/category-usecase-provider';
+import { finalize } from 'rxjs';
+import { CourseUsecaseProvider } from '../../../../../core/course/infrastructure/providers/course-usecase-provider';
+import { Course, PartialCourse } from '../../../../../core/course/domain/course.model';
+import { IPlayerCard } from '../../../interfaces/IPlayerCard';
 
 @Component({
   selector: 'app-video-list',
@@ -18,8 +22,14 @@ import { PlayerCardComponent } from '../../../components/player-card/player-card
 })
 export class VideoListComponent {
 
-  public categoriesService = inject(CategoriesService);
-  public fetchedCategories= signal<ICategory[]>([])
+  public fetchedCategories= signal<Category[]>([])
+  private categoryUseCaseService = inject(CategoyUsecaseProvider);
+  public selectedCategory?: Category;
+  public isLoadingCategories = false;
+
+  public coursesUseCaseService = inject(CourseUsecaseProvider);
+  public isLoadingCourses = false;
+  public coursesByCategory = signal<PartialCourse[]>([]);
 
   public videos: IVideoCourses[]  = [
     {
@@ -80,43 +90,56 @@ export class VideoListComponent {
     }
   ];
 
-  public selectedCategory?: ICategory;
 
-  ngOnInit() {
-    this.getCategories();
+  ngOnInit(): void {
+    this.getCategories()
   }
 
   constructor(private router:Router, private route:ActivatedRoute) {
     this.route.queryParams.subscribe((params: { [key: string ]: string }) => {
       if(params['category']) {
-        this.fetchedCategories().forEach((category) => {
-          if(category.name === params['category']) {
-            this.setSelectedCategory(category);
-          }
+        this.fetchedCategories()
+          .forEach(category => {
+            if(category.name == params['category']) {
+              this.setSelectedCategory(category);
+            }
         });
       }
     });
   }
+
+  adaptToPlayerCard(video: PartialCourse) {
+    return PartialCourseToPlayerCard(video);
+  }
+
+  public getCategories(params?: string) {
+    this.isLoadingCategories = true
+    this.categoryUseCaseService.usecase.getByParams(params ?? '')
+      .pipe(finalize(() => this.isLoadingCategories = false))
+      .subscribe(
+        c => {
+          this.fetchedCategories.set(c);
+          this.onCategorySelected(c[0]);
+        }
+      )
+  }
+
+  public getCoursesByCategory(): void {
+    this.isLoadingCourses = true
+    this.coursesUseCaseService.usecase.getCoursesByParams(`?filter=${this.selectedCategory?.name.toUpperCase()}`)
+      .pipe(
+        finalize(() => this.isLoadingCourses = false),
+      ).subscribe(c => this.coursesByCategory.set(c))
+  }
+
   
-
-  adaptToPlayerCard(video: IVideoCourses) {
-    return PlayerCardAdapter(video);
-  }
-
-  getCategories(): void {
-    this.categoriesService.getCategories().subscribe((categories) => {
-      this.fetchedCategories.set(categories.map((category) => CategoryDataAdapterCourse(category)));
-      this.setSelectedCategory(this.fetchedCategories()?.[0]);
-    });
-
-  }
-
-  onCategorySelected(category: ICategory) {
+  onCategorySelected(category: Category) {
     this.router.navigate([] ,{queryParams: {category: category.name}, queryParamsHandling: 'merge'});
     this.setSelectedCategory(category);
   }
 
-  setSelectedCategory(category : ICategory) {
+  setSelectedCategory(category : Category) {
     this.selectedCategory = category;
+    this.getCoursesByCategory();
   }
 }
