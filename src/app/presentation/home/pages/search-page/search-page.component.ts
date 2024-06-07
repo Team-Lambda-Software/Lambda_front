@@ -5,13 +5,13 @@ import { BasicHeaderComponent } from '../../components/basic-header/basic-header
 import { ProgramsTagComponent } from '../../components/programs-tag/programs-tag.component';
 import { CardCarruselComponent } from '../../components/card-carrusel/card-carrusel.component';
 import { ICard, IProgram } from '../../interfaces/ILittleCard';
-import { CoursesPopularService } from '../../services/courses/getPopulars/courses-popular.service';
-import { CourseLevelService } from '../../services/courses/getByLevel/course-level.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { CourseCardAdapter } from '../../adapters/CardAdapter';
-import { CourseTagAdapter } from '../../adapters/TagAdapter';
-import { SearchService } from '../../services/search/search.service';
+import { PopularCourseCardAdapter } from '../../adapters/CardAdapter';
+import { SearchUsecaseProvider } from '../../../../core/search/infraestructure/providers/search-api-usecase-provider';
+import { SearchModel, Body } from '../../../../core/search/domain/search-model';
+import { CourseUsecaseProvider } from '../../../../core/course/infrastructure/providers/course-usecase-provider';
+import { finalize, map } from 'rxjs';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 interface ITag {
   id: number;
@@ -21,16 +21,18 @@ interface ITag {
 @Component({
   selector: 'app-search-page',
   standalone: true,
-  imports: [RouterLink, BasicHeaderComponent, ProgramsTagComponent, CardCarruselComponent, TranslocoModule, FormsModule],
+  imports: [RouterLink, BasicHeaderComponent, ProgramsTagComponent, MatExpansionModule ,CardCarruselComponent, TranslocoModule, FormsModule],
   templateUrl: './search-page.component.html',
   styleUrl: './search-page.component.css'
 })
 export class SearchPageComponent {
 
   public inputSearch: string = '';
-  public programService = inject(CourseLevelService);
-  public popularService = inject(CoursesPopularService);
-  public searchService = inject(SearchService);  
+  public program: SearchModel = { blogs: [], courses: [] };
+  public popularService = inject(CourseUsecaseProvider);
+  public searchService = inject(SearchUsecaseProvider);
+  public popularCourses: ICard[] = [];
+  public isLoading = false;  
 
   public categories: ITag[] = [
     { id: 1, name: 'Prenatal' },
@@ -47,17 +49,43 @@ export class SearchPageComponent {
 
   constructor() { }
 
-  adaptCard(): ICard[]{
-    let cursos = this.popularService.getPopulars();
-    return cursos.map(course => CourseCardAdapter(course));
+  ngOnInit(): void {
+    this.getPopulars();
   }
 
-  adaptTag(): IProgram[]{
-    let cursos = this.programService.getAll();
-    return cursos.map(course => CourseTagAdapter(course));
+  public getPopulars(): void {
+    this.isLoading = true
+    this.popularService.usecase.getPopularCourses()
+      .pipe(
+        map(courses => courses.map(PopularCourseCardAdapter)),
+        finalize(() => this.isLoading = false),
+      ).subscribe(pc => this.popularCourses = pc)
   }
 
   getBySearch() {
-    this.searchService.getBySearch(this.inputSearch);
+    this.isLoading = true;
+    let response =this.searchService.usecase.getBySearch(this.inputSearch)
+      if(response.isError()){
+        alert(response.getError().message);
+      }
+      response.getValue()
+      .pipe(
+        finalize(() => this.isLoading = false)
+      )
+      .subscribe(data => this.program = data);
+  }
+
+    adaptToTag(data: Body[]): IProgram[]{
+      let res = data.map((item) => {
+        return {
+          id: item.id,
+          title: item.title,
+          thumbnail: item.image,
+          description: item.trainer,
+          level: new Date(item.date).toLocaleDateString()
+        }}
+      )
+      return res;
   }
 }
+

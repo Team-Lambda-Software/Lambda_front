@@ -12,3 +12,7 @@
 .carrousel::-webkit-scrollbar{
     display:none;
 }
+
+mat-expansion-panel {
+    background-color: transparent;
+  }

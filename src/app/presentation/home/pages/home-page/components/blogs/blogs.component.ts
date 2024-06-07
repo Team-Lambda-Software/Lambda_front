@@ -36,6 +36,6 @@ export class BlogsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getBlogs('?filter=RECENT');
+    this.getBlogs('?filter=RECENT&perPage=5');
   }
 }

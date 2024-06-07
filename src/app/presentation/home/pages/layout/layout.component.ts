@@ -5,8 +5,8 @@ import { BottomBarComponent } from './components/bottom-bar/bottom-bar.component
 import { AuthService } from '../../../auth/services/auth.service';
 import { Subscription, filter } from 'rxjs';
 
-const BOTTOM_NAVIGATION_BAR_BLACK_LIST = [
-  '/home/player-video',
+const BOTTOM_NAVIGATION_BAR_BLACK_LIST: string[] = [
+  //'/home/player-video',
 ]
 @Component({
   standalone: true,
