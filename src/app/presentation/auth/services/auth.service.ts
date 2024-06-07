@@ -83,7 +83,7 @@ export class AuthService {
     return this.http.get<User>(url,{headers})
       .pipe(
         map((response)=>{
-          return true
+          return this.setAuthtication(response)
         })
       )
   }
