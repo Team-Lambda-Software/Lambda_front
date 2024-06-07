@@ -29,7 +29,6 @@ export class AuthService {
   private _authStatus= signal<AuthStatus>(AuthStatus.notAuthenticated);
   private localStorage:LocalStorage= new LocalStorage('','');
   private code=new Optional<string>(undefined);
-  private email='';
   public currentUser=computed(()=>this._currentUser);
   public _hasCode=(false);
   public _hasCodeVerified=(false);
@@ -186,10 +185,14 @@ export class AuthService {
     let data=verificationCodeForm.value
     let numbers=Object.values(data);
     let code:string=numbers.join('')
-    let email:string=this.email
+    let email=this.localStorage.LoadLocalStorage('email')
     const url=`${this.baseUrl}/auth/code/validate`
+
+    if (!email.hasValue()) email.setValue('')
     this.setChecking();
-    const body={email,code}
+    const body={email:email.getValue(),code}
+    console.log(url,body);
+
 
     return this.http.post<HttpResponseBase>(url,body,{ observe: 'response' })
       .pipe(
@@ -212,8 +215,10 @@ export class AuthService {
   updatePassword(password:string):Observable<HttpResponseBase>{
 
     const url=`${this.baseUrl}/auth/change/password`
+    let email=this.localStorage.LoadLocalStorage('email')
+
     const body={
-      email:this.email,
+      email:email.getValue(),
       password,
       code:this.code.getValue()
     }

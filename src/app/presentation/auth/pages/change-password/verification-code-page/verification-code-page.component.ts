@@ -8,7 +8,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { VerificationCodeForm } from '../../../interfaces/forms/verticationCode-form.interface';
 import { ValidatorService } from '../../../../shared/services/validator/validator.service';
 import { TranslocoModule } from '@jsverse/transloco';
-import Swal from 'sweetalert2';
+import { PopupInfoModalService } from '../../../../shared/services/popup-info-modal/popup-info-modal.service';
 
 @Component({
   selector: 'app-verification-code-page',
@@ -21,7 +21,7 @@ import Swal from 'sweetalert2';
 })
 
 
-export class VerificationCodePageComponent implements OnInit{
+export class VerificationCodePageComponent{
 
   private authService=inject(AuthService)
   public darkModeService = inject(DarkModeService);
@@ -29,6 +29,8 @@ export class VerificationCodePageComponent implements OnInit{
   private validatorService= inject(ValidatorService)
   private localStorage= new LocalStorage('','')
   private fb = inject(FormBuilder)
+  private popupService=inject(PopupInfoModalService)
+
   public email=this.localStorage.LoadLocalStorage('email')
 
   // @ViewChild('miBoton') miBoton!: ElementRef;
@@ -44,63 +46,43 @@ export class VerificationCodePageComponent implements OnInit{
     forthCode:new FormControl('',{nonNullable:true, validators:[Validators.pattern(this.validatorService.numberPattern),Validators.required]}),
   })
 
-  public isValid = signal<void>(
-    this.verificateCode()
-  );
 
   public title="verification code"
   public subtitle="please type the verification code sent to"
   public buttonVerificateCode="verificate code"
   public iDontReceive="I don't receibe a dode!"
   public pleaseResend="please resend"
+  private codeSendSuccsessfully='Code was was accepted successfully'
+  private codeResendto=`Code resend to ${this.email.getValue()}`
+  private errorStatusCode='The status response is not 201'
 
-  ngOnInit(): void {
-    const Toast = Swal.mixin({
-      toast: true,
-      position: "bottom",
-      showConfirmButton: false,
-      timer: 5000,
-      timerProgressBar: true,
-    });
-    Toast.fire({
-      icon: "info",
-      title: "Code was send successfully, the code sent is valid for 5 minutes",
-      showClass: {
-        popup: `
-          animate__animated
-          animate__fadeInUp
-          animate__faster
-        `
-      },
-      hideClass: {
-        popup: `
-          animate__animated
-          animate__fadeOutDown
-          animate__faster
-        `
-      }
-    });
-  }
 
   resendCode(){
     const email=this.email;
     if (email.hasValue())
-      Swal.fire('Info',`Code resend to ${email.getValue()}`,'info')
+      this.popupService.displayInfoModal(this.codeResendto)
       this.authService.getCodeUpdatePassword(email.getValue())
     .subscribe({
       error:(error)=>{
-        Swal.fire('Error',error,'error')
+        this.popupService.displayErrorModal(error)
       }
     })
   }
 
   verificateCode(){
     if (this.verificationCodeForm.valid){
+
       this.authService.verificateLocalCode(this.verificationCodeForm).subscribe({
-        next:(value)=> value.status==201 ? this.router.navigateByUrl('/auth/createpassword') : Swal.fire('Error','The status response is not 201','error'),
+        next:(value)=>{
+          if (value.status==201){
+            this.router.navigateByUrl('/auth/createpassword')
+            this.popupService.displayBelowModal(this.codeSendSuccsessfully,'success')
+          }
+          else this.popupService.displayErrorModal(this.errorStatusCode)
+        },
         error:(error)=>{
           console.log(error);
-          Swal.fire('Error',error,'error')
+          this.popupService.displayErrorModal(error)
         }
       })
     }

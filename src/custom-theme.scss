@@ -34,7 +34,8 @@ $Lambda_front-theme: mat.define-light-theme((
   density: 0
 ));
 
-$Lambda_front-primary: mat.define-palette(mat.$deep-purple-palette);
+$Lambda_front-primary: mat.define-palette(mat.$cyan-palette);
+$Lambda_front-dark-theme: mat.define-palette(mat.$grey-palette,300);
 
 $Lambda_front-dark-theme: mat.define-dark-theme((
   colors: (
@@ -49,17 +50,39 @@ $Lambda_front-dark-theme: mat.define-dark-theme((
   density: 0
 ));
 
+$custom_primary : mat.define-palette(mat.$blue-palette);
+$custom_accent : mat.define-palette(mat.$pink-palette,A200,A100,A400);
+$custom_warn : mat.define-palette(mat.$blue-palette);
+
+$custom-theme:mat.define-light-theme(
+  (
+    color:(
+      primary: $custom_primary,
+      accent: $custom_accent,
+      warn: $custom_warn,
+    )
+  )
+);
+
+
+
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-.ligth-theme{
+
+@include mat.all-component-themes($custom-theme);
+
+.ligth{
+  background-color: aqua;
+  color: #677294;
+
   @include mat.all-component-themes($Lambda_front-theme);
   @include mat.checkbox-theme(mat.$indigo-palette);
-  color: #677294;
 }
 
-.dark-theme{
+.dark{
+  background-color: #F2F2F2;
+  color: #F2F2F2;
   @include mat.all-component-themes($Lambda_front-dark-theme);
   @include mat.checkbox-theme(mat.$indigo-palette);
-  color: #F2F2F2;
 }

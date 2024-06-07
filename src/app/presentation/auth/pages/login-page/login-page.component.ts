@@ -13,6 +13,7 @@ import { ValidatorService } from '../../../shared/services/validator/validator.s
 import { AuthStatus } from '../../interfaces/auth-status.enum';
 import { TranslocoModule } from '@jsverse/transloco';
 import Swal from 'sweetalert2'
+import { PopupInfoModalService } from '../../../shared/services/popup-info-modal/popup-info-modal.service';
 
 
 @Component({
@@ -30,8 +31,10 @@ export class LoginPageComponent {
   private fb = inject(FormBuilder)
   private authService=inject(AuthService)
   private router= inject(Router)
-  public hide:boolean=false;
+  private popupService=inject(PopupInfoModalService)
   public validatorService= inject(ValidatorService);
+
+  public hide:boolean=false;
 
   public title="login"
   public emailLabel='email'
@@ -54,7 +57,7 @@ export class LoginPageComponent {
     .subscribe({
       next:()=> this.router.navigateByUrl('/home'),
       error:(error)=>{
-        Swal.fire('Error',error,'error')
+        this.popupService.displayErrorModal(error)
         console.log({loginerror:error});
       }
     })

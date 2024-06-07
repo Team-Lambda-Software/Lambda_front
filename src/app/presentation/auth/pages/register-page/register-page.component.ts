@@ -19,6 +19,7 @@ import { EmailValidatorService } from '../../../shared/validators/email.validato
 import { TranslocoModule } from '@jsverse/transloco';
 import Swal from 'sweetalert2';
 import { Type } from '../../interfaces/response/type.interface';
+import { PopupInfoModalService } from '../../../shared/services/popup-info-modal/popup-info-modal.service';
 
 @Component({
   selector: 'app-register-page',
@@ -34,6 +35,8 @@ export class RegisterPageComponent {
   public validatorService= inject(ValidatorService)
   private authService=inject(AuthService)
   private router= inject(Router)
+  private popupService=inject(PopupInfoModalService)
+
   public hide:boolean=false
 
   public title="sign up"
@@ -112,7 +115,7 @@ export class RegisterPageComponent {
       .subscribe({
         next:()=> this.router.navigateByUrl('/auth/on-boarding'),
         error:(error)=>{
-         Swal.fire('Error',error,'error')
+         this.popupService.displayErrorModal(error)
         }
       })
     }
