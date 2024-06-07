@@ -102,7 +102,6 @@ export class RegisterPageComponent {
       type: Type.CLIENT
     }
     console.log(newUser);
-
     return (newUser);
   }
 

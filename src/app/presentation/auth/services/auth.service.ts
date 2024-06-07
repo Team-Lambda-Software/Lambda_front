@@ -2,7 +2,7 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
 import { enviroment } from '../../../../environments/environment';
 import { Observable, catchError, map, of, throwError } from 'rxjs';
-import { AuthStatus } from '../interfaces/auth-status.enum';
+import { AuthStatus } from '../../../core/user/domain/interfaces/auth-status.enum';
 import { LoginResponse } from '../interfaces/response/login-response.interface';
 import { User } from '../interfaces/user-state.interface';
 import { SignUpUser } from '../interfaces/signup-user.interface';
@@ -29,7 +29,7 @@ export class AuthService {
   private _authStatus= signal<AuthStatus>(AuthStatus.notAuthenticated);
   private localStorage:LocalStorage= new LocalStorage('','');
   private code=new Optional<string>(undefined);
-  public currentUser=computed(()=>this._currentUser);
+  public currentUser=computed(()=>this._currentUser());
   public _hasCode=(false);
   public _hasCodeVerified=(false);
   public authStatus=computed(()=>this._authStatus());
@@ -66,6 +66,8 @@ export class AuthService {
     let newUser:User={
       ...response.user
     }
+    //TODO Quitar por defecto esta imagen en caso que no tenga imagen el usuario
+    newUser.image="https://via.placeholder.com/40"
     return newUser
   }
 

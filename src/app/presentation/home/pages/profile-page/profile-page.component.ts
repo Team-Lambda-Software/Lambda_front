@@ -11,6 +11,8 @@ import { CourseLitleCardAdapter } from '../../adapters/LitleCardAdapter';
 import { CoursesMyTrainingService } from '../../services/courses/getTraining/courses-mytraining.service';
 import { IUserProfile } from '../../interfaces/user-info-model';
 import { UserInfoService } from '../../services/user/getUserInfo/user-info.service';
+import { AuthService } from '../../../auth/services/auth.service';
+import { Optional } from '../../../shared/helpers/Optional';
 
 
 @Component({
@@ -24,6 +26,9 @@ export class ProfilePageComponent {
 
   public myTrainingService = inject(CoursesMyTrainingService);
   public userInfoProfile =inject(UserInfoService);
+  public auth= inject(AuthService)
+  public user= new Optional(this.auth.currentUser())
+
 
   public progressValue = 50;
 
@@ -74,14 +79,14 @@ export class ProfilePageComponent {
     group: ScaleType.Ordinal,
     domain: ['#4F14A0', '#27AE60']
   };
-  
+
   public darkColorSchemeStatistics: Color = {
     name: 'myDarkScheme',
     selectable: true,
     group: ScaleType.Ordinal,
     domain: ['#FFFFFF', '#27AE60']
   };
-  
+
   constructor(private darkModeService: DarkModeService) {
     this.isDarkMode = this.darkModeService.isDarkMode();
   }

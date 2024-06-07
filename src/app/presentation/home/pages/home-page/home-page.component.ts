@@ -17,6 +17,7 @@ import { IPlayerCard } from '../../interfaces/IPlayerCard';
 import { PlayerCardAdapter } from '../../adapters/PlayerCardAdapter';
 import { AuthService } from '../../../auth/services/auth.service';
 import { User } from '../../../auth/interfaces/user-state.interface';
+import { Optional } from '../../../shared/helpers/Optional';
 
 @Component({
   selector: 'app-home-page',
@@ -37,11 +38,12 @@ import { User } from '../../../auth/interfaces/user-state.interface';
   ]
 })
 
-export class HomePageComponent implements OnInit {
+export class HomePageComponent {
 
   public popularService = inject(CoursesPopularService);
   public userInfo = inject(UserInfoService);
   public auth= inject(AuthService)
+  public user= new Optional(this.auth.currentUser())
 
 
   public videoCourses: IVideoCourses[] = [
@@ -76,13 +78,6 @@ export class HomePageComponent implements OnInit {
   ];
 
 
-  ngOnInit(): void {
-  }
-
-  public getUserInfo(): Signal<User | null> {
-    let info = this.auth.currentUser()
-    return info;
-  }
 
   public adaptToPlayerCard(data: IVideoCourses): IPlayerCard {
     return PlayerCardAdapter(data)
