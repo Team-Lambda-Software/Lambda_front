@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslocoModule } from '@jsverse/transloco';
 import Swal from 'sweetalert2';
+import { PopupInfoModalService } from '../../../../shared/services/popup-info-modal/popup-info-modal.service';
 
 @Component({
   selector: 'app-reset-password-page',
@@ -24,6 +25,7 @@ export class ResetPasswordPageComponent {
   private fb = inject(FormBuilder)
   private authService=inject(AuthService)
   private router= inject(Router)
+  private popupService=inject(PopupInfoModalService)
 
   public resetPasswordForm :FormGroup=this.fb.group({
     email:['',[Validators.required,Validators.email]],
@@ -35,14 +37,19 @@ export class ResetPasswordPageComponent {
   public doYouWantToReturn="do you wan't to return to "
   public logInOption="log in"
   public sigUnOption="sign up"
+  private codeSendSuccsessfully='Code was send successfully, the code sent is valid for 5 minutes'
+
   resetPassword(){
     const {email}=this.resetPasswordForm.value;
     console.log(this.resetPasswordForm.value);
     this.authService.getCodeUpdatePassword(email)
     .subscribe({
-      next:()=> this.router.navigateByUrl('/auth/verificationcode'),
+      next:()=>{
+        this.popupService.displayBelowModal(this.codeSendSuccsessfully,'info')
+        this.router.navigateByUrl('/auth/verificationcode')
+      },
       error:(error)=>{
-        Swal.fire('Error',error,'error')
+        this.popupService.displayErrorModal(error)
       }
     })
   }

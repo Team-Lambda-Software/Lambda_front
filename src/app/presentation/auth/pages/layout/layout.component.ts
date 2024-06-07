@@ -1,7 +1,7 @@
 import { Component, computed, effect, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { AuthStatus } from '../../interfaces/auth-status.enum';
+import { AuthStatus } from '../../../../core/user/domain/interfaces/auth-status.enum';
 import { LoaderComponent } from '../../components/loader/loader.component';
 
 @Component({
