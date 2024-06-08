@@ -18,6 +18,8 @@ import { CommonModule } from '@angular/common';
 import { EmailValidatorService } from '../../../shared/validators/email.validators.service';
 import { TranslocoModule } from '@jsverse/transloco';
 import Swal from 'sweetalert2';
+import { Type } from '../../interfaces/response/type.interface';
+import { PopupInfoModalService } from '../../../shared/services/popup-info-modal/popup-info-modal.service';
 
 @Component({
   selector: 'app-register-page',
@@ -33,6 +35,8 @@ export class RegisterPageComponent {
   public validatorService= inject(ValidatorService)
   private authService=inject(AuthService)
   private router= inject(Router)
+  private popupService=inject(PopupInfoModalService)
+
   public hide:boolean=false
 
   public title="sign up"
@@ -83,25 +87,21 @@ export class RegisterPageComponent {
   }
 
 
-  //TODO: quitarle el any y hacerlo estricto con la separacion de nombres
   createSignUpUser(registerData:FormGroup<SignUpForm>):SignUpUser{
     const data= registerData
     const email=data.value.email || ''
-    const FullName=data.value.name  || ''
+    const name=data.value.name  || ''
     const phone=data.value.phone  || ''
     const password=data.value.password || ''
-    let namesAndLastNames = this.splitNamesAndLastNames(FullName)
 
     let newUser:SignUpUser={
-      email: email,
-      password: password,
-      firstName: namesAndLastNames[0],
-      firstLastName: namesAndLastNames [2],
-      secondLastName: namesAndLastNames [3],
-      phone
+      email,
+      password,
+      name,
+      phone,
+      type: Type.CLIENT
     }
     console.log(newUser);
-
     return (newUser);
   }
 
@@ -114,7 +114,7 @@ export class RegisterPageComponent {
       .subscribe({
         next:()=> this.router.navigateByUrl('/auth/on-boarding'),
         error:(error)=>{
-         Swal.fire('Error',error,'error')
+         this.popupService.displayErrorModal(error)
         }
       })
     }

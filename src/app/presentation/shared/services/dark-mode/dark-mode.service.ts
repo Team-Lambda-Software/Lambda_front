@@ -12,6 +12,7 @@ export class DarkModeService {
   constructor() {
     effect(() => {
       window.localStorage.setItem('darkMode', JSON.stringify(this.isDarkMode()));
+
     });
   }
 }

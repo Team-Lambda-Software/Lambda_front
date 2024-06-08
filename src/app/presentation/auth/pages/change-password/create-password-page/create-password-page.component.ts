@@ -13,6 +13,7 @@ import { VerificationPasswordForm } from '../../../interfaces/forms/createPasswo
 import { ErrorComponent } from '../../../../shared/components/error/error.component';
 import { TranslocoModule } from '@jsverse/transloco';
 import Swal from 'sweetalert2';
+import { PopupInfoModalService } from '../../../../shared/services/popup-info-modal/popup-info-modal.service';
 
 @Component({
     selector: 'app-create-password-page',
@@ -31,6 +32,8 @@ export class CreatePasswordPageComponent {
   public validatorService= inject(ValidatorService)
   private localStorage= new LocalStorage('','')
   private fb = inject(FormBuilder)
+  private popupService=inject(PopupInfoModalService)
+
   public hideConfirm = true;
   public hidePassword = true;
   public createPasswordForm :FormGroup<VerificationPasswordForm>=this.fb.group<VerificationPasswordForm>({
@@ -44,7 +47,9 @@ export class CreatePasswordPageComponent {
 )
   public title='create Password'
   public subtitle='create a new password and please never share it with anyone for safe use'
-  public updatePassword='update Password'
+  public updatePassword='update password'
+  private errorStatusCode='The status response is not 200'
+
 
   isValidField(field:string){
     return this.validatorService.isValidField(this.createPasswordForm,field)
@@ -58,9 +63,9 @@ export class CreatePasswordPageComponent {
         if (password){
           this.authService.updatePassword(password)
           .subscribe({
-            next:()=> this.router.navigateByUrl('/auth/confirmpassword'),
+            next:(value)=>value.status==200 ? this.router.navigateByUrl('/auth/confirmpassword') : this.popupService.displayErrorModal(this.errorStatusCode),
             error:(error)=>{
-              Swal.fire('Error',error,'error')
+              this.popupService.displayErrorModal(error)
             }
           })
         }

@@ -1,10 +1,10 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
 import { enviroment } from '../../../../environments/environment';
 import { Observable, catchError, map, of, throwError } from 'rxjs';
-import { AuthStatus } from '../interfaces/auth-status.enum';
+import { AuthStatus } from '../../../core/user/domain/interfaces/auth-status.enum';
 import { LoginResponse } from '../interfaces/response/login-response.interface';
-import { UserState } from '../interfaces/user-state.interface';
+import { User } from '../interfaces/user-state.interface';
 import { SignUpUser } from '../interfaces/signup-user.interface';
 import { SignUpResponse } from '../interfaces/response/signup-response.interface';
 import { GetCodeResponse } from '../interfaces/response/getCode-response.interface';
@@ -25,12 +25,11 @@ export class AuthService {
   private router = inject(Router);
   private readonly baseUrl:string= enviroment.baseUrl
   private http= inject(HttpClient)
-  private _currentUser=signal <UserState |null>(null)
+  private _currentUser=signal <User |null>(null)
   private _authStatus= signal<AuthStatus>(AuthStatus.notAuthenticated);
   private localStorage:LocalStorage= new LocalStorage('','');
   private code=new Optional<string>(undefined);
-  private email='';
-  public currentUser=computed(()=>this._currentUser);
+  public currentUser=computed(()=>this._currentUser());
   public _hasCode=(false);
   public _hasCodeVerified=(false);
   public authStatus=computed(()=>this._authStatus());
@@ -44,9 +43,10 @@ export class AuthService {
   private changeError(){
     this._hasError=!this._hasError
   }
-  private setAuthtication(newUser:UserState):boolean{
+  private setAuthtication(newUser:User):boolean{
     this._currentUser.set(newUser)
     this.setAuthenticaded()
+    console.log(this._currentUser());
     return true
   }
 
@@ -61,12 +61,31 @@ export class AuthService {
     this._authStatus.set(AuthStatus.notAuthenticated)
   }
 
-  private createUser(responseData:LoginResponse):UserState{
-    const {token,...response}= responseData
-    let newUser:UserState={
-      ...response,
+  private createUser(responseData:LoginResponse):User{
+    const {token,type,...response}= responseData
+    let newUser:User={
+      ...response.user
     }
+    //TODO Quitar por defecto esta imagen en caso que no tenga imagen el usuario
+    newUser.image="https://via.placeholder.com/40"
     return newUser
+  }
+
+  current():Observable<boolean>{
+    const url=`${this.baseUrl}/auth/current`
+    const token=this.localStorage.LoadLocalStorage('token')
+
+    if( !token.hasValue()) return (of(false))
+
+    const headers= new HttpHeaders()
+    .set('Authorization',`Bearer ${token.getValue()}`)
+
+    return this.http.get<User>(url,{headers})
+      .pipe(
+        map((response)=>{
+          return this.setAuthtication(response)
+        })
+      )
   }
 
 
@@ -95,16 +114,17 @@ export class AuthService {
 
     signup(user:SignUpUser):Observable<boolean>{
 
-      const url=`${this.baseUrl}/auth/signupuser`
-      const body={...user,}
+      const url=`${this.baseUrl}/auth/register`
+      const body={...user}
       this.setChecking();
 
       return this.http.post<SignUpResponse>(url,body)
         .pipe(
           map((response)=>{
-            let newUser=this.createUser(response);
-            this.localStorage.SaveLocalStorage('token',response.token)
-            return this.setAuthtication(newUser)
+            this.login(user.email,user.password)
+            this.setAuthenticaded();
+
+            return true
             // console.log(response);
           }),
           catchError(error=>{
@@ -117,7 +137,7 @@ export class AuthService {
 
   getCodeUpdatePassword(email:string):Observable<GetCodeResponse>{
 
-    const url=`${this.baseUrl}/auth/getcodeupdatepassword`;
+    const url=`${this.baseUrl}/auth/forget/password`;
     const body={email}
     this.localStorage.SaveLocalStorage('email',email)
     this.setChecking();
@@ -127,12 +147,10 @@ export class AuthService {
         map((response)=>{
           this.localStorage.SaveLocalStorage('date',response.date.toString())
           this._hasCode=true
-          this.email=response.email
-          this.code.setValue(response.code);
-          console.log(response.code);
+          console.log(response.date);
+          console.log(new Date( response.date + 1000 * (60 * 5) )
+        )
           this.setNotAuthenticated();
-
-          // console.log(JSON.stringify(this._hasCode));
           return response
         }),
         catchError(error=>{
@@ -165,44 +183,55 @@ export class AuthService {
       )
   }
 
-  verificateLocalCode(verificationCodeForm:FormGroup<VerificationCodeForm>):boolean{
+  verificateLocalCode(verificationCodeForm:FormGroup<VerificationCodeForm>):Observable<HttpResponseBase>{
     let data=verificationCodeForm.value
     let numbers=Object.values(data);
     let code:string=numbers.join('')
+    let email=this.localStorage.LoadLocalStorage('email')
+    const url=`${this.baseUrl}/auth/code/validate`
+
+    if (!email.hasValue()) email.setValue('')
     this.setChecking();
+    const body={email:email.getValue(),code}
+    console.log(url,body);
 
-    // console.log(this.code.getValue());
-    // console.log(code);
 
-    if (this.code.hasValue()){
-      if (this.code.getValue()===code){
-        this.setNotAuthenticated();
-        this._hasCodeVerified=true
-        // this.localStorage.deleteLocalStorage('code')
-        return true
-      }
-    }
-    this.setNotAuthenticated();
-    return false
+    return this.http.post<HttpResponseBase>(url,body,{ observe: 'response' })
+      .pipe(
+        map((response)=>{
+          this.setNotAuthenticated();
+          console.log(response);
+          this._hasCodeVerified=(true);
+          this.code=new Optional(code)
+          return response
+        }),
+        catchError(error=>{
+          this.setNotAuthenticated();
+          console.log(error);
+          return throwError(()=>error.error.message)
+        })
+      )
+
   }
 
-  updatePassword(password:string):Observable<boolean>{
+  updatePassword(password:string):Observable<HttpResponseBase>{
 
-    const url=`${this.baseUrl}/auth/updatepassword`
+    const url=`${this.baseUrl}/auth/change/password`
+    let email=this.localStorage.LoadLocalStorage('email')
+
     const body={
-      email:this.email,
+      email:email.getValue(),
       password,
       code:this.code.getValue()
     }
     this.setChecking();
-
     console.log(body);
 
-    return this.http.post<UpdatePasswordResponse>(url,body)
+    return this.http.put<HttpResponseBase>(url,body,{ observe: 'response' })
       .pipe(
         map((response)=>{
           this.setNotAuthenticated()
-          return true
+          return response
         }),
         catchError(error=>{
           this.setNotAuthenticated()

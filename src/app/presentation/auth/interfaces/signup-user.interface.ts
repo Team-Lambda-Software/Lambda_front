@@ -1,8 +1,9 @@
+import { Type } from "./response/type.interface"
+
 export interface SignUpUser {
-  email:          string;
-  password:       string;
-  firstName:      string;
-  firstLastName:  string;
-  secondLastName: string;
-  phone:          string;
+  email: string
+  name: string
+  password: string
+  phone: string
+  type: Type
 }

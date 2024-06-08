@@ -1,8 +1,7 @@
-export interface LoginResponse {
-  token:          string;
-  email:          string;
-  firstLastName:  string;
-  firstName:      string;
-  secondLastName: string;
-}
+import { User } from "../user-state.interface";
 
+export interface LoginResponse {
+  token: string;
+  type:  string;
+  user:  User;
+}

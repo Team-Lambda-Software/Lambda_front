@@ -10,9 +10,10 @@ import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.se
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { ValidatorService } from '../../../shared/services/validator/validator.service';
-import { AuthStatus } from '../../interfaces/auth-status.enum';
+import { AuthStatus } from '../../../../core/user/domain/interfaces/auth-status.enum';
 import { TranslocoModule } from '@jsverse/transloco';
 import Swal from 'sweetalert2'
+import { PopupInfoModalService } from '../../../shared/services/popup-info-modal/popup-info-modal.service';
 
 
 @Component({
@@ -30,8 +31,10 @@ export class LoginPageComponent {
   private fb = inject(FormBuilder)
   private authService=inject(AuthService)
   private router= inject(Router)
-  public hide:boolean=false;
+  private popupService=inject(PopupInfoModalService)
   public validatorService= inject(ValidatorService);
+
+  public hide:boolean=false;
 
   public title="login"
   public emailLabel='email'
@@ -40,7 +43,7 @@ export class LoginPageComponent {
   public LogInbuttonName="login"
   public SignInbuttonName='sign up'
   public ForgetYourPassword="forget your password"
-  public DontHaveAnAccount="Don't have an account ? "
+  public DontHaveAnAccount="don't have an account ?"
 
   public loginForm :FormGroup=this.fb.group({
     email:['',[Validators.required,Validators.pattern(this.validatorService.emailPattern)]],
@@ -54,7 +57,7 @@ export class LoginPageComponent {
     .subscribe({
       next:()=> this.router.navigateByUrl('/home'),
       error:(error)=>{
-        Swal.fire('Error',error,'error')
+        this.popupService.displayErrorModal(error)
         console.log({loginerror:error});
       }
     })

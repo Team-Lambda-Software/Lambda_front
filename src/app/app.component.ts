@@ -8,8 +8,8 @@ import { SwUpdate } from '@angular/service-worker';
 @Component({
   selector: 'app-root',
   template: `
-    <div 
-      class="bg-custom-light dark:bg-custom-dark" 
+    <div
+      class="bg-custom-light dark:bg-custom-dark"
       [ngClass]="{ 'overflow-hidden h-screen': sidebarService.isSidebarActive() }"
     >
       <router-outlet></router-outlet>
