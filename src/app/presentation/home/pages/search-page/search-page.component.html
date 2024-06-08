@@ -40,7 +40,7 @@
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                                <h2 class=" font-semibold text-gray-400 dark:text:white px-5">{{"found: " | transloco}}( {{this.program.courses.length}} )</h2>
+                                <h2 class=" font-semibold text-gray-400 dark:text:white px-5">{{"found: " | transloco}}<span class="text-white text-xs px-1.5 mx-2 font-semibold bg-purple-700 rounded-full">{{this.program.courses.length}}</span></h2>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <app-programs-tag [programs]="adaptToTag(this.program.courses)" [redirect]="'/home/main-course'"/>
@@ -60,7 +60,7 @@
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                                <h2 class=" font-semibold text-gray-400 dark:text:white px-5">{{"found: " | transloco}}( {{this.program.courses.length}} )</h2>
+                            <h2 class=" font-semibold text-gray-400 dark:text:white px-5">{{"found: " | transloco}}<span class="text-white text-xs px-1.5 mx-2 font-semibold bg-purple-700 rounded-full">{{this.program.courses.length}}</span></h2>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <app-programs-tag [programs]="adaptToTag(this.program.blogs)" [redirect]="'/home/main-blogs'"/>
