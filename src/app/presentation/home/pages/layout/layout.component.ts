@@ -6,7 +6,7 @@ import { AuthService } from '../../../auth/services/auth.service';
 import { Subscription, filter } from 'rxjs';
 
 const BOTTOM_NAVIGATION_BAR_BLACK_LIST = [
-  //'/home/player-video',
+  '/home/player-video',
 ]
 @Component({
   standalone: true,

@@ -126,7 +126,7 @@ export class VideoListComponent {
 
   public getCoursesByCategory(): void {
     this.isLoadingCourses = true
-    this.coursesUseCaseService.usecase.getCoursesByParams(`?filter=${this.selectedCategory?.name.toUpperCase()}`)
+    this.coursesUseCaseService.usecase.getCoursesByParams(`?filter=RECENT&category=${this.selectedCategory?.id}`)
       .pipe(
         finalize(() => this.isLoadingCourses = false),
       ).subscribe(c => this.coursesByCategory.set(c))
@@ -139,7 +139,7 @@ export class VideoListComponent {
   }
 
   setSelectedCategory(category : Category) {
-    this.selectedCategory = category;
+    this.selectedCategory = category;    
     this.getCoursesByCategory();
   }
 }
