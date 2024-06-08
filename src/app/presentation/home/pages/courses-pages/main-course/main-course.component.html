@@ -57,13 +57,14 @@
         <h1 class="text-xl dark:text-white font-bold">
           {{'sections' | transloco}}
         </h1>
-        <span class="text-purple-600 font-semibold px-4">({{course?.lessons?.length}})</span>
+        <span class="text-white text-sm px-1.5 mx-2 font-semibold bg-purple-700 rounded-full">{{course?.lessons?.length}}</span>
       </div>
     </mat-expansion-panel-header>
     <ol class="grid grid-cols-1 gap-2">
       @for (item of course?.lessons; track $index) {
         <li class="flex justify-between items-center my-2 text-gray-500 hover:bg-violet-300 hover:text-purple-700 py-2 px-4 rounded-md"
-        (click)="goToPlayer(item)">
+        [routerLink]="['/home/player-video']"
+        [queryParams]="{course: id,lesson: item.id}">
           <div class="text-lg font-semibold dark:text-white  ">{{item.title}}</div>
           <span class="fa-solid fa-play text-lg dark:text-white"></span>
         </li>

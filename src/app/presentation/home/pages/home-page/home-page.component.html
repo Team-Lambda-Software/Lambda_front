@@ -41,9 +41,11 @@
       </div>
     </div>
 
-    <div class="carrousel mt-4 flex gap-5">
+    <div class="carrousel mt-4">
       @for (item of videoCourses; track item.id) {
-        <app-player-card [item]="adaptToPlayerCard(item)"/>
+        <article class="w-[200px] h-[150]">
+          <app-player-card [item]="adaptToPlayerCard(item)"/>
+        </article>
       }
     </div>
   </section>

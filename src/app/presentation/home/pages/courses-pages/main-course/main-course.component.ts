@@ -33,7 +33,7 @@ import { NavigationExtras } from '@angular/router';
 })
 export class MainCourseComponent {
 
-  private id?: string;
+  public id?: string;
   public courseUseCaseService = inject(CourseUsecaseProvider);
   public logoPath = 'assets/icons/app-logo.svg'
   public course?: Course;

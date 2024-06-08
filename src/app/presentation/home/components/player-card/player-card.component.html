@@ -1,6 +1,8 @@
-<div class="bg-white rounded-lg shadow-md relative w-[220px] h-[150]">
-    <img [src]="item.thumbnail" alt="video" [routerLink]="['/home/player-video']" class="w-full h-[150px] object-cover rounded-md">
-    <button [routerLink]="['/home/player-video']" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-6xl">
+<div class="bg-white rounded-lg shadow-md relative"
+    [routerLink]="['/home/player-video']"
+    [queryParams]="{course:item.id}">
+    <img [src]="item.thumbnail" alt="video"  class="w-full h-[150px] object-cover rounded-md">
+    <button class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-6xl">
         <i class="fa-regular fa-circle-play"></i>
     </button>
 </div>
