@@ -24,54 +24,49 @@
     <section class="my-8 mx-4">
         <h1 class="text-xl font-bold dark:text-white">{{'popular-courses' | transloco}}</h1>
 
-        <app-card-carrusel [items]="this.popularCourses" />
+        <app-card-carrusel [items]="popularCourses" />
 
     </section>
 
-    @if(this.isLoading){
+    @if(isLoading){
         <div class="flex justify-center items-center h-16">
             <span class="fas fa-spinner fa-spin fa-2x text-gray-400"></span>
             <span class="text-gray-400 text-lg ml-2">{{'loading' | transloco}}</span>
         </div>
     }@else {
         <section class="mt-8 mx-4">
-            <h1 class="text-xl font-bold dark:text-white">{{'courses' | transloco}}</h1>
-            @if(this.program.courses.length > 0){
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                                <h2 class=" font-semibold text-gray-400 dark:text:white px-5">{{"found: " | transloco}}<span class="text-white text-xs px-1.5 mx-2 font-semibold bg-purple-700 rounded-full">{{this.program.courses.length}}</span></h2>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <app-programs-tag [programs]="adaptToTag(this.program.courses)" [redirect]="'/home/main-course'"/>
-                </mat-expansion-panel>
-            }
-            @else {
-                <div class="flex justify-center items-center h-16">
-                    <span class="fas fa-exclamation-triangle fa-2x text-gray-400"></span>
-                    <span class="text-gray-400 text-lg ml-2">{{'nothing-found yet' | transloco}}</span>
-                </div>
-            }
-        </section>
-    
-        <section class="mt-8 mx-4">
-            <h1 class="text-xl font-bold dark:text-white">{{'blogs' | transloco}}</h1>
-            @if(this.program.blogs.length > 0){
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            <h2 class=" font-semibold text-gray-400 dark:text:white px-5">{{"found: " | transloco}}<span class="text-white text-xs px-1.5 mx-2 font-semibold bg-purple-700 rounded-full">{{this.program.courses.length}}</span></h2>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <app-programs-tag [programs]="adaptToTag(this.program.blogs)" [redirect]="'/home/main-blogs'"/>
-                </mat-expansion-panel>
-            }
-            @else {
-                <div class="flex justify-center items-center h-16">
-                    <span class="fas fa-exclamation-triangle fa-2x text-gray-400"></span>
-                    <span class="text-gray-400 text-lg ml-2">{{'nothing-found yet' | transloco}}</span>
-                </div>
-            }
+            <mat-tab-group>
+                <mat-tab label="Courses">
+                    @if(this.program.courses.length > 0){
+                        <div class="flex justify-end items-center py-4">
+                            <h4 class=" font-semibold text-gray-400 dark:text:white px-5">{{"found: " | transloco}}<span class="text-white text-xs px-1.5 mx-2 font-semibold bg-purple-700 rounded-full">{{this.program.courses.length}}</span></h4>
+                        </div>
+                        <div class="border-t border-gray-200 dark:border-gray-700"></div>
+                        <app-programs-tag [programs]="adaptToTag(program.courses)" [redirect]="'/home/main-course'"/>
+                    }
+                    @else {
+                        <div class="flex justify-center items-center h-16 mt-4">
+                            <span class="fas fa-exclamation-triangle fa-2x text-gray-400"></span>
+                            <span class="text-gray-400 text-lg ml-2">{{'no-courses-to-show' | transloco}}</span>
+                        </div>
+                    }
+                </mat-tab>
+                <mat-tab label="Blogs">
+                    @if(this.program.blogs.length > 0){
+                        <div class="flex justify-end items-center py-4">
+                            <h4 class=" font-semibold text-gray-400 dark:text:white px-5">{{"found: " | transloco}}<span class="text-white text-xs px-1.5 mx-2 font-semibold bg-purple-700 rounded-full">{{this.program.courses.length}}</span></h4>
+                        </div>
+                        <div class="border-t border-gray-200 dark:border-gray-700"></div>
+                        <app-programs-tag [programs]="adaptToTag(program.courses)" [redirect]="'/home/main-course'"/>
+                    }
+                    @else {
+                        <div class="flex justify-center items-center h-16 mt-4">
+                            <span class="fas fa-exclamation-triangle fa-2x text-gray-400"></span>
+                            <span class="text-gray-400 text-lg ml-2">{{'no-blogs-to-show' | transloco}}</span>
+                        </div>
+                    }
+                </mat-tab>
+            </mat-tab-group>
         </section>
     }
 
