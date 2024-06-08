@@ -33,3 +33,14 @@
   <div class="border-t border-dashed border-gray-300 my-4 mx-4"></div>
   <textarea class="font-medium text-sm p-3 text-gray-500 border-purple-700 border-2 rounded-lg focus:outline-none h-auto overflow-y-scroll" rows="3" placeholder="Escribe tu comentario"></textarea>
 </section>
+
+<section class="flex justify-between p-4 mt-3">
+  <button
+    [disabled]="!this.hasPrevious()"
+    (click)="this.setPreviusLesson()"
+    class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded disabled:opacity-40 disabled:cursor-not-allowed disabled:select-none">Previous</button>
+  <button
+    [disabled]="!this.hasNext()"
+    (click)="this.setNextLesson()"
+    class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded disabled:opacity-40 disabled:cursor-not-allowed disabled:select-none">Next</button>
+</section>
