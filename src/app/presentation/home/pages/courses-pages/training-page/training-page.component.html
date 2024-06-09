@@ -3,7 +3,7 @@
         <span [routerLink]="['/home/main-course']" class="fas fa-chevron-left pr-4"></span> <span class="font-medium text-lg">Training</span>
     </div>
 
-    <nav class="flex justify-around">
+    <nav class="flex justify-evenly">
         @for (item of levels; track $index) {
             <div (click)="onLevelSelected(item)">
                 <div class="flex justify-center items-center p-2 text-white">
