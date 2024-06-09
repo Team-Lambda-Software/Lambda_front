@@ -27,83 +27,20 @@ export class VideoListComponent {
   public selectedCategory?: Category;
   public isLoadingCategories = false;
 
+  private param?: string
+
   public coursesUseCaseService = inject(CourseUsecaseProvider);
   public isLoadingCourses = false;
   public coursesByCategory = signal<PartialCourse[]>([]);
 
-  public videos: IVideoCourses[]  = [
-    {
-      id: 1,
-      title: 'How to get started with a healthy lifestyle',
-      description: 'A healthy lifestyle is one which helps to keep and improve your health and well-being. There are many different things that you can do to live a healthy lifestyle, such as eating healthy, being physically active, maintaining a healthy weight, and managing your stress.',
-      thumbnail: 'https://via.placeholder.com/150',
-      videoUrl: 'https://www.youtube.com/watch?v=8A89M3nR2oY'
-    },
-    {
-      id: 2,
-      title: 'How to get started with a healthy lifestyle',
-      description: 'A healthy lifestyle is one which helps to keep and improve your health and well-being. There are many different things that you can do to live a healthy lifestyle, such as eating healthy, being physically active, maintaining a healthy weight, and managing your stress.',
-      thumbnail: 'https://via.placeholder.com/150',
-      videoUrl: 'https://www.youtube.com/watch?v=8A89M3nR2oY'
-    },
-    {
-      id: 3,
-      title: 'How to get started with a healthy lifestyle',
-      description: 'A healthy lifestyle is one which helps to keep and improve your health and well-being. There are many different things that you can do to live a healthy lifestyle, such as eating healthy, being physically active, maintaining a healthy weight, and managing your stress.',
-      thumbnail: 'https://via.placeholder.com/150',
-      videoUrl: 'https://www.youtube.com/watch?v=8A89M3nR2oY'
-    },
-    {
-      id: 4,
-      title: 'How to get started with a healthy lifestyle',
-      description: 'A healthy lifestyle is one which helps to keep and improve your health and well-being. There are many different things that you can do to live a healthy lifestyle, such as eating healthy, being physically active, maintaining a healthy weight, and managing your stress.',
-      thumbnail: 'https://via.placeholder.com/150',
-      videoUrl: 'https://www.youtube.com/watch?v=8A89M3nR2oY'
-    },
-    {
-      id: 5,
-      title: 'How to get started with a healthy lifestyle',
-      description: 'A healthy lifestyle is one which helps to keep and improve your health and well-being. There are many different things that you can do to live a healthy lifestyle, such as eating healthy, being physically active, maintaining a healthy weight, and managing your stress.',
-      thumbnail: 'https://via.placeholder.com/150',
-      videoUrl: 'https://www.youtube.com/watch?v=8A89M3nR2oY'
-    },
-    {
-      id: 6,
-      title: 'How to get started with a healthy lifestyle',
-      description: 'A healthy lifestyle is one which helps to keep and improve your health and well-being. There are many different things that you can do to live a healthy lifestyle, such as eating healthy, being physically active, maintaining a healthy weight, and managing your stress.',
-      thumbnail: 'https://via.placeholder.com/150',
-      videoUrl: 'https://www.youtube.com/watch?v=8A89M3nR2oY'
-    },
-    {
-      id: 7,
-      title: 'How to get started with a healthy lifestyle',
-      description: 'A healthy lifestyle is one which helps to keep and improve your health and well-being. There are many different things that you can do to live a healthy lifestyle, such as eating healthy, being physically active, maintaining a healthy weight, and managing your stress.',
-      thumbnail: 'https://via.placeholder.com/150',
-      videoUrl: 'https://www.youtube.com/watch?v=8A89M3nR2oY'
-    },
-    {
-      id: 8,
-      title: 'How to get started with a healthy lifestyle',
-      description: 'A healthy lifestyle is one which helps to keep and improve your health and well-being. There are many different things that you can do to live a healthy lifestyle, such as eating healthy, being physically active, maintaining a healthy weight, and managing your stress.',
-      thumbnail: 'https://via.placeholder.com/150',
-      videoUrl: 'https://www.youtube.com/watch?v=8A89M3nR2oY'
-    }
-  ];
-
-
-  ngOnInit(): void {
+  ngOnInit() {
     this.getCategories()
   }
 
   constructor(private router:Router, private route:ActivatedRoute) {
     this.route.queryParams.subscribe((params: { [key: string ]: string }) => {
       if(params['category']) {
-        this.fetchedCategories()
-          .forEach(category => {
-            if(category.name == params['category']) {
-              this.setSelectedCategory(category);
-            }
-        });
+        this.param = params['category']
       }
     });
   }
@@ -112,14 +49,19 @@ export class VideoListComponent {
     return PartialCourseToPlayerCard(video);
   }
 
-  public getCategories(params?: string) {
+   public async getCategories(params?: string): Promise<void> {
     this.isLoadingCategories = true
     this.categoryUseCaseService.usecase.getByParams(params ?? '')
       .pipe(finalize(() => this.isLoadingCategories = false))
       .subscribe(
         c => {
-          this.fetchedCategories.set(c);
-          this.onCategorySelected(c[0]);
+          this.fetchedCategories.set(c)
+          if(this.param){
+            this.setSelectedCategory(this.fetchedCategories().find(category => category.name == this.param)!)
+          }
+          else{
+            this.setSelectedCategory(c[0])
+          }
         }
       )
   }
@@ -138,7 +80,7 @@ export class VideoListComponent {
     this.setSelectedCategory(category);
   }
 
-  setSelectedCategory(category : Category) {
+  private setSelectedCategory(category : Category) {    
     this.selectedCategory = category;    
     this.getCoursesByCategory();
   }

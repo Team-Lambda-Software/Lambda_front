@@ -10,12 +10,12 @@ import { CourseLevelService } from '../../../services/courses/getByLevel/course-
 import { CourseLitleCardAdapter } from '../../../adapters/LitleCardAdapter';
 import { CourseTagAdapter } from '../../../adapters/TagAdapter';
 
-type CoursesLevel = 'beginner' | 'skilled' | 'master';
+type CoursesLevel = 'Beginner' | 'Skilled' | 'Master';
 
 const coursesLevel = {
-  'beginner': 1, // 'Beginner
-  'skilled': 2,
-  'master': 3
+  'Master': 1,
+  'Skilled': 2,
+  'Beginner': 3, // 'Beginner
 }
 
 @Component({
@@ -32,12 +32,15 @@ export class TrainingPageComponent {
 
   
   public levels: CoursesLevel[] = Object.keys(coursesLevel) as CoursesLevel[];
-  public selectedLevel: CoursesLevel = 'beginner';
+  public selectedLevel: CoursesLevel = 'Master';
 
   constructor(private router:Router, private route:ActivatedRoute) {
     this.route.queryParams.subscribe((params: { [key: string]: any }) => {
       if(params['level']) {
         this.setSelectedLevel(params['level']);
+      }
+      else{
+        this.onLevelSelected('Master');
       }
     });
   }

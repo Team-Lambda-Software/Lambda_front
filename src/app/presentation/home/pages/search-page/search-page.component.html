@@ -12,16 +12,16 @@
 </nav>
 
 <div class="animate__animated animate__fadeIn">
-    <div class="flex flex-wrap m-4 gap-x-3 gap-y-2 pt-10">
+    <div class="flex flex-wrap mt-10 p-1 mx-2 gap-2">
         @for (item of categories; track item.id) {
         <div
             class="bg-violet-100 hover:bg-purple-700 dark:bg-gray-600 dark:hover:bg-white text-purple-900 hover:text-white dark:text-white dark:hover:text-purple-900 rounded-full shadow-md flex items-center justify-center ">
-            <span class="text-sm font-extralight py-2 px-6">{{ item.name }}</span>
+            <span class="text-xs font-light py-2 px-6">{{ item.name }}</span>
         </div>
         }
     </div>
 
-    <section class="my-8 mx-4">
+    <section class="mt-4 mx-4 mb-2">
         <h1 class="text-xl font-bold dark:text-white">{{'popular-courses' | transloco}}</h1>
 
         <app-card-carrusel [items]="popularCourses" />
