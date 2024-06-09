@@ -1,10 +1,32 @@
 <div class="bottombar border-t-[3px] border-custom-light dark:border-custom-dark">
   <div style="height: var(--bottom-bar-height)" class="bg-white flex items-center justify-around text-gray-400 relative dark:bg-custom-light-dark">
-    <span class="fas fa-home" [routerLink]="['/home/main']"></span>
-    <span class="fa-brands fa-accessible-icon" [routerLink]="['/home/main-course']"></span>
+    <span 
+      class="cursor-pointer fas fa-home"
+      [routerLink]="['/home/main']"
+      [routerLinkActive]="'active'"
+      [ngClass]="darkModeService.isDarkMode() ? 'dark' : 'light'"
+      [routerLinkActiveOptions]="{exact: true}">
+    </span>
+    <span 
+      class="cursor-pointer fa-brands fa-accessible-icon"
+      [routerLink]="['/home/main-course']"
+      routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+    </span>
     <span class=""></span>
-    <span class="fas fa-gear" [routerLink]="['/home/settings']"></span>
-    <span class="fas fa-bell" [routerLink]="['/home/notification']"></span>
+    <span 
+      class="cursor-pointer fas fa-gear"
+      [routerLink]="['/home/settings']"
+      routerLinkActive="active"
+      [ngClass]="darkModeService.isDarkMode() ? 'dark' : 'light'"
+      [routerLinkActiveOptions]="{exact: true}">
+    </span>
+    <span  
+      class="cursor-pointer fas fa-bell"
+      [routerLink]="['/home/notification']"
+      routerLinkActive="active"
+      [ngClass]="darkModeService.isDarkMode() ? 'dark' : 'light'"
+      [routerLinkActiveOptions]="{exact: true}">
+    </span>
     <div id="thunder" class="text-white bg-gradient-purple w-[66px] h-[66px] flex items-center justify-center rounded-full">
       <span class="fas fa-bolt"></span>
     </div>
