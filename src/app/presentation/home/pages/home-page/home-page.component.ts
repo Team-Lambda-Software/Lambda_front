@@ -1,4 +1,4 @@
-import { Component, OnInit, Signal, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
@@ -12,12 +12,11 @@ import { SquareSkeletonComponent } from '../../../shared/components/square-skele
 import { CategoriesComponent } from './components/categories/categories.component';
 import { PopularCoursesComponent } from './components/popular-courses/popular-courses.component';
 import { IVideoCourses } from '../../interfaces/video-courses-model';
-import { IUser } from '../../interfaces/user-info-model';
 import { IPlayerCard } from '../../interfaces/IPlayerCard';
 import { PlayerCardAdapter } from '../../adapters/PlayerCardAdapter';
 import { AuthService } from '../../../auth/services/auth.service';
-import { User } from '../../../auth/interfaces/user-state.interface';
 import { Optional } from '../../../shared/helpers/Optional';
+import { VideoCoursesComponent } from './components/video-courses/video-courses.component';
 
 @Component({
   selector: 'app-home-page',
@@ -34,7 +33,8 @@ import { Optional } from '../../../shared/helpers/Optional';
     SquareSkeletonComponent,
     CategoriesComponent,
     PopularCoursesComponent,
-    BlogsComponent
+    BlogsComponent,
+    VideoCoursesComponent
   ]
 })
 
