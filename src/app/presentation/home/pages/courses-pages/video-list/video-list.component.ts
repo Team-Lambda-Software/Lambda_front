@@ -1,17 +1,14 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslocoModule } from '@jsverse/transloco';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
-import { IVideoCourses } from '../../../interfaces/video-courses-model';
-import { CategoryDataAdapterCourse } from '../../../adapters/CategoryDataAdapter';
-import { PartialCourseToPlayerCard, PlayerCardAdapter } from '../../../adapters/PlayerCardAdapter';
+import { PartialCourseToPlayerCard } from '../../../adapters/PlayerCardAdapter';
 import { PlayerCardComponent } from '../../../components/player-card/player-card.component';
 import { Category } from '../../../../../core/categories/domain/category.model';
 import { CategoyUsecaseProvider } from '../../../../../core/categories/infrastructure/providers/category-usecase-provider';
 import { finalize } from 'rxjs';
 import { CourseUsecaseProvider } from '../../../../../core/course/infrastructure/providers/course-usecase-provider';
-import { Course, PartialCourse } from '../../../../../core/course/domain/course.model';
-import { IPlayerCard } from '../../../interfaces/IPlayerCard';
+import { PartialCourse } from '../../../../../core/course/domain/course.model';
 
 @Component({
   selector: 'app-video-list',
@@ -20,7 +17,7 @@ import { IPlayerCard } from '../../../interfaces/IPlayerCard';
   templateUrl: './video-list.component.html',
   styleUrl: './video-list.component.css'
 })
-export class VideoListComponent {
+export class VideoListComponent implements OnInit {
 
   public fetchedCategories= signal<Category[]>([])
   private categoryUseCaseService = inject(CategoyUsecaseProvider);
@@ -33,25 +30,26 @@ export class VideoListComponent {
   public isLoadingCourses = false;
   public coursesByCategory = signal<PartialCourse[]>([]);
 
-  ngOnInit() {
-    this.getCategories()
-  }
-
   constructor(private router:Router, private route:ActivatedRoute) {
     this.route.queryParams.subscribe((params: { [key: string ]: string }) => {
       if(params['category']) {
         this.param = params['category']
+        this.getCategories();
       }
     });
+  }
+
+  ngOnInit(): void {
+    this.getCategories();
   }
 
   adaptToPlayerCard(video: PartialCourse) {
     return PartialCourseToPlayerCard(video);
   }
 
-   public async getCategories(params?: string): Promise<void> {
+   public getCategories(params?: string): void {
     this.isLoadingCategories = true
-    this.categoryUseCaseService.usecase.getByParams(params ?? '')
+    this.categoryUseCaseService.usecase.getByParams(params)
       .pipe(finalize(() => this.isLoadingCategories = false))
       .subscribe(
         c => {
