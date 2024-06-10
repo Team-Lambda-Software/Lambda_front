@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, inject, signal } from '@angular/core';
+import { Component, OnInit, Input, inject, signal, ElementRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute,RouterLink } from '@angular/router';
 import { BasicHeaderComponent } from '../../../components/basic-header/basic-header.component';
 import { Course, Lesson, PartialCourse } from '../../../../../core/course/domain/course.model';
@@ -21,10 +21,10 @@ interface PlayerOptions {
 })
 export class PlayerVideoComponent {
 
-  lesson?: Lesson;
-  idCourse?: string;
-  idLesson?: string;
-
+  @ViewChild('videoPlayer') videoPlayer!: ElementRef;
+  public lesson?: Lesson;
+  public idCourse?: string;
+  public idLesson?: string;
   public courseUseCaseService = inject(CourseUsecaseProvider);
   public isLoading = false;
   public course? : Course;
@@ -59,8 +59,6 @@ export class PlayerVideoComponent {
       }else{
         this.lesson = course.lessons[0]
       }
-      console.log(this.lesson);
-      
     })
   }
 
@@ -83,7 +81,8 @@ export class PlayerVideoComponent {
     if(this.hasNext()){
       let indexLesson = this.course?.lessons.findIndex(lesson => lesson.id == this.lesson?.id)
       this.router.navigate([] ,{queryParams: {course: this.idCourse, lesson: this.course?.lessons[indexLesson! + 1].id}, queryParamsHandling: 'merge'});
-      this.lesson = this.course?.lessons[indexLesson! + 1]
+      this.lesson = this.course?.lessons[indexLesson! + 1];
+      this.videoPlayer.nativeElement.load();
     }
   }
 
@@ -93,7 +92,8 @@ export class PlayerVideoComponent {
     if(this.hasPrevious()){
       let indexLesson = this.course?.lessons.findIndex(lesson => lesson.id == this.lesson?.id)
       this.router.navigate([] ,{queryParams: { lesson: this.course?.lessons[indexLesson! - 1].id}, queryParamsHandling: 'merge'});
-      this.lesson = this.course?.lessons[indexLesson! - 1]
+      this.lesson = this.course?.lessons[indexLesson! - 1];
+      this.videoPlayer.nativeElement.load();
     }
   }
 }

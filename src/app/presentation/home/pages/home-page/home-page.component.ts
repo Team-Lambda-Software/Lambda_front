@@ -42,45 +42,7 @@ export class HomePageComponent {
 
   public popularService = inject(CoursesPopularService);
   public userInfo = inject(UserInfoService);
-  public auth= inject(AuthService)
-  public user= new Optional(this.auth.currentUser())
-
-
-  public videoCourses: IVideoCourses[] = [
-    {
-      id: '555661cv-dddsb',
-      title: 'How to get started with a healthy lifestyle',
-      description: 'A healthy lifestyle is one which helps to keep and improve your health and well-being. There are many different things that you can do to live a healthy lifestyle, such as eating healthy, being physically active, maintaining a healthy weight, and managing your stress.',
-      thumbnail: 'https://via.placeholder.com/250',
-      videoUrl: 'https://www.youtube.com/watch?v=8A89M3nR2oY'
-    },
-    {
-      id: '555661cv-dddsc',
-      title: 'How to get started with a healthy lifestyle',
-      description: 'A healthy lifestyle is one which helps to keep and improve your health and well-being. There are many different things that you can do to live a healthy lifestyle, such as eating healthy, being physically active, maintaining a healthy weight, and managing your stress.',
-      thumbnail: 'https://via.placeholder.com/250',
-      videoUrl: 'https://www.youtube.com/watch?v=8A89M3nR2oY'
-    },
-    {
-      id: '555661cv-dddsd',
-      title: 'How to get started with a healthy lifestyle',
-      description: 'A healthy lifestyle is one which helps to keep and improve your health and well-being. There are many different things that you can do to live a healthy lifestyle, such as eating healthy, being physically active, maintaining a healthy weight, and managing your stress.',
-      thumbnail: 'https://via.placeholder.com/250',
-      videoUrl: 'https://www.youtube.com/watch?v=8A89M3nR2oY'
-    },
-    {
-      id: '555661cv-dddse',
-      title: 'How to get started with a healthy lifestyle',
-      description: 'A healthy lifestyle is one which helps to keep and improve your health and well-being. There are many different things that you can do to live a healthy lifestyle, such as eating healthy, being physically active, maintaining a healthy weight, and managing your stress.',
-      thumbnail: 'https://via.placeholder.com/250',
-      videoUrl: 'https://www.youtube.com/watch?v=8A89M3nR2oY'
-    }
-  ];
-
-
-
-  public adaptToPlayerCard(data: IVideoCourses): IPlayerCard {
-    return PlayerCardAdapter(data)
-  }
+  public auth = inject(AuthService)
+  public user = new Optional(this.auth.currentUser())
 
 }

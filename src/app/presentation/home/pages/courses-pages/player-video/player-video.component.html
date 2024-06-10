@@ -1,7 +1,7 @@
 <app-basic-header [options]="{name:'player video', redirect:'/home/main'}"/>
 
 <section class="grid content-center p-2 mt-8 rounded-md">
-  <video class="w-full aspect-video rounded-xl" controls autoplay>
+  <video #videoPlayer class="w-full aspect-video rounded-xl" controls autoplay>
     <source
       [src]="this.lesson?.video" 
       type="video/mp4">
