@@ -3,17 +3,17 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 import { enviroment } from '../../../../environments/environment';
 import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { AuthStatus } from '../../../core/user/domain/interfaces/auth-status.enum';
-import { LoginResponse } from '../interfaces/response/login-response.interface';
+import { LoginResponse } from '../../../core/user/infraestructure/dto/response/login-response.interface';
 import { User } from '../interfaces/user-state.interface';
 import { SignUpUser } from '../interfaces/signup-user.interface';
-import { SignUpResponse } from '../interfaces/response/signup-response.interface';
-import { GetCodeResponse } from '../interfaces/response/getCode-response.interface';
+import { SignUpResponse } from '../../../core/user/infraestructure/dto/response/signup-response.interface';
+import { GetCodeResponse } from '../../../core/user/infraestructure/dto/response/getCode-response.interface';
 import { LocalStorage } from './LocalStorage';
 import { VerificationCodeForm } from '../interfaces/forms/verticationCode-form.interface';
 import { FormGroup } from '@angular/forms';
 import { Optional } from '../../shared/helpers/Optional';
-import { UpdatePasswordResponse } from '../interfaces/response/updatePassword-response.interface';
-import { CheckTokenResponse } from '../interfaces/response/checkToken-response.interface';
+import { UpdatePasswordResponse } from '../../../core/user/infraestructure/dto/response/updatePassword-response.interface';
+import { CheckTokenResponse } from '../../../core/user/infraestructure/dto/response/checkToken-response.interface';
 import { Router } from '@angular/router';
 
 @Injectable({

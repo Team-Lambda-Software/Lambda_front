@@ -18,7 +18,7 @@ import { CommonModule } from '@angular/common';
 import { EmailValidatorService } from '../../../shared/validators/email.validators.service';
 import { TranslocoModule } from '@jsverse/transloco';
 import Swal from 'sweetalert2';
-import { Type } from '../../interfaces/response/type.interface';
+import { Type } from '../../../../core/user/infraestructure/dto/response/type.interface';
 import { PopupInfoModalService } from '../../../shared/services/popup-info-modal/popup-info-modal.service';
 
 @Component({
