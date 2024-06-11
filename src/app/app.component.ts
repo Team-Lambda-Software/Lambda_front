@@ -24,7 +24,6 @@ import { SwUpdate } from '@angular/service-worker';
   imports: [RouterOutlet, NgClass]
 })
 export class AppComponent {
-  title = 'Lambda_front';
 
   private swUpdate = inject(SwUpdate);
   public sidebarService = inject(SidebarService);
