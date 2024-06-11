@@ -61,10 +61,9 @@ animate__animated animate__fadeIn"
 
     <a class=" text-custom-dark-purple dark:text-custom-light mt-3" [routerLink]="['/auth/resetpassword']">{{ForgetYourPassword | transloco}}</a>
 
-    <div class="mt-10"
-      [routerLink]="['/auth/signup']">
+    <div class="mt-10">
       <span class="dark:text-custom-light text-gray-500 mt-10"> {{DontHaveAnAccount | transloco}} </span>
-      <a class=" dark:text-custom-light text-custom-dark-purple mt-10 font-bold">{{SignInbuttonName | transloco}}</a>
+      <a class=" dark:text-custom-light text-custom-dark-purple mt-10 font-bold" [routerLink]="['/auth/signup']">{{SignInbuttonName | transloco}}</a>
     </div>
 </div>
 
