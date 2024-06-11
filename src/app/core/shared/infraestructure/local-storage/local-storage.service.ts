@@ -1,17 +1,19 @@
-import { Optional } from "../../../helpers/Optional";
-import { IRepository } from "../../application/ports/IRepository.interface";
+import { Optional } from "../../../../common/helpers/Optional";
+import { IAuthRepository } from "../../application/ports/IRepository.interface";
 
-export class LocalStorageService implements IRepository {
-  saveByKeyValue(key: string, value: string): void {
-    localStorage.setItem(key, value);
+export class LocalStorageService implements IAuthRepository {
+  private tokenKey='token'
+
+  saveToken(tokenValue: string): void {
+    localStorage.setItem(this.tokenKey, tokenValue);
   }
-  getByKey(key: string): Optional<string> {
-    let item = localStorage.getItem(key)
+  getToken(): Optional<string> {
+    let item = localStorage.getItem(this.tokenKey)
     if (item) return new Optional<string>(item)
     return new Optional<string>(undefined)
   }
-  deleteByKey(key: string): void {
-    localStorage.removeItem(key);
+  deleteToken(): void {
+    localStorage.removeItem(this.tokenKey);
   }
   deleteAllKeys(): void {
     localStorage.clear();

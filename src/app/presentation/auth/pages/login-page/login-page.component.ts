@@ -13,6 +13,7 @@ import { ValidatorService } from '../../../shared/services/validator/validator.s
 import { TranslocoModule } from '@jsverse/transloco';
 import { PopupInfoModalService } from '../../../shared/services/popup-info-modal/popup-info-modal.service';
 import { AuthUsecaseProvider } from '../../../../core/user/infraestructure/providers/auth-use-case-provider';
+import { Result } from '../../../../common/helpers/Result';
 
 
 @Component({
@@ -56,19 +57,21 @@ export class LoginPageComponent {
     console.log(this.loginForm.value);
 
     //Sin hexagonal
-    this.authService.login(email,password)
-    .subscribe({
-      next:()=> this.router.navigateByUrl('/home'),
-      error:(error)=>{
-        this.popupService.displayErrorModal(error)
-        console.log({loginerror:error});}})
+    // this.authService.login(email,password)
+    // .subscribe({
+    //   next:()=> this.router.navigateByUrl('/home'),
+    //   error:(error)=>{
+    //     this.popupService.displayErrorModal(error)
+    //     console.log({loginerror:error});}})
 
     // Con hexagonal
-    // this.authUseCaseService.usecase.login({email,password}).subscribe({
-    //   next:(answer)=>{
-    //     if(!answer.isError()) this.router.navigateByUrl('/home')
-    //     else this.popupService.displayErrorModal(answer.getError().message)
-    //   }
-    // })
+    this.authUseCaseService.usecase.login({email,password}).subscribe({
+      next:(answer)=>{
+        if(!answer.isError()) this.router.navigateByUrl('/home')
+      },
+      error:(error:Result<Error>)=>{
+         this.popupService.displayErrorModal(error.getError().message)
+      }
+    })
   }
 }

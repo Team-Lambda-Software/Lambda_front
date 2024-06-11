@@ -1,4 +1,4 @@
-import { User } from "../../../../../presentation/auth/interfaces/user-state.interface";
+import { User } from "./user-response.interface";
 
 export interface LoginResponse {
   token: string;

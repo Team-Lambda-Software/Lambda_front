@@ -1,4 +1,4 @@
-import { Type } from "../../../core/user/infraestructure/dto/response/type.interface"
+import { Type } from "../response/type.interface"
 
 export interface SignUpUser {
   email: string

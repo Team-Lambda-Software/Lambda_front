@@ -4,15 +4,15 @@ import { enviroment } from '../../../../environments/environment';
 import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { AuthStatus } from '../../../core/user/domain/interfaces/auth-status.enum';
 import { LoginResponse } from '../../../core/user/infraestructure/dto/response/login-response.interface';
-import { User } from '../interfaces/user-state.interface';
-import { SignUpUser } from '../interfaces/signup-user.interface';
+import { User } from '../../../core/user/infraestructure/dto/response/user-response.interface';
 import { SignUpResponse } from '../../../core/user/infraestructure/dto/response/signup-response.interface';
 import { GetCodeResponse } from '../../../core/user/infraestructure/dto/response/getCode-response.interface';
 import { LocalStorage } from './LocalStorage';
 import { VerificationCodeForm } from '../interfaces/forms/verticationCode-form.interface';
 import { FormGroup } from '@angular/forms';
-import { Optional } from '../../shared/helpers/Optional';
 import { Router } from '@angular/router';
+import { Optional } from '../../../common/helpers/Optional';
+import { SignUpUser } from '../../../core/user/infraestructure/dto/entry/signup-user.interface';
 
 @Injectable({
   providedIn: 'root'

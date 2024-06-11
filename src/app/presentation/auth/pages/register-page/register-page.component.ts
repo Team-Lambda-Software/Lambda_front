@@ -6,7 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ValidatorService } from '../../../shared/services/validator/validator.service';
 import { ErrorComponent } from '../../../shared/components/error/error.component';
-import { SignUpUser } from '../../interfaces/signup-user.interface';
+import { SignUpUser } from '../../../../core/user/infraestructure/dto/entry/signup-user.interface';
 import { SignUpForm } from '../../interfaces/forms/signup-form.interface';
 
 import { MatInputModule } from '@angular/material/input';

@@ -1,12 +1,12 @@
-import { Optional } from "../../../helpers/Optional";
+import { Optional } from "../../../../common/helpers/Optional";
 
-export interface IRepository {
+export interface IAuthRepository {
 
-    saveByKeyValue(key: string, value: string):void;
+    saveToken(tokenValue: string):void;
 
-    getByKey(key: string): Optional<string>;
+    getToken(): Optional<string>;
 
-    deleteByKey(key: string): void;
+    deleteToken(): void;
 
     deleteAllKeys(): void
 

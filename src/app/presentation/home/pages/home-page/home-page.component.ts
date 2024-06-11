@@ -16,8 +16,8 @@ import { IUser } from '../../interfaces/user-info-model';
 import { IPlayerCard } from '../../interfaces/IPlayerCard';
 import { PlayerCardAdapter } from '../../adapters/PlayerCardAdapter';
 import { AuthService } from '../../../auth/services/auth.service';
-import { User } from '../../../auth/interfaces/user-state.interface';
-import { Optional } from '../../../shared/helpers/Optional';
+import { User } from '../../../../core/user/infraestructure/dto/response/user-response.interface';
+import { Optional } from '../../../../common/helpers/Optional';
 
 @Component({
   selector: 'app-home-page',
