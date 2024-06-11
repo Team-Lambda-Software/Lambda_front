@@ -1,11 +1,16 @@
-<app-sidebar/>
+@if(!finishedAuthCheck()){
+  <app-loader></app-loader>
+}
 
-<div id="container">
-  <main class="pb-[125px]">
-    <router-outlet/>
-  </main>
-  @if(isBottombarActive()) {
-    <app-bottom-bar/>
-  }
-</div>
+@else{
+  <app-sidebar/>
 
+  <div id="container">
+    <main class="pb-[125px]">
+      <router-outlet/>
+    </main>
+    @if(isBottombarActive()) {
+      <app-bottom-bar/>
+    }
+  </div>
+}

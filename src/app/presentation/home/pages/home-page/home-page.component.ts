@@ -38,7 +38,7 @@ import { Optional } from '../../../shared/helpers/Optional';
   ]
 })
 
-export class HomePageComponent {
+export class HomePageComponent{
 
   public popularService = inject(CoursesPopularService);
   public userInfo = inject(UserInfoService);

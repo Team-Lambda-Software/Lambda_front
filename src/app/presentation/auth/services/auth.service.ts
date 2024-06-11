@@ -12,8 +12,6 @@ import { LocalStorage } from './LocalStorage';
 import { VerificationCodeForm } from '../interfaces/forms/verticationCode-form.interface';
 import { FormGroup } from '@angular/forms';
 import { Optional } from '../../shared/helpers/Optional';
-import { UpdatePasswordResponse } from '../../../core/user/infraestructure/dto/response/updatePassword-response.interface';
-import { CheckTokenResponse } from '../../../core/user/infraestructure/dto/response/checkToken-response.interface';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -37,7 +35,7 @@ export class AuthService {
   public hasError=this._hasError
 
   constructor() {
-    this.checkAuthStatus().subscribe()
+    this.current().subscribe()
   }
 
   private changeError(){
@@ -46,7 +44,6 @@ export class AuthService {
   private setAuthtication(newUser:User):boolean{
     this._currentUser.set(newUser)
     this.setAuthenticaded()
-    console.log(this._currentUser());
     return true
   }
 
@@ -74,8 +71,11 @@ export class AuthService {
   current():Observable<boolean>{
     const url=`${this.baseUrl}/auth/current`
     const token=this.localStorage.LoadLocalStorage('token')
+    this.setChecking();
 
-    if( !token.hasValue()) return (of(false))
+    if( !token.hasValue()) return (
+      this.setNotAuthenticated(),
+      of(false))
 
     const headers= new HttpHeaders()
     .set('Authorization',`Bearer ${token.getValue()}`)
@@ -161,27 +161,6 @@ export class AuthService {
       )
   }
 
-  checkAuthStatus():Observable<boolean>{
-    const url=`${this.baseUrl}/auth/checktoken`;
-    const token=this.localStorage.LoadLocalStorage('token')
-
-    if (!token.hasValue()) return (
-      this.logout(),
-      of(false))
-
-    const headers= new HttpHeaders()
-      .set('Authorization',`Bearer ${token.getValue()}`)
-
-    return this.http.get<CheckTokenResponse>(url,{headers})
-      .pipe(
-        map((resp)=>{
-          if (resp.tokenIsValid) this.setAuthenticaded()
-          else this.setNotAuthenticated()
-          return resp.tokenIsValid
-        }),
-        catchError(()=>of(false))
-      )
-  }
 
   verificateLocalCode(verificationCodeForm:FormGroup<VerificationCodeForm>):Observable<HttpResponseBase>{
     let data=verificationCodeForm.value
