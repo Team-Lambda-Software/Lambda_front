@@ -1,6 +1,6 @@
 import { Optional } from "../../../helpers/Optional";
 
-export interface ISave {
+export interface IRepository {
 
     saveByKeyValue(key: string, value: string):void;
 

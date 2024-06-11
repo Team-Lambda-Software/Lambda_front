@@ -15,9 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { CommonModule } from '@angular/common';
-import { EmailValidatorService } from '../../../shared/validators/email.validators.service';
 import { TranslocoModule } from '@jsverse/transloco';
-import Swal from 'sweetalert2';
 import { Type } from '../../../../core/user/infraestructure/dto/response/type.interface';
 import { PopupInfoModalService } from '../../../shared/services/popup-info-modal/popup-info-modal.service';
 

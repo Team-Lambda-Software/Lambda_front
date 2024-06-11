@@ -1,7 +1,7 @@
 import { Optional } from "../../../helpers/Optional";
-import { ISave } from "../../application/ports/ISave.interface";
+import { IRepository } from "../../application/ports/IRepository.interface";
 
-export class LocalStorageService implements ISave {
+export class LocalStorageService implements IRepository {
   saveByKeyValue(key: string, value: string): void {
     localStorage.setItem(key, value);
   }
@@ -16,5 +16,6 @@ export class LocalStorageService implements ISave {
   deleteAllKeys(): void {
     localStorage.clear();
   }
+  constructor(){}
 
 }

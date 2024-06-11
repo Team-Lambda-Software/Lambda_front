@@ -13,6 +13,7 @@ import { CATEGORY_API_PROVIDER } from './core/categories/infrastructure/provider
 import { TRAINER_API_PROVIDER } from './core/trainer/infrastructure/providers/trainer-api-provider';
 import { BLOG_API_PROVIDER } from './core/blog/infrastructure/providers/blog-api-provider';
 import { SEARCH_API_PROVIDER } from './core/search/infraestructure/providers/search-api-provider';
+import { AUTH_API_PROVIDER } from './core/user/infraestructure/providers/auth-api-provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -45,6 +46,8 @@ export const appConfig: ApplicationConfig = {
     CATEGORY_API_PROVIDER,
     BLOG_API_PROVIDER,
     TRAINER_API_PROVIDER,
-    SEARCH_API_PROVIDER
+    SEARCH_API_PROVIDER,
+    AUTH_API_PROVIDER
+
   ]
 };

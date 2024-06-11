@@ -30,7 +30,8 @@ export class LayoutComponent {
   })
 
   public authStatusChangeEffect= effect(()=>{
-      console.log(this.authService.authStatus());
+    console.log(this.lastLink);
+
       switch(this.authService.authStatus()){
         case AuthStatus.checking:
           return;
