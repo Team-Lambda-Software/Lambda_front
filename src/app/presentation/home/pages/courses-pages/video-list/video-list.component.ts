@@ -17,7 +17,7 @@ import { PartialCourse } from '../../../../../core/course/domain/course.model';
   templateUrl: './video-list.component.html',
   styleUrl: './video-list.component.css'
 })
-export class VideoListComponent implements OnInit {
+export class VideoListComponent {
 
   public fetchedCategories= signal<Category[]>([])
   private categoryUseCaseService = inject(CategoyUsecaseProvider);
@@ -34,20 +34,16 @@ export class VideoListComponent implements OnInit {
     this.route.queryParams.subscribe((params: { [key: string ]: string }) => {
       if(params['category']) {
         this.param = params['category']
-        this.getCategories();
       }
+      this.getCategories();
     });
-  }
-
-  ngOnInit(): void {
-    this.getCategories();
   }
 
   adaptToPlayerCard(video: PartialCourse) {
     return PartialCourseToPlayerCard(video);
   }
 
-   public getCategories(params?: string): void {
+  public getCategories(params?: string) {
     this.isLoadingCategories = true
     this.categoryUseCaseService.usecase.getByParams(params)
       .pipe(finalize(() => this.isLoadingCategories = false))
@@ -64,7 +60,7 @@ export class VideoListComponent implements OnInit {
       )
   }
 
-  public getCoursesByCategory(): void {
+  public getCoursesByCategory() {
     this.isLoadingCourses = true
     this.coursesUseCaseService.usecase.getCoursesByParams(`?filter=RECENT&category=${this.selectedCategory?.id}`)
       .pipe(

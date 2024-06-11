@@ -3,7 +3,7 @@ import { Router, ActivatedRoute,RouterLink } from '@angular/router';
 import { BasicHeaderComponent } from '../../../components/basic-header/basic-header.component';
 import { Course, Lesson, PartialCourse } from '../../../../../core/course/domain/course.model';
 import { CourseUsecaseProvider } from '../../../../../core/course/infrastructure/providers/course-usecase-provider';
-import { finalize } from 'rxjs';
+import { TranslocoModule } from '@jsverse/transloco';
 
 interface PlayerOptions {
   redirect?: string;
@@ -15,7 +15,7 @@ interface PlayerOptions {
 @Component({
   selector: 'app-player-video',
   standalone: true,
-  imports: [RouterLink, BasicHeaderComponent],
+  imports: [RouterLink, BasicHeaderComponent, TranslocoModule],
   templateUrl: './player-video.component.html',
   styleUrl: './player-video.component.css'
 })
@@ -39,19 +39,15 @@ export class PlayerVideoComponent {
       if(params['lesson']) {
         this.idLesson = params['lesson'];
       }
+      this.getCourse(this.idCourse!);
+
     })
   }
 
-  ngOnInit() {
-    this.getCourse(this.idCourse!);
-  }
 
   public getCourse(id: string){
     this.isLoading = true
     this.courseUseCaseService.usecase.getById(id)
-    .pipe(
-      finalize(() => this.isLoading = false)
-    )
     .subscribe( course =>{
       this.course = course
       if(this.idLesson){
@@ -59,7 +55,7 @@ export class PlayerVideoComponent {
       }else{
         this.lesson = course.lessons[0]
       }
-    })
+    }).add(() => this.isLoading = false)
   }
 
   public hasNext(){
