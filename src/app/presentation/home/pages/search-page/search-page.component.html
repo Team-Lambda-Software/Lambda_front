@@ -6,7 +6,9 @@
             <input [(ngModel)]="inputSearch" type="text"
                 class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
                 placeholder="Search">
-            <span class="fas fa-search fa-xl text-gray-400" (click)="getBySearch()"></span>
+            <span class="fas fa-search fa-xl text-gray-400 aria-disabled:text-gray-200 aria-disabled:cursor-not-allowed"
+            [ariaDisabled]="(this.inputSearch.length === 0)"
+            (click)="getBySearch()"></span>
         </div>
     </div>
 </nav>

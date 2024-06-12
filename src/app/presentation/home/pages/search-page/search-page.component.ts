@@ -48,6 +48,7 @@ export class SearchPageComponent {
 
   getBySearch(): void {
     this.isLoading = true;
+    if(this.inputSearch.length === 0 && this._tag.length === 0) return;
     let response =this.searchService.usecase.getBySearch(this.inputSearch, this._tag.map(item => item.toLowerCase()));
     console.log(response)
       if(response.isError()){
