@@ -68,8 +68,7 @@ export class SearchPageComponent {
       }else{
         this._tag.push(tag);
       }
-      if(this.inputSearch)  this.getBySearch();
-      
+      this.getBySearch();
   }
 
     adaptToTag(data: Body[]): IProgram[]{

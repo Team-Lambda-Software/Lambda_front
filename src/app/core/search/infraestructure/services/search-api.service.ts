@@ -15,9 +15,9 @@ export class SearchApiService implements ISearchApiService {
     let params = new HttpParams();
     if (terms) {
       params = params.append('term', terms);
-      if (tags){
-        tags.forEach(tag => params = params.append('tag', tag));
-      }
+    }
+    if (tags && tags.length > 0){
+      tags.forEach(tag => params = params.append('tag', tag));
     }
     let req = this._httpClient.get<SearchModel>(`${this.BASE_URL}`, { params });
     req.subscribe({
