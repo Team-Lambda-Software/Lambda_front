@@ -7,10 +7,10 @@ import { Result } from "../../helpers/Result";
 export class SearchUseCaseService implements ISearchUseCase{
     constructor(private _searchApiService: ISearchApiService) {}
     
-    getBySearch(terms?: string): Result<Observable<SearchModel>>{
-        if (!terms) {
+    getBySearch(terms?: string, tags?: string[]): Result<Observable<SearchModel>>{
+        if(!terms)  
             return Result.makeError(new Error('Terms are required'));
-        }
-        return Result.makeResult(this._searchApiService.getBySearch(terms));
+        else
+            return Result.makeResult(this._searchApiService.getBySearch(terms, tags));
     }
 }

@@ -1,0 +1,14 @@
+@if(isLoading){
+    <div class="flex justify-center items-center h-16">
+        <span class="fas fa-spinner fa-spin fa-2x text-gray-400"></span>
+        <span class="text-gray-400 text-lg ml-2">{{'loading' | transloco}}</span>
+    </div>
+}
+@else {
+    <section class="mt-4 mx-4 mb-2">
+        <h1 class="text-xl font-bold dark:text-white">{{'popular-courses' | transloco}}</h1>
+
+        <app-card-carrusel [items]="popularCourses" />
+
+    </section>
+}
