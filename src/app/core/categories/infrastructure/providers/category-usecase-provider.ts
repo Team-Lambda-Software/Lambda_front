@@ -6,7 +6,7 @@ import { ProxyCategoryUseCase } from "../../application/proxy-category-use-case.
 import { ICategoryUseCase } from "../../domain/interfaces/category-use-case.interface";
 
 @Injectable({ providedIn: "root" })
-export class CategoyUsecaseProvider {
+export class CategoyUseCaseProvider {
   public usecase: ICategoryUseCase;
 
   constructor(

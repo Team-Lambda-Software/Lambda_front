@@ -1,9 +1,12 @@
 import { Component, OnInit, Input, inject, signal, ElementRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute,RouterLink } from '@angular/router';
 import { BasicHeaderComponent } from '../../../components/basic-header/basic-header.component';
-import { Course, Lesson, PartialCourse } from '../../../../../core/course/domain/course.model';
+import { Course, Lesson } from '../../../../../core/course/domain/course.model';
 import { CourseUsecaseProvider } from '../../../../../core/course/infrastructure/providers/course-usecase-provider';
 import { TranslocoModule } from '@jsverse/transloco';
+import { CommentsComponent } from './components/comments/comments.component';
+import { PlayerComponent } from './components/player/player.component';
+import { BehaviorSubject } from 'rxjs';
 
 interface PlayerOptions {
   redirect?: string;
@@ -15,19 +18,19 @@ interface PlayerOptions {
 @Component({
   selector: 'app-player-video',
   standalone: true,
-  imports: [RouterLink, BasicHeaderComponent, TranslocoModule],
+  imports: [RouterLink, BasicHeaderComponent, TranslocoModule, CommentsComponent, PlayerComponent],
   templateUrl: './player-video.component.html',
   styleUrl: './player-video.component.css'
 })
 export class PlayerVideoComponent {
 
   @ViewChild('videoPlayer') videoPlayer!: ElementRef;
+  public courseUseCaseService = inject(CourseUsecaseProvider);
   public lesson?: Lesson;
+  public course? : Course;
   public idCourse?: string;
   public idLesson?: string;
-  public courseUseCaseService = inject(CourseUsecaseProvider);
   public isLoading = false;
-  public course? : Course;
   
   constructor(private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe( (params: { [key: string ]: string }) => {
