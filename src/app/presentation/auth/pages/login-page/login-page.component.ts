@@ -10,10 +10,10 @@ import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.se
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { ValidatorService } from '../../../shared/services/validator/validator.service';
-import { AuthStatus } from '../../../../core/user/domain/interfaces/auth-status.enum';
 import { TranslocoModule } from '@jsverse/transloco';
-import Swal from 'sweetalert2'
 import { PopupInfoModalService } from '../../../shared/services/popup-info-modal/popup-info-modal.service';
+import { AuthUsecaseProvider } from '../../../../core/user/infraestructure/providers/auth-use-case-provider';
+import { Result } from '../../../../common/helpers/Result';
 
 
 @Component({
@@ -30,6 +30,8 @@ export class LoginPageComponent {
   public darkModeService = inject(DarkModeService);
   private fb = inject(FormBuilder)
   private authService=inject(AuthService)
+  private authUseCaseService = inject(AuthUsecaseProvider);
+
   private router= inject(Router)
   private popupService=inject(PopupInfoModalService)
   public validatorService= inject(ValidatorService);
@@ -53,12 +55,22 @@ export class LoginPageComponent {
   login(){
     const {email,password}=this.loginForm.value;
     console.log(this.loginForm.value);
-    this.authService.login(email,password)
-    .subscribe({
-      next:()=> this.router.navigateByUrl('/home'),
-      error:(error)=>{
-        this.popupService.displayErrorModal(error)
-        console.log({loginerror:error});
+
+    //Sin hexagonal
+    // this.authService.login(email,password)
+    // .subscribe({
+    //   next:()=> this.router.navigateByUrl('/home'),
+    //   error:(error)=>{
+    //     this.popupService.displayErrorModal(error)
+    //     console.log({loginerror:error});}})
+
+    // Con hexagonal
+    this.authUseCaseService.usecase.login({email,password}).subscribe({
+      next:(answer)=>{
+        if(!answer.isError()) this.router.navigateByUrl('/home')
+      },
+      error:(error:Result<Error>)=>{
+         this.popupService.displayErrorModal(error.getError().message)
       }
     })
   }

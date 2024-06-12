@@ -3,18 +3,16 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 import { enviroment } from '../../../../environments/environment';
 import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { AuthStatus } from '../../../core/user/domain/interfaces/auth-status.enum';
-import { LoginResponse } from '../interfaces/response/login-response.interface';
-import { User } from '../interfaces/user-state.interface';
-import { SignUpUser } from '../interfaces/signup-user.interface';
-import { SignUpResponse } from '../interfaces/response/signup-response.interface';
-import { GetCodeResponse } from '../interfaces/response/getCode-response.interface';
+import { LoginResponse } from '../../../core/user/infraestructure/dto/response/login-response.interface';
+import { User } from '../../../core/user/infraestructure/dto/response/user-response.interface';
+import { SignUpResponse } from '../../../core/user/infraestructure/dto/response/signup-response.interface';
+import { GetCodeResponse } from '../../../core/user/infraestructure/dto/response/getCode-response.interface';
 import { LocalStorage } from './LocalStorage';
 import { VerificationCodeForm } from '../interfaces/forms/verticationCode-form.interface';
 import { FormGroup } from '@angular/forms';
-import { Optional } from '../../shared/helpers/Optional';
-import { UpdatePasswordResponse } from '../interfaces/response/updatePassword-response.interface';
-import { CheckTokenResponse } from '../interfaces/response/checkToken-response.interface';
 import { Router } from '@angular/router';
+import { Optional } from '../../../common/helpers/Optional';
+import { SignUpUser } from '../../../core/user/infraestructure/dto/entry/signup-user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +35,7 @@ export class AuthService {
   public hasError=this._hasError
 
   constructor() {
-    this.checkAuthStatus().subscribe()
+    this.current().subscribe()
   }
 
   private changeError(){
@@ -46,7 +44,6 @@ export class AuthService {
   private setAuthtication(newUser:User):boolean{
     this._currentUser.set(newUser)
     this.setAuthenticaded()
-    console.log(this._currentUser());
     return true
   }
 
@@ -74,8 +71,11 @@ export class AuthService {
   current():Observable<boolean>{
     const url=`${this.baseUrl}/auth/current`
     const token=this.localStorage.LoadLocalStorage('token')
+    this.setChecking();
 
-    if( !token.hasValue()) return (of(false))
+    if( !token.hasValue()) return (
+      this.setNotAuthenticated(),
+      of(false))
 
     const headers= new HttpHeaders()
     .set('Authorization',`Bearer ${token.getValue()}`)
@@ -161,27 +161,6 @@ export class AuthService {
       )
   }
 
-  checkAuthStatus():Observable<boolean>{
-    const url=`${this.baseUrl}/auth/checktoken`;
-    const token=this.localStorage.LoadLocalStorage('token')
-
-    if (!token.hasValue()) return (
-      this.logout(),
-      of(false))
-
-    const headers= new HttpHeaders()
-      .set('Authorization',`Bearer ${token.getValue()}`)
-
-    return this.http.get<CheckTokenResponse>(url,{headers})
-      .pipe(
-        map((resp)=>{
-          if (resp.tokenIsValid) this.setAuthenticaded()
-          else this.setNotAuthenticated()
-          return resp.tokenIsValid
-        }),
-        catchError(()=>of(false))
-      )
-  }
 
   verificateLocalCode(verificationCodeForm:FormGroup<VerificationCodeForm>):Observable<HttpResponseBase>{
     let data=verificationCodeForm.value

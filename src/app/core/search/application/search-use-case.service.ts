@@ -2,7 +2,7 @@ import { Observable } from "rxjs";
 import { ISearchApiService } from "../domain/interfaces/search-api.interface";
 import { SearchModel } from "../domain/search-model";
 import { ISearchUseCase } from "../domain/interfaces/search-use-case.interface";
-import { Result } from "../../helpers/Result";
+import { Result } from "../../../common/helpers/Result";
 
 export class SearchUseCaseService implements ISearchUseCase{
     constructor(private _searchApiService: ISearchApiService) {}
