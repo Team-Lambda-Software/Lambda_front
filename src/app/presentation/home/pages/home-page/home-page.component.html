@@ -1,9 +1,10 @@
 <header *ngIf="user.hasValue()">
   <nav class="bg-gradient-purple rounded-br-[50px] text-white">
     <div class="py-10 px-4 text-white bg-main-bg bg-cover">
-      <a class="profile-picture" [routerLink]="['/home/profile']"><img src="{{user.getValue().image}}"
-          class="w-[40px] h-[40px] rounded-full" align="right" /></a>
-      <span class="font-bold text-lg">{{user.getValue().name}}<br>
+      <a class="profile-picture" [routerLink]="['/home/profile']">
+          <img src="{{user.getValue().image}}" class="w-[75px] h-[75px] rounded-full" align="right" />
+      </a>
+      <span class="font-bold text-2xl">{{user.getValue().name}}<br>
         <p class="font-medium text-lg">{{user.getValue().id}}</p>
       </span>
     </div>
@@ -32,21 +33,7 @@
 
   <app-popular-courses/>
 
-  <section class="mx-4 py-7">
-    <div class="flex justify-between items-end dark:text-white">
-      <h1 class="text-xl font-bold">{{'video-courses' | transloco}}</h1>
-      <div class="flex items-center text-gray-500 pr-2" [routerLink]="['/home/video-list']">
-        <a class="text-sm mx-2 dark:text-white">{{'see-all' | transloco}}</a>
-        <span class="fas fa-chevron-right"></span>
-      </div>
-    </div>
-
-    <div class="carrousel mt-4 flex gap-5">
-      @for (item of videoCourses; track item.id) {
-        <app-player-card [item]="adaptToPlayerCard(item)"/>
-      }
-    </div>
-  </section>
+  <app-video-courses/>
 
   <app-blogs/>
 </div>

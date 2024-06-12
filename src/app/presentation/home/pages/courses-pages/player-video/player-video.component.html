@@ -1,35 +1,64 @@
 <app-basic-header [options]="{name:'player video', redirect:'/home/main'}"/>
 
-<section class="grid content-center p-2 mt-8 rounded-md">
-  <video class="w-full aspect-video rounded-xl" controls autoplay>
-    <source
-      [src]="this.lesson?.video + '?sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2024-06-07T23:10:20Z&st=2024-06-07T15:10:20Z&spr=https,http&sig=IZ2APcDxzhbDFZpwuZVTEATTC2fO%2Bd8zilP7FgVV%2BA8%3D'" 
-      type="video/mp4">
-  </video>
-</section>
+@if (isLoading) {
+  <div class="flex justify-center items-center h-16 animate__animated animate__fadeIn">
+    <span class="fas fa-spinner fa-spin fa-2x text-gray-400"></span>
+    <span class="text-gray-400 text-lg ml-2">{{'loading' | transloco}}</span>
+  </div>
+}
+@else {
+  <section class="grid content-center p-2 mt-8 rounded-md animate__animated animate__fadeIn">
+    <video #videoPlayer class="w-full aspect-video rounded-xl" controls autoplay>
+      <source
+        [src]="this.lesson?.video" 
+        type="video/mp4">
+    </video>
+  </section>
+  
+  <section class="text-white bg-gradient-purple flex flex-col p-4 w-auto m-3 rounded-xl animate__animated animate__fadeIn">
+    <h1 class="text-white text-2xl font-bold text-center">{{this.lesson?.title}}</h1>
+    @if (this.lesson?.content) {
+      <h2 class="font-semibold my-1">Content:</h2>
+      <p>{{this.lesson?.content}}</p>
+    }
+  </section>
+  
+  <div class="border-t border-gray-300 my-6 mx-4"></div>
+  
+  <section class="bg-gradient-purple flex flex-col p-4 w-auto mt-3 mx-3 rounded-xl text-white animate__animated animate__fadeIn">
+    <h1 class="text-white text-lg font-bold text-start">Comentarios</h1>
+    <div class="border-t border-dashed border-gray-300 my-4 mx-4"></div>
+  
+    <article class="flex">
+      <div class="font-semibold w-1/4">
+        <span>Carlos Alonzo: </span> 
+      </div>
+      <div class="w-3/4">
+        <p>Lambda sin duda alguna es el mejor equipo que se ha presentado en la materia de Desarrollo de software, estoy muy contento con ustedes. Son los mejores, 20 puntos para todos ustedes</p>
+      </div>
+    </article>
+    <div class="border-t border-dashed border-gray-300 my-4 mx-4"></div>
+    <textarea class="font-medium text-sm p-3 text-gray-500 border-purple-700 border-2 rounded-lg focus:outline-none h-auto overflow-y-scroll" rows="3" placeholder="Escribe tu comentario"></textarea>
+  </section>
+  
+  <section class="flex justify-between items-end m-3 animate__animated animate__fadeIn">
+    <button class="bg-purple-700 text-white font-bold py-2 px-4 rounded disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:select-none"
+      [disabled]="!this.hasPrevious()"
+      (click)="this.setPreviusLesson()">
+      <span class="fas fa-chevron-left"></span>
+      Prev
+    </button>
+    <button class="font-semibold text-xl text-purple-700 underline hover:text-gray-500 dark:hover:text-white"
+    [routerLink]="['/home/main-course']"
+    [queryParams]="{id:idCourse}">
+      Ir al Curso
+    </button>
+    <button class="bg-purple-700 text-white font-bold py-2 px-4 rounded disabled:bg-slate-500  disabled:opacity-50 disabled:cursor-not-allowed disabled:select-none"
+      [disabled]="!this.hasNext()"
+      (click)="this.setNextLesson()">
+      Next
+      <span class="fas fa-chevron-right"></span>
+    </button>
+  </section>
+}
 
-<section class="bg-gradient-purple flex flex-col p-4 w-auto m-3 rounded-xl">
-  <h1 class="text-white text-2xl font-bold text-center">{{this.lesson?.title}}</h1>
-  @if (this.lesson?.content) {
-    <h2 class="font-semibold my-1">Content:</h2>
-    <p>{{this.lesson?.content}}</p>
-  }
-</section>
-
-<div class="border-t border-gray-300 my-6 mx-4"></div>
-
-<section class="bg-gradient-purple flex flex-col p-4 w-auto mt-3 mx-3 rounded-xl text-white">
-  <h1 class="text-white text-lg font-bold text-start">Comentarios</h1>
-  <div class="border-t border-dashed border-gray-300 my-4 mx-4"></div>
-
-  <article class="flex">
-    <div class="font-semibold w-1/4">
-      <span>Carlos Alonzo: </span> 
-    </div>
-    <div class="w-3/4">
-      <p>Lambda sin duda alguna es el mejor equipo que se ha presentado en la materia de Desarrollo de software, estoy muy contento con ustedes. Son los mejores, 20 puntos para todos ustedes</p>
-    </div>
-  </article>
-  <div class="border-t border-dashed border-gray-300 my-4 mx-4"></div>
-  <textarea class="font-medium text-sm p-3 text-gray-500 border-purple-700 border-2 rounded-lg focus:outline-none h-auto overflow-y-scroll" rows="3" placeholder="Escribe tu comentario"></textarea>
-</section>

@@ -12,6 +12,7 @@ import { SearchModel, Body } from '../../../../core/search/domain/search-model';
 import { CourseUsecaseProvider } from '../../../../core/course/infrastructure/providers/course-usecase-provider';
 import { finalize, map } from 'rxjs';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { MatTabsModule } from '@angular/material/tabs';
 
 interface ITag {
   id: number;
@@ -21,7 +22,7 @@ interface ITag {
 @Component({
   selector: 'app-search-page',
   standalone: true,
-  imports: [RouterLink, BasicHeaderComponent, ProgramsTagComponent, MatExpansionModule ,CardCarruselComponent, TranslocoModule, FormsModule],
+  imports: [RouterLink, BasicHeaderComponent, ProgramsTagComponent, MatExpansionModule ,CardCarruselComponent, TranslocoModule, FormsModule, MatTabsModule],
   templateUrl: './search-page.component.html',
   styleUrl: './search-page.component.css'
 })
@@ -55,7 +56,7 @@ export class SearchPageComponent {
 
   public getPopulars(): void {
     this.isLoading = true
-    this.popularService.usecase.getPopularCourses()
+    this.popularService.usecase.getCoursesByParams('?filter=POPULAR&perPage=5')
       .pipe(
         map(courses => courses.map(PopularCourseCardAdapter)),
         finalize(() => this.isLoading = false),

@@ -13,6 +13,6 @@
     display:none;
 }
 
-mat-expansion-panel {
+mat-tab-group {
     background-color: transparent;
-  }
+}

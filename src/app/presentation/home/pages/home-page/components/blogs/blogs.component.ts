@@ -24,18 +24,17 @@ export class BlogsComponent implements OnInit {
   public isLoadingBlogs = false;
   public latestBlogs: ILatestBlogs[] = [];
 
-  
+  ngOnInit(): void {
+    this.getBlogs('?filter=RECENT&perPage=5');
+  }
+
   public getBlogs(params?: string) {
     this.isLoadingBlogs = true;
-    this.blogUseCaseService.usecase.getByParams(params ?? '')
+    this.blogUseCaseService.usecase.getByParams(params)
       .pipe(
         map(b => b.map(BlogAdapter)),
         finalize(() => this.isLoadingBlogs = false)
       )
       .subscribe(c => this.latestBlogs = c)
-  }
-
-  ngOnInit(): void {
-    this.getBlogs('?filter=RECENT&perPage=5');
   }
 }

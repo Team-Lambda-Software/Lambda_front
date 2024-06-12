@@ -1,7 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject, signal, ElementRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute,RouterLink } from '@angular/router';
 import { BasicHeaderComponent } from '../../../components/basic-header/basic-header.component';
-import { Lesson } from '../../../../../core/course/domain/course.model';
+import { Course, Lesson, PartialCourse } from '../../../../../core/course/domain/course.model';
+import { CourseUsecaseProvider } from '../../../../../core/course/infrastructure/providers/course-usecase-provider';
+import { TranslocoModule } from '@jsverse/transloco';
 
 interface PlayerOptions {
   redirect?: string;
@@ -13,24 +15,81 @@ interface PlayerOptions {
 @Component({
   selector: 'app-player-video',
   standalone: true,
-  imports: [RouterLink, BasicHeaderComponent],
+  imports: [RouterLink, BasicHeaderComponent, TranslocoModule],
   templateUrl: './player-video.component.html',
   styleUrl: './player-video.component.css'
 })
 export class PlayerVideoComponent {
-  lesson: Lesson | undefined;
-  courseId: string | undefined;
+
+  @ViewChild('videoPlayer') videoPlayer!: ElementRef;
+  public lesson?: Lesson;
+  public idCourse?: string;
+  public idLesson?: string;
+  public courseUseCaseService = inject(CourseUsecaseProvider);
+  public isLoading = false;
+  public course? : Course;
   
   constructor(private route: ActivatedRoute, private router: Router) {
-    this.lesson = this.router.getCurrentNavigation()?.extras?.state?.['lesson'];
-    this.courseId = this.router.getCurrentNavigation()?.extras?.state?.['courseId'];
-    if (!this.lesson && this.courseId) {
-      this.router.navigate(['/home/main-course'], { queryParams: { id: this.courseId } });
-    } else if (!this.lesson) {
-      this.router.navigate(['/home']);
+    this.route.queryParams.subscribe( (params: { [key: string ]: string }) => {
+      if(params['course']) {
+        this.idCourse = params['course'];
+      }else{
+        this.router.navigate(['/home'])
+      }
+      if(params['lesson']) {
+        this.idLesson = params['lesson'];
+      }
+      this.getCourse(this.idCourse!);
+
+    })
+  }
+
+
+  public getCourse(id: string){
+    this.isLoading = true
+    this.courseUseCaseService.usecase.getById(id)
+    .subscribe( course =>{
+      this.course = course
+      if(this.idLesson){
+        this.lesson = course.lessons.find(lesson => lesson.id == this.idLesson)
+      }else{
+        this.lesson = course.lessons[0]
+      }
+    }).add(() => this.isLoading = false)
+  }
+
+  public hasNext(){
+    if(this.lesson?.id == this.course?.lessons[this.course?.lessons.length - 1].id){
+      return false
     }
-    console.log(this.lesson);
-    console.log(this.courseId);
+    return true
+  }
+
+  public hasPrevious(){
+    if(this.lesson?.id == this.course?.lessons[0].id){
+      return false
+    }
+    return true
+  }
+
+  public setNextLesson(){
+    console.log('click');
+    if(this.hasNext()){
+      let indexLesson = this.course?.lessons.findIndex(lesson => lesson.id == this.lesson?.id)
+      this.router.navigate([] ,{queryParams: {course: this.idCourse, lesson: this.course?.lessons[indexLesson! + 1].id}, queryParamsHandling: 'merge'});
+      this.lesson = this.course?.lessons[indexLesson! + 1];
+      this.videoPlayer.nativeElement.load();
+    }
+  }
+
+  public setPreviusLesson(){
+    console.log('click');
     
+    if(this.hasPrevious()){
+      let indexLesson = this.course?.lessons.findIndex(lesson => lesson.id == this.lesson?.id)
+      this.router.navigate([] ,{queryParams: { lesson: this.course?.lessons[indexLesson! - 1].id}, queryParamsHandling: 'merge'});
+      this.lesson = this.course?.lessons[indexLesson! - 1];
+      this.videoPlayer.nativeElement.load();
+    }
   }
 }

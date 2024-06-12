@@ -5,7 +5,7 @@ import { provideServiceWorker } from '@angular/service-worker';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideTransloco } from '@jsverse/transloco';
 
-import { routes } from './app.routes';
+import { inMemoryScrollingFeature, routes } from './app.routes';
 import { TranslocoHttpLoader } from './transloco-loader';
 import { authInterceptor } from './presentation/shared/interceptors/auth/auth.interceptor';
 import { COURSE_API_PROVIDER } from './core/course/infrastructure/providers/course-api-provider';
@@ -17,15 +17,7 @@ import { AUTH_API_PROVIDER } from './core/user/infraestructure/providers/auth-ap
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),
-    provideServiceWorker('ngsw-worker.js', {
-      enabled: !isDevMode(),
-      registrationStrategy: 'registerWhenStable:30000'
-    }),
-    provideServiceWorker('ngsw-worker.js', {
-      enabled: !isDevMode(),
-      registrationStrategy: 'registerWhenStable:30000'
-    }),
+    provideRouter(routes, inMemoryScrollingFeature),
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000'

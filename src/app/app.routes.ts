@@ -1,4 +1,9 @@
-import { Routes } from '@angular/router';
+import { 
+  InMemoryScrollingFeature,
+  InMemoryScrollingOptions,
+  Routes,
+  withInMemoryScrolling 
+} from '@angular/router';
 import { NotFoundComponent } from './presentation/shared/pages/not-found-page/not-found.component';
 import { isAuthenticatedGuard } from './presentation/auth/guards/isAuthenticated.guard';
 import { isNotAuthenticatedGuard } from './presentation/auth/guards/isNotAuthenticated.guard';
@@ -28,3 +33,11 @@ export const routes: Routes = [
     redirectTo:'404-not-found'
   }
 ];
+
+const scrollConfig: InMemoryScrollingOptions = {
+  scrollPositionRestoration: 'top',
+  //anchorScrolling: 'enabled',
+};
+
+export const inMemoryScrollingFeature: InMemoryScrollingFeature =
+  withInMemoryScrolling(scrollConfig);

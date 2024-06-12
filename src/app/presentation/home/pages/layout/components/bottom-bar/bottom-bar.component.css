@@ -29,3 +29,13 @@
   top: 0%;
   left: 50%;
 }
+
+.active.light {
+  background: linear-gradient(144.61deg, #4F14A0 3.01%, #8066FF 90.98%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.active.dark {
+  color: white;
+}
