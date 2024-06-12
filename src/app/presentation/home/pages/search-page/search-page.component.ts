@@ -3,16 +3,14 @@ import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { BasicHeaderComponent } from '../../components/basic-header/basic-header.component';
 import { ProgramsTagComponent } from '../../components/programs-tag/programs-tag.component';
-import { CardCarruselComponent } from '../../components/card-carrusel/card-carrusel.component';
-import { ICard, IProgram } from '../../interfaces/ILittleCard';
+import { IProgram } from '../../interfaces/ILittleCard';
 import { FormsModule } from '@angular/forms';
-import { PopularCourseCardAdapter } from '../../adapters/CardAdapter';
 import { SearchUsecaseProvider } from '../../../../core/search/infraestructure/providers/search-api-usecase-provider';
 import { SearchModel, Body } from '../../../../core/search/domain/search-model';
-import { CourseUsecaseProvider } from '../../../../core/course/infrastructure/providers/course-usecase-provider';
-import { finalize, map } from 'rxjs';
+import { finalize } from 'rxjs';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { MatTabsModule } from '@angular/material/tabs';
+import { PopularCoursesComponent } from './components/popular-courses/popular-courses.component';
 
 interface ITag {
   id: number;
@@ -22,58 +20,56 @@ interface ITag {
 @Component({
   selector: 'app-search-page',
   standalone: true,
-  imports: [RouterLink, BasicHeaderComponent, ProgramsTagComponent, MatExpansionModule ,CardCarruselComponent, TranslocoModule, FormsModule, MatTabsModule],
+  imports: [RouterLink, BasicHeaderComponent, ProgramsTagComponent, MatExpansionModule , PopularCoursesComponent, TranslocoModule, FormsModule, MatTabsModule],
   templateUrl: './search-page.component.html',
   styleUrl: './search-page.component.css'
 })
 export class SearchPageComponent {
 
   public inputSearch: string = '';
+  public _tag: string[] = new Array<string>();
   public program: SearchModel = { blogs: [], courses: [] };
-  public popularService = inject(CourseUsecaseProvider);
   public searchService = inject(SearchUsecaseProvider);
-  public popularCourses: ICard[] = [];
   public isLoading = false;  
 
   public categories: ITag[] = [
-    { id: 1, name: 'Prenatal' },
-    { id: 2, name: 'For Women' },
-    { id: 3, name: 'Trainning'},
-    { id: 4, name: 'Courses'},
-    { id: 5, name: 'Videos'},
-    { id: 6, name: 'Morning'},
+    { id: 1, name: 'Women' },
+    { id: 2, name: 'Men' },
+    { id: 3, name: 'Relaxing'},
+    { id: 4, name: 'Challenging'},
+    { id: 5, name: 'Daily Routine'},
+    { id: 6, name: 'Energy'},
     { id: 7, name: 'Yoga'},
-    { id: 8, name: 'Restorative'},
-    { id: 9, name: 'Recent Posts'},
-    { id: 10, name: 'Most Popular'}
+    { id: 8, name: 'Better Health'},
+    { id: 9, name: 'Mind Relaxing'}
   ];
 
   constructor() { }
 
-  ngOnInit(): void {
-    this.getPopulars();
-  }
-
-  public getPopulars(): void {
-    this.isLoading = true
-    this.popularService.usecase.getCoursesByParams('?filter=POPULAR&perPage=5')
-      .pipe(
-        map(courses => courses.map(PopularCourseCardAdapter)),
-        finalize(() => this.isLoading = false),
-      ).subscribe(pc => this.popularCourses = pc)
-  }
-
-  getBySearch() {
+  getBySearch(): void {
     this.isLoading = true;
-    let response =this.searchService.usecase.getBySearch(this.inputSearch)
+    if(this.inputSearch.length === 0 && this._tag.length === 0) return;
+    let response =this.searchService.usecase.getBySearch(this.inputSearch, this._tag.map(item => item.toLowerCase()));
+    console.log(response)
       if(response.isError()){
         alert(response.getError().message);
+        this.isLoading = false;
+        return;
       }
       response.getValue()
       .pipe(
         finalize(() => this.isLoading = false)
       )
       .subscribe(data => this.program = data);
+  }
+
+  onTagClick(tag: string): void {
+      if(this._tag.includes(tag)){
+        this._tag = this._tag.filter(item => item !== tag);
+      }else{
+        this._tag.push(tag);
+      }
+      this.getBySearch();
   }
 
     adaptToTag(data: Body[]): IProgram[]{

@@ -12,6 +12,9 @@ export class SearchUsecaseProvider {
     constructor(
         @Inject(HTTP_SEARCH_SERVICE) private _searchApiService: ISearchApiService
     ) {
-        this.usecase = new ProxySearchUseCase(new SearchUseCaseService(this._searchApiService));
+        this.usecase = new SearchUseCaseService(this._searchApiService);
+
+        // ? Por ahora no voy a usar el proxy porque voy a probar los tags
+        // this.usecase = new ProxySearchUseCase(new SearchUseCaseService(this._searchApiService));
     }
 }
