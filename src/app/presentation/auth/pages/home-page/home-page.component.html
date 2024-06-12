@@ -28,12 +28,13 @@ animate__animated animate__fadeIn">
         <div class="grid grid-cols-2 w-72 h-14 mt-9">
 
           <button class="btn w-32 lg:h-16 lg:w-36  align-middle dark:bg-custom-light bg-custom-dark-purple  text-custom-light dark:text-custom-dark
-          rounded-[50px] mx-[6px] lg:m-3 lg:ml-3">
-            <a [routerLink]="['/auth/login']">{{LogInbuttonName|transloco}}</a>
+          rounded-[50px] mx-[6px] lg:m-3 lg:ml-3"
+          [routerLink]="['/auth/login']">
+            {{LogInbuttonName|transloco}}
           </button>
 
-          <button class="btn2 h-14 w-32 lg:h-16 lg:w-36  align-middle dark:text-custom-light text-custom-dark-purple  border dark:border-white rounded-[50px] mx-[6px] lg:m-3">
-            <a [routerLink]="['/auth/signup']">{{SignInbuttonName | transloco}}</a>
+          <button class="btn2 h-14 w-32 lg:h-16 lg:w-36  align-middle dark:text-custom-light text-custom-dark-purple  border dark:border-white rounded-[50px] mx-[6px] lg:m-3" [routerLink]="['/auth/signup']">
+            {{SignInbuttonName | transloco}}
           </button>
 
         </div>

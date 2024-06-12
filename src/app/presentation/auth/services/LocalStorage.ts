@@ -1,4 +1,4 @@
-import { Optional } from "../../shared/helpers/Optional"
+import { Optional } from "../../../common/helpers/Optional"
 
 export class LocalStorage{
   key:string

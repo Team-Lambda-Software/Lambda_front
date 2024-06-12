@@ -6,7 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ValidatorService } from '../../../shared/services/validator/validator.service';
 import { ErrorComponent } from '../../../shared/components/error/error.component';
-import { SignUpUser } from '../../interfaces/signup-user.interface';
+import { SignUpUser } from '../../../../core/user/infraestructure/dto/entry/signup-user.interface';
 import { SignUpForm } from '../../interfaces/forms/signup-form.interface';
 
 import { MatInputModule } from '@angular/material/input';
@@ -15,10 +15,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { CommonModule } from '@angular/common';
-import { EmailValidatorService } from '../../../shared/validators/email.validators.service';
 import { TranslocoModule } from '@jsverse/transloco';
-import Swal from 'sweetalert2';
-import { Type } from '../../interfaces/response/type.interface';
+import { Type } from '../../../../core/user/infraestructure/dto/response/type.interface';
 import { PopupInfoModalService } from '../../../shared/services/popup-info-modal/popup-info-modal.service';
 
 @Component({
