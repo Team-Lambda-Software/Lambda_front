@@ -18,8 +18,8 @@ export class ValidatorService{
 
   public firstNameAndLastnamePatternMessage: string = 'Must have first and last name';
   public emailPatternMessage: string = "Must be acceted email. Ex:youremail@gmail.com";
-  public passwordPatternMessage: string = "Must have one uppercase,lower case, one number and a special caracter and between 8 or 16 of legth Ex:Password12=";
-  public phoneNumberPatternMessage: string = "Must be numbers Ex:+088 031 420 698";
+  public passwordPatternMessage: string = "Must have one uppercase,lower case, one number and a special caracter and between 8 or 16 of length Ex:Password12=";
+  public phoneNumberPatternMessage: string = "Must be 0414,0416,0412 Ex:04122408080";
   public numberPatternMessage:string="Must be a number";
   public termsAndCoditionsMessage:string='Must accept terms and conditions'
 

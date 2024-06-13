@@ -100,7 +100,7 @@ animate__animated animate__fadeIn input-dark"
 
       @if (isValidField('password')) {
         @if (validatorService.getFieldError(signUpForm,'password').hasValue()){
-          @if (validatorService.getFieldError(signUpForm,'password').getValue()==='pattern'){
+          @if (validatorService.getFieldError(signUpForm,'password').getValue()==='Invalid pattern'){
             <mat-error class="bg-custom-dark-purple border border-red-400 rounded input-error
             font-bold relative">{{validatorService.passwordPatternMessage}}</mat-error>
           }
@@ -126,7 +126,7 @@ animate__animated animate__fadeIn input-dark"
 
         @if (isValidField('termsAndConditions')) {
           @if (validatorService.getFieldError(signUpForm,'termsAndConditions').hasValue()){
-            @if (validatorService.getFieldError(signUpForm,'termsAndConditions').getValue()==='pattern'){
+            @if (validatorService.getFieldError(signUpForm,'termsAndConditions').getValue()==='Invalid pattern'){
               <mat-error class="bg-custom-dark-purple border border-red-400 rounded input-error
               font-bold relative">{{validatorService.termsAndCoditionsMessage}}</mat-error>
             }

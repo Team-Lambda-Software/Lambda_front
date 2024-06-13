@@ -110,6 +110,9 @@ export class AuthApiService implements IAuthApiService {
         map((response)=>{
           this._authRepository.saveEmail(email)
           this._authRepository.saveDateCode(response.date.toString())
+          console.log(new Date(response.date));
+          console.log(new Date(response.date).getDate());
+
           this._userStatus.setNotAuthenticated()
           return
         }),
@@ -170,7 +173,6 @@ export class AuthApiService implements IAuthApiService {
           }),
           catchError(error=>{
             this._userStatus.setNotAuthenticated()
-            console.log(error);
             return throwError(()=>error.error.message)
           })
         )
