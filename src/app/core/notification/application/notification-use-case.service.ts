@@ -9,7 +9,8 @@ export class NotificationUseCaseService implements INotificationUseCase {
   sendSignUpNotification(email:string):Observable<Boolean>{
     return this._notificationApiService.sendSignUpNotification(email);
   }
-	getNotificationByParams(params: string): Observable<Notification[]> {
+
+   	getNotificationByParams(params: string): Observable<Notification[]> {
 		return this._notificationApiService.getNotificationByParams(params);
 	}
 

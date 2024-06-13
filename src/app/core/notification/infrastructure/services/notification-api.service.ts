@@ -44,11 +44,7 @@ export class NotificationApiService implements INotificationApiService {
     return this._httpClient.get<NotificationResponse[]>(`${this.BASE_URL}/many${params}`)
     .pipe(
       map((responses: NotificationResponse[]) => {
-        return responses.map(response => ({
-          title: response.title,
-          body: response.body,
-          date: response.date
-        }));
+        return responses.map(NotificationResponseToNotification);
       })
     );
   }  

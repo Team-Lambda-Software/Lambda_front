@@ -3,7 +3,9 @@ import { NotificationResponse, NotificationTokenResponse } from "../dtos/notific
 
 
 export const NotificationResponseToNotification = (notification: NotificationResponse): Notification => ({
-  ...notification
+  title:notification.title,
+  body:notification.body,
+  date:notification.date
 })
 
 export const NotificationTokenResponseToNotificationToken = (notificationtoken: NotificationTokenResponse): NotificationToken => ({

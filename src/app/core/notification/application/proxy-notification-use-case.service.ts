@@ -1,7 +1,7 @@
 import { Observable, of, tap } from 'rxjs';
 import { Notification } from '../domain/notification.model';
 import { INotificationUseCase } from '../domain/interfaces/notification-use-case.interface';
-
+/*
 export class ProxyNotificationUseCase implements INotificationUseCase {
   
   private cacheProxy = {
@@ -17,4 +17,4 @@ export class ProxyNotificationUseCase implements INotificationUseCase {
                     this.cacheProxy.getByParams.set(params ?? 'noParamsProvided', of(c))
                   }));
   }
-}
+}*/

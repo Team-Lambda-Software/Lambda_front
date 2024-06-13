@@ -1,15 +1,19 @@
 <app-basic-header-notification [options]="{name: 'notifications', redirect:'/home/main'}"/>
-<div class="flex justify-center items-center h-screen">
-    <div class="mt-8 font-medium max-w-[800px] m-auto mb-[175px]">
+@if (this.structure.length > 0) {
+    <app-structure-notification [structure]="this.structure"></app-structure-notification>
+}@else {
+    <div class="flex justify-center items-center h-screen">
+        <div class="mt-8 font-medium max-w-[800px] m-auto mb-[175px]">
+        
+            <span class="fa-regular fa-bell text-gray-500 dark:text-gray-400"></span>
     
-        <span class="fa-regular fa-bell text-gray-500 dark:text-gray-400"></span>
-
-        <div class="label-notificaciones">
-            <span class="text-black dark:text-white font-bold"[innerHTML]="'Cant find notifications' | transloco"></span><br>
-            <span class="text-gray-500 dark:text-white"[innerHTML]="'Lets explore more content around you' | transloco"></span>
+            <div class="label-notificaciones">
+                <span class="text-black dark:text-white font-bold"[innerHTML]="'Cant find notifications' | transloco"></span><br>
+                <span class="text-gray-500 dark:text-white"[innerHTML]="'Lets explore more content around you' | transloco"></span>
+            </div>
+    
+            <button class="boton-volver text-white bg-purple-900 dark:text-purple-700 dark:bg-white" [innerHTML]="'Back to feed' | transloco" [routerLink]="['/home']"></button>
+    
         </div>
-
-        <button class="boton-volver text-white bg-purple-900 dark:text-purple-700 dark:bg-white" [innerHTML]="'Back to feed' | transloco" [routerLink]="['/home']"></button>
-
     </div>
-</div>
+}
