@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { SquareSkeletonComponent } from '../../../../../shared/components/square-skeleton/square-skeleton.component';
-import { CategoyUsecaseProvider } from '../../../../../../core/categories/infrastructure/providers/category-usecase-provider';
+import { CategoyUseCaseProvider } from '../../../../../../core/categories/infrastructure/providers/category-usecase-provider';
 import { finalize } from 'rxjs';
 import { Category } from '../../../../../../core/categories/domain/category.model';
 
@@ -15,7 +15,7 @@ import { Category } from '../../../../../../core/categories/domain/category.mode
 })
 export class CategoriesComponent implements OnInit {
   
-  private categoryUseCaseService = inject(CategoyUsecaseProvider);
+  private categoryUseCaseService = inject(CategoyUseCaseProvider);
   public isLoadingCategories = false;
   public categories: Category[] = [];
 
