@@ -108,6 +108,8 @@ export class AuthApiService implements IAuthApiService {
       return this._httpClient.post<GetCodeResponse>(url,body)
       .pipe(
         map((response)=>{
+          this._authRepository.saveEmail(email)
+          this._authRepository.saveDateCode(response.date.toString())
           this._userStatus.setNotAuthenticated()
           return
         }),
