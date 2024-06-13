@@ -14,6 +14,7 @@ import { TranslocoModule } from '@jsverse/transloco';
 import { PopupInfoModalService } from '../../../shared/services/popup-info-modal/popup-info-modal.service';
 import { AuthUsecaseProvider } from '../../../../core/user/infraestructure/providers/auth-use-case-provider';
 import { Result } from '../../../../common/helpers/Result';
+import { UserStatusService } from '../../../../core/user/application/user-status.service';
 
 
 @Component({
@@ -29,10 +30,9 @@ export class LoginPageComponent {
 
   public darkModeService = inject(DarkModeService);
   private fb = inject(FormBuilder)
-  private authService=inject(AuthService)
   private authUseCaseService = inject(AuthUsecaseProvider);
-
   private router= inject(Router)
+  private userStatusService=inject(UserStatusService)
   private popupService=inject(PopupInfoModalService)
   public validatorService= inject(ValidatorService);
 
@@ -54,20 +54,9 @@ export class LoginPageComponent {
 
   login(){
     const {email,password}=this.loginForm.value;
-    console.log(this.loginForm.value);
-
-    //Sin hexagonal
-    // this.authService.login(email,password)
-    // .subscribe({
-    //   next:()=> this.router.navigateByUrl('/home'),
-    //   error:(error)=>{
-    //     this.popupService.displayErrorModal(error)
-    //     console.log({loginerror:error});}})
-
-    // Con hexagonal
     this.authUseCaseService.usecase.login({email,password}).subscribe({
       next:(answer)=>{
-        if(!answer.isError()) this.router.navigateByUrl('/home')
+        if(!answer.isError()) {this.router.navigateByUrl('/home'),this.userStatusService.setUser(answer.getValue())}
       },
       error:(error:Result<Error>)=>{
          this.popupService.displayErrorModal(error.getError().message)

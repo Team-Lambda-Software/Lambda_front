@@ -1,6 +1,6 @@
-import { Type } from "../response/type.interface"
+import { Type } from "../type.interface"
 
-export interface SignUpUser {
+export interface SignUpEntryDomainDTO {
   email: string
   name: string
   password: string

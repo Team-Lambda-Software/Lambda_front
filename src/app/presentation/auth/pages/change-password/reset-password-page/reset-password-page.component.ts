@@ -11,6 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslocoModule } from '@jsverse/transloco';
 import Swal from 'sweetalert2';
 import { PopupInfoModalService } from '../../../../shared/services/popup-info-modal/popup-info-modal.service';
+import { UserStatusService } from '../../../../../core/user/application/user-status.service';
+import { AuthUsecaseProvider } from '../../../../../core/user/infraestructure/providers/auth-use-case-provider';
 
 @Component({
   selector: 'app-reset-password-page',
@@ -23,7 +25,7 @@ import { PopupInfoModalService } from '../../../../shared/services/popup-info-mo
 export class ResetPasswordPageComponent {
   public darkModeService = inject(DarkModeService);
   private fb = inject(FormBuilder)
-  private authService=inject(AuthService)
+  private authUseCaseService = inject(AuthUsecaseProvider);
   private router= inject(Router)
   private popupService=inject(PopupInfoModalService)
 
@@ -41,8 +43,7 @@ export class ResetPasswordPageComponent {
 
   resetPassword(){
     const {email}=this.resetPasswordForm.value;
-    console.log(this.resetPasswordForm.value);
-    this.authService.getCodeUpdatePassword(email)
+    this.authUseCaseService.usecase.getCodeUpdatePassword(email)
     .subscribe({
       next:()=>{
         this.popupService.displayBelowModal(this.codeSendSuccsessfully,'info')
