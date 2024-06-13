@@ -6,8 +6,8 @@ export interface IComment {
 }
 
 export enum ETarget {
-    lesson,
-    blog
+    section = 'SECTION',
+    blog = 'BLOG'
 }
 
 export class CommentFeatureDto {

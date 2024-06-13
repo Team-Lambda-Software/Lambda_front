@@ -29,7 +29,7 @@ export class PlayerVideoComponent {
   public lesson?: Lesson;
   public course? : Course;
   public idCourse?: string;
-  public idLesson?: string;
+  public idLesson = signal('');
   public isLoading = false;
   
   constructor(private route: ActivatedRoute, private router: Router) {
@@ -40,7 +40,7 @@ export class PlayerVideoComponent {
         this.router.navigate(['/home'])
       }
       if(params['lesson']) {
-        this.idLesson = params['lesson'];
+        this.idLesson?.set(params['lesson']);
       }
       this.getCourse(this.idCourse!);
 
@@ -53,10 +53,11 @@ export class PlayerVideoComponent {
     this.courseUseCaseService.usecase.getById(id)
     .subscribe( course =>{
       this.course = course
-      if(this.idLesson){
-        this.lesson = course.lessons.find(lesson => lesson.id == this.idLesson)
+      if(this.idLesson()){
+        this.lesson = course.lessons.find(lesson => lesson.id == this.idLesson())
       }else{
         this.lesson = course.lessons[0]
+        this.idLesson.set(this.lesson.id)
       }
     }).add(() => this.isLoading = false)
   }
@@ -76,17 +77,16 @@ export class PlayerVideoComponent {
   }
 
   public setNextLesson(){
-    console.log('click');
     if(this.hasNext()){
       let indexLesson = this.course?.lessons.findIndex(lesson => lesson.id == this.lesson?.id)
       this.router.navigate([] ,{queryParams: {course: this.idCourse, lesson: this.course?.lessons[indexLesson! + 1].id}, queryParamsHandling: 'merge'});
       this.lesson = this.course?.lessons[indexLesson! + 1];
       this.videoPlayer.nativeElement.load();
+      
     }
   }
 
   public setPreviusLesson(){
-    console.log('click');
     
     if(this.hasPrevious()){
       let indexLesson = this.course?.lessons.findIndex(lesson => lesson.id == this.lesson?.id)

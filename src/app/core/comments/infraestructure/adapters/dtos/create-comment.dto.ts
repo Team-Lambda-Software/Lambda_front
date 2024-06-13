@@ -1,7 +1,7 @@
 
 
 export interface CreateComentApiDto {
-    targetId: string,
+    target: string,
     targetType: string,
     body: string
 }

@@ -21,6 +21,9 @@ export class CommentApiService implements ICommentApiService {
     }
     createComment(data: CommentFeatureDto): Observable<void> {
         let comment= CommentToCreateCommentApiDto(data)
+        console.log(comment)
+        if(comment.targetType == 'SECTION') comment.targetType = 'LESSON'
+        console.log(comment)
         return this._httpClient.post<void>(`${this.BASE_URL}/release`, comment);
     }
 }
