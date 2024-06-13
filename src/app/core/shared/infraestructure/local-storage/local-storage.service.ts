@@ -5,6 +5,7 @@ export class LocalStorageService implements IAuthRepository {
   private dateCodeKey='dateCode'
   private tokenKey='token'
   private emailKey='email'
+  private codeKey='code'
 
   saveToken(tokenValue: string): void {
     localStorage.setItem(this.tokenKey, tokenValue);
@@ -14,6 +15,9 @@ export class LocalStorageService implements IAuthRepository {
   }
   saveDateCode(dateCodeValue: string): void {
     localStorage.setItem(this.dateCodeKey, dateCodeValue);
+  }
+  saveCode(codeValue: string): void {
+    localStorage.setItem(this.codeKey, codeValue);
   }
   getToken(): Optional<string> {
     let item = localStorage.getItem(this.tokenKey)
@@ -30,6 +34,11 @@ export class LocalStorageService implements IAuthRepository {
       if (item) return new Optional<string>(item)
       return new Optional<string>(undefined)     }
 
+  getCode(): Optional<string> {
+      let item = localStorage.getItem(this.codeKey)
+      if (item) return new Optional<string>(item)
+      return new Optional<string>(undefined)     }
+
   deleteToken(): void {
     localStorage.removeItem(this.tokenKey);
   }
@@ -39,9 +48,14 @@ export class LocalStorageService implements IAuthRepository {
   deleteDateCode(): void {
     localStorage.removeItem(this.dateCodeKey);
   }
+  deleteCode(): void {
+    localStorage.removeItem(this.codeKey);
+  }
   deleteAllKeys(): void {
     localStorage.clear();
   }
   constructor(){}
+
+
 
 }

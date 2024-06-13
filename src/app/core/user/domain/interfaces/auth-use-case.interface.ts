@@ -11,5 +11,7 @@ export interface IAuthUseCase {
   currentUser():Observable<Result<AppUser>>;
   signup(user: SignUpEntryDomainDTO): Observable<Result<AppUser>>
   getCodeUpdatePassword(email:string):Observable<void>;
+  verificateCode(code:string):Observable<number>;
+  updatePassword(password:string):Observable<Number>;
 
 }

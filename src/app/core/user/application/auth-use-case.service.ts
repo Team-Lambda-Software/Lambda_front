@@ -25,7 +25,17 @@ export class AuthUseCaseService implements IAuthUseCase {
   signup(user: SignUpEntryDomainDTO): Observable<Result<AppUser>>{
     return this._loginApiService.signup(user)
   }
+
   getCodeUpdatePassword(email:string):Observable<void>{
     return this._loginApiService.getCodeUpdatePassword(email)
   }
+
+  verificateCode(code:string):Observable<number>{
+    return this._loginApiService.verificateCode(code)
+  }
+
+  updatePassword(password:string):Observable<Number>{
+    return this._loginApiService.updatePassword(password)
+  }
+
 }

@@ -20,7 +20,7 @@ import { Result } from '../../../../common/helpers/Result';
 
 import { Observable, catchError, map, of, switchMap, throwError } from 'rxjs';
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponseBase } from '@angular/common/http';
 import { GetCodeResponse } from '../dto/response/getCode-response.interface';
 
 
@@ -120,5 +120,60 @@ export class AuthApiService implements IAuthApiService {
         })
       )
     }
+
+
+  verificateCode(code:string):Observable<number>{
+    let email=this._authRepository.getEmail()
+    const url=`${this.BASE_URL}/code/validate`
+
+    if (!email.hasValue()) return of ()
+    this._userStatus.setChecking();
+    const body={email:email.getValue(),code}
+
+    return this._httpClient.post<HttpResponseBase>(url,body,{ observe: 'response' })
+      .pipe(
+        map((response)=>{
+          this._userStatus.setNotAuthenticated()
+          this._authRepository.saveCode(code)
+          return response.status
+        }),
+        catchError(error=>{
+          this._userStatus.setNotAuthenticated()
+          console.log(error);
+          return throwError(()=>error.error.message)
+        })
+      )
+
+  }
+
+    updatePassword(password:string):Observable<Number>{
+
+      const url=`${this.BASE_URL}/change/password`
+      let email=this._authRepository.getEmail()
+      let code=this._authRepository.getCode()
+
+      if (!email.hasValue()) return of()
+      if (!code.hasValue()) return of()
+
+      const body={
+        email:email.getValue(),
+        password,
+        code:code.getValue()
+      }
+      this._userStatus.setChecking();
+
+      return this._httpClient.put<HttpResponseBase>(url,body,{ observe: 'response' })
+        .pipe(
+          map((response)=>{
+            this._userStatus.setNotAuthenticated()
+            return response.status
+          }),
+          catchError(error=>{
+            this._userStatus.setNotAuthenticated()
+            console.log(error);
+            return throwError(()=>error.error.message)
+          })
+        )
+      }
 
 }

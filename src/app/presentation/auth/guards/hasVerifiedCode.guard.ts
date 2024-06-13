@@ -1,23 +1,17 @@
 import { inject } from '@angular/core';
 import { Router, type CanActivateFn } from '@angular/router';
-import { AuthService } from '../services/auth.service';
-import { AuthStatus } from '../../../core/user/domain/interfaces/auth-status.enum';
-import { enviroment } from '../../../../environments/environment';
-import { LocalStorage } from '../services/LocalStorage';
+import { IAuthRepository } from '../../../core/shared/application/ports/IRepository.interface';
+import { LocalStorageService } from '../../../core/shared/infraestructure/local-storage/local-storage.service';
 
 export const hasVerifiedCodeGuard: CanActivateFn = (route, state) => {
 
-  const authService=inject(AuthService)
-
+  const _authRepository:IAuthRepository= new LocalStorageService()
   const router = inject(Router);
-  // if (!enviroment.production) {
-  //   return true
-  // }
+  _authRepository.deleteDateCode()
 
-  if(authService._hasCodeVerified) {
-   return true}
-  else{
+  if(!_authRepository.getCode().hasValue()) {
     router.navigateByUrl('/auth/resetpassword')
-    return false;
+    return false
   }
+  return true
 };

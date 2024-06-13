@@ -9,12 +9,9 @@ export const hasCodeGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   if(!_authRepository.getDateCode().hasValue()) {
-    console.log('mal');
-
     router.navigateByUrl('/auth/resetpassword')
     return false;
   }
-  console.log('llego');
 
   return true
 };
