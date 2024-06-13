@@ -1,19 +1,12 @@
-import { Component, OnInit, Input, inject, signal, ElementRef, ViewChild } from '@angular/core';
+import { Component, inject, signal, ElementRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute,RouterLink } from '@angular/router';
+import { TranslocoModule } from '@jsverse/transloco';
 import { BasicHeaderComponent } from '../../../components/basic-header/basic-header.component';
+import { PlayerComponent } from './components/player/player.component';
+import { CommentsComponent } from './components/comments/comments.component';
 import { Course, Lesson } from '../../../../../core/course/domain/course.model';
 import { CourseUsecaseProvider } from '../../../../../core/course/infrastructure/providers/course-usecase-provider';
-import { TranslocoModule } from '@jsverse/transloco';
-import { CommentsComponent } from './components/comments/comments.component';
-import { PlayerComponent } from './components/player/player.component';
-import { BehaviorSubject } from 'rxjs';
 
-interface PlayerOptions {
-  redirect?: string;
-  title: string;
-  content: string;
-  videoUrl: string;
-}
 
 @Component({
   selector: 'app-player-video',
@@ -30,6 +23,7 @@ export class PlayerVideoComponent {
   public course? : Course;
   public idCourse?: string;
   public idLesson = signal('');
+  public video = signal('')
   public isLoading = false;
   
   constructor(private route: ActivatedRoute, private router: Router) {
@@ -43,7 +37,6 @@ export class PlayerVideoComponent {
         this.idLesson?.set(params['lesson']);
       }
       this.getCourse(this.idCourse!);
-
     })
   }
 
@@ -55,10 +48,12 @@ export class PlayerVideoComponent {
       this.course = course
       if(this.idLesson()){
         this.lesson = course.lessons.find(lesson => lesson.id == this.idLesson())
+
       }else{
         this.lesson = course.lessons[0]
         this.idLesson.set(this.lesson.id)
       }
+      this.video.set(this.lesson?.video)
     }).add(() => this.isLoading = false)
   }
 
@@ -81,8 +76,7 @@ export class PlayerVideoComponent {
       let indexLesson = this.course?.lessons.findIndex(lesson => lesson.id == this.lesson?.id)
       this.router.navigate([] ,{queryParams: {course: this.idCourse, lesson: this.course?.lessons[indexLesson! + 1].id}, queryParamsHandling: 'merge'});
       this.lesson = this.course?.lessons[indexLesson! + 1];
-      this.videoPlayer.nativeElement.load();
-      
+      this.video.set(this.lesson?.video)
     }
   }
 
@@ -92,7 +86,7 @@ export class PlayerVideoComponent {
       let indexLesson = this.course?.lessons.findIndex(lesson => lesson.id == this.lesson?.id)
       this.router.navigate([] ,{queryParams: { lesson: this.course?.lessons[indexLesson! - 1].id}, queryParamsHandling: 'merge'});
       this.lesson = this.course?.lessons[indexLesson! - 1];
-      this.videoPlayer.nativeElement.load();
+      this.video.set(this.lesson?.video)
     }
   }
 }

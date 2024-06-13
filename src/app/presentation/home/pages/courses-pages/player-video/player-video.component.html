@@ -7,13 +7,7 @@
   </div>
 }
 @else {
-  <section class="grid content-center p-2 mt-8 rounded-md animate__animated animate__fadeIn">
-    <video #videoPlayer class="w-full aspect-video rounded-xl" controls autoplay="false">
-      <source
-        [src]="this.lesson?.video" 
-        type="video/mp4">
-    </video>
-  </section>
+  <app-player [_inputVideo]="this.video"/>
   
   <section class="text-white bg-gradient-purple flex flex-col p-4 w-auto m-3 rounded-xl animate__animated animate__fadeIn">
     <h1 class="text-white text-2xl font-bold text-center">{{this.lesson?.title}}</h1>
