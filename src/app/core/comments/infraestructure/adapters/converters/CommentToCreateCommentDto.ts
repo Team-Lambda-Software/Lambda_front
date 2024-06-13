@@ -1,4 +1,4 @@
-import { CommentFeatureDto } from "../../../domain/Comment";
+import { CommentFeatureDto } from "../../../domain/comment.model";
 import { CreateComentApiDto } from "../dtos/create-comment.dto";
 
 export const CommentToCreateCommentApiDto = (data: CommentFeatureDto): CreateComentApiDto => {  

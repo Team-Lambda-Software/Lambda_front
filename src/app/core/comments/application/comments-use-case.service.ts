@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { CommentFeatureDto, IComment } from "../domain/Comment";
+import { CommentFeatureDto, IComment } from "../domain/comment.model";
 import { ICommentUseCase } from "../domain/interfaces/comment-use-case.interface";
 import { ICommentApiService } from "../domain/interfaces/comment-api.interface";
 

@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { CommentFeatureDto, IComment } from "../Comment";
+import { CommentFeatureDto, IComment } from "../comment.model";
 import { Result } from "../../../../common/helpers/Result";
 
 export interface ICommentApiService{

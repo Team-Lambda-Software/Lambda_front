@@ -3,7 +3,7 @@ import { Observable, map } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { enviroment } from '../../../../../environments/environment';
 import { ICommentApiService } from "../../domain/interfaces/comment-api.interface";
-import { IComment, CommentFeatureDto } from "../../domain/Comment";
+import { IComment, CommentFeatureDto } from "../../domain/comment.model";
 import { CommentDto } from "../adapters/dtos/comment.dto";
 import { CommentResponseToComment } from "../adapters/converters/CommentResponseToComment";
 import { CommentToCreateCommentApiDto } from "../adapters/converters/CommentToCreateCommentDto";
@@ -21,9 +21,7 @@ export class CommentApiService implements ICommentApiService {
     }
     createComment(data: CommentFeatureDto): Observable<void> {
         let comment= CommentToCreateCommentApiDto(data)
-        console.log(comment)
         if(comment.targetType == 'SECTION') comment.targetType = 'LESSON'
-        console.log(comment)
         return this._httpClient.post<void>(`${this.BASE_URL}/release`, comment);
     }
 }

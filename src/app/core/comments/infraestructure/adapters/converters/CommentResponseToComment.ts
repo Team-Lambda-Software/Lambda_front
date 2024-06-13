@@ -1,4 +1,4 @@
-import { IComment } from "../../../domain/Comment";
+import { IComment } from "../../../domain/comment.model";
 import { CommentDto } from "../dtos/comment.dto";
 
 export const CommentResponseToComment = (data: CommentDto): IComment => {
