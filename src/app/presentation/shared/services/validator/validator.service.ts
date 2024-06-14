@@ -12,14 +12,14 @@ export class ValidatorService {
   public emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
   public passwordPattern: string = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+=-])\\S{8,16}$";
   // public phoneNumberPattern: string = "^(\\+[0-9]{1,3})\\s[0-9]{3}\\s[0-9]{4}\\s[0-9]{3,4}$";
-  public phoneNumberPattern: string = "^(0412|0414|0416)\\d{7}$";
+  public phoneNumberPattern: string = "^(0412|0414|0416,0424)\\d{7}$";
 
   public numberPattern:string="\\d*";
 
   public firstNameAndLastnamePatternMessage: string = 'Must have first and last name';
   public emailPatternMessage: string = "Must be acceted email. Ex:youremail@gmail.com";
   public passwordPatternMessage: string = "Must have one uppercase,lower case, one number and a special caracter and between 8 or 16 of length Ex:Password12=";
-  public phoneNumberPatternMessage: string = "Must be 0414,0416,0412 Ex:04122408080";
+  public phoneNumberPatternMessage: string = "Must be 0414,0416,0412,0424 Ex:04122408080";
   public numberPatternMessage:string="Must be a number";
   public termsAndCoditionsMessage:string='Must accept terms and conditions'
 
