@@ -6,7 +6,9 @@
             <input [(ngModel)]="inputSearch" type="text"
                 class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
                 placeholder="Search">
-            <span class="fas fa-search fa-xl text-gray-400" (click)="getBySearch()"></span>
+            <span class="fas fa-search fa-xl text-gray-400 aria-disabled:text-gray-200 aria-disabled:cursor-not-allowed"
+            [ariaDisabled]="(this.inputSearch.length === 0)"
+            (click)="getBySearch()"></span>
         </div>
     </div>
 </nav>
@@ -14,19 +16,21 @@
 <div class="animate__animated animate__fadeIn">
     <div class="flex flex-wrap mt-10 p-1 mx-2 gap-2">
         @for (item of categories; track item.id) {
-        <div
-            class="bg-violet-100 hover:bg-purple-700 dark:bg-gray-600 dark:hover:bg-white text-purple-900 hover:text-white dark:text-white dark:hover:text-purple-900 rounded-full shadow-md flex items-center justify-center ">
-            <span class="text-xs font-light py-2 px-6">{{ item.name }}</span>
-        </div>
+        <div (click)="onTagClick(item.name)"
+        [class]="{ 
+            'text-white': this._tag.includes(item.name), 
+            'dark:text-violet-700': this._tag.includes(item.name), 
+            'bg-violet-700': this._tag.includes(item.name), 
+            'dark:bg-slate-100': this._tag.includes(item.name),
+        }"
+        class="bg-violet-100 text-purple-700 dark:text-white dark:bg-gray-500 rounded-full shadow-md flex items-center justify-center ">
+        <span class="text-sm font-light py-2 px-6">{{ item.name }}</span>
+   </div>
+
         }
     </div>
 
-    <section class="mt-4 mx-4 mb-2">
-        <h1 class="text-xl font-bold dark:text-white">{{'popular-courses' | transloco}}</h1>
-
-        <app-card-carrusel [items]="popularCourses" />
-
-    </section>
+    <app-popular-courses/>
 
     @if(isLoading){
         <div class="flex justify-center items-center h-16">
@@ -54,7 +58,7 @@
                 <mat-tab label="Blogs">
                     @if(this.program.blogs.length > 0){
                         <div class="flex justify-end items-center py-4">
-                            <h4 class=" font-semibold text-gray-400 dark:text:white px-5">{{"found: " | transloco}}<span class="text-white text-xs px-1.5 mx-2 font-semibold bg-purple-700 rounded-full">{{this.program.courses.length}}</span></h4>
+                            <h4 class=" font-semibold text-gray-400 dark:text:white px-5">{{"found: " | transloco}}<span class="text-white text-xs px-1.5 mx-2 font-semibold bg-purple-700 rounded-full">{{this.program.blogs.length}}</span></h4>
                         </div>
                         <div class="border-t border-gray-200 dark:border-gray-700"></div>
                         <app-programs-tag [programs]="adaptToTag(program.blogs)" [redirect]="'/home/main-course'"/>

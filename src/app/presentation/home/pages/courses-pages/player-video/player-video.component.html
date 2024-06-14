@@ -7,13 +7,7 @@
   </div>
 }
 @else {
-  <section class="grid content-center p-2 mt-8 rounded-md animate__animated animate__fadeIn">
-    <video #videoPlayer class="w-full aspect-video rounded-xl" controls autoplay>
-      <source
-        [src]="this.lesson?.video" 
-        type="video/mp4">
-    </video>
-  </section>
+  <app-player [_inputVideo]="this.video"/>
   
   <section class="text-white bg-gradient-purple flex flex-col p-4 w-auto m-3 rounded-xl animate__animated animate__fadeIn">
     <h1 class="text-white text-2xl font-bold text-center">{{this.lesson?.title}}</h1>
@@ -25,21 +19,7 @@
   
   <div class="border-t border-gray-300 my-6 mx-4"></div>
   
-  <section class="bg-gradient-purple flex flex-col p-4 w-auto mt-3 mx-3 rounded-xl text-white animate__animated animate__fadeIn">
-    <h1 class="text-white text-lg font-bold text-start">Comentarios</h1>
-    <div class="border-t border-dashed border-gray-300 my-4 mx-4"></div>
-  
-    <article class="flex">
-      <div class="font-semibold w-1/4">
-        <span>Carlos Alonzo: </span> 
-      </div>
-      <div class="w-3/4">
-        <p>Lambda sin duda alguna es el mejor equipo que se ha presentado en la materia de Desarrollo de software, estoy muy contento con ustedes. Son los mejores, 20 puntos para todos ustedes</p>
-      </div>
-    </article>
-    <div class="border-t border-dashed border-gray-300 my-4 mx-4"></div>
-    <textarea class="font-medium text-sm p-3 text-gray-500 border-purple-700 border-2 rounded-lg focus:outline-none h-auto overflow-y-scroll" rows="3" placeholder="Escribe tu comentario"></textarea>
-  </section>
+  <app-comments [sectionId]="idLesson!"/>
   
   <section class="flex justify-between items-end m-3 animate__animated animate__fadeIn">
     <button class="bg-purple-700 text-white font-bold py-2 px-4 rounded disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:select-none"
