@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.service';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ValidatorService } from '../../../shared/services/validator/validator.service';
 import { ErrorComponent } from '../../../shared/components/error/error.component';
@@ -21,7 +20,7 @@ import { Type } from '../../../../core/user/domain/interfaces/type.interface';
 import { PopupInfoModalService } from '../../../shared/services/popup-info-modal/popup-info-modal.service';
 import { AuthUsecaseProvider } from '../../../../core/user/infraestructure/providers/auth-use-case-provider';
 import { Result } from '../../../../common/helpers/Result';
-import { UserStatusService } from '../../../../core/user/application/user-status.service';
+import { UserStatusService } from '../../../../core/user/infraestructure/services/user-status.service';
 
 @Component({
   selector: 'app-register-page',
@@ -105,7 +104,6 @@ export class RegisterPageComponent {
       phone,
       type: Type.CLIENT
     }
-    console.log(newUser);
     return (newUser);
   }
 

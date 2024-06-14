@@ -7,7 +7,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.service';
-import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { ValidatorService } from '../../../shared/services/validator/validator.service';
 import { TranslocoModule } from '@jsverse/transloco';
@@ -16,6 +15,7 @@ import { AuthUsecaseProvider } from '../../../../core/user/infraestructure/provi
 import { Result } from '../../../../common/helpers/Result';
 import { UserStatusService } from '../../../../core/user/application/user-status.service';
 import { NotificationService } from '../../../home/services/notifications/Notification.service';
+
 
 
 @Component({

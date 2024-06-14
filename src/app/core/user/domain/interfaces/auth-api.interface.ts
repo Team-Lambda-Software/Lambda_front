@@ -1,7 +1,7 @@
 import { Observable } from "rxjs";
 
-import { LoginEntryDomainDTO } from "../../domain/interfaces/entry/login-entry.dto";
-import { SignUpEntryDomainDTO } from "../../domain/interfaces/entry/signup-entry.dto";
+import { LoginEntryDomainDTO } from "./entry/login-entry.dto";
+import { SignUpEntryDomainDTO } from "./entry/signup-entry.dto";
 
 
 import { AppUser } from "../appuser";
@@ -14,5 +14,5 @@ export interface IAuthApiService{
   getCodeUpdatePassword(email:string):Observable<void>;
   verificateCode(code:string):Observable<number>;
   updatePassword(password:string):Observable<Number>;
-
+  logout (): void
 }

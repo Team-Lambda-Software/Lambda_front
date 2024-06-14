@@ -13,5 +13,5 @@ export interface IAuthUseCase {
   getCodeUpdatePassword(email:string):Observable<void>;
   verificateCode(code:string):Observable<number>;
   updatePassword(password:string):Observable<Number>;
-
+  logout (): void
 }

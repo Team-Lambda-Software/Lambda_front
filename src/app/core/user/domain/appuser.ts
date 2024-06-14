@@ -6,7 +6,7 @@ export class AppUser implements IAppUser{
   email: string;
   name: string;
   phone: string;
-  image?: string | undefined;
+  image?: string;
   type:Type
 
   constructor(data:IAppUser){
@@ -15,7 +15,9 @@ export class AppUser implements IAppUser{
     this.name=data.name
     this.phone=data.phone
     this.type=data.type
-    if(data.image) this.image=data.image
-    else this.image="https://via.placeholder.com/40"
+    if(data.image==null || data.image==undefined) this.image="https://via.placeholder.com/40"
+    else this.image=data.image
+    console.log(this.image);
+
   }
 }

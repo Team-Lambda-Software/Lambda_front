@@ -1,10 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 import { DarkModeService } from '../../../../shared/services/dark-mode/dark-mode.service';
 import { ValidatorService } from '../../../../shared/services/validator/validator.service';
-import { LocalStorage } from '../../../services/LocalStorage';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -55,7 +53,6 @@ export class CreatePasswordPageComponent {
   }
 
   createPassword(){
-    console.log(this.createPasswordForm.value);
     if(this.createPasswordForm.valid)
       {
         let {password}=this.createPasswordForm.value
