@@ -9,7 +9,7 @@ import { initializeApp } from 'firebase/app';
 import { getMessaging, onMessage } from 'firebase/messaging';
 import { enviroment } from '../environments/environment';
 import { AuthUsecaseProvider } from './core/user/infraestructure/providers/auth-use-case-provider';
-import { UserStatusService } from './core/user/application/user-status.service';
+import { UserStatusService } from './core/user/infraestructure/services/user-status.service';
 
 @Component({
   selector: 'app-root',
