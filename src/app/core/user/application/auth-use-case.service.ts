@@ -1,34 +1,41 @@
 import { Observable} from "rxjs";
 import { IAuthUseCase } from "../domain/interfaces/auth-use-case.interface";
-import { LoginUserData } from "../infraestructure/dto/entry/login-auth.interface";
 import { IAuthApiService } from "../domain/interfaces/login-api.interface";
-import { User } from "../domain/user";
-import { AuthStatus } from "../domain/interfaces/auth-status.enum";
+import { AppUser } from "../domain/appuser";
+
+import { LoginEntryDomainDTO } from "../domain/interfaces/entry/login-entry.dto";
+import { SignUpEntryDomainDTO } from "../domain/interfaces/entry/signup-entry.dto";
+
+
 import { Result } from "../../../common/helpers/Result";
-import { Optional } from "../../../common/helpers/Optional";
 
 
 export class AuthUseCaseService implements IAuthUseCase {
 
-  private _user= new Optional<User>(null)
-  private _authStatus:AuthStatus=AuthStatus.notAuthenticated;
-
-  private setChecking():void{
-    this._authStatus=AuthStatus.checking
-  }
-
-  private setAuthenticaded():void{
-    this._authStatus=AuthStatus.authenticated
-  }
-  private setNotAuthenticated():void{
-    this._authStatus=AuthStatus.notAuthenticated
-  }
-
   constructor(private _loginApiService: IAuthApiService) { }
 
-  login(loginData:LoginUserData): Observable<Result<User>> {
-    this.setChecking()
+  currentUser(): Observable<Result<AppUser>> {
+    return this._loginApiService.currentUser()
+  }
+
+  login(loginData:LoginEntryDomainDTO): Observable<Result<AppUser>> {
     return this._loginApiService.login(loginData)
+  }
+
+  signup(user: SignUpEntryDomainDTO): Observable<Result<AppUser>>{
+    return this._loginApiService.signup(user)
+  }
+
+  getCodeUpdatePassword(email:string):Observable<void>{
+    return this._loginApiService.getCodeUpdatePassword(email)
+  }
+
+  verificateCode(code:string):Observable<number>{
+    return this._loginApiService.verificateCode(code)
+  }
+
+  updatePassword(password:string):Observable<Number>{
+    return this._loginApiService.updatePassword(password)
   }
 
 }

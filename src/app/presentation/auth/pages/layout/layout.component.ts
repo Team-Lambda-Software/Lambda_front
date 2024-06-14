@@ -3,6 +3,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { AuthStatus } from '../../../../core/user/domain/interfaces/auth-status.enum';
 import { LoaderComponent } from '../../components/loader/loader.component';
+import { UserStatusService } from '../../../../core/user/application/user-status.service';
 
 @Component({
   selector: 'app-layout-page',
@@ -13,18 +14,18 @@ import { LoaderComponent } from '../../components/loader/loader.component';
 })
 
 export class LayoutComponent {
-  public authService=inject(AuthService)
   public router=inject(Router)
   public lastLink=this.router.url
+  public userStatusService=inject(UserStatusService)
   public finishedAuthCheck= computed<boolean>(()=>{
-    if (this.authService.authStatus()===AuthStatus.checking) return false
+    if (this.userStatusService.currentStatus()===AuthStatus.checking) return false
     return true
   })
   public authStatusChangeEffect= effect(()=>{
     this.lastLink=this.router.url
     console.log(this.lastLink);
 
-    switch(this.authService.authStatus()){
+    switch(this.userStatusService.currentStatus()){
       case AuthStatus.checking:
         return;
       case AuthStatus.authenticated:{
@@ -32,7 +33,6 @@ export class LayoutComponent {
       }
       case AuthStatus.notAuthenticated:
       {
-        if (this.authService.hasError) this.router.navigateByUrl(this.lastLink)
         return
         // this.router.navigateByUrl('/auth')
       }

@@ -11,8 +11,7 @@ import { CourseLitleCardAdapter } from '../../adapters/LitleCardAdapter';
 import { CoursesMyTrainingService } from '../../services/courses/getTraining/courses-mytraining.service';
 import { IUserProfile } from '../../interfaces/user-info-model';
 import { UserInfoService } from '../../services/user/getUserInfo/user-info.service';
-import { AuthService } from '../../../auth/services/auth.service';
-import { Optional } from '../../../../common/helpers/Optional';
+import { UserStatusService } from '../../../../core/user/application/user-status.service';
 
 
 @Component({
@@ -26,8 +25,8 @@ export class ProfilePageComponent {
 
   public myTrainingService = inject(CoursesMyTrainingService);
   public userInfoProfile =inject(UserInfoService);
-  public auth= inject(AuthService)
-  public user= new Optional(this.auth.currentUser())
+  public userStatusService = inject(UserStatusService)
+  public user = this.userStatusService.currentUser();
 
 
   public progressValue = 50;

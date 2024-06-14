@@ -19,6 +19,7 @@ import { User } from '../../../../core/user/infraestructure/dto/response/user-re
 import { Optional } from '../../../../common/helpers/Optional';
 import { VideoCoursesComponent } from './components/video-courses/video-courses.component';
 import { NotificationService } from '../../services/notifications/Notification.service';
+import { UserStatusService } from '../../../../core/user/application/user-status.service';
 
 @Component({
   selector: 'app-home-page',
@@ -45,11 +46,12 @@ export class HomePageComponent implements OnInit {
   public popularService = inject(CoursesPopularService);
   public userInfo = inject(UserInfoService);
   public auth = inject(AuthService)
-  public user = new Optional(this.auth.currentUser())
   private notification=inject(NotificationService)
-  
+  public userStatusService = inject(UserStatusService)
+  public user = this.userStatusService.currentUser();
+
   ngOnInit(): void {
     this.notification.saveNotificationToken().then( token => {})    
   }
-
+  
 }

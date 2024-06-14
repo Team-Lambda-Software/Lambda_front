@@ -1,16 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { DarkModeService } from '../../../../shared/services/dark-mode/dark-mode.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslocoModule } from '@jsverse/transloco';
-import Swal from 'sweetalert2';
 import { PopupInfoModalService } from '../../../../shared/services/popup-info-modal/popup-info-modal.service';
+import { AuthUsecaseProvider } from '../../../../../core/user/infraestructure/providers/auth-use-case-provider';
+import { IAuthRepository } from '../../../../../core/shared/application/ports/IRepository.interface';
+import { LocalStorageService } from '../../../../../core/shared/infraestructure/local-storage/local-storage.service';
 
 @Component({
   selector: 'app-reset-password-page',
@@ -20,12 +21,19 @@ import { PopupInfoModalService } from '../../../../shared/services/popup-info-mo
   templateUrl: './reset-password-page.component.html',
   styleUrl: './reset-password-page.component.css',
 })
-export class ResetPasswordPageComponent {
+export class ResetPasswordPageComponent implements OnInit {
+  ngOnInit(): void {
+    this._authRepository.deleteEmail()
+    this._authRepository.deleteCode()
+    this._authRepository.deleteDateCode()
+  }
   public darkModeService = inject(DarkModeService);
   private fb = inject(FormBuilder)
-  private authService=inject(AuthService)
+  private authUseCaseService = inject(AuthUsecaseProvider);
   private router= inject(Router)
   private popupService=inject(PopupInfoModalService)
+  private _authRepository:IAuthRepository= new LocalStorageService()
+
 
   public resetPasswordForm :FormGroup=this.fb.group({
     email:['',[Validators.required,Validators.email]],
@@ -41,8 +49,7 @@ export class ResetPasswordPageComponent {
 
   resetPassword(){
     const {email}=this.resetPasswordForm.value;
-    console.log(this.resetPasswordForm.value);
-    this.authService.getCodeUpdatePassword(email)
+    this.authUseCaseService.usecase.getCodeUpdatePassword(email)
     .subscribe({
       next:()=>{
         this.popupService.displayBelowModal(this.codeSendSuccsessfully,'info')

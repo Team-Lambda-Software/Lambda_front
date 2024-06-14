@@ -12,8 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { VerificationPasswordForm } from '../../../interfaces/forms/createPassword-form.interface';
 import { ErrorComponent } from '../../../../shared/components/error/error.component';
 import { TranslocoModule } from '@jsverse/transloco';
-import Swal from 'sweetalert2';
 import { PopupInfoModalService } from '../../../../shared/services/popup-info-modal/popup-info-modal.service';
+import { AuthUsecaseProvider } from '../../../../../core/user/infraestructure/providers/auth-use-case-provider';
 
 @Component({
     selector: 'app-create-password-page',
@@ -26,11 +26,10 @@ import { PopupInfoModalService } from '../../../../shared/services/popup-info-mo
     ]
 })
 export class CreatePasswordPageComponent {
-  private authService=inject(AuthService)
+  private authUseCaseService = inject(AuthUsecaseProvider);
   public darkModeService = inject(DarkModeService);
   private router= inject(Router)
   public validatorService= inject(ValidatorService)
-  private localStorage= new LocalStorage('','')
   private fb = inject(FormBuilder)
   private popupService=inject(PopupInfoModalService)
 
@@ -61,9 +60,9 @@ export class CreatePasswordPageComponent {
       {
         let {password}=this.createPasswordForm.value
         if (password){
-          this.authService.updatePassword(password)
+          this.authUseCaseService.usecase.updatePassword(password)
           .subscribe({
-            next:(value)=>value.status==200 ? this.router.navigateByUrl('/auth/confirmpassword') : this.popupService.displayErrorModal(this.errorStatusCode),
+            next:(value)=>value==200 ? this.router.navigateByUrl('/auth/confirmpassword') : this.popupService.displayErrorModal(this.errorStatusCode),
             error:(error)=>{
               this.popupService.displayErrorModal(error)
             }

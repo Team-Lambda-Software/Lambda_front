@@ -12,7 +12,7 @@ import { VerificationCodeForm } from '../interfaces/forms/verticationCode-form.i
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Optional } from '../../../common/helpers/Optional';
-import { SignUpUser } from '../../../core/user/infraestructure/dto/entry/signup-user.interface';
+import { SignUpEntryDomainDTO } from '../../../core/user/domain/interfaces/entry/signup-entry.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -112,7 +112,7 @@ export class AuthService {
       )
     }
 
-    signup(user:SignUpUser):Observable<boolean>{
+    signup(user:SignUpEntryDomainDTO):Observable<boolean>{
 
       const url=`${this.baseUrl}/auth/register`
       const body={...user}
