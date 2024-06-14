@@ -9,6 +9,9 @@ import { VerificationCodeForm } from '../../../interfaces/forms/verticationCode-
 import { ValidatorService } from '../../../../shared/services/validator/validator.service';
 import { TranslocoModule } from '@jsverse/transloco';
 import { PopupInfoModalService } from '../../../../shared/services/popup-info-modal/popup-info-modal.service';
+import { AuthUsecaseProvider } from '../../../../../core/user/infraestructure/providers/auth-use-case-provider';
+import { IAuthRepository } from '../../../../../core/shared/application/ports/IRepository.interface';
+import { LocalStorageService } from '../../../../../core/shared/infraestructure/local-storage/local-storage.service';
 
 @Component({
   selector: 'app-verification-code-page',
@@ -23,21 +26,15 @@ import { PopupInfoModalService } from '../../../../shared/services/popup-info-mo
 
 export class VerificationCodePageComponent{
 
-  private authService=inject(AuthService)
   public darkModeService = inject(DarkModeService);
   private router= inject(Router)
   private validatorService= inject(ValidatorService)
-  private localStorage= new LocalStorage('','')
   private fb = inject(FormBuilder)
+  private authUseCaseService = inject(AuthUsecaseProvider);
   private popupService=inject(PopupInfoModalService)
+  private _authRepository:IAuthRepository= new LocalStorageService()
 
-  public email=this.localStorage.LoadLocalStorage('email')
-
-  // @ViewChild('miBoton') miBoton!: ElementRef;
-
-  // private submitForm(){
-  //   this.miBoton.nativeElement.click();
-  // }
+  public email=this._authRepository.getEmail()
 
   public verificationCodeForm :FormGroup<VerificationCodeForm>=this.fb.group<VerificationCodeForm>({
     firstCode:new FormControl('',{nonNullable:true, validators:[Validators.pattern(this.validatorService.numberPattern),Validators.required]}),
@@ -56,13 +53,19 @@ export class VerificationCodePageComponent{
   private codeResendto=`Code resend to ${this.email.getValue()}`
   private errorStatusCode='The status response is not 201'
 
+  getCode(verificationCodeForm:FormGroup<VerificationCodeForm>):string{
+    let data=verificationCodeForm.value
+    let numbers=Object.values(data);
+    return numbers.join('')
+  }
+
 
   resendCode(){
     const email=this.email;
     if (email.hasValue())
-      this.popupService.displayInfoModal(this.codeResendto)
-      this.authService.getCodeUpdatePassword(email.getValue())
+      this.authUseCaseService.usecase.getCodeUpdatePassword(email.getValue())
     .subscribe({
+      next:(value)=>{ this.popupService.displayInfoModal(this.codeResendto) },
       error:(error)=>{
         this.popupService.displayErrorModal(error)
       }
@@ -71,17 +74,16 @@ export class VerificationCodePageComponent{
 
   verificateCode(){
     if (this.verificationCodeForm.valid){
-
-      this.authService.verificateLocalCode(this.verificationCodeForm).subscribe({
+      let code = this.getCode(this.verificationCodeForm)
+      this.authUseCaseService.usecase.verificateCode(code).subscribe({
         next:(value)=>{
-          if (value.status==201){
+          if (value==201){
             this.router.navigateByUrl('/auth/createpassword')
             this.popupService.displayBelowModal(this.codeSendSuccsessfully,'success')
           }
           else this.popupService.displayErrorModal(this.errorStatusCode)
         },
         error:(error)=>{
-          console.log(error);
           this.popupService.displayErrorModal(error)
         }
       })

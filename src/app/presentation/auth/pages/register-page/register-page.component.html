@@ -19,27 +19,29 @@ animate__animated animate__fadeIn input-dark"
     (ngSubmit)="register()"
     >
 
-      <mat-form-field appearance="outline"
-      class="text-base w-80 h-16 mt-5">
-        <mat-label>Full Name</mat-label>
-          <input matInput
-          type="text"
-          formControlName="name"
-          placeholder="Your name here">
-      </mat-form-field>
+      <div class="mt-5">
+        <mat-form-field appearance="outline"
+        class="text-base w-80 h-16">
+          <mat-label>Full Name</mat-label>
+            <input matInput
+            type="text"
+            formControlName="name"
+            placeholder="Your name here">
+        </mat-form-field>
 
-      @if (isValidField('name')) {
-        @if (validatorService.getFieldError(signUpForm,'name').hasValue()){
-          @if (validatorService.getFieldError(signUpForm,'name').getValue()==='pattern'){
-          <mat-error class="bg-custom-dark-purple border border-red-400 rounded input-error
-          font-bold relative">{{validatorService.firstNameAndLastnamePatternMessage}}</mat-error>
-          }
-          @else {
-            <mat-error class="bg-custom-dark-purple border border-red-400 rounded input-error
-            font-bold relative">{{validatorService.getFieldError(signUpForm,'name').getValue()}}</mat-error>
+        @if (isValidField('name')) {
+          @if (validatorService.getFieldError(signUpForm,'name').hasValue()){
+            @if (validatorService.getFieldError(signUpForm,'name').getValue()==='Invalid pattern'){
+            <mat-error class="font-bold relative">
+            {{validatorService.firstNameAndLastnamePatternMessage}}</mat-error>
+            }
+            @else {
+              <mat-error class="bg-custom-dark-purple border border-red-400 rounded input-error
+              font-bold relative">{{validatorService.getFieldError(signUpForm,'name').getValue()}}</mat-error>
+            }
           }
         }
-      }
+      </div>
 
       <mat-form-field appearance="outline" class="text-base mt-6 w-80 h-16">
         <mat-icon matPrefix class="material-icons md-18 ml-4">mail</mat-icon>
@@ -52,7 +54,7 @@ animate__animated animate__fadeIn input-dark"
 
       @if (isValidField('email')) {
         @if (validatorService.getFieldError(signUpForm,'email').hasValue()){
-          @if (validatorService.getFieldError(signUpForm,'email').getValue()==='pattern'){
+          @if (validatorService.getFieldError(signUpForm,'email').getValue()==='Invalid pattern'){
             <mat-error class="bg-custom-dark-purple border border-red-400 rounded input-error
             font-bold relative">{{validatorService.emailPatternMessage}}</mat-error>
           }
@@ -68,12 +70,12 @@ animate__animated animate__fadeIn input-dark"
           <input matInput
           type="tel"
           formControlName="phone"
-          placeholder="+088 031 420 698">
+          placeholder="0414240808">
       </mat-form-field>
 
       @if (isValidField('phone')) {
         @if (validatorService.getFieldError(signUpForm,'phone').hasValue()){
-          @if (validatorService.getFieldError(signUpForm,'phone').getValue()==='pattern'){
+          @if (validatorService.getFieldError(signUpForm,'phone').getValue()==='Invalid pattern'){
             <mat-error class="bg-custom-dark-purple border border-red-400 rounded input-error
             font-bold relative">{{validatorService.phoneNumberPatternMessage}}</mat-error>
           }
@@ -98,7 +100,7 @@ animate__animated animate__fadeIn input-dark"
 
       @if (isValidField('password')) {
         @if (validatorService.getFieldError(signUpForm,'password').hasValue()){
-          @if (validatorService.getFieldError(signUpForm,'password').getValue()==='pattern'){
+          @if (validatorService.getFieldError(signUpForm,'password').getValue()==='Invalid pattern'){
             <mat-error class="bg-custom-dark-purple border border-red-400 rounded input-error
             font-bold relative">{{validatorService.passwordPatternMessage}}</mat-error>
           }
@@ -124,7 +126,7 @@ animate__animated animate__fadeIn input-dark"
 
         @if (isValidField('termsAndConditions')) {
           @if (validatorService.getFieldError(signUpForm,'termsAndConditions').hasValue()){
-            @if (validatorService.getFieldError(signUpForm,'termsAndConditions').getValue()==='pattern'){
+            @if (validatorService.getFieldError(signUpForm,'termsAndConditions').getValue()==='Invalid pattern'){
               <mat-error class="bg-custom-dark-purple border border-red-400 rounded input-error
               font-bold relative">{{validatorService.termsAndCoditionsMessage}}</mat-error>
             }

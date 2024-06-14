@@ -6,6 +6,7 @@ import { AuthService } from '../../../auth/services/auth.service';
 import { Subscription, filter } from 'rxjs';
 import { AuthStatus } from '../../../../core/user/domain/interfaces/auth-status.enum';
 import { LoaderComponent } from "../../../auth/components/loader/loader.component";
+import { UserStatusService } from '../../../../core/user/application/user-status.service';
 
 const BOTTOM_NAVIGATION_BAR_BLACK_LIST:string[] = [
   // '/home/player-video',
@@ -19,24 +20,23 @@ const BOTTOM_NAVIGATION_BAR_BLACK_LIST:string[] = [
 })
 
 export class LayoutComponent {
-  private authService=inject(AuthService);
+  public userStatusService=inject(UserStatusService)
   public subscriber?: Subscription;
   public isBottombarActive = signal<boolean>(false);
   constructor(private router: Router) { }
-  public lastLink=this.router.url
   public finishedAuthCheck= computed<boolean>(()=>{
-    if (this.authService.authStatus()===AuthStatus.checking) return false
+    if (this.userStatusService.currentStatus()===AuthStatus.checking) return false
     return true
   })
 
   public authStatusChangeEffect= effect(()=>{
-    console.log(this.lastLink);
-
-      switch(this.authService.authStatus()){
+    let lastLink=this.router.url
+    console.log(lastLink);
+      switch(this.userStatusService.currentStatus()){
         case AuthStatus.checking:
           return;
         case AuthStatus.authenticated:{
-          this.router.navigateByUrl(this.lastLink)
+          this.router.navigateByUrl(lastLink)
           return
         }
       }

@@ -18,6 +18,7 @@ import { AuthService } from '../../../auth/services/auth.service';
 import { User } from '../../../../core/user/infraestructure/dto/response/user-response.interface';
 import { Optional } from '../../../../common/helpers/Optional';
 import { VideoCoursesComponent } from './components/video-courses/video-courses.component';
+import { UserStatusService } from '../../../../core/user/application/user-status.service';
 
 @Component({
   selector: 'app-home-page',
@@ -43,7 +44,7 @@ export class HomePageComponent {
 
   public popularService = inject(CoursesPopularService);
   public userInfo = inject(UserInfoService);
-  public auth = inject(AuthService)
-  public user = new Optional(this.auth.currentUser())
+  public userStatusService = inject(UserStatusService)
+  public user = this.userStatusService.currentUser();
 
 }

@@ -6,7 +6,8 @@ import { AuthService } from '../../services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ValidatorService } from '../../../shared/services/validator/validator.service';
 import { ErrorComponent } from '../../../shared/components/error/error.component';
-import { SignUpUser } from '../../../../core/user/infraestructure/dto/entry/signup-user.interface';
+import { SignUpEntryDomainDTO } from '../../../../core/user/domain/interfaces/entry/signup-entry.dto';
+
 import { SignUpForm } from '../../interfaces/forms/signup-form.interface';
 
 import { MatInputModule } from '@angular/material/input';
@@ -16,8 +17,11 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { CommonModule } from '@angular/common';
 import { TranslocoModule } from '@jsverse/transloco';
-import { Type } from '../../../../core/user/infraestructure/dto/response/type.interface';
+import { Type } from '../../../../core/user/domain/interfaces/type.interface';
 import { PopupInfoModalService } from '../../../shared/services/popup-info-modal/popup-info-modal.service';
+import { AuthUsecaseProvider } from '../../../../core/user/infraestructure/providers/auth-use-case-provider';
+import { Result } from '../../../../common/helpers/Result';
+import { UserStatusService } from '../../../../core/user/application/user-status.service';
 
 @Component({
   selector: 'app-register-page',
@@ -31,9 +35,11 @@ export class RegisterPageComponent {
   public darkModeService = inject(DarkModeService);
   private fb = inject(FormBuilder)
   public validatorService= inject(ValidatorService)
-  private authService=inject(AuthService)
   private router= inject(Router)
   private popupService=inject(PopupInfoModalService)
+  private authUseCaseService = inject(AuthUsecaseProvider);
+  private userStatusService=inject(UserStatusService)
+
 
   public hide:boolean=false
 
@@ -45,11 +51,11 @@ export class RegisterPageComponent {
   public conditions="conditions"
 
   public signUpForm :FormGroup<SignUpForm>=this.fb.group<SignUpForm>({
-    name:new FormControl('',{nonNullable:true, validators:[Validators.pattern(this.validatorService.firstNameAndLastnamePattern),Validators.required]}),
-    email:new FormControl('',{nonNullable:true,validators:[Validators.pattern(this.validatorService.emailPattern),Validators.required]}),
-    phone:new FormControl('',{nonNullable:true,validators:[Validators.pattern(this.validatorService.phoneNumberPattern),Validators.required]}),
-    password:new FormControl('',{nonNullable:true, validators:[Validators.pattern(this.validatorService.passwordPattern),Validators.required,Validators.minLength(6),Validators.maxLength(16)]}),
-    termsAndConditions:new FormControl(false,{nonNullable:true, validators:[Validators.requiredTrue]})
+    name:new FormControl(null,{nonNullable:true, validators:[Validators.pattern(this.validatorService.firstNameAndLastnamePattern),Validators.required]}),
+    email:new FormControl(null,{nonNullable:true,validators:[Validators.pattern(this.validatorService.emailPattern),Validators.required]}),
+    phone:new FormControl(null,{nonNullable:true,validators:[Validators.pattern(this.validatorService.phoneNumberPattern),Validators.required]}),
+    password:new FormControl(null,{nonNullable:true, validators:[Validators.pattern(this.validatorService.passwordPattern),Validators.required,Validators.minLength(6),Validators.maxLength(16)]}),
+    termsAndConditions:new FormControl(null,{nonNullable:true, validators:[Validators.requiredTrue]})
   })
 
   isValidField(field:string){
@@ -85,14 +91,14 @@ export class RegisterPageComponent {
   }
 
 
-  createSignUpUser(registerData:FormGroup<SignUpForm>):SignUpUser{
+  createSignUpEntryDomainDTO(registerData:FormGroup<SignUpForm>):SignUpEntryDomainDTO{
     const data= registerData
     const email=data.value.email || ''
     const name=data.value.name  || ''
     const phone=data.value.phone  || ''
     const password=data.value.password || ''
 
-    let newUser:SignUpUser={
+    let newUser:SignUpEntryDomainDTO={
       email,
       password,
       name,
@@ -105,16 +111,19 @@ export class RegisterPageComponent {
 
   register(){
 
-    console.log(this.signUpForm.value);
     if(this.signUpForm.valid){
-      let newUser:SignUpUser=this.createSignUpUser(this.signUpForm)
-      this.authService.signup(newUser)
-      .subscribe({
-        next:()=> this.router.navigateByUrl('/auth/on-boarding'),
-        error:(error)=>{
-         this.popupService.displayErrorModal(error)
-        }
-      })
+      let newUser:SignUpEntryDomainDTO=this.createSignUpEntryDomainDTO(this.signUpForm)
+      this.authUseCaseService.usecase.signup(newUser)
+        .subscribe({
+          next:(answer)=>{
+            if(!answer.isError()) {this.router.navigateByUrl('/auth/on-boarding'),
+              this.userStatusService.setUser(answer.getValue())}
+            else this.popupService.displayErrorModal(answer.getError().message)
+          },
+          error:(error:Result<Error>)=>{
+             this.popupService.displayErrorModal(error.getError().message)
+          }
+        })
     }
   }
 }
