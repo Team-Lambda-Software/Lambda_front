@@ -26,7 +26,7 @@
       }
     </div>
   } @else {
-    <app-card-carrusel class="animate__animated animate__fadeIn" [items]="blogsByCategory()" />
+    <app-card-carrusel class="animate__animated animate__fadeIn" [items]="blogsByCategory()" [routerLink]="'/home/blogs-details'"/>
   }
 </section>
 
