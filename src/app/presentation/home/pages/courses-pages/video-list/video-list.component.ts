@@ -5,7 +5,7 @@ import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { PartialCourseToPlayerCard } from '../../../adapters/PlayerCardAdapter';
 import { PlayerCardComponent } from '../../../components/player-card/player-card.component';
 import { Category } from '../../../../../core/categories/domain/category.model';
-import { CategoyUsecaseProvider } from '../../../../../core/categories/infrastructure/providers/category-usecase-provider';
+import { CategoyUseCaseProvider } from '../../../../../core/categories/infrastructure/providers/category-usecase-provider';
 import { finalize } from 'rxjs';
 import { CourseUsecaseProvider } from '../../../../../core/course/infrastructure/providers/course-usecase-provider';
 import { PartialCourse } from '../../../../../core/course/domain/course.model';
@@ -20,7 +20,7 @@ import { PartialCourse } from '../../../../../core/course/domain/course.model';
 export class VideoListComponent {
 
   public fetchedCategories= signal<Category[]>([])
-  private categoryUseCaseService = inject(CategoyUsecaseProvider);
+  private categoryUseCaseService = inject(CategoyUseCaseProvider);
   public selectedCategory?: Category;
   public isLoadingCategories = false;
 

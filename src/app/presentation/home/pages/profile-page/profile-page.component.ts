@@ -12,7 +12,7 @@ import { CoursesMyTrainingService } from '../../services/courses/getTraining/cou
 import { IUserProfile } from '../../interfaces/user-info-model';
 import { UserInfoService } from '../../services/user/getUserInfo/user-info.service';
 import { AuthService } from '../../../auth/services/auth.service';
-import { Optional } from '../../../shared/helpers/Optional';
+import { Optional } from '../../../../common/helpers/Optional';
 
 
 @Component({

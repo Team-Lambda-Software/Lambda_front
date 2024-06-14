@@ -18,6 +18,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     }
   });
 
+  //TODO QUITAR ESE INSTANCE OF ESO ES PENADO
   return next(authReq).pipe(
     catchError((err: any) => {
       if (err instanceof HttpErrorResponse && err.status === 401) {
