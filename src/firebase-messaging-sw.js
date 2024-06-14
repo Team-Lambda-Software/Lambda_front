@@ -1,13 +1,14 @@
-export const enviroment = {
-  production: false,
-  baseUrl: 'https://lambda-team-back.agreeablesand-4e6566d1.eastus.azurecontainerapps.io',
-  firebase: {
+importScripts('https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/8.1.1/firebase-messaging.js');
+
+const app=firebase.initializeApp(
+  {
     apiKey: "AIzaSyCp7y6c0L-ea3PUOiwxv6tjAZxYgq30jFE",
     authDomain: "myawe-91958.firebaseapp.com",
     projectId: "myawe-91958",
     storageBucket: "myawe-91958.appspot.com",
     messagingSenderId: "415162198994",
     appId: "1:415162198994:web:a00b5775f2f8424304b60b",
-    vpaidKey:"BF0UVOWqxHeh6U-lWOAQb_3FQtJBzNztkWrB5kSNuZcjOk0wUy81mP3hUodQpbgQGLiflQfm0Oi_isL3OcdIrY4"
   }
-}
+)
+const messaging=firebase.messaging(app)

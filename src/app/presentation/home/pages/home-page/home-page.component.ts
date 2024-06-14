@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
@@ -18,6 +18,7 @@ import { AuthService } from '../../../auth/services/auth.service';
 import { User } from '../../../../core/user/infraestructure/dto/response/user-response.interface';
 import { Optional } from '../../../../common/helpers/Optional';
 import { VideoCoursesComponent } from './components/video-courses/video-courses.component';
+import { NotificationService } from '../../services/notifications/Notification.service';
 
 @Component({
   selector: 'app-home-page',
@@ -39,11 +40,16 @@ import { VideoCoursesComponent } from './components/video-courses/video-courses.
   ]
 })
 
-export class HomePageComponent {
+export class HomePageComponent implements OnInit {
 
   public popularService = inject(CoursesPopularService);
   public userInfo = inject(UserInfoService);
   public auth = inject(AuthService)
   public user = new Optional(this.auth.currentUser())
+  private notification=inject(NotificationService)
+  
+  ngOnInit(): void {
+    this.notification.saveNotificationToken().then( token => {})    
+  }
 
 }
