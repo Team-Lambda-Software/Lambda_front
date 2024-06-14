@@ -20,17 +20,6 @@ export class NotificationPageComponent {
   public structure: Notification[] = [];
 
   ngOnInit(): void {
-    this.structure.push({
-      title: "Soy el titulo",
-      body: "Soy la descripcion mas fachera de la vida Siuuuuuuuu",
-      date: "23-10-2024",
-    });
-
-    this.structure.push({
-      title: "Soy el titulo",
-      body: "Soy la descripcion mas fachera de la vida Siuuuuuuuu",
-      date: "22-11-2024"
-    });
 
     this.notificationUseCase.usecase.getNotificationByParams('?page=0&perPage=0')
       .subscribe(notifications => {

@@ -14,32 +14,6 @@ export class NotificationApiService implements INotificationApiService {
   private readonly BASE_URL = enviroment.baseUrl + '/notifications';
   public APItoken: Optional<string>=new Optional()
 
-  sendSignUpNotification(email:string):Observable<boolean>{
-
-    const url=`${this.BASE_URL}/savetoken`
-    const token=this.APItoken.getValue()
-    const body={email,token}
-
-    console.log(url,body);
-
-    if (!this.APItoken.hasValue()) return (
-      of(false))
-
-
-  return this._httpClient.post<NotificationTokenResponse>(url,body)
-    .pipe(
-      map((response)=>{
-        console.log('response',response.message);
-        return true
-      }),
-      catchError((error)=>
-        {
-          return throwError(()=>error.error.message)
-        }
-      )
-    )
-  }
-
   getNotificationByParams(params: string): Observable<Notification[]> {
     return this._httpClient.get<NotificationResponse[]>(`${this.BASE_URL}/many${params}`)
     .pipe(
@@ -49,6 +23,5 @@ export class NotificationApiService implements INotificationApiService {
     );
   }  
 
-
-
+  
 }
