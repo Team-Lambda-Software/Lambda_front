@@ -104,7 +104,6 @@ export class RegisterPageComponent {
       phone,
       type: Type.CLIENT
     }
-    console.log(newUser);
     return (newUser);
   }
 

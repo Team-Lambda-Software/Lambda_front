@@ -17,7 +17,6 @@ export class AppUser implements IAppUser{
     this.type=data.type
     if(data.image==null || data.image==undefined) this.image="https://via.placeholder.com/40"
     else this.image=data.image
-    console.log(this.image);
 
   }
 }

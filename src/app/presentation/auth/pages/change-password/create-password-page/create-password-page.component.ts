@@ -53,7 +53,6 @@ export class CreatePasswordPageComponent {
   }
 
   createPassword(){
-    console.log(this.createPasswordForm.value);
     if(this.createPasswordForm.valid)
       {
         let {password}=this.createPasswordForm.value
