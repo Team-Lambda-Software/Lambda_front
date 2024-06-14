@@ -16,7 +16,7 @@ export class NotificationService {
   public messaggingFirebase:Messaging
   private readonly baseUrl:string= enviroment.baseUrl
   private http= inject(HttpClient)
-  public _notificationToken: Optional<string>=new Optional()
+  public _notificationToken: Optional<string>=new Optional(localStorage.getItem('NotificationToken'))
   private _authToken:Optional<string>=new Optional(localStorage.getItem('token'))
 
   async saveNotificationToken() {
