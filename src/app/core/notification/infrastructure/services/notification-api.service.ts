@@ -6,7 +6,7 @@ import { enviroment } from '../../../../../environments/environment';
 import { Notification } from '../../domain/notification.model';
 import { NotificationTokenResponse, NotificationResponse } from '../adapters/dtos/notification.dto';
 import { NotificationResponseToNotification, NotificationTokenResponseToNotificationToken } from '../adapters/converters/NotificationResponseToNotification';
-import { Optional } from '../../../helpers/Optional';
+import { Optional } from '../../../../common/helpers/Optional';
 
 @Injectable()
 export class NotificationApiService implements INotificationApiService {
