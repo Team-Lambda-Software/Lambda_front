@@ -1,4 +1,3 @@
-
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
@@ -22,6 +21,32 @@ $Lambda_front-warn: mat.define-palette(mat.$red-palette);
 // theming systems such as "color" or "typography".
 $Lambda_front-theme: mat.define-light-theme((
   colors: (
+    primary: $Lambda_front-primary,
+    accent: $Lambda_front-accent,
+    warn: $Lambda_front-warn,
+    custom-dark: '#2D2D3A',
+    custom-light: '#F2F2F2',
+    custom-dark-purple: '#4F14A0',
+    custom-light-purple: '#8066FF',
+    custom-black: '#222222',
+    custom-light-dark: '#4E546A',
+    custom-ligth-gray: '#677294',
+  ),
+  typography: mat.define-typography-config(),
+  density: 0
+));
+
+$Lambda_front-primary-dark: mat.define-palette(mat.$indigo-palette);
+$Lambda_front-accent-dark: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$Lambda_front-warn: mat.define-palette(mat.$red-palette);
+
+$Lambda_front-theme: mat.define-light-theme((
+  colors: (
+    primary: $Lambda_front-primary-dark,
+    accent: $Lambda_front-accent-dark,
+    warn: $Lambda_front-warn,
     custom-dark: '#2D2D3A',
     custom-light: '#F2F2F2',
     custom-dark-purple: '#4F14A0',
@@ -37,4 +62,8 @@ $Lambda_front-theme: mat.define-light-theme((
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include mat.all-component-themes($Lambda_front-theme);
+// @include angular-material-theme($Lambda_front-theme);
+
+.dark {
+  @include mat.all-component-themes($Lambda_front-theme);
+}
