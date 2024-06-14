@@ -13,7 +13,9 @@ import { TranslocoModule } from '@jsverse/transloco';
 import { PopupInfoModalService } from '../../../shared/services/popup-info-modal/popup-info-modal.service';
 import { AuthUsecaseProvider } from '../../../../core/user/infraestructure/providers/auth-use-case-provider';
 import { Result } from '../../../../common/helpers/Result';
-import { UserStatusService } from '../../../../core/user/infraestructure/services/user-status.service';
+import { UserStatusService } from '../../../../core/user/application/user-status.service';
+import { NotificationService } from '../../../home/services/notifications/Notification.service';
+
 
 
 @Component({
@@ -32,6 +34,8 @@ export class LoginPageComponent {
   private authUseCaseService = inject(AuthUsecaseProvider);
   private router= inject(Router)
   private userStatusService=inject(UserStatusService)
+  private notification=inject(NotificationService)
+
   private popupService=inject(PopupInfoModalService)
   public validatorService= inject(ValidatorService);
 
@@ -55,7 +59,10 @@ export class LoginPageComponent {
     const {email,password}=this.loginForm.value;
     this.authUseCaseService.usecase.login({email,password}).subscribe({
       next:(answer)=>{
-        if(!answer.isError()) {this.userStatusService.setUser(answer.getValue()),this.router.navigateByUrl('/home')}
+        if(!answer.isError()) {this.router.navigateByUrl('/home'),
+          this.userStatusService.setUser(answer.getValue()),
+          this.notification.saveNotificationToken().then( token => {})
+        }
       },
       error:(error:Result<Error>)=>{
          this.popupService.displayErrorModal(error.getError().message)

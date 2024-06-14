@@ -1,17 +1,9 @@
 import { PartialBlog } from "../../../core/blog/domain/blog.model";
-import { ICard, ILittleCard } from "../interfaces/ILittleCard";
+import { ILatestBlogs } from "../interfaces/latest-blogs-model";
 
-export const PartialBlogToILittleCardAdapter = (blog: PartialBlog): ILittleCard => ({
+export const BlogAdapter = (blog: PartialBlog): ILatestBlogs => ({
   id: blog.id,
-  thumbnail: blog.image,
-  title: blog.title,
+  image: blog.image,
+  name: blog.title,
   description: blog.description
-})
-
-export const PartialBlogToICardAdapter = (blog: PartialBlog): ICard => ({
-  id: blog.id,
-  title: blog.title,
-  description: blog.description,
-  thumbnail: blog.image,
-  date: new Date(blog.date).toLocaleDateString()
 })

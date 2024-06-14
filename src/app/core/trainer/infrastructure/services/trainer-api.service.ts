@@ -9,7 +9,7 @@ import { Trainer } from '../../domain/trainer.model';
 export class TrainerApiService implements ITrainerApiService {
 
   private _httpClient = inject(HttpClient);
-  private readonly BASE_URL = enviroment.baseUrl + '/trainer'
+  private readonly BASE_URL = enviroment.baseUrl + '/category'
   
   getById(id: string): Observable<Trainer> {
     throw new Error('Method not implemented.');

@@ -42,6 +42,7 @@ export class HomePageComponent implements OnInit{
 
   public popularService = inject(CoursesPopularService);
   public userInfo = inject(UserInfoService);
+  public auth = inject(AuthService)
   public userStatusService = inject(UserStatusService)
   public user = this.userStatusService.currentUser();
 
