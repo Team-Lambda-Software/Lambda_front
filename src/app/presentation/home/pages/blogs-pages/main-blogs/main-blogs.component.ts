@@ -1,142 +1,89 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Inject, OnInit, inject, signal } from '@angular/core';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
-import { IBlog } from '../../../interfaces/blog-model';
-import { ICard, ILittleCard } from '../../../interfaces/ILittleCard';
 import { CardCarruselComponent } from '../../../components/card-carrusel/card-carrusel.component';
-import { BlogCardAdapter } from '../../../adapters/CardAdapter';
-import { BlogLitleCardAdapter } from '../../../adapters/LitleCardAdapter';
 import { LitleCardComponent } from '../../../components/litle-card/litle-card.component';
-
-interface ICategory {
-  name: string;
-  reditect: string;
-}
+import { Category } from '../../../../../core/categories/domain/category.model';
+import { CategoyUseCaseProvider } from '../../../../../core/categories/infrastructure/providers/category-usecase-provider';
+import { finalize, map } from 'rxjs';
+import { BlogUsecaseProvider } from '../../../../../core/blog/infrastructure/providers/blog-usecase-provider';
+import { PartialBlogToICardAdapter } from '../../../adapters/BlogAdapter';
+import { ICard } from '../../../interfaces/ILittleCard';
+import { SquareSkeletonComponent } from '../../../../shared/components/square-skeleton/square-skeleton.component';
+import { RecentPostComponent } from './components/recent-post/recent-post.component';
 
 @Component({
   selector: 'app-main-blogs',
   standalone: true,
-  imports: [RouterLink, TranslocoModule, CommonModule, CardCarruselComponent, LitleCardComponent],
+  imports: [
+    RouterLink,
+    TranslocoModule,
+    CommonModule,
+    CardCarruselComponent,
+    LitleCardComponent,
+    SquareSkeletonComponent,
+    RecentPostComponent
+  ],
   templateUrl: './main-blogs.component.html',
   styleUrl: './main-blogs.component.css'
 })
-export class MainBlogsComponent {
+export class MainBlogsComponent implements OnInit {
   
-  public categories: ICategory[] = [
-    {
-      name: 'Most Popular',
-      reditect: '/home'
-    },
-    {
-      name: 'Nutrition',
-      reditect: '/nutrition'
-    },
-    {
-      name: 'Training',
-      reditect: '/training'
-    },
-    {
-      name: 'Yoga',
-      reditect: '/yoga'
-    },
-    {
-      name: 'Prenatal',
-      reditect: '/prenatal'
-    },
-    {
-      name:'Otro',
-      reditect: '/otro'
-    },
-  ]
+  private blogUseCaseService = inject(BlogUsecaseProvider);
+  private categoryUseCaseService = inject(CategoyUseCaseProvider);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  public categories= signal<Category[]>([]);
+  public blogsByCategory = signal<ICard[]>([]);
+  public isLoadingBlogsByCategory = signal(false);
+  public isLoadingCategories = signal(false);
+  public selectedCategory?: Category;
 
-
-  public blogs: IBlog[] = [
-    {
-      id: 1,
-      instructor: 'Pedro',
-      title: 'How to get started with a healthy lifestyle',
-      description: 'A healthy lifestyle is one which helps to keep and improve your health and well-being. There are many different things that you can do to live a healthy lifestyle, such as eating healthy, being physically active, maintaining a healthy weight, and managing your stress.',
-      thumbnail: 'https://via.placeholder.com/150',
-      category: 'Prenatal', date:'Feb 17,2020' ,
-      imagenUrl: 'https://media.glamour.mx/photos/642c5305347cb2132003b34a/16:9/w_2560%2Cc_limit/yoga_y_estiramientos_diferencias.jpg'
-    },
-    {
-      id: 2,
-      instructor: 'Pedro',
-      title: 'How to get started with a healthy lifestyle',
-      description: 'A healthy lifestyle is one which helps to keep and improve your health and well-being. There are many different things that you can do to live a healthy lifestyle, such as eating healthy, being physically active, maintaining a healthy weight, and managing your stress.',
-      thumbnail: 'https://via.placeholder.com/150',
-      category: 'Prenatal', date:'Feb 17,2020' ,
-      imagenUrl: 'https://media.glamour.mx/photos/642c5305347cb2132003b34a/16:9/w_2560%2Cc_limit/yoga_y_estiramientos_diferencias.jpg'
-    },
-    {
-      id: 3,
-      instructor: 'Pedro',
-      title: 'How to get started with a healthy lifestyle',
-      description: 'A healthy lifestyle is one which helps to keep and improve your health and well-being. There are many different things that you can do to live a healthy lifestyle, such as eating healthy, being physically active, maintaining a healthy weight, and managing your stress.',
-      thumbnail: 'https://via.placeholder.com/150',
-      category: 'Prenatal', date:'Feb 17,2020' ,
-      imagenUrl: 'https://media.glamour.mx/photos/642c5305347cb2132003b34a/16:9/w_2560%2Cc_limit/yoga_y_estiramientos_diferencias.jpg'
-    },
-    {
-      id: 4,
-      instructor: 'Pedro',
-      title: 'How to get started with a healthy lifestyle',
-      description: 'A healthy lifestyle is one which helps to keep and improve your health and well-being. There are many different things that you can do to live a healthy lifestyle, such as eating healthy, being physically active, maintaining a healthy weight, and managing your stress.',
-      thumbnail: 'https://via.placeholder.com/150',
-      category: 'Prenatal', date:'Feb 17,2020' ,
-      imagenUrl: 'https://media.glamour.mx/photos/642c5305347cb2132003b34a/16:9/w_2560%2Cc_limit/yoga_y_estiramientos_diferencias.jpg'
-    },
-    {
-      id: 5,
-      instructor: 'Pedro',
-      title: 'How to get started with a healthy lifestyle',
-      description: 'A healthy lifestyle is one which helps to keep and improve your health and well-being. There are many different things that you can do to live a healthy lifestyle, such as eating healthy, being physically active, maintaining a healthy weight, and managing your stress.',
-      thumbnail: 'https://via.placeholder.com/150',
-      category: 'Prenatal', date:'Feb 17,2020' ,
-      imagenUrl: 'https://media.glamour.mx/photos/642c5305347cb2132003b34a/16:9/w_2560%2Cc_limit/yoga_y_estiramientos_diferencias.jpg'
-    }
-  ];
-
-  public recentBlogs: IBlog[] = [
-    { id: 1, instructor:'Pedro', title: 'Prenatal Yoga Prenatal Yoga Prenatal Yoga', category: 'Prenatal', date:'Feb 17,2020' , imagenUrl: 'https://media.glamour.mx/photos/642c5305347cb2132003b34a/16:9/w_2560%2Cc_limit/yoga_y_estiramientos_diferencias.jpg',description: 'A ',  thumbnail: 'https://via.placeholder.com/150'},
-    { id: 2, instructor:'Juan', title: 'Prenatal Yoga Prenatal Yoga Prenatal Yoga', category: 'Prenatal', date:'Feb 17,2020' , imagenUrl: 'https://media.glamour.mx/photos/642c5305347cb2132003b34a/16:9/w_2560%2Cc_limit/yoga_y_estiramientos_diferencias.jpg',description: 'A ',  thumbnail: 'https://via.placeholder.com/150'},
-    { id: 3, instructor: 'Maria',title:'Prenatal Yoga Prenatal Yoga Prenatal Yoga', category: 'Prenatal', date:'Feb 17,2020' , imagenUrl: 'https://media.glamour.mx/photos/642c5305347cb2132003b34a/16:9/w_2560%2Cc_limit/yoga_y_estiramientos_diferencias.jpg',description: 'A ',  thumbnail: 'https://via.placeholder.com/150'},
-  ];
-
-    public selectBlogs: IBlog[] = [
-    { id: 1, instructor:'Pedro', title: 'Prenatal Yoga Prenatal Yoga Prenatal Yoga', category: 'Prenatal', date:'Feb 17,2020' , imagenUrl: 'https://media.glamour.mx/photos/642c5305347cb2132003b34a/16:9/w_2560%2Cc_limit/yoga_y_estiramientos_diferencias.jpg',description: 'A ',  thumbnail: 'https://via.placeholder.com/150'},
-    { id: 2, instructor:'Juan', title: 'Prenatal Yoga Prenatal Yoga Prenatal Yoga', category: 'Prenatal', date:'Feb 17,2020' , imagenUrl: 'https://media.glamour.mx/photos/642c5305347cb2132003b34a/16:9/w_2560%2Cc_limit/yoga_y_estiramientos_diferencias.jpg',description: 'A ',  thumbnail: 'https://via.placeholder.com/150'},
-    { id: 3, instructor: 'Maria',title:'Prenatal Yoga Prenatal Yoga Prenatal Yoga', category: 'Prenatal', date:'Feb 17,2020' , imagenUrl: 'https://media.glamour.mx/photos/642c5305347cb2132003b34a/16:9/w_2560%2Cc_limit/yoga_y_estiramientos_diferencias.jpg',description: 'A ',  thumbnail: 'https://via.placeholder.com/150'},
-  ];
-  
-  public selectedCategory: string = "Most Popular";
-
-  constructor(private router:Router, private route:ActivatedRoute) {
+  constructor(@Inject(DOCUMENT) private document: Document) {
     this.route.queryParams.subscribe((params: { [key: string]: any }) => {
       if(params['category']) {
-        this.setSelectedCategory(params['category']);
+        this.selectedCategory = this.categories().find(c => c.name === params['category']);
+        const baseQuery = '?filter=RECENT';
+        const categoryQuery = this.selectedCategory?.id ? `&category=${this.selectedCategory.id}` : '';
+        const queryParams = `${baseQuery}${categoryQuery}`;
+        this.getBlogs(queryParams);
       }
     });
   }
 
-  adaptBlogToCard(): ICard[] {
-    let blogs = this.selectBlogs.map((blog) => BlogCardAdapter(blog));
-    return blogs;
+  public ngOnInit(): void {
+    this.getCategories();
+    this.document.documentElement.scrollTop = 0;
+    this.document.body.scrollTop = 0;
   }
 
-  adaptBlogToLitleCard(data: IBlog): ILittleCard{
-    return BlogLitleCardAdapter(data);
-  }
-  
-
-  onCategorySelected(category : ICategory) {
+  onCategorySelected(category : Category) {
     this.router.navigate([] ,{queryParams: {category: category.name}, queryParamsHandling: 'merge'});
-    this.setSelectedCategory(category.name);
+    this.setSelectedCategory(category);
   }
 
-  setSelectedCategory(category : string) {
+  setSelectedCategory(category : Category) {
     this.selectedCategory = category;
+  }
+
+  public getCategories(params?: string) {
+    this.isLoadingCategories.set(true);
+    this.categoryUseCaseService.usecase.getByParams(params ?? '')
+      .pipe(finalize(() => this.isLoadingCategories.set(false)))
+      .subscribe(c => {
+        this.getBlogs('?filter=RECENT&category=' + c[0].id);
+        this.setSelectedCategory(c[0]);
+        this.categories.set(c);
+      })
+  }
+
+  public getBlogs(params?: string) {
+    this.isLoadingBlogsByCategory.set(true);
+    this.blogUseCaseService.usecase.getByParams(params ?? '')
+      .pipe(
+        map(b => b.map(PartialBlogToICardAdapter)),
+        finalize(() => this.isLoadingBlogsByCategory.set(false))
+      ).subscribe(b => this.blogsByCategory.set(b))
   }
 }
