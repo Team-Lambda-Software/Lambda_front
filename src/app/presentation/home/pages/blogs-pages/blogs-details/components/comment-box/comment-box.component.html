@@ -1,0 +1,6 @@
+<div class="w-full bg-white py-5 px-6 flex gap-8 justify-center items-center dark:bg-custom-light-dark">
+  <input autocomplete="off" [(ngModel)]="newComment" class="px-6 py-3 rounded-full w-full border-none bg-gray-200 dark:bg-gray-400 dark:placeholder:text-white/85" type="text" name="comment" id="comment" placeholder="Add a comment...">
+  <button (click)="sendComment()" class="text-white w-[55px] aspect-square bg-gradient-purple rounded-full flex items-center justify-center">
+    <span class="text-xl fas fa-comment"></span>
+  </button>
+</div>

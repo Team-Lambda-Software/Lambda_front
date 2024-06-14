@@ -1,0 +1,15 @@
+<hr>
+<p class="font-semibold text-custom-dark dark:text-gray-200 text-xl mt-4">Comments Section</p>
+@if (comments().length) {
+  @for (comment of comments(); track $index) {
+    <div class="bg-gray-200 dark:bg-custom-light-dark rounded-xl p-4 w-full mt-8">
+      <p class="text-gray-500 text-base dark:text-gray-100">{{comment.userName}}</p>
+      <p class="text-gray-500 text-sm dark:text-gray-100">{{comment.content}}</p>
+    </div>
+  }
+} @else {
+  <div class="flex justify-center items-center w-full p-6 border-gray-300 border-dashed border-2 mt-4">
+    <p class="text-gray-500 text-lg dark:text-gray-100">No comments yet. You can be the first one!</p>
+  </div>
+}
+
