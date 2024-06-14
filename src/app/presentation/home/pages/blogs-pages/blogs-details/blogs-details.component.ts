@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, ViewChild, inject, signal } from '@angular/core';
 import { BlogUsecaseProvider } from '../../../../../core/blog/infrastructure/providers/blog-usecase-provider';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Blog } from '../../../../../core/blog/domain/blog.model';
@@ -20,6 +20,7 @@ import { CommentSectionComponent } from './components/comment-section/comment-se
   styleUrl: './blogs-details.component.css'
 })
 export class BlogsDetailsComponent implements OnInit {
+  @ViewChild('comments') commentSection!: CommentSectionComponent;
   private blogUseCase = inject(BlogUsecaseProvider);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -38,5 +39,9 @@ export class BlogsDetailsComponent implements OnInit {
   ngOnInit () {
     this.blogUseCase.usecase.getById(this.id!)
       .subscribe(this.blog.set)
+  }
+
+  onCommentCreated() {
+    this.commentSection.getComments();
   }
 }

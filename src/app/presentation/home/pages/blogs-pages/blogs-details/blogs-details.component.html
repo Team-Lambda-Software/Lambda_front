@@ -1,6 +1,6 @@
-<div id="container">
+<div id="container" class="animate__animated animate__fadeIn">
   <main>
-    <app-basic-header [options]="{redirect: '/home/main-blogs', name:'Tips & Topic Detalis'}"/>
+    <app-basic-header [options]="{redirect: '/home/main-blogs', name:'Tips & Topic Details'}"/>
     
     <div class="mt-6 p-4 pb-12">
       @if (blog()) {
@@ -13,8 +13,8 @@
           <app-square-skeleton class="block mt-2" [dimensions]="{width: '100%', heigth: '20px'}" />
         }
       }
-    <app-comment-section class="block mt-4" [blogId]="id!"/>
+    <app-comment-section #comments class="block mt-4" [blogId]="id!"/>
     </div>
   </main>
-    <app-comment-box [blogId]="id!"/>
+    <app-comment-box [blogId]="id!" (commentCreated)="onCommentCreated()"/>
 </div>

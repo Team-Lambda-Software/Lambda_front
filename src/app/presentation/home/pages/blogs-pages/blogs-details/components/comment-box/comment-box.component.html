@@ -1,6 +1,23 @@
-<div class="w-full bg-white py-5 px-6 flex gap-8 justify-center items-center dark:bg-custom-light-dark">
-  <input autocomplete="off" [(ngModel)]="newComment" class="px-6 py-3 rounded-full w-full border-none bg-gray-200 dark:bg-gray-400 dark:placeholder:text-white/85" type="text" name="comment" id="comment" placeholder="Add a comment...">
-  <button (click)="sendComment()" class="text-white w-[55px] aspect-square bg-gradient-purple rounded-full flex items-center justify-center">
-    <span class="text-xl fas fa-comment"></span>
+<div class="w-full bg-white py-5 px-6 flex gap-8 justify-center items-center dark:bg-custom-light-dark animate__animated animate__fadeIn">
+  <textarea 
+    rows="1"
+    autocomplete="off"
+    [(ngModel)]="newComment"
+    class="px-6 py-3 rounded-[30px] w-full border-none text-custom-light-dark bg-gray-200 dark:bg-gray-400 dark:placeholder:text-white/85 dark:text-white/85" 
+    type="text" 
+    name="comment"
+    id="comment"
+    #commentInput
+    [placeholder]="'add-a-comment' | transloco"
+    [disabled]="isLoadingComment()"
+    (input)="commentInput.style.height = ''; commentInput.style.height = commentInput.scrollHeight + 'px'"
+  > </textarea>
+  <button 
+    (click)="sendComment()" 
+    class="text-white w-[65px] aspect-square rounded-full flex items-center justify-center disabled:bg-gray-400 transition-colors duration-200 ease-in-out"
+    [class.bg-gradient-purple]="!isLoadingComment()"
+    [disabled]="isLoadingComment()"
+  >
+    <span class="text-2xl fas fa-comment"></span>
   </button>
 </div>
