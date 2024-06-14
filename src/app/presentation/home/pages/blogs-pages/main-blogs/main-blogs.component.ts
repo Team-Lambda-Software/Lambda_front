@@ -5,7 +5,7 @@ import { TranslocoModule } from '@jsverse/transloco';
 import { CardCarruselComponent } from '../../../components/card-carrusel/card-carrusel.component';
 import { LitleCardComponent } from '../../../components/litle-card/litle-card.component';
 import { Category } from '../../../../../core/categories/domain/category.model';
-import { CategoyUsecaseProvider } from '../../../../../core/categories/infrastructure/providers/category-usecase-provider';
+import { CategoyUseCaseProvider } from '../../../../../core/categories/infrastructure/providers/category-usecase-provider';
 import { finalize, map } from 'rxjs';
 import { BlogUsecaseProvider } from '../../../../../core/blog/infrastructure/providers/blog-usecase-provider';
 import { PartialBlogToICardAdapter } from '../../../adapters/BlogAdapter';
@@ -31,7 +31,7 @@ import { RecentPostComponent } from './components/recent-post/recent-post.compon
 export class MainBlogsComponent implements OnInit {
   
   private blogUseCaseService = inject(BlogUsecaseProvider);
-  private categoryUseCaseService = inject(CategoyUsecaseProvider);
+  private categoryUseCaseService = inject(CategoyUseCaseProvider);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   public categories= signal<Category[]>([]);
