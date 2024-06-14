@@ -11,14 +11,8 @@ import { BlogsComponent } from './components/blogs/blogs.component';
 import { SquareSkeletonComponent } from '../../../shared/components/square-skeleton/square-skeleton.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { PopularCoursesComponent } from './components/popular-courses/popular-courses.component';
-import { IVideoCourses } from '../../interfaces/video-courses-model';
-import { IPlayerCard } from '../../interfaces/IPlayerCard';
-import { PlayerCardAdapter } from '../../adapters/PlayerCardAdapter';
 import { AuthService } from '../../../auth/services/auth.service';
-import { User } from '../../../../core/user/infraestructure/dto/response/user-response.interface';
-import { Optional } from '../../../../common/helpers/Optional';
 import { VideoCoursesComponent } from './components/video-courses/video-courses.component';
-import { NotificationService } from '../../services/notifications/Notification.service';
 import { UserStatusService } from '../../../../core/user/application/user-status.service';
 
 @Component({
@@ -41,17 +35,12 @@ import { UserStatusService } from '../../../../core/user/application/user-status
   ]
 })
 
-export class HomePageComponent implements OnInit {
+export class HomePageComponent {
 
   public popularService = inject(CoursesPopularService);
   public userInfo = inject(UserInfoService);
   public auth = inject(AuthService)
-  private notification=inject(NotificationService)
   public userStatusService = inject(UserStatusService)
   public user = this.userStatusService.currentUser();
 
-  ngOnInit(): void {
-    this.notification.saveNotificationToken().then( token => {})    
-  }
-  
 }

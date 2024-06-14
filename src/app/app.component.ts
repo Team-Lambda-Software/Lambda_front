@@ -8,11 +8,8 @@ import { NotificationService } from './presentation/home/services/notifications/
 import { initializeApp } from 'firebase/app';
 import { getMessaging, onMessage } from 'firebase/messaging';
 import { enviroment } from '../environments/environment';
-import { AuthService } from './presentation/auth/services/auth.service';
-import { AuthStatus } from './core/user/domain/interfaces/auth-status.enum';
 import { AuthUsecaseProvider } from './core/user/infraestructure/providers/auth-use-case-provider';
 import { UserStatusService } from './core/user/application/user-status.service';
-import { map, pipe } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -48,7 +45,7 @@ export class AppComponent implements OnInit {
     )
     this.router.navigateByUrl('/')
   }
-  
+
   @HostBinding('class.dark') get mode() {
     return this.darkModeService.isDarkMode();
   }
@@ -58,14 +55,15 @@ export class AppComponent implements OnInit {
     const messaging = getMessaging(appFb)
 
     this.notification.requestPermission().then( token => {})
-     
+
     onMessage(messaging, (payload) => {
       const title = payload.notification?.title
       const body = payload.notification?.body
-      const noti = new Notification( title ?? 'title_dont_received' , { body: body })
+      const icon='https://firebasestorage.googleapis.com/v0/b/chat-realtime-5e9cc.appspot.com/o/icon-128x128.png?alt=media&token=073a48a1-3adf-4bd8-a259-2ee99daf55c7 '
+      const noti = new Notification( title ?? 'title_dont_received' , { body: body, icon:icon})
       console.log('Message received. ', payload.notification);
     })
-    
+
     this.swUpdate.versionUpdates.subscribe(event => {
       if (event.type == 'VERSION_DETECTED' && confirm('New version available. Load New Version?')) {
         window.location.reload();
