@@ -1,6 +1,6 @@
 import { Observable} from "rxjs";
 import { IAuthUseCase } from "../domain/interfaces/auth-use-case.interface";
-import { IAuthApiService } from "../domain/interfaces/login-api.interface";
+import { IAuthApiService } from "../domain/interfaces/auth-api.interface";
 import { AppUser } from "../domain/appuser";
 
 import { LoginEntryDomainDTO } from "../domain/interfaces/entry/login-entry.dto";
@@ -36,6 +36,10 @@ export class AuthUseCaseService implements IAuthUseCase {
 
   updatePassword(password:string):Observable<Number>{
     return this._loginApiService.updatePassword(password)
+  }
+
+  logout (): void {
+    this._loginApiService.logout()
   }
 
 }

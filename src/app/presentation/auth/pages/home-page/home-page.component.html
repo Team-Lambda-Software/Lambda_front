@@ -1,6 +1,6 @@
 <div class="flex flex-col  h-screen w-auto items-center justify-center
 animate__animated animate__fadeIn">
-  <div class="relative">
+  <div class="relative items-center justify-center ">
     <div class="w-44 md:w-52 lg:w-60">
       @if (darkModeService.isDarkMode()) {
         <img class="w-auto h-max" src="assets/icons/logo-dark.png" alt="logo">
@@ -19,7 +19,7 @@ animate__animated animate__fadeIn">
         }
       </button>
 
-      <div class="m-14 text-center items-center">
+      <div class="mt-14 text-center items-center justify-center">
 
         <div class="text-3xl text-wrap w-64 font-bold text-center align-middle dark:text-custom-light text-custom-dark">
           <h1>{{mainTitle | transloco}}</h1>

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@angular/core";
 import { AuthUseCaseService } from "../../application/auth-use-case.service";
-import { IAuthApiService } from "../../domain/interfaces/login-api.interface";
+import { IAuthApiService } from "../../domain/interfaces/auth-api.interface";
 import { HTTP_AUTH_SERVICE } from "./auth-api-provider";
 
 

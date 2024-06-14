@@ -4,11 +4,9 @@ import { SidebarService } from './presentation/shared/services/sidebar/sidebar.s
 import { NgClass } from '@angular/common';
 import { DarkModeService } from './presentation/shared/services/dark-mode/dark-mode.service';
 import { SwUpdate } from '@angular/service-worker';
-import { AuthService } from './presentation/auth/services/auth.service';
-import { AuthStatus } from './core/user/domain/interfaces/auth-status.enum';
+
 import { AuthUsecaseProvider } from './core/user/infraestructure/providers/auth-use-case-provider';
-import { UserStatusService } from './core/user/application/user-status.service';
-import { map, pipe } from 'rxjs';
+import { UserStatusService } from './core/user/infraestructure/services/user-status.service';
 
 @Component({
   selector: 'app-root',
