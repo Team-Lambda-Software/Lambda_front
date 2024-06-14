@@ -2,8 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, ElementRef, viewChild, ViewChild, signal, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { DarkModeService } from '../../../../shared/services/dark-mode/dark-mode.service';
-import { LocalStorage } from '../../../services/LocalStorage';
-import { AuthService } from '../../../services/auth.service';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { VerificationCodeForm } from '../../../interfaces/forms/verticationCode-form.interface';
 import { ValidatorService } from '../../../../shared/services/validator/validator.service';

@@ -4,8 +4,9 @@ import { SidebarService } from '../../../../../shared/services/sidebar/sidebar.s
 import { DarkModeService } from '../../../../../shared/services/dark-mode/dark-mode.service';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AvailableLangs } from '../../../../../shared/interfaces/available-lang.model';
-import { AuthService } from '../../../../../auth/services/auth.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthUsecaseProvider } from '../../../../../../core/user/infraestructure/providers/auth-use-case-provider';
+import { UserStatusService } from '../../../../../../core/user/infraestructure/services/user-status.service';
 
 const LIMIT_TOUCHED_FOR_OPEN_SIDEBAR = 80;
 const SLIP_THRESHOLD = 80;
@@ -18,10 +19,12 @@ const SLIP_THRESHOLD = 80;
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
-  
+
   private startX: number = 0;
   private threshold = SLIP_THRESHOLD;
-  private authService = inject(AuthService)
+  private authUseCaseService = inject(AuthUsecaseProvider);
+  private router=inject(Router)
+  private user=inject(UserStatusService)
   public sidebarService = inject(SidebarService);
   public darkModeService = inject(DarkModeService);
   public translocoService = inject(TranslocoService);
@@ -63,7 +66,8 @@ export class SidebarComponent {
   }
 
   logout() {
-    this.authService.logout();
+    this.authUseCaseService.usecase.logout();
+    this.router.navigate(['/auth'])
   }
 
 }

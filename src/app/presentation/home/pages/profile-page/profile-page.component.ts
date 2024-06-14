@@ -11,7 +11,7 @@ import { CourseLitleCardAdapter } from '../../adapters/LitleCardAdapter';
 import { CoursesMyTrainingService } from '../../services/courses/getTraining/courses-mytraining.service';
 import { IUserProfile } from '../../interfaces/user-info-model';
 import { UserInfoService } from '../../services/user/getUserInfo/user-info.service';
-import { UserStatusService } from '../../../../core/user/application/user-status.service';
+import { UserStatusService } from '../../../../core/user/infraestructure/services/user-status.service';
 
 
 @Component({

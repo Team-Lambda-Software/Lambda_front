@@ -1,9 +1,8 @@
-import { Component, computed, effect, inject } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
 import { AuthStatus } from '../../../../core/user/domain/interfaces/auth-status.enum';
 import { LoaderComponent } from '../../components/loader/loader.component';
-import { UserStatusService } from '../../../../core/user/application/user-status.service';
+import { UserStatusService } from '../../../../core/user/infraestructure/services/user-status.service';
 
 @Component({
   selector: 'app-layout-page',
@@ -17,7 +16,9 @@ export class LayoutComponent {
   public router=inject(Router)
   public lastLink=this.router.url
   public userStatusService=inject(UserStatusService)
+  public userStatus=signal<AuthStatus>(this.userStatusService.currentStatus())
   public finishedAuthCheck= computed<boolean>(()=>{
+
     if (this.userStatusService.currentStatus()===AuthStatus.checking) return false
     return true
   })
@@ -34,7 +35,6 @@ export class LayoutComponent {
       case AuthStatus.notAuthenticated:
       {
         return
-        // this.router.navigateByUrl('/auth')
       }
     }
   })

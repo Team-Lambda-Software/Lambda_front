@@ -1,11 +1,10 @@
-import { IAuthApiService } from '../../domain/interfaces/login-api.interface';
+import { IAuthApiService } from '../../domain/interfaces/auth-api.interface';
 import { LoginEntryDomainDTO  } from '../../domain/interfaces/entry/login-entry.dto';
 import { SignUpEntryDomainDTO } from '../../domain/interfaces/entry/signup-entry.dto';
 import { Type } from '../../domain/interfaces/type.interface';
 import { AppUser } from '../../domain/appuser';
 
 
-import { UserStatusService } from '../../application/user-status.service';
 
 
 import { LoginResponse } from '../dto/response/login-response.interface';
@@ -19,9 +18,10 @@ import { Result } from '../../../../common/helpers/Result';
 
 
 import { Observable, catchError, map, of, switchMap, throwError } from 'rxjs';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, Optional, inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponseBase } from '@angular/common/http';
 import { GetCodeResponse } from '../dto/response/getCode-response.interface';
+import { UserStatusService } from './user-status.service';
 
 
 @Injectable({
@@ -32,7 +32,7 @@ export class AuthApiService implements IAuthApiService {
   private _httpClient = inject(HttpClient);
   readonly BASE_URL:string= enviroment.baseUrl+`/auth`
   private _authRepository:IAuthRepository= new LocalStorageService()
-  private _userStatus:UserStatusService = new UserStatusService()
+  private _userStatus:UserStatusService = inject(UserStatusService)
 
   constructor() {}
 
@@ -110,9 +110,6 @@ export class AuthApiService implements IAuthApiService {
         map((response)=>{
           this._authRepository.saveEmail(email)
           this._authRepository.saveDateCode(response.date.toString())
-          console.log(new Date(response.date));
-          console.log(new Date(response.date).getDate());
-
           this._userStatus.setNotAuthenticated()
           return
         }),
@@ -176,6 +173,12 @@ export class AuthApiService implements IAuthApiService {
             return throwError(()=>error.error.message)
           })
         )
+      }
+
+      logout (): void {
+        this._authRepository.deleteToken();
+        this._userStatus.setNotAuthenticated()
+        this._userStatus.deleteUser()
       }
 
 }

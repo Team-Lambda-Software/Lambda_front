@@ -11,14 +11,8 @@ import { BlogsComponent } from './components/blogs/blogs.component';
 import { SquareSkeletonComponent } from '../../../shared/components/square-skeleton/square-skeleton.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { PopularCoursesComponent } from './components/popular-courses/popular-courses.component';
-import { IVideoCourses } from '../../interfaces/video-courses-model';
-import { IPlayerCard } from '../../interfaces/IPlayerCard';
-import { PlayerCardAdapter } from '../../adapters/PlayerCardAdapter';
-import { AuthService } from '../../../auth/services/auth.service';
-import { User } from '../../../../core/user/infraestructure/dto/response/user-response.interface';
-import { Optional } from '../../../../common/helpers/Optional';
 import { VideoCoursesComponent } from './components/video-courses/video-courses.component';
-import { UserStatusService } from '../../../../core/user/application/user-status.service';
+import { UserStatusService } from '../../../../core/user/infraestructure/services/user-status.service';
 
 @Component({
   selector: 'app-home-page',

@@ -1,18 +1,13 @@
 import { inject } from '@angular/core';
 import { Router, type CanActivateFn } from '@angular/router';
-import { AuthService } from '../services/auth.service';
 import { AuthStatus } from '../../../core/user/domain/interfaces/auth-status.enum';
-import { enviroment } from '../../../../environments/environment';
+import { UserStatusService } from '../../../core/user/infraestructure/services/user-status.service';
 
 export const isAuthenticatedGuard: CanActivateFn = (route, state) => {
-
-  const authService=inject(AuthService)
+  const userStatus=inject(UserStatusService)
   const router = inject(Router);
-  if (!enviroment.production) {
-    return true
-  }
 
-  if(authService.authStatus()=== AuthStatus.authenticated) return true
+  if(userStatus.currentStatus()=== AuthStatus.authenticated) return true
   else{
     router.navigateByUrl('/auth/home')
     return false;

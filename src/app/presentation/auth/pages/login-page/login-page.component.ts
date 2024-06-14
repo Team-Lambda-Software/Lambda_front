@@ -7,14 +7,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.service';
-import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { ValidatorService } from '../../../shared/services/validator/validator.service';
 import { TranslocoModule } from '@jsverse/transloco';
 import { PopupInfoModalService } from '../../../shared/services/popup-info-modal/popup-info-modal.service';
 import { AuthUsecaseProvider } from '../../../../core/user/infraestructure/providers/auth-use-case-provider';
 import { Result } from '../../../../common/helpers/Result';
-import { UserStatusService } from '../../../../core/user/application/user-status.service';
+import { UserStatusService } from '../../../../core/user/infraestructure/services/user-status.service';
 
 
 @Component({
@@ -56,7 +55,7 @@ export class LoginPageComponent {
     const {email,password}=this.loginForm.value;
     this.authUseCaseService.usecase.login({email,password}).subscribe({
       next:(answer)=>{
-        if(!answer.isError()) {this.router.navigateByUrl('/home'),this.userStatusService.setUser(answer.getValue())}
+        if(!answer.isError()) {this.userStatusService.setUser(answer.getValue()),this.router.navigateByUrl('/home')}
       },
       error:(error:Result<Error>)=>{
          this.popupService.displayErrorModal(error.getError().message)
