@@ -73,6 +73,7 @@ export class AuthApiService implements IAuthApiService {
         map((response)=>{
           let type= Type.CLIENT
           this._userStatus.setAuthenticated()
+          console.log(this._userStatus.currentStatus());
           return Result.makeResult(new AppUser({...response,type}))
         }),
         catchError(error=>{

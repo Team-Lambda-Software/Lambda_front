@@ -1,6 +1,3 @@
-// import { AuthStatus } from '../domain/interfaces/auth-status.enum';
-// import { AppUser } from '../domain/appuser';
-// import { Optional } from '../../../common/helpers/Optional';
 import { AuthStatus } from '../../domain/interfaces/auth-status.enum';
 import { AppUser } from '../../domain/appuser';
 import { IUserStatusProvider } from '../../domain/interfaces/user-status-provider.interface';

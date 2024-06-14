@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
@@ -34,7 +34,11 @@ import { UserStatusService } from '../../../../core/user/infraestructure/service
   ]
 })
 
-export class HomePageComponent {
+export class HomePageComponent implements OnInit{
+  ngOnInit(): void {
+    this.user = this.userStatusService.currentUser();
+    console.log(this.user.getValue());
+  }
 
   public popularService = inject(CoursesPopularService);
   public userInfo = inject(UserInfoService);
