@@ -1,12 +1,9 @@
 @if(!finishedAuthCheck()){
   <app-loader></app-loader>
-}
-
-@else{
+} @else{
   <app-sidebar/>
-
   <div id="container">
-    <main class="pb-[125px]">
+    <main [ngClass]="{'pb-[125px]': isBottombarActive()}">
       <router-outlet/>
     </main>
     @if(isBottombarActive()) {

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { RouterLink  } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { ICard } from '../../interfaces/ILittleCard';
 
 @Component({
@@ -12,4 +12,5 @@ import { ICard } from '../../interfaces/ILittleCard';
 export class BigCardComponent {
 
   @Input({ required: true }) public item!: ICard;
+  @Input({ required: true }) public routerLink!: string;
 }
