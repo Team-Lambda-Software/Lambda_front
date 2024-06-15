@@ -14,7 +14,7 @@
       }
     } @else {
       @for (blog of latestBlogs; track blog.id) {
-        <article class="rounded-lg w-[190px] p-2 ">
+        <article class="rounded-lg w-full">
           <img [src]="blog.image" alt="course" class="w-full h-36 object-cover rounded-xl">
           <div class="p-4">
             <p class="text-base font-bold text-wrap dark:text-white">{{ blog.name }}</p>

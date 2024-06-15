@@ -5,7 +5,7 @@ import { NgClass } from '@angular/common';
 import { DarkModeService } from './presentation/shared/services/dark-mode/dark-mode.service';
 import { SwUpdate } from '@angular/service-worker';
 import { NotificationService } from './presentation/home/services/notifications/Notification.service';
-import { initializeApp } from 'firebase/app';
+import { initializeApp } from '@firebase/app';
 import { getMessaging, onMessage } from 'firebase/messaging';
 import { enviroment } from '../environments/environment';
 import { AuthUsecaseProvider } from './core/user/infraestructure/providers/auth-use-case-provider';

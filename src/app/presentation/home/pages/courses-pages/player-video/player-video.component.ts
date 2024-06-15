@@ -1,4 +1,4 @@
-import { Component, inject, signal, ElementRef, ViewChild } from '@angular/core';
+import { Component, inject, signal, ElementRef, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute,RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { BasicHeaderComponent } from '../../../components/basic-header/basic-header.component';
@@ -15,7 +15,7 @@ import { CourseUsecaseProvider } from '../../../../../core/course/infrastructure
   templateUrl: './player-video.component.html',
   styleUrl: './player-video.component.css'
 })
-export class PlayerVideoComponent {
+export class PlayerVideoComponent implements OnInit{
 
   @ViewChild('videoPlayer') videoPlayer!: ElementRef;
   public courseUseCaseService = inject(CourseUsecaseProvider);
@@ -39,9 +39,16 @@ export class PlayerVideoComponent {
       this.getCourse(this.idCourse!);
     })
   }
+  
+  ngOnInit(): void {
+    this.isLoading = true;
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+      this.isLoading = false;
+    }, 100); 
+  }
 
-
-  public getCourse(id: string){
+  public getCourse(id: string): void{
     this.isLoading = true
     this.courseUseCaseService.usecase.getById(id)
     .subscribe( course =>{
@@ -57,21 +64,21 @@ export class PlayerVideoComponent {
     }).add(() => this.isLoading = false)
   }
 
-  public hasNext(){
+  public hasNext(): boolean{
     if(this.lesson?.id == this.course?.lessons[this.course?.lessons.length - 1].id){
       return false
     }
     return true
   }
 
-  public hasPrevious(){
+  public hasPrevious(): boolean{
     if(this.lesson?.id == this.course?.lessons[0].id){
       return false
     }
     return true
   }
 
-  public setNextLesson(){
+  public setNextLesson(): void{
     if(this.hasNext()){
       let indexLesson = this.course?.lessons.findIndex(lesson => lesson.id == this.lesson?.id)
       this.router.navigate([] ,{queryParams: {course: this.idCourse, lesson: this.course?.lessons[indexLesson! + 1].id}, queryParamsHandling: 'merge'});
@@ -80,8 +87,7 @@ export class PlayerVideoComponent {
     }
   }
 
-  public setPreviusLesson(){
-    
+  public setPreviusLesson(): void{
     if(this.hasPrevious()){
       let indexLesson = this.course?.lessons.findIndex(lesson => lesson.id == this.lesson?.id)
       this.router.navigate([] ,{queryParams: { lesson: this.course?.lessons[indexLesson! - 1].id}, queryParamsHandling: 'merge'});
