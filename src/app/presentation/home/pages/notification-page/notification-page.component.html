@@ -1,4 +1,4 @@
-<app-basic-header-notification [options]="{name: 'notifications', redirect:'/home/main'}"/>
+<app-basic-header-notification [options]="{name: 'notifications', redirect:'/home/main', inbox: this.structure.length}" (notifyClear)="clearNotifications()"/>
 @if (this.structure.length > 0) {
     <app-structure-notification [structure]="this.structure"></app-structure-notification>
 }@else {

@@ -26,6 +26,12 @@ export class NotificationPageComponent {
         this.structure.push(...notifications);
 
   });
+ }
 
+  public clearNotifications(): void {
+    this.structure = []; 
+  }
 }
-}
+
+
+

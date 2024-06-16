@@ -1,14 +1,14 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { BasicHeaderNotificationComponent } from '../../../components/basic-header-notification/basic-header-notification.component';
 import { RouterLink } from '@angular/router';
-import { NotificationUseCaseProvider } from '../../../../../core/notification/infrastructure/providers/notification-usecase-provider';
 import { Notification } from '../../../../../core/notification/domain/notification.model';
-
+import { MatDialog } from '@angular/material/dialog';
+import { StructureDetailComponent } from '../structure-detail/structure-detail.component';
 
 @Component({
   selector: 'app-structure-notification',
   standalone: true,
-  imports: [BasicHeaderNotificationComponent,RouterLink],
+  imports: [BasicHeaderNotificationComponent,RouterLink,StructureDetailComponent],
   templateUrl: './structure-notification.component.html',
   styleUrl: './structure-notification.component.css'
 })
@@ -16,6 +16,19 @@ import { Notification } from '../../../../../core/notification/domain/notificati
 export class StructureNotificationComponent {
   @Input({required:true})
   public structure: Notification[] = [];
+  constructor(public dialog: MatDialog) {}
+
+openDialog(st: any): void {
+  const dialogRef = this.dialog.open(StructureDetailComponent, {
+    width: '250px',
+    data: st
+  });
+
+  dialogRef.afterClosed().subscribe(() => {
+    console.log('The dialog was closed');
+  });
   }
+
+}
   
 

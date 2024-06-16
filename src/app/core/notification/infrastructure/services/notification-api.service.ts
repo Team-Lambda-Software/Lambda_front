@@ -21,7 +21,7 @@ export class NotificationApiService implements INotificationApiService {
         return responses.map(NotificationResponseToNotification);
       })
     );
-  }  
 
+  }
   
 }
