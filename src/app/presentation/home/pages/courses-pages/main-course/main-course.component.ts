@@ -31,13 +31,14 @@ import { NavigationExtras } from '@angular/router';
   templateUrl: './main-course.component.html',
   styleUrl: './main-course.component.css'
 })
-export class MainCourseComponent {
+export class MainCourseComponent implements OnInit {
 
   public id?: string;
   public courseUseCaseService = inject(CourseUsecaseProvider);
   public logoPath = 'assets/icons/app-logo.svg'
   public course?: Course;
   public popularCourses$ = of<ILittleCard[]>([]);
+  public isLoading = false;
 
   constructor(private router:Router, private route:ActivatedRoute) {
     this.route.queryParams.subscribe((params) => {
@@ -48,19 +49,25 @@ export class MainCourseComponent {
       } else this.router.navigate(['/home'])
     });
   }
+  
+  ngOnInit(): void {
+    this.isLoading = true;
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+      this.isLoading = false;
+    }, 200); 
+  }
 
   goToPlayer(lesson: Lesson){
     const data: NavigationExtras = {state: {lesson, courseId: this.id}}
     this.router.navigate(['/home/player-video'], data);
   }
 
-  // adaptCourseToLittleCard(course: ICourse): ILittleCard {
-  //   return CourseLitleCardAdapter(course);
-  // }
 
   getById() {
+    this.isLoading = true
     this.courseUseCaseService.usecase.getById(this.id!)
-      .subscribe( course => this.course = course)
+      .subscribe( course => this.course = course).add( () => this.isLoading = false)
   }
 
   public getPopulars(): Observable<ILittleCard[]> {
