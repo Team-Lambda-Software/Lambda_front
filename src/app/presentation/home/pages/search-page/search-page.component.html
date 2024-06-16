@@ -18,12 +18,16 @@
         @for (item of categories; track item.id) {
         <div (click)="onTagClick(item.name)"
         [class]="{ 
-            'text-white': this._tag.includes(item.name), 
-            'dark:text-violet-700': this._tag.includes(item.name), 
-            'bg-violet-700': this._tag.includes(item.name), 
-            'dark:bg-slate-100': this._tag.includes(item.name),
+            'text-white': _tag.includes(item.name), 
+            'text-purple-700': !_tag.includes(item.name), 
+            'bg-violet-700': _tag.includes(item.name), 
+            'bg-violet-100': !_tag.includes(item.name), 
+            'dark:text-violet-700': _tag.includes(item.name), 
+            'dark:bg-slate-100': _tag.includes(item.name),
+            'dark:bg-gray-500': !_tag.includes(item.name), 
+            'dark:text-white': !_tag.includes(item.name), 
         }"
-        class="bg-violet-100 text-purple-700 dark:text-white dark:bg-gray-500 rounded-full shadow-md flex items-center justify-center ">
+        class=" rounded-full shadow-lg flex items-center justify-center ">
         <span class="text-sm font-light py-2 px-6">{{ item.name }}</span>
    </div>
 
