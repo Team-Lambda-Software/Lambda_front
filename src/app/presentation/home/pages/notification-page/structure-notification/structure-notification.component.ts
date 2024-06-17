@@ -19,16 +19,11 @@ export class StructureNotificationComponent {
   constructor(public dialog: MatDialog) {}
 
 openDialog(st: any): void {
-  const dialogRef = this.dialog.open(StructureDetailComponent, {
+  this.dialog.open(StructureDetailComponent, {
     width: '250px',
     data: st
   });
-
-  dialogRef.afterClosed().subscribe(() => {
-    console.log('The dialog was closed');
-  });
-  }
-
-}
   
 
+  } 
+}
