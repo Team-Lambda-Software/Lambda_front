@@ -1,14 +1,15 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
-import { AuthLocalStorageService } from '../../services/local-storage/local-storage.service';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthLocalStorageService } from '../../../../core/shared/infraestructure/local-storage/auth-local-storage.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router)
+  const _authRepository:AuthLocalStorageService= new AuthLocalStorageService()
   let authToken = null;
-  const possibleToken = AuthLocalStorageService.get('token');
+  const possibleToken = _authRepository.getToken();
   if (possibleToken.hasValue())
     authToken = possibleToken.getValue();
 
@@ -23,7 +24,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     catchError((err: any) => {
       if (err instanceof HttpErrorResponse && err.status === 401) {
         router.navigate(['/auth']);
-        AuthLocalStorageService.delete('token');
+        _authRepository.deleteToken()
       }
       return throwError(() => err);
     }));

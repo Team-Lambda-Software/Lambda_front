@@ -2,41 +2,53 @@ import { AuthStatus } from '../../domain/interfaces/auth-status.enum';
 import { AppUser } from '../../domain/appuser';
 import { IUserStatusProvider } from '../../domain/interfaces/user-status-provider.interface';
 
+import { AuthLoadingStore } from '../auth-loading-store';
+import { UserStore } from '../user-store';
+
 import { Optional } from '../../../../common/helpers/Optional';
 import { Injectable } from '@angular/core';
+
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class UserStatusService implements IUserStatusProvider{
-  private _user=new Optional<AppUser>(null)
-  private _authStatus:AuthStatus=AuthStatus.notAuthenticated;
 
   setChecking():void{
-    this._authStatus=AuthStatus.checking
+    const _status=AuthLoadingStore.getInstance();
+    _status.store(AuthStatus.checking)
   }
 
   setNotAuthenticated():void{
-    this._authStatus=AuthStatus.notAuthenticated
+    const _status=AuthLoadingStore.getInstance();
+    _status.store(AuthStatus.notAuthenticated)
   }
 
   setAuthenticated():void{
-    this._authStatus=AuthStatus.authenticated
+    const _status=AuthLoadingStore.getInstance();
+    _status.store(AuthStatus.authenticated)
   }
 
-  deleteUser():void{this._user=new Optional<AppUser>(null)
+  deleteUser():void{
+    const _user=UserStore.getInstance();
+    _user.store(new Optional<AppUser>(null))
   }
 
   setUser(user:AppUser){
     this.setAuthenticated()
-   this._user=new Optional(user)
+    const _user=UserStore.getInstance();
+    _user.store(new Optional<AppUser>(user))
   }
 
-  currentStatus():AuthStatus{ return this._authStatus}
+  currentStatus():AuthStatus{
+    const _status=AuthLoadingStore.getInstance();
+    return _status.get()}
 
-  currentUser():Optional<AppUser>{return this._user}
+  currentUser():Optional<AppUser>{
+    const _user=UserStore.getInstance();
+    return _user.get()
+  }
 
-  constructor() { }
-
+  constructor(){}
 }
