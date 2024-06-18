@@ -34,6 +34,7 @@ export class AppComponent implements OnInit {
   private swUpdate = inject(SwUpdate);
   public sidebarService = inject(SidebarService);
   public darkModeService = inject(DarkModeService);
+  //TODO: Para poder desplegar la app localmente
   private notification=inject(NotificationService)
   private authUseCaseService = inject(AuthUsecaseProvider);
   private userStatusService=inject(UserStatusService);
@@ -54,15 +55,16 @@ export class AppComponent implements OnInit {
     const appFb = initializeApp(enviroment.firebase)
     const messaging = getMessaging(appFb)
 
+    //TODO: Para poder desplegar la app localmente
     this.notification.requestPermission().then( token => {})
 
-    onMessage(messaging, (payload) => {
-      const title = payload.notification?.title
-      const body = payload.notification?.body
-      const icon='https://firebasestorage.googleapis.com/v0/b/chat-realtime-5e9cc.appspot.com/o/icon-128x128.png?alt=media&token=073a48a1-3adf-4bd8-a259-2ee99daf55c7 '
-      const noti = new Notification( title ?? 'title_dont_received' , { body: body, icon:icon})
-      console.log('Message received. ', payload.notification);
-    })
+    // onMessage(messaging, (payload) => {
+    //   const title = payload.notification?.title
+    //   const body = payload.notification?.body
+    //   const icon='https://firebasestorage.googleapis.com/v0/b/chat-realtime-5e9cc.appspot.com/o/icon-128x128.png?alt=media&token=073a48a1-3adf-4bd8-a259-2ee99daf55c7'
+    //   const noti = new Notification( title ?? 'title_dont_received' , { body: body, icon:icon})
+    //   console.log('Message received. ', payload.notification);
+    // })
 
     this.swUpdate.versionUpdates.subscribe(event => {
       if (event.type == 'VERSION_DETECTED' && confirm('New version available. Load New Version?')) {

@@ -6,8 +6,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { Router } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
-import { IAuthRepository } from '../../../../../core/shared/application/ports/IRepository.interface';
-import { LocalStorageService } from '../../../../../core/shared/infraestructure/local-storage/local-storage.service';
+import { IAuthRepository } from '../../../../../core/shared/application/ports/IAuthRepository.interface';
+import { AuthLocalStorageService } from '../../../../../core/shared/infraestructure/local-storage/auth-local-storage.service';
 
 @Component({
   selector: 'app-create-password-confirm-page',
@@ -21,7 +21,7 @@ import { LocalStorageService } from '../../../../../core/shared/infraestructure/
 export class CreatePasswordConfirmPageComponent implements OnInit {
 
   public router=inject(Router)
-  private _authRepository:IAuthRepository= new LocalStorageService()
+  private _authRepository:IAuthRepository= new AuthLocalStorageService()
 
   public title="password Changed"
   public subtitle="congratulations You have successfully changed your password"

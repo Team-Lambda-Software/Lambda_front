@@ -18,27 +18,25 @@ export class LayoutComponent {
   public lastLink=this.router.url
   public loadingStore=LoadingStore.getInstance().getObservable();
   public userStatusService=inject(UserStatusService)
-  public userStatus=signal<AuthStatus>(this.userStatusService.currentStatus())
+  public UserStatus=signal<AuthStatus>(this.userStatusService.currentStatus())
   public finishedAuthCheck= computed<boolean>(()=>{
-    console.log('computed',this.userStatus());
-
-
-    if (this.userStatusService.currentStatus()===AuthStatus.checking) return false
+    console.log(this.userStatusService.currentStatus());
+    if (this.UserStatus()===AuthStatus.checking) return false
     return true
   })
-  public authStatusChangeEffect= effect(()=>{
-    this.lastLink=this.router.url
 
-    switch(this.userStatusService.currentStatus()){
-      case AuthStatus.checking:
-        return;
-      case AuthStatus.authenticated:{
-        return
+  public authStatusChangeEffect= effect(()=>{
+    let lastLink=this.router.url
+    console.log('effect',this.userStatusService.currentStatus());
+
+    console.log(lastLink);
+      switch(this.userStatusService.currentStatus()){
+        case AuthStatus.checking:
+          return;
+        case AuthStatus.authenticated:{
+          this.router.navigateByUrl(lastLink)
+          return
+        }
       }
-      case AuthStatus.notAuthenticated:
-      {
-        return
-      }
-    }
   })
  }

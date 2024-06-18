@@ -11,9 +11,9 @@ import { LoginResponse } from '../dto/response/login-response.interface';
 import { SignUpResponse } from '../dto/response/signup-response.interface';
 import { User } from '../dto/response/user-response.interface';
 
-import { LocalStorageService } from '../../../shared/infraestructure/local-storage/local-storage.service';
+import { AuthLocalStorageService } from '../../../shared/infraestructure/local-storage/auth-local-storage.service';
 import { enviroment } from '../../../../../environments/environment';
-import { IAuthRepository } from '../../../shared/application/ports/IRepository.interface';
+import { IAuthRepository } from '../../../shared/application/ports/IAuthRepository.interface';
 import { Result } from '../../../../common/helpers/Result';
 
 
@@ -31,7 +31,7 @@ import { UserStatusService } from './user-status.service';
 export class AuthApiService implements IAuthApiService {
   private _httpClient = inject(HttpClient);
   readonly BASE_URL:string= enviroment.baseUrl+`/auth`
-  private _authRepository:IAuthRepository= new LocalStorageService()
+  private _authRepository:IAuthRepository= new AuthLocalStorageService()
   private _userStatus:UserStatusService = inject(UserStatusService)
 
   constructor() {}

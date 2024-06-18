@@ -32,7 +32,6 @@ export class LayoutComponent {
 
   public authStatusChangeEffect= effect(()=>{
     let lastLink=this.router.url
-    console.log(lastLink);
       switch(this.userStatusService.currentStatus()){
         case AuthStatus.checking:
           return;

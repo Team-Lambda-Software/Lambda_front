@@ -1,7 +1,7 @@
 import { Optional } from "../../../../common/helpers/Optional";
-import { IAuthRepository } from "../../application/ports/IRepository.interface";
+import { IAuthRepository } from "../../application/ports/IAuthRepository.interface";
 
-export class LocalStorageService implements IAuthRepository {
+export class AuthLocalStorageService implements IAuthRepository {
   private dateCodeKey='dateCode'
   private tokenKey='token'
   private emailKey='email'
