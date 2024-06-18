@@ -9,7 +9,9 @@ import { UserStatusService } from '../../../../core/user/infraestructure/service
 import { NgClass } from '@angular/common';
 
 const BOTTOM_NAVIGATION_BAR_BLACK_LIST: RegExp[] = [
-  /\/home\/blogs-details\?id=.+/
+  /\/home\/blogs-details\?id=.+/,
+  // /\/home\/search/,
+  // /\/home\/player-video\?course=.+/, ?:como se agrega esto que nada funciona
 ]
 @Component({
   standalone: true,

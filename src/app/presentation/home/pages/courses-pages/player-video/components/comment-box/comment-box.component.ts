@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-bar';
 import { delay } from 'rxjs';
 import { TranslocoModule } from '@jsverse/transloco';
-import { CommentsUseCaseProvider } from '../../../../../../../../core/comments/infraestructure/providers/category-use-case-provider';
-import { CommentFeatureDto, ETarget } from '../../../../../../../../core/comments/domain/comment.model';
+import { CommentsUseCaseProvider } from '../../../../../../../core/comments/infraestructure/providers/category-use-case-provider';
+import { CommentFeatureDto, ETarget } from '../../../../../../../core/comments/domain/comment.model';
 
 const SNACKBAR_OPTIONS: MatSnackBarConfig = { duration: 4000, verticalPosition: 'top', horizontalPosition: 'center'};
 

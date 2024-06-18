@@ -4,7 +4,7 @@ import { TranslocoModule } from '@jsverse/transloco';
 import { CommentsUseCaseProvider } from '../../../../../../../core/comments/infraestructure/providers/category-use-case-provider';
 import { CommentFeatureDto, ETarget, IComment } from '../../../../../../../core/comments/domain/comment.model';
 import { SquareSkeletonComponent } from '../../../../../../shared/components/square-skeleton/square-skeleton.component';
-import { CommentBoxComponent } from './comment-box/comment-box.component';
+import { CommentBoxComponent } from '../comment-box/comment-box.component';
 
 
 @Component({

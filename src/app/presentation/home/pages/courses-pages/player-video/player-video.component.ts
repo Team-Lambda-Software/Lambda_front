@@ -23,6 +23,7 @@ export class PlayerVideoComponent implements OnInit{
   public course? : Course;
   public idCourse?: string;
   public idLesson = signal('');
+  public indexLesson: number = 1
   public video = signal('')
   public isLoading = false;
   
@@ -55,10 +56,11 @@ export class PlayerVideoComponent implements OnInit{
       this.course = course
       if(this.idLesson()){
         this.lesson = course.lessons.find(lesson => lesson.id == this.idLesson())
-
+        this.indexLesson = course.lessons.findIndex(lesson => lesson.id == this.idLesson()) + 1
       }else{
         this.lesson = course.lessons[0]
         this.idLesson.set(this.lesson.id)
+        this.indexLesson = 1
       }
       this.video.set(this.lesson?.video)
     }).add(() => this.isLoading = false)
@@ -83,6 +85,7 @@ export class PlayerVideoComponent implements OnInit{
       let indexLesson = this.course?.lessons.findIndex(lesson => lesson.id == this.lesson?.id)
       this.router.navigate([] ,{queryParams: {course: this.idCourse, lesson: this.course?.lessons[indexLesson! + 1].id}, queryParamsHandling: 'merge'});
       this.lesson = this.course?.lessons[indexLesson! + 1];
+      this.indexLesson = indexLesson! + 1
       this.video.set(this.lesson?.video)
     }
   }
@@ -92,6 +95,7 @@ export class PlayerVideoComponent implements OnInit{
       let indexLesson = this.course?.lessons.findIndex(lesson => lesson.id == this.lesson?.id)
       this.router.navigate([] ,{queryParams: { lesson: this.course?.lessons[indexLesson! - 1].id}, queryParamsHandling: 'merge'});
       this.lesson = this.course?.lessons[indexLesson! - 1];
+      this.indexLesson = indexLesson! - 1
       this.video.set(this.lesson?.video)
     }
   }

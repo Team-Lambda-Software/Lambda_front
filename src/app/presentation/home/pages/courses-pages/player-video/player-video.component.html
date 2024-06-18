@@ -25,6 +25,10 @@
         <span class="fas fa-chevron-left"></span>
         Prev
       </button>
+
+      <span class="text-purple-700 px-2 py-1.5 bg-slate-200 dark:bg-slate-400 border-violet-800 border-2 border-opacity-200 rounded-xl dark:text-white text-sm font-semibold text-pretty-purple">
+        {{this.indexLesson}}...{{this.course?.lessons?.length!}}
+      </span>
       
       <button class="bg-gradient-purple text-white text-sm font-semibold py-2 px-3 rounded-full disabled:opacity-30 first-letter:disabled:cursor-not-allowed disabled:select-none"
         [disabled]="!this.hasNext()"
