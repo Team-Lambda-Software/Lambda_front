@@ -12,4 +12,6 @@ import { ICard } from '../../interfaces/ILittleCard';
 export class CardCarruselComponent {
   
   @Input({required: true}) public items!: ICard[];
+  @Input({required: true}) public routerLink!: string;
+
 }

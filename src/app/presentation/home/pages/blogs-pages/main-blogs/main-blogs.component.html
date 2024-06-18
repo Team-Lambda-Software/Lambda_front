@@ -1,33 +1,33 @@
 <header class="bg-gradient-purple rounded-br-[50px]">
-    <div class="text-white bg-main-bg bg-cover">
-        <div class="py-6 px-4">
-            <span [routerLink]="['/home/main']" class="fas fa-chevron-left pr-4"></span> <span class="font-medium text-lg">Tips & Topic</span>
-        </div>
-        <nav class="flex gap-5 mx-3 carrusel overflow-auto">
-            @for (item of categories; track $index) {
-                <div (click)="onCategorySelected(item)">
-                    <div class="flex justify-center items-center text-nowrap text-white p-2">
-                        <span class="h-2 w-2 bg-white rounded-full mr-2"></span>
-                        <span class="font-medium text-sm">{{item.name}}</span>
-                    </div>
-                    <span [ngClass]="{'selected': item.name == selectedCategory}"></span>
-                </div>
-            }
-        </nav>
+  <div class="text-white bg-main-bg bg-cover">
+    <div class="py-6 px-4">
+      <span [routerLink]="['/home/main']" class="fas fa-chevron-left pr-4"></span> 
+        <span class="font-medium text-lg">Tips & Topic</span>
     </div>
+    <nav class="flex gap-5 mx-3 carrusel overflow-auto">
+      @for (category of categories(); track $index) {
+      <div (click)="onCategorySelected(category)">
+        <div class="flex justify-center items-center text-nowrap text-white p-2 animate__animated animate__fadeIn">
+          <span class="h-2 w-2 bg-white rounded-full mr-2"></span>
+          <span class="font-medium text-sm">{{category.name}}</span>
+        </div>
+        <span [ngClass]="{'selected': category.name == selectedCategory?.name}"></span>
+      </div>
+      }
+    </nav>
+  </div>
 </header>
 
 <section class="my-8 mx-4">
-        <app-card-carrusel [items]="adaptBlogToCard()"/>
-</section>
-
-<section class="mx-4 my-6">
-    <h2 class="text-xl font-bold dark:text-white">Recent Post</h2>
-    <div class="grid grid-flow-row grid-cols-2 gap-x-3 gap-y-4 md:grid-cols-4">
-        @for (item of blogs; track item.id) {
-            <app-litle-card [item]="adaptBlogToLitleCard(item)" class= "flex justify-center" [routerLink]="['/home/blogs', item.id]"/>
-        }
+  @if(isLoadingBlogsByCategory()) {
+    <div class="carrousel gap-5 mt-4 animate__animated animate__fadeIn">
+      @for (item of [1,2,3,4,5,6,7,8,9]; track $index) {
+        <app-square-skeleton [dimensions]="{width: '240px', heigth: '185px'}" />
+      }
     </div>
+  } @else {
+    <app-card-carrusel class="animate__animated animate__fadeIn" [items]="blogsByCategory()" [routerLink]="'/home/blogs-details'"/>
+  }
 </section>
 
-
+<app-recent-post/>

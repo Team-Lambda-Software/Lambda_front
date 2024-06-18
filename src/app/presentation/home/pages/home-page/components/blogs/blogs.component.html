@@ -7,17 +7,17 @@
     </div>
   </div>
 
-  <div class="grid grid-cols-2 mt-4 gap-4 justify-center">
+  <div class="grid grid-cols-2 mt-4 gap-2 justify-center">
     @if (isLoadingBlogs) {
       @for (item of [1,2,3,4]; track $index) {
         <app-square-skeleton [dimensions]="{width: '175px', heigth: '175px'}" />
       }
     } @else {
       @for (blog of latestBlogs; track blog.id) {
-        <article class="rounded-lg w-[190px] p-2 ">
-          <img [src]="blog.image" alt="course" class="w-full h-36 object-cover rounded-xl">
+        <article class="rounded-lg w-full p-2">
+          <img [src]="blog.thumbnail" alt="course" class="w-full h-36 object-cover rounded-xl">
           <div class="p-4">
-            <p class="text-base font-bold text-wrap dark:text-white">{{ blog.name }}</p>
+            <p class="text-base font-bold text-wrap dark:text-white">{{ blog.title }}</p>
             <div class="flex justify-between mt-3">
               <p class="text-sm text-gray-500 text-wrap dark:text-white">{{ blog.description }}</p>
             </div>

@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject,signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { BottomBarComponent } from './components/bottom-bar/bottom-bar.component';
@@ -8,20 +8,27 @@ import { LoaderComponent } from "../../../auth/components/loader/loader.componen
 import { UserStatusService } from '../../../../core/user/infraestructure/services/user-status.service';
 import { AuthLoadingStore } from '../../../../core/user/infraestructure/auth-loading-store';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { NgClass } from '@angular/common';
 
-const BOTTOM_NAVIGATION_BAR_BLACK_LIST:string[] = [
-  // '/home/player-video',
+const BOTTOM_NAVIGATION_BAR_BLACK_LIST: RegExp[] = [
+  /\/home\/blogs-details\?id=.+/
 ]
 @Component({
-    standalone: true,
-    selector: 'app-layout-page',
-    templateUrl: './layout.component.html',
-    styleUrl: './layout.component.css',
-    imports: [RouterOutlet, SidebarComponent, BottomBarComponent, LoaderComponent]
+  standalone: true,
+  selector: 'app-layout-page',
+  templateUrl: './layout.component.html',
+  styleUrl: './layout.component.css',
+  imports: [
+    RouterOutlet,
+    SidebarComponent,
+    BottomBarComponent,
+    LoaderComponent,
+    NgClass
+  ]
 })
 
 export class LayoutComponent {
-  public userStatusService=inject(UserStatusService)
+  public userStatusService = inject(UserStatusService)
   public subscriber?: Subscription;
   public isBottombarActive = signal<boolean>(false);
   constructor(private router: Router) { }
@@ -33,18 +40,23 @@ export class LayoutComponent {
   })
 
   ngOnInit() {
-
-    this.isBottombarActive.set(!BOTTOM_NAVIGATION_BAR_BLACK_LIST.includes(this.router.url))
+    this.checkBottomBarStatus(this.router.url)
 
     this.subscriber = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
-      const currentUrl =  event.url
-      if(BOTTOM_NAVIGATION_BAR_BLACK_LIST.includes(currentUrl))
+      this.checkBottomBarStatus(event.url)
+    });
+  }
+
+  checkBottomBarStatus(currentUrl: string) {
+    for (const regexRoute of BOTTOM_NAVIGATION_BAR_BLACK_LIST) {
+      const isInvalidURL = regexRoute.test(currentUrl)
+      if (isInvalidURL)
         this.isBottombarActive.set(false);
       else
         this.isBottombarActive.set(true)
-    });
+    }
   }
 
   ngOnDestroy() {

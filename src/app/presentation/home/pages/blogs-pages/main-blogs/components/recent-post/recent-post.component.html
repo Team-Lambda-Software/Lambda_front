@@ -1,0 +1,18 @@
+<section class="mx-4 my-6 animate__animated animate__fadeIn">
+  <h2 class="text-xl font-bold dark:text-white">Recent Post</h2>
+  <div class="grid grid-flow-row grid-cols-2 gap-x-3 gap-y-4 md:grid-cols-4 mt-4">
+    @if(isLoading()) {
+      @for (item of [1,2,3,4,5,6,7,8]; track $index) {
+        <app-square-skeleton [dimensions]="{width: '175px', heigth: '175px'}" />
+      }
+    } @else {
+      @for (blog of blogs(); track blog.id) {
+        <app-litle-card 
+          class="animate__animated animate__fadeIn"
+          [item]="blog" class="flex justify-center"
+          [routerLink]="['/home/blogs', blog.id]" 
+        />
+      }
+    }
+  </div>
+</section>
