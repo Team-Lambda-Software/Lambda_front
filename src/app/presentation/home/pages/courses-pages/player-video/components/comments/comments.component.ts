@@ -3,11 +3,14 @@ import { FormsModule } from '@angular/forms'
 import { TranslocoModule } from '@jsverse/transloco';
 import { CommentsUseCaseProvider } from '../../../../../../../core/comments/infraestructure/providers/category-use-case-provider';
 import { CommentFeatureDto, ETarget, IComment } from '../../../../../../../core/comments/domain/comment.model';
+import { SquareSkeletonComponent } from '../../../../../../shared/components/square-skeleton/square-skeleton.component';
+import { CommentBoxComponent } from './comment-box/comment-box.component';
+
 
 @Component({
   selector: 'app-comments',
   standalone: true,
-  imports: [TranslocoModule, FormsModule],
+  imports: [TranslocoModule, FormsModule, SquareSkeletonComponent, CommentBoxComponent],
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.css'
 })
@@ -24,9 +27,9 @@ export class CommentsComponent {
     effect(() => this.getComments())
   }
 
-  private getComments(): void{
+  public getComments(): void{
     this.isLoading = true
-    this.commentService.usecase.getCommentsByParams(`?lesson=${this.sectionId()}`)
+    this.commentService.usecase.getCommentsByParams(`?perPage=10&page=0&lesson=${this.sectionId()}`)
     .subscribe({
       next: (comments) => this._comments = comments,
       error: (err) => console.log(err)
@@ -43,4 +46,5 @@ export class CommentsComponent {
       }).add(() => this.newComment = '')
     }
   }
+
 }
