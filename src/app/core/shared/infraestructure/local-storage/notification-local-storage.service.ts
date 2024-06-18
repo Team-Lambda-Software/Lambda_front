@@ -2,7 +2,7 @@ import { Optional } from "../../../../common/helpers/Optional";
 import { INotificationRepository } from "../../application/ports/INotificationRepository.interface";
 
 export class NotificationLocalStorageService implements INotificationRepository {
-  private notificationTokenKey='notificationToken'
+  private notificationTokenKey='NotificationToken'
 
   saveNotificationToken(tokenValue: string): void {
     localStorage.setItem(this.notificationTokenKey, tokenValue);

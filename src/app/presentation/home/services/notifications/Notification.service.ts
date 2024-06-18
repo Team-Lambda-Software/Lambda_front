@@ -25,6 +25,8 @@ export class NotificationService {
   private _authToken:Optional<string>=this._authRepository.getToken()
 
   async saveNotificationToken() {
+    this._authToken=this._authRepository.getToken()
+    this._notificationToken=this._notifactionRepository.getNotificationToken()
       return new Promise(async (resolve,reject)=>{
         if(!this._authToken.hasValue()) reject( new Error('not-auth') ) ;
         if (!this._notificationToken.hasValue()) reject( new Error('not-fb-token-registered') )
