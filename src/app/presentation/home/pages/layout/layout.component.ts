@@ -11,7 +11,9 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { NgClass } from '@angular/common';
 
 const BOTTOM_NAVIGATION_BAR_BLACK_LIST: RegExp[] = [
-  /\/home\/blogs-details\?id=.+/
+  /\/home\/blogs-details\?id=.+/,
+  /\/home\/search/,
+  /\/home\/player-video\?course=.+/,
 ]
 @Component({
   standalone: true,
@@ -50,13 +52,14 @@ export class LayoutComponent {
   }
 
   checkBottomBarStatus(currentUrl: string) {
+    let isBottomActive = true
     for (const regexRoute of BOTTOM_NAVIGATION_BAR_BLACK_LIST) {
-      const isInvalidURL = regexRoute.test(currentUrl)
-      if (isInvalidURL)
-        this.isBottombarActive.set(false);
-      else
-        this.isBottombarActive.set(true)
+      if (regexRoute.test(currentUrl)){
+        isBottomActive = false
+        break
+      }
     }
+    this.isBottombarActive.set(isBottomActive)
   }
 
   ngOnDestroy() {
