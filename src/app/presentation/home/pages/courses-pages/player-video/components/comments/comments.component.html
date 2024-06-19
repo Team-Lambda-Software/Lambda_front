@@ -9,7 +9,7 @@
   </div>
 } @else {
   @if (_comments && _comments.length > 0) {
-    <div class="flex flex-col gap-4 mx-4 my-6 overflow-y-scroll h-40 animate__animated animate__fadeIn">
+    <div class="flex flex-col gap-4 mx-4 my-6 overflow-y-scroll h-36 animate__animated animate__fadeIn">
       @for (comment of _comments; track $index) {
         <div class="bg-gray-200 dark:bg-custom-light-dark rounded-xl p-2.5 w-full animate__animated animate__fadeIn">
           <p class="text-gray-700 text-base dark:text-gray-100 font-semibold">{{comment.userName}}</p>

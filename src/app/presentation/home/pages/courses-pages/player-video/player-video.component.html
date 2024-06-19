@@ -8,6 +8,8 @@
 }
 @else {
   <app-player [_inputVideo]="this.video"/>
+    
+  <div class="flex flex-col h-auto">
     <section class="text-white bg-gradient-purple flex flex-col p-4 w-auto m-3 rounded-xl animate__animated animate__fadeIn">
       <h1 [routerLink]="['/home/main-course']"
           [queryParams]="{id:idCourse}"
@@ -25,7 +27,7 @@
         <span class="fas fa-chevron-left"></span>
         Prev
       </button>
-
+  
       <span class="text-purple-700 px-2 py-1.5 bg-slate-200 dark:bg-slate-400 border-violet-800 border-2 border-opacity-200 rounded-xl dark:text-white text-sm font-semibold text-pretty-purple">
         {{this.indexLesson}}...{{this.course?.lessons?.length!}}
       </span>
@@ -38,9 +40,11 @@
       </button>
     </section>
     
-    <div class="flex flex-col justify-end w-full sticky bottom-0">
+    <div class="mt-auto w-full p-1">
       <app-comments #comments [sectionId]="idLesson"/>
       <app-comment-box [sectionId]="idLesson" (commentCreated)="onCommentCreated()"/>
     </div>
+  </div>
+    
 }
 
