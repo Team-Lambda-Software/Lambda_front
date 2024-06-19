@@ -39,6 +39,9 @@
     </section>
     
     
-    <app-comments [sectionId]="idLesson!"/>
+    <app-comments #comments [sectionId]="idLesson"/>
+
+    <app-comment-box [sectionId]="idLesson" (commentCreated)="onCommentCreated()"/>
+
 }
 

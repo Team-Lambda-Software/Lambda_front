@@ -6,18 +6,20 @@ import { PlayerComponent } from './components/player/player.component';
 import { CommentsComponent } from './components/comments/comments.component';
 import { Course, Lesson } from '../../../../../core/course/domain/course.model';
 import { CourseUsecaseProvider } from '../../../../../core/course/infrastructure/providers/course-usecase-provider';
+import { CommentBoxComponent } from './components/comment-box/comment-box.component';
 
 
 @Component({
   selector: 'app-player-video',
   standalone: true,
-  imports: [RouterLink, BasicHeaderComponent, TranslocoModule, CommentsComponent, PlayerComponent],
+  imports: [RouterLink, BasicHeaderComponent, TranslocoModule, CommentsComponent, CommentBoxComponent ,PlayerComponent],
   templateUrl: './player-video.component.html',
   styleUrl: './player-video.component.css'
 })
 export class PlayerVideoComponent implements OnInit{
 
   @ViewChild('videoPlayer') videoPlayer!: ElementRef;
+  @ViewChild('comments') commentSection!: CommentsComponent;
   public courseUseCaseService = inject(CourseUsecaseProvider);
   public lesson?: Lesson;
   public course? : Course;
@@ -98,5 +100,9 @@ export class PlayerVideoComponent implements OnInit{
       this.indexLesson = indexLesson! - 1
       this.video.set(this.lesson?.video)
     }
+  }
+
+  onCommentCreated() {
+    this.commentSection.getComments();
   }
 }

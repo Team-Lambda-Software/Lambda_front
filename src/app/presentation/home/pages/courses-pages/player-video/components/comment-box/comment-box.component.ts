@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject, signal } from '@angular/core';
+import { Component, EventEmitter, Input, Output, Signal, inject, signal } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -18,7 +18,7 @@ const SNACKBAR_OPTIONS: MatSnackBarConfig = { duration: 4000, verticalPosition: 
 })
 export class CommentBoxComponent {
   @Output() commentCreated = new EventEmitter<void>();
-  @Input({ required: true }) sectionId!: string;
+  @Input({ required: true }) sectionId!: Signal<string>;
   private snackBar = inject(MatSnackBar);
   private commentUseCase = inject(CommentsUseCaseProvider);
   public newComment = '';
@@ -29,7 +29,7 @@ export class CommentBoxComponent {
     const newComment = this.newComment;
     this.newComment = 'Sending message...';
     this.isLoadingComment.set(true);
-    let comment = new CommentFeatureDto(this.sectionId, ETarget.section, newComment)
+    let comment = new CommentFeatureDto(this.sectionId(), ETarget.section, newComment)
     this.commentUseCase.usecase.createComment(comment)
       .pipe(delay(2000))
       .subscribe({
