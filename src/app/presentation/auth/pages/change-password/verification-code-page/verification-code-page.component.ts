@@ -8,8 +8,8 @@ import { ValidatorService } from '../../../../shared/services/validator/validato
 import { TranslocoModule } from '@jsverse/transloco';
 import { PopupInfoModalService } from '../../../../shared/services/popup-info-modal/popup-info-modal.service';
 import { AuthUsecaseProvider } from '../../../../../core/user/infraestructure/providers/auth-use-case-provider';
-import { IAuthRepository } from '../../../../../core/shared/application/ports/IRepository.interface';
-import { LocalStorageService } from '../../../../../core/shared/infraestructure/local-storage/local-storage.service';
+import { IAuthRepository } from '../../../../../core/shared/application/ports/IAuthRepository.interface';
+import { AuthLocalStorageService } from '../../../../../core/shared/infraestructure/local-storage/auth-local-storage.service';
 
 @Component({
   selector: 'app-verification-code-page',
@@ -30,7 +30,7 @@ export class VerificationCodePageComponent{
   private fb = inject(FormBuilder)
   private authUseCaseService = inject(AuthUsecaseProvider);
   private popupService=inject(PopupInfoModalService)
-  private _authRepository:IAuthRepository= new LocalStorageService()
+  private _authRepository:IAuthRepository= new AuthLocalStorageService()
 
   public email=this._authRepository.getEmail()
 
