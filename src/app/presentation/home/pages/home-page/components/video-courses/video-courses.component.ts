@@ -7,6 +7,7 @@ import { PartialCourseToPlayerCard } from '../../../../adapters/PlayerCardAdapte
 import { TranslocoModule } from '@jsverse/transloco';
 import { RouterLink } from '@angular/router';
 import { SquareSkeletonComponent } from '../../../../../shared/components/square-skeleton/square-skeleton.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @Component({
   selector: 'app-video-courses',
@@ -15,27 +16,39 @@ import { SquareSkeletonComponent } from '../../../../../shared/components/square
     PlayerCardComponent,
     TranslocoModule,
     RouterLink,
-    SquareSkeletonComponent
+    SquareSkeletonComponent,
+    InfiniteScrollModule
   ],
   templateUrl: './video-courses.component.html',
   styleUrl: './video-courses.component.css'
 })
 export class VideoCoursesComponent implements OnInit {
 
+  public currentPage = 1;
   public courseUseCase = inject(CourseUsecaseProvider);
   public courses = signal<IPlayerCard[]>([]);
-  public isLoading = false;
+  public isLoading = signal(false);
+  public isLoadingMoreCourses = signal(false);
 
   ngOnInit(): void {
     this.getCourses();
   }
 
   getCourses() {
-    this.isLoading = true;
-    this.courseUseCase.usecase.getCoursesByParams('?filter=RECENT&perPage=10&page=1')
-      .pipe(finalize(() => this.isLoading = false))
+    if(this.currentPage === 1) this.isLoading.set(true);
+    else this.isLoadingMoreCourses.set(true);
+    this.courseUseCase.usecase
+      .getCoursesByParams(`?perPage=3&page=${this.currentPage}&filter=RECENT`)
+      .pipe(finalize(() => {
+        this.isLoading.set(false)
+        this.isLoadingMoreCourses.set(false)
+        this.currentPage++;
+      }))
       .subscribe((courses) => {
-        this.courses.set( courses.map(c => PartialCourseToPlayerCard(c)));
+        this.courses.set([
+          ...this.courses(),
+          ...courses.map(c => PartialCourseToPlayerCard(c))
+        ]);
       })
   }
 }
