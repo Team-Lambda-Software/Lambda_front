@@ -1,9 +1,9 @@
-import { Component, HostListener, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { LitleCardComponent } from '../../../../../components/litle-card/litle-card.component';
 import { RouterLink } from '@angular/router';
 import { BlogUsecaseProvider } from '../../../../../../../core/blog/infrastructure/providers/blog-usecase-provider';
 import { ILittleCard } from '../../../../../interfaces/ILittleCard';
-import { finalize, fromEvent, map, tap } from 'rxjs';
+import { finalize, map } from 'rxjs';
 import { PartialBlogToILittleCardAdapter } from '../../../../../adapters/BlogAdapter';
 import { SquareSkeletonComponent } from '../../../../../../shared/components/square-skeleton/square-skeleton.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -27,7 +27,7 @@ export class RecentPostComponent implements OnInit {
   public blogs = signal<ILittleCard[]>([]);
   public isLoading = signal(false);
   public isLoadingMoreBlogs = signal(false);
-  public currentPage = 0;
+  public currentPage = 1;
   public scrollContainer = inject(DOCUMENT).getElementById('scrollContainer');
 
   ngOnInit(): void {

@@ -41,13 +41,13 @@ export class MainBlogsComponent implements OnInit {
   public isLoadingBlogsByCategory = signal(false);
   public isLoadingCategories = signal(false);
   public selectedCategory?: Category;
-  public blogNextPage = 0;
+  public blogNextPage = 1;
   public isLoadingScroll = signal(false);
 
   constructor(@Inject(DOCUMENT) private document: Document) {
     this.route.queryParams.subscribe((params: { [key: string]: any }) => {
       if(params['category']) {
-        this.blogNextPage = 0;
+        this.blogNextPage = 1;
         this.selectedCategory = this.categories().find(c => c.name === params['category']);
         const baseQuery = '?filter=RECENT&perPage=5&page=' + this.blogNextPage;
         const categoryQuery = this.selectedCategory?.id ? `&category=${this.selectedCategory.id}` : '';
@@ -77,7 +77,7 @@ export class MainBlogsComponent implements OnInit {
     this.categoryUseCaseService.usecase.getByParams(params ?? '')
       .pipe(finalize(() => this.isLoadingCategories.set(false)))
       .subscribe(c => {
-        this.getBlogs('?filter=RECENT&category=' + c[0].id);
+        this.getBlogs(`?filter=RECENT&perPage=5&page=${this.blogNextPage}&category=${c[0].id}`);
         this.setSelectedCategory(c[0]);
         this.categories.set(c);
       })
@@ -92,14 +92,11 @@ export class MainBlogsComponent implements OnInit {
       ).subscribe(b => this.blogsByCategory.set(b))
   }
 
-  //TODO: OJO CON LA PAGINACIÓN, HAY QUE DECIDIR TODOS LOS EQUIPOS EL FUNCIONAMIENTO DEL MISMO
-  //TODO: PUEDE SER LIMIT, OFFSET, PAGE, PERPAGE, ETC
   onScroll() {
     this.isLoadingScroll.set(true);
     const baseQuery = '?filter=RECENT&perPage=5&page=' + (this.blogNextPage + 1);
     const categoryQuery = this.selectedCategory?.id ? `&category=${this.selectedCategory.id}` : '';
     const queryParams = `${baseQuery}${categoryQuery}`;
-    console.log(queryParams)
     this.blogUseCaseService.usecase.getByParams(queryParams)
       .pipe(
         tap(() => this.blogNextPage++),
