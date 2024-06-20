@@ -1,71 +1,76 @@
-<nav class="bg-gradient-purple rounded-br-[50px] text-white mb-2">
-  <div class="py-10 px-4 text-white bg-main-bg bg-cover">
-    <div [routerLink]="['/home/main-course']" [queryParams]="{id: idCourse!}" class="cursor-pointer w-max">
-      <span class="fas fa-chevron-left pr-4"></span>
-      <span class="font-medium text-lg">{{course?.title}}</span>
-    </div>
-  </div>
-</nav>
-@if (isLoading) {
-  <div class="flex justify-center items-center h-16 animate__animated animate__fadeIn">
-    <span class="fas fa-spinner fa-spin fa-2x text-gray-400"></span>
-    <span class="text-gray-400 text-lg ml-2">{{'loading' | transloco}}</span>
-  </div>
-}
-@else {
-  <app-player [_inputVideo]="this.video"/>
+<div id="container">
+  <main>
+    <nav class="bg-gradient-purple rounded-br-[50px] text-white mb-2">
+      <div class="py-10 px-4 text-white bg-main-bg bg-cover">
+        <div [routerLink]="['/home/main-course']" [queryParams]="{id: idCourse!}" class="cursor-pointer w-max">
+          <span class="fas fa-chevron-left pr-4"></span>
+          <span class="font-medium text-lg">{{course?.title}}</span>
+        </div>
+      </div>
+    </nav>
+    @if (isLoading) {
+      <div class="flex justify-center items-center h-16 animate__animated animate__fadeIn">
+        <span class="fas fa-spinner fa-spin fa-2x text-gray-400"></span>
+        <span class="text-gray-400 text-lg ml-2">{{'loading' | transloco}}</span>
+      </div>
+    }
+    @else {
+      <app-player [_inputVideo]="this.video"/>
+        
+      <div class="flex flex-col h-auto">
+        <section class="text-white bg-gradient-purple flex flex-col p-4 w-auto my-2 mx-1 rounded-xl animate__animated animate__fadeIn">
+         
+          <header class="flex flex-col items-center justify-center">
+            <h1 class="text-white text-lg font-semibold text-center">
+              {{this.lesson?.title}}
+            </h1>
+            <!-- <span class="text-white font-extralight text-sm">
+              ({{this.course?.trainer?.name}})
+            </span> -->
+          </header>
     
-  <div class="flex flex-col h-auto">
-    <section class="text-white bg-gradient-purple flex flex-col p-4 w-auto my-2 mx-1 rounded-xl animate__animated animate__fadeIn">
-     
-      <header class="flex flex-col items-center justify-center">
-        <h1 class="text-white text-lg font-semibold text-center">
-          {{this.lesson?.title}}
-        </h1>
-        <!-- <span class="text-white font-extralight text-sm">
-          ({{this.course?.trainer?.name}})
-        </span> -->
-      </header>
-
-      @if (this.lesson?.content) {
-        <h2 class="font-semibold mt-1">{{'content' | transloco}}:</h2>
-        <p>{{this.lesson?.content}}</p>
-      }
-      <div class="flex justify-end items-center mt-2">
-        <span class="text-white  text-xs font-semibold">
-          {{this.indexLesson}}/{{this.course?.lessons?.length!}}
-        </span>
-      </div>  
-    </section>
-  
-    <section class="flex justify-between items-center m-3 animate__animated animate__fadeIn">
-      <button class="bg-gradient-purple text-white text-sm font-semibold py-2 px-3 rounded-full  disabled:opacity-30 disabled:cursor-not-allowed disabled:select-none"
-        [disabled]="!this.hasPrevious()"
-        (click)="this.setPreviusLesson()">
-        <span class="fas fa-chevron-left"></span>
-        {{'prev' | transloco}}
-      </button>
-
-      <!-- <div class="flex items-center text-gray-500 dark:text-white" 
-      [routerLink]="['/home/main-course']"
-      [queryParams]="{id: this.idCourse}">
-        <a class="text-sm mx-2">{{'go-to-course' | transloco}}</a>
-        <span class="fa-regular fa-file"></span>
-      </div> -->
-
-      <button class="bg-gradient-purple text-white text-sm font-semibold py-2 px-3 rounded-full disabled:opacity-30 first-letter:disabled:cursor-not-allowed disabled:select-none"
-        [disabled]="!this.hasNext()"
-        (click)="this.setNextLesson()">
-        {{'next'|transloco}}
-        <span class="fas fa-chevron-right"></span>
-      </button>
-    </section>
+          @if (this.lesson?.content) {
+            <h2 class="font-semibold mt-1">{{'content' | transloco}}:</h2>
+            <p>{{this.lesson?.content}}</p>
+          }
+          <div class="flex justify-end items-center mt-2">
+            <span class="text-white  text-xs font-semibold">
+              {{this.indexLesson}}/{{this.course?.lessons?.length!}}
+            </span>
+          </div>  
+        </section>
+      
+        <section class="flex justify-between items-center m-3 animate__animated animate__fadeIn">
+          <button class="bg-gradient-purple text-white text-sm font-semibold py-2 px-3 rounded-full  disabled:opacity-30 disabled:cursor-not-allowed disabled:select-none"
+            [disabled]="!this.hasPrevious()"
+            (click)="this.setPreviusLesson()">
+            <span class="fas fa-chevron-left"></span>
+            {{'prev' | transloco}}
+          </button>
     
-    <div class="mt-auto w-full p-1">
-      <app-comments #comments [sectionId]="idLesson"/>
-      <app-comment-box [sectionId]="idLesson" (commentCreated)="onCommentCreated()"/>
-    </div>
-  </div>
+          <!-- <div class="flex items-center text-gray-500 dark:text-white" 
+          [routerLink]="['/home/main-course']"
+          [queryParams]="{id: this.idCourse}">
+            <a class="text-sm mx-2">{{'go-to-course' | transloco}}</a>
+            <span class="fa-regular fa-file"></span>
+          </div> -->
     
-}
+          <button class="bg-gradient-purple text-white text-sm font-semibold py-2 px-3 rounded-full disabled:opacity-30 first-letter:disabled:cursor-not-allowed disabled:select-none"
+            [disabled]="!this.hasNext()"
+            (click)="this.setNextLesson()">
+            {{'next'|transloco}}
+            <span class="fas fa-chevron-right"></span>
+          </button>
+        </section>
+        
+        <div class="mt-auto w-full p-1">
+          <app-comments #comments [sectionId]="idLesson"/>
+        </div>
+      </div>
+        
+    }
+  </main>
+  <app-comment-box [sectionId]="idLesson" (commentCreated)="onCommentCreated()"/>
+</div>
+
 
