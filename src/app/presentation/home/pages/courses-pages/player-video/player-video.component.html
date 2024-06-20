@@ -8,37 +8,43 @@
 }
 @else {
   <app-player [_inputVideo]="this.video"/>
+    
+  <div class="flex flex-col h-auto">
+    <section class="text-white bg-gradient-purple flex flex-col p-4 w-auto m-3 rounded-xl animate__animated animate__fadeIn">
+      <h1 [routerLink]="['/home/main-course']"
+          [queryParams]="{id:idCourse}"
+          class="text-white text-xl underline font-semibold text-center">{{this.lesson?.title}}</h1>
+      @if (this.lesson?.content) {
+        <h2 class="font-semibold my-1">Content:</h2>
+        <p>{{this.lesson?.content}}</p>
+      }
+    </section>
   
-  <section class="text-white bg-gradient-purple flex flex-col p-4 w-auto m-3 rounded-xl animate__animated animate__fadeIn">
-    <h1 class="text-white text-2xl font-bold text-center">{{this.lesson?.title}}</h1>
-    @if (this.lesson?.content) {
-      <h2 class="font-semibold my-1">Content:</h2>
-      <p>{{this.lesson?.content}}</p>
-    }
-  </section>
+    <section class="flex justify-between items-end m-3 animate__animated animate__fadeIn">
+      <button class="bg-gradient-purple text-white text-sm font-semibold py-2 px-3 rounded-full  disabled:opacity-30 disabled:cursor-not-allowed disabled:select-none"
+        [disabled]="!this.hasPrevious()"
+        (click)="this.setPreviusLesson()">
+        <span class="fas fa-chevron-left"></span>
+        Prev
+      </button>
   
-  <div class="border-t border-gray-300 my-6 mx-4"></div>
-  
-  <app-comments [sectionId]="idLesson!"/>
-  
-  <section class="flex justify-between items-end m-3 animate__animated animate__fadeIn">
-    <button class="bg-purple-700 text-white font-bold py-2 px-4 rounded disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:select-none"
-      [disabled]="!this.hasPrevious()"
-      (click)="this.setPreviusLesson()">
-      <span class="fas fa-chevron-left"></span>
-      Prev
-    </button>
-    <button class="font-semibold text-xl text-purple-700 underline hover:text-gray-500 dark:hover:text-white"
-    [routerLink]="['/home/main-course']"
-    [queryParams]="{id:idCourse}">
-      Ir al Curso
-    </button>
-    <button class="bg-purple-700 text-white font-bold py-2 px-4 rounded disabled:bg-slate-500  disabled:opacity-50 disabled:cursor-not-allowed disabled:select-none"
-      [disabled]="!this.hasNext()"
-      (click)="this.setNextLesson()">
-      Next
-      <span class="fas fa-chevron-right"></span>
-    </button>
-  </section>
+      <span class="text-purple-700 px-2 py-1.5 bg-slate-200 dark:bg-slate-400 border-violet-800 border-2 border-opacity-200 rounded-xl dark:text-white text-sm font-semibold text-pretty-purple">
+        {{this.indexLesson}}...{{this.course?.lessons?.length!}}
+      </span>
+      
+      <button class="bg-gradient-purple text-white text-sm font-semibold py-2 px-3 rounded-full disabled:opacity-30 first-letter:disabled:cursor-not-allowed disabled:select-none"
+        [disabled]="!this.hasNext()"
+        (click)="this.setNextLesson()">
+        Next
+        <span class="fas fa-chevron-right"></span>
+      </button>
+    </section>
+    
+    <div class="mt-auto w-full p-1">
+      <app-comments #comments [sectionId]="idLesson"/>
+      <app-comment-box [sectionId]="idLesson" (commentCreated)="onCommentCreated()"/>
+    </div>
+  </div>
+    
 }
 

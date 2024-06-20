@@ -1,48 +1,25 @@
-<section
-  class="bg-gradient-purple flex flex-col p-4 w-auto mt-3 mx-3 rounded-xl text-white animate__animated animate__fadeIn">
-  <div class="flex justify-between items-center">
-    <h1 class="text-white text-lg font-bold text-start">Comentarios</h1>
-    <span class="fas fa-comments fa-2x text-purple-700"></span>
-  </div>
-  <div class="border-t border-dashed border-gray-300 my-4 mx-4"></div>
+<hr>
+<p class="font-semibold text-custom-dark dark:text-gray-200 text-xl m-4">{{ 'comments' | transloco }}</p>
 
-  <article class="grid grid-flow-row grid-cols-1 gap-4 mx-4 items-center">
-    @if(isLoading){
-      <div class="flex items-center h-16 animate__animated animate__fadeIn mx-auto">
-        <span class="fas fa-spinner fa-spin fa-2x text-gray-400"></span>
-        <span class="text-gray-400 text-lg px-3">{{'loading' | transloco}}</span>
-      </div>
+@if (isLoading) {
+  <div class="flex gap-4 flex-col mt-4">
+    @for (c of [1,2,3,4,5,6]; track $index) {
+      <app-square-skeleton [dimensions]="{width: '100%', heigth: '60px'}" />
     }
-    @else {
-      @if (_comments.length > 0) {
-        @for (item of _comments; track $index) {
-          <div class="flex items-center w-auto">
-            <div class="w-1/4">
-              <span class="font-semibold text-slate-300 text-xs">{{item.userName}}:</span>
-            </div>
-            <div class="w-3/4 px-3">
-              <p class="text-sm">{{item.content}}</p>
-            </div>
-          </div>
-          }
-      }
-      @else {
-        <div class="flex justify-center items-center h-16 mt-4">
-          <span class="fa-regular fa-comments fa-2x text-gray-400"></span>
-          <span class="text-gray-400 text-lg ml-2">{{'no-comments-yet' | transloco}}</span>
+  </div>
+} @else {
+  @if (_comments && _comments.length > 0) {
+    <div class="flex flex-col gap-4 mx-4 my-6 overflow-y-scroll h-36 animate__animated animate__fadeIn">
+      @for (comment of _comments; track $index) {
+        <div class="bg-gray-200 dark:bg-custom-light-dark rounded-xl p-2.5 w-full animate__animated animate__fadeIn">
+          <p class="text-gray-700 text-base dark:text-gray-100 font-semibold">{{comment.userName}}</p>
+          <p class="text-gray-500 text-sm dark:text-gray-100">{{comment.content}}</p>
         </div>
       }
-    }
-
-  </article>
-  <div class="border-t border-dashed border-gray-300 my-4 mx-4"></div>
-  <textarea [(ngModel)]="newComment"
-    class="font-medium text-sm p-3 text-gray-500 border-purple-700 border-2 rounded-lg focus:outline-none h-auto overflow-y-scroll"
-    rows="3" placeholder="Escribe tu comentario"></textarea>
-  <button 
-    (click)="setNewComment()" 
-    [disabled]="newComment.length < 3"
-    class="bg-purple-700 text-white font-bold py-2 px-4 rounded mt-2 disabled:bg-gray-400 disabled:cursor-not-allowed"
-
-  >Enviar</button>
-</section>
+    </div>
+  } @else {
+    <div class="flex justify-center items-center w-full p-6 border-gray-300 border-dashed border-2 mt-4">
+      <p class="text-gray-500 text-lg dark:text-gray-100">No comments yet. You can be the first one!</p>
+    </div>
+  }
+}

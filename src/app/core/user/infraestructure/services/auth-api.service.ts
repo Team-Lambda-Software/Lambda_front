@@ -11,9 +11,9 @@ import { LoginResponse } from '../dto/response/login-response.interface';
 import { SignUpResponse } from '../dto/response/signup-response.interface';
 import { User } from '../dto/response/user-response.interface';
 
-import { LocalStorageService } from '../../../shared/infraestructure/local-storage/local-storage.service';
+import { AuthLocalStorageService } from '../../../shared/infraestructure/local-storage/auth-local-storage.service';
 import { enviroment } from '../../../../../environments/environment';
-import { IAuthRepository } from '../../../shared/application/ports/IRepository.interface';
+import { IAuthRepository } from '../../../shared/application/ports/IAuthRepository.interface';
 import { Result } from '../../../../common/helpers/Result';
 
 
@@ -22,6 +22,8 @@ import { Injectable, Optional, inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponseBase } from '@angular/common/http';
 import { GetCodeResponse } from '../dto/response/getCode-response.interface';
 import { UserStatusService } from './user-status.service';
+import { AuthLoadingStore } from '../auth-loading-store';
+import { AuthStatus } from '../../domain/interfaces/auth-status.enum';
 
 
 @Injectable({
@@ -31,27 +33,28 @@ import { UserStatusService } from './user-status.service';
 export class AuthApiService implements IAuthApiService {
   private _httpClient = inject(HttpClient);
   readonly BASE_URL:string= enviroment.baseUrl+`/auth`
-  private _authRepository:IAuthRepository= new LocalStorageService()
+  private _authRepository:IAuthRepository= new AuthLocalStorageService()
   private _userStatus:UserStatusService = inject(UserStatusService)
+  private _status:AuthLoadingStore=AuthLoadingStore.getInstance()
 
   constructor() {}
 
   login(LoginEntryDomainDTO: LoginEntryDomainDTO): Observable<Result<AppUser>> {
     const body={...LoginEntryDomainDTO}
     const url=`${this.BASE_URL}/login`
-    this._userStatus.setChecking()
+    this._status.store(AuthStatus.checking)
     return this._httpClient.post<LoginResponse>(url,body)
       .pipe(
         map((response)=>{
           this._authRepository.saveToken(response.token)
-          this._userStatus.setAuthenticated()
+          this._status.store(AuthStatus.authenticated)
           let type:Type=Type.CLIENT
           if(response.type===Type.CLIENT) type=Type.CLIENT
           if(response.type===Type.ADMIN) type=Type.ADMIN
           return Result.makeResult(new AppUser({...response.user,type}))
         }),
         catchError(error=>{
-          this._userStatus.setNotAuthenticated()
+          this._status.store(AuthStatus.notAuthenticated)
           return throwError(()=>Result.makeError(new Error(error.error.message)))
         })
       )
