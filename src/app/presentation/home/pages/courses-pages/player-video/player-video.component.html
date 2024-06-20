@@ -1,5 +1,11 @@
-<app-basic-header [options]="{name:course?.title!, redirect:'/home/main'}"/>
-
+<nav class="bg-gradient-purple rounded-br-[50px] text-white mb-2">
+  <div class="py-10 px-4 text-white bg-main-bg bg-cover">
+    <div [routerLink]="['/home/main-course']" [queryParams]="{id: idCourse!}" class="cursor-pointer w-max">
+      <span class="fas fa-chevron-left pr-4"></span>
+      <span class="font-medium text-lg">{{course?.title}}</span>
+    </div>
+  </div>
+</nav>
 @if (isLoading) {
   <div class="flex justify-center items-center h-16 animate__animated animate__fadeIn">
     <span class="fas fa-spinner fa-spin fa-2x text-gray-400"></span>
@@ -40,12 +46,12 @@
         {{'prev' | transloco}}
       </button>
 
-      <div class="flex items-center text-gray-500 dark:text-white" 
+      <!-- <div class="flex items-center text-gray-500 dark:text-white" 
       [routerLink]="['/home/main-course']"
       [queryParams]="{id: this.idCourse}">
         <a class="text-sm mx-2">{{'go-to-course' | transloco}}</a>
         <span class="fa-regular fa-file"></span>
-      </div>
+      </div> -->
 
       <button class="bg-gradient-purple text-white text-sm font-semibold py-2 px-3 rounded-full disabled:opacity-30 first-letter:disabled:cursor-not-allowed disabled:select-none"
         [disabled]="!this.hasNext()"

@@ -32,7 +32,7 @@ export class VideoCoursesComponent implements OnInit {
 
   getCourses() {
     this.isLoading = true;
-    this.courseUseCase.usecase.getCoursesByParams('?filter=RECENT&perPage=10')
+    this.courseUseCase.usecase.getCoursesByParams('?filter=RECENT&perPage=10&page=1')
       .pipe(finalize(() => this.isLoading = false))
       .subscribe((courses) => {
         this.courses.set( courses.map(c => PartialCourseToPlayerCard(c)));
