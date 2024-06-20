@@ -1,5 +1,4 @@
 import { Injectable, inject } from '@angular/core';
-import { LocalStorage } from '../../../auth/services/LocalStorage';
 import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Messaging, onMessage, getToken, getMessaging } from "firebase/messaging";
@@ -7,6 +6,10 @@ import * as firebase from 'firebase/app';
 import { enviroment } from '../../../../../environments/environment';
 import { NotificationTokenResponse } from '../../../../core/notification/infrastructure/adapters/dtos/notification.dto';
 import { Optional } from '../../../../common/helpers/Optional';
+import { INotificationRepository } from '../../../../core/shared/application/ports/INotificationRepository.interface';
+import { NotificationLocalStorageService } from '../../../../core/shared/infraestructure/local-storage/notification-local-storage.service';
+import { IAuthRepository } from '../../../../core/shared/application/ports/IAuthRepository.interface';
+import { AuthLocalStorageService } from '../../../../core/shared/infraestructure/local-storage/auth-local-storage.service';
 
 
 @Injectable({
@@ -16,10 +19,14 @@ export class NotificationService {
   public messaggingFirebase:Messaging
   private readonly baseUrl:string= enviroment.baseUrl
   private http= inject(HttpClient)
-  public _notificationToken: Optional<string>=new Optional(localStorage.getItem('NotificationToken'))
-  private _authToken:Optional<string>=new Optional(localStorage.getItem('token'))
+  private _notifactionRepository:INotificationRepository= new NotificationLocalStorageService();
+  private _authRepository:IAuthRepository= new AuthLocalStorageService()
+  public _notificationToken: Optional<string>= this._notifactionRepository.getNotificationToken()
+  private _authToken:Optional<string>=this._authRepository.getToken()
 
   async saveNotificationToken() {
+    this._authToken=this._authRepository.getToken()
+    this._notificationToken=this._notifactionRepository.getNotificationToken()
       return new Promise(async (resolve,reject)=>{
         if(!this._authToken.hasValue()) reject( new Error('not-auth') ) ;
         if (!this._notificationToken.hasValue()) reject( new Error('not-fb-token-registered') )

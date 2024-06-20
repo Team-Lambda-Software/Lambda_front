@@ -6,10 +6,14 @@ import { Subscription, filter } from 'rxjs';
 import { AuthStatus } from '../../../../core/user/domain/interfaces/auth-status.enum';
 import { LoaderComponent } from "../../../auth/components/loader/loader.component";
 import { UserStatusService } from '../../../../core/user/infraestructure/services/user-status.service';
+import { AuthLoadingStore } from '../../../../core/user/infraestructure/auth-loading-store';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { NgClass } from '@angular/common';
 
 const BOTTOM_NAVIGATION_BAR_BLACK_LIST: RegExp[] = [
-  /\/home\/blogs-details\?id=.+/
+  /\/home\/blogs-details\?id=.+/,
+  /\/home\/search/,
+  /\/home\/player-video\?course=.+/,
 ]
 @Component({
   standalone: true,
@@ -30,24 +34,11 @@ export class LayoutComponent {
   public subscriber?: Subscription;
   public isBottombarActive = signal<boolean>(false);
   constructor(private router: Router) { }
-  public UserStatus = signal<AuthStatus>(this.userStatusService.currentStatus())
-  public finishedAuthCheck = computed<boolean>(() => {
-    console.log(this.userStatusService.currentStatus());
-    if (this.UserStatus() === AuthStatus.checking) return false
+  public AuthLoadingStore=AuthLoadingStore.getInstance();
+  public UserStatus= toSignal(this.AuthLoadingStore.getObservable())
+  public finishedAuthCheck= computed<boolean>(()=>{
+    if (this.UserStatus()===AuthStatus.checking) return false
     return true
-  })
-
-  public authStatusChangeEffect = effect(() => {
-    let lastLink = this.router.url
-    console.log(lastLink);
-    switch (this.userStatusService.currentStatus()) {
-      case AuthStatus.checking:
-        return;
-      case AuthStatus.authenticated: {
-        this.router.navigateByUrl(lastLink)
-        return
-      }
-    }
   })
 
   ngOnInit() {
@@ -61,13 +52,14 @@ export class LayoutComponent {
   }
 
   checkBottomBarStatus(currentUrl: string) {
+    let isBottomActive = true
     for (const regexRoute of BOTTOM_NAVIGATION_BAR_BLACK_LIST) {
-      const isInvalidURL = regexRoute.test(currentUrl)
-      if (isInvalidURL)
-        this.isBottombarActive.set(false);
-      else
-        this.isBottombarActive.set(true)
+      if (regexRoute.test(currentUrl)){
+        isBottomActive = false
+        break
+      }
     }
+    this.isBottombarActive.set(isBottomActive)
   }
 
   ngOnDestroy() {
