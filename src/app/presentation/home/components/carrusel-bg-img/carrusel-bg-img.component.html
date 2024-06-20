@@ -1,5 +1,18 @@
-<div class="carrousel mt-4">
-    @for (item of items; track item.id) {
-        <app-litle-card [item]="item"/>
+<div 
+  class="carrousel mt-4"
+  infiniteScroll
+  [infiniteScrollDistance]="0"
+  [infiniteScrollThrottle]="0"
+  (scrolled)="onScroll()" 
+  [horizontal]="true"
+  [scrollWindow]="false"
+>
+  @for (item of items; track item.id) {
+    <app-litle-card [item]="item" />
+  }
+  @if (loadingQuantity) {
+    @for (item of createArrayByNumber(); track $index) {
+      <app-square-skeleton [dimensions]="{width: '164px', heigth: '150px'}"/>
     }
+  }
 </div>

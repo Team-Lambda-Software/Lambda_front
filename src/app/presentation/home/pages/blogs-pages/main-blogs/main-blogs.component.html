@@ -30,7 +30,7 @@
       class="animate__animated animate__fadeIn" 
       [items]="blogsByCategory()" 
       [routerLink]="'/home/blogs-details'"
-      (scrolled)="onScroll()"
+      (scrolled)="!isLoadingScroll() && onScroll()"
       [loadingQuantity]="isLoadingScroll() ? 2 : undefined"
     />
   }

@@ -7,13 +7,21 @@
     </div>
   </div>
 
-  <div class="grid grid-cols-2 mt-4 gap-2 justify-center">
-    @if (isLoadingBlogs) {
+  <div 
+    class="grid grid-cols-2 mt-4 gap-2 justify-center"
+    infiniteScroll
+    [infiniteScrollContainer]="scrollContainer"
+    [infiniteScrollDistance]=".25"
+    [infiniteScrollThrottle]="300"
+    [horizontal]="false"
+    (scrolled)="!isLoadingBlogs() && !isLoadingMoreBlogs() && getBlogs()"
+  >
+    @if (isLoadingBlogs()) {
       @for (item of [1,2,3,4]; track $index) {
         <app-square-skeleton [dimensions]="{width: '175px', heigth: '175px'}" />
       }
     } @else {
-      @for (blog of latestBlogs; track blog.id) {
+      @for (blog of latestBlogs(); track blog.id) {
         <article class="rounded-lg w-full p-2">
           <img [src]="blog.thumbnail" alt="course" class="w-full h-36 object-cover rounded-xl">
           <div class="p-4">
@@ -23,6 +31,11 @@
             </div>
           </div>
         </article>
+      }
+      @if (isLoadingMoreBlogs()) {
+        @for (item of [1,2]; track $index) {
+          <app-square-skeleton [dimensions]="{width: '175px', heigth: '175px'}" />
+        }
       }
     }
   </div>
