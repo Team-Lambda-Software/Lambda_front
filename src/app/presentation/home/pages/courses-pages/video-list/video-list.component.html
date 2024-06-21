@@ -28,9 +28,22 @@
       <span class="text-gray-400 text-lg ml-2">{{'loading' | transloco}}</span>
     </div>
   } @else if (coursesByCategory().length > 0) {
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 px-4 mt-4 animate__animated animate__fadeIn">
+    <div 
+      class="grid grid-cols-2 md:grid-cols-3 gap-4 px-4 mt-4 animate__animated animate__fadeIn"
+      infiniteScroll
+      [infiniteScrollContainer]="scrollContainer"
+      [infiniteScrollDistance]=".15"
+      [infiniteScrollThrottle]="300"
+      [horizontal]="false"
+      (scrolled)="!isLoadingMoreCoursesByCategory && getCoursesByCategory()"
+    >
       @for (course of coursesByCategory(); track $index) {
         <app-player-card [item]="adaptToPlayerCard(course)" class="w-full h-auto" />
+      }
+      @if (isLoadingMoreCoursesByCategory) {
+        @for (i of [1,2,3,4]; track $index) {
+          <app-square-skeleton [dimensions]="{width: '100%', heigth:'150px'}"/>
+        }
       }
     </div>
   } @else {
