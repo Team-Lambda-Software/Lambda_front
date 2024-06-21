@@ -2,15 +2,13 @@
     <textarea 
       rows="1"
       autocomplete="off"
-      [(ngModel)]="newComment"
+      [formControl]="newComment"
       class="px-6 py-3 rounded-[30px] w-full border-none text-custom-light-dark bg-gray-200 dark:bg-gray-400 dark:placeholder:text-white/85 dark:text-white/85" 
       type="text" 
       name="comment"
       id="comment"
       #commentInput
       [placeholder]="'add-a-comment' | transloco"
-      [disabled]="isLoadingComment()"
-      (input)="commentInput.style.height = ''; commentInput.style.height = commentInput.scrollHeight + 'px'"
     > </textarea>
     <button 
       (click)="sendComment()" 

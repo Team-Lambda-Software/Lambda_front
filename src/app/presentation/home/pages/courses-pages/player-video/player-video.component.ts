@@ -7,6 +7,7 @@ import { CommentsComponent } from './components/comments/comments.component';
 import { Course, Lesson } from '../../../../../core/course/domain/course.model';
 import { CourseUsecaseProvider } from '../../../../../core/course/infrastructure/providers/course-usecase-provider';
 import { CommentBoxComponent } from './components/comment-box/comment-box.component';
+import { IComment } from '../../../../../core/comments/domain/comment.model';
 
 
 @Component({
@@ -16,7 +17,7 @@ import { CommentBoxComponent } from './components/comment-box/comment-box.compon
   templateUrl: './player-video.component.html',
   styleUrl: './player-video.component.css'
 })
-export class PlayerVideoComponent implements OnInit{
+export class PlayerVideoComponent {
 
   @ViewChild('videoPlayer') videoPlayer!: ElementRef;
   @ViewChild('comments') commentSection!: CommentsComponent;
@@ -41,14 +42,6 @@ export class PlayerVideoComponent implements OnInit{
       }
       this.getCourse(this.idCourse!);
     })
-  }
-  
-  ngOnInit(): void {
-    this.isLoading = true;
-    setTimeout(() => {
-      window.scrollTo(0, 0);
-      this.isLoading = false;
-    }, 100); 
   }
 
   public getCourse(id: string): void{
@@ -102,7 +95,7 @@ export class PlayerVideoComponent implements OnInit{
     }
   }
 
-  onCommentCreated() {
-    this.commentSection.getComments();
+  onCommentCreated($event: IComment) {
+    this.commentSection.comments.set([...this.commentSection.comments(), $event]);
   }
 }
