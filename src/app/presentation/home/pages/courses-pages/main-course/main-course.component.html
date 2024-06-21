@@ -89,6 +89,17 @@
           <span class="fas fa-chevron-right"></span>
         </div>
       </div>
-      <app-carrusel-bg-img [items]="(popularCourses$ | async) || []" />
+      @if (isLoadingPopulars) {
+        <div class="carrousel mt-4">
+          @for (item of [1,2,3,4]; track $index) {
+            <app-square-skeleton [dimensions]="{width: '164px', heigth: '150px'}" />
+          }
+        </div>
+      }
+      <app-carrusel-bg-img 
+        [items]="popularCourses"
+        [loadingQuantity]="isLoadingMorePopulars ? 2 : undefined"
+        (scrolled)="!isLoadingPopulars && !isLoadingMorePopulars && getPopulars()" 
+        />
     </section>
 }
