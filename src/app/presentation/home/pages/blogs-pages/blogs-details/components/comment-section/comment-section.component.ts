@@ -25,7 +25,7 @@ export class CommentSectionComponent implements OnInit {
   getComments() {
     this.isLoadingComments.set(true);
     this.commentUseCase.usecase
-      .getCommentsByParams(`?perPage=10&page=0&blog=${this.blogId}`)
+      .getCommentsByParams(`?perPage=10&page=1&blog=${this.blogId}`)
       .pipe(finalize(() => this.isLoadingComments.set(false)))
       .subscribe(this.comments.set);
   }

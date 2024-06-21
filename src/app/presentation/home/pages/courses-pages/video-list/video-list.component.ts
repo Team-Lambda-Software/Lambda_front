@@ -34,6 +34,8 @@ export class VideoListComponent {
   public fetchedCategories= signal<Category[]>([])
   public selectedCategory?: Category;
   public isLoadingCategories = false;
+  private param?: string
+  private currentPage = 1;
   public coursesUseCaseService = inject(CourseUsecaseProvider);
   public isLoadingCourses = false;
   public coursesByCategory = signal<PartialCourse[]>([]);
@@ -76,10 +78,8 @@ export class VideoListComponent {
   }
 
   public getCoursesByCategory() {
-    if (this.currentPage === 1) this.isLoadingCourses = true;
-    else this.isLoadingMoreCoursesByCategory = true;
-    this.coursesUseCaseService.usecase
-      .getCoursesByParams(`?filter=RECENT&category=${this.selectedCategory?.id}&page=${this.currentPage}&perPage=10`)
+    this.isLoadingCourses = true
+    this.coursesUseCaseService.usecase.getCoursesByParams(`?filter=RECENT&page=${this.currentPage}&category=${this.selectedCategory?.id}`)
       .pipe(
         finalize(() => {
           this.isLoadingCourses = false;

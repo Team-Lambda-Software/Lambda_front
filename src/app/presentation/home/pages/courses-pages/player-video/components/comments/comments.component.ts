@@ -28,7 +28,7 @@ export class CommentsComponent {
 
   public getComments(): void{
     this.isLoading = true
-    this.commentService.usecase.getCommentsByParams(`?perPage=10&page=0&lesson=${this.sectionId()}`)
+    this.commentService.usecase.getCommentsByParams(`?perPage=10&page=1&lesson=${this.sectionId()}`)
     .subscribe({
       next: (comments) => this._comments = comments,
       error: (err) => console.log(err)
