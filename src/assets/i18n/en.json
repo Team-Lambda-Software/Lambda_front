@@ -70,6 +70,9 @@
   "loading" : "Loading",
   "Tips & Topic Details": "Tips & Topic Details",
   "comments": "Comments",
-  "add-a-comment": "Add a comment..."
+  "add-a-comment": "Add a comment...",
+  "go-to-course": "go to course",
+  "next": "Next",
+  "prev": "Prev"
 }
 

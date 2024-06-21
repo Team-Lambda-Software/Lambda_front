@@ -1,5 +1,17 @@
-<div class="carrousel mt-4 py-2" >
+<div class="carrousel mt-4 py-2" 
+    infiniteScroll
+    [infiniteScrollDistance]="0"
+    [infiniteScrollThrottle]="0"
+    (scrolled)="onScroll()" 
+    [horizontal]="true"
+    [scrollWindow]="false"
+  >
   @for (item of items; track item.id) {
     <app-big-card [item]="item" [routerLink]="routerLink"/>
+  }
+  @if (loadingQuantity) {
+    @for (item of createArrayByNumber(); track $index) {
+      <app-square-skeleton [dimensions]="{width: '250px', heigth: '220px'}"/>
+    }
   }
 </div>
