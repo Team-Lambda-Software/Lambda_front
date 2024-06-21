@@ -16,7 +16,7 @@ import { CommentBoxComponent } from './components/comment-box/comment-box.compon
   templateUrl: './player-video.component.html',
   styleUrl: './player-video.component.css'
 })
-export class PlayerVideoComponent implements OnInit{
+export class PlayerVideoComponent {
 
   @ViewChild('videoPlayer') videoPlayer!: ElementRef;
   @ViewChild('comments') commentSection!: CommentsComponent;
@@ -41,14 +41,6 @@ export class PlayerVideoComponent implements OnInit{
       }
       this.getCourse(this.idCourse!);
     })
-  }
-  
-  ngOnInit(): void {
-    this.isLoading = true;
-    setTimeout(() => {
-      window.scrollTo(0, 0);
-      this.isLoading = false;
-    }, 100); 
   }
 
   public getCourse(id: string): void{

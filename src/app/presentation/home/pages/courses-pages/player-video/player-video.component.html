@@ -1,5 +1,5 @@
 <div id="container">
-  <main>
+  <main id="scrollCourseCommentContainer">
     <nav class="bg-gradient-purple rounded-br-[50px] text-white mb-2">
       <div class="py-10 px-4 text-white bg-main-bg bg-cover">
         <div [routerLink]="['/home/main-course']" [queryParams]="{id: idCourse!}" class="cursor-pointer w-max">
@@ -63,7 +63,7 @@
         </section>
         
         <div class="mt-auto w-full p-1">
-          <app-comments #comments [sectionId]="idLesson"/>
+          <app-comments #comments [sectionId]="idLesson()"/>
         </div>
       </div>
         
