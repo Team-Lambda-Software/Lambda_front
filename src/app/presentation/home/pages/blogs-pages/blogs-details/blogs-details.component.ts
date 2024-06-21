@@ -6,6 +6,7 @@ import { BasicHeaderComponent } from '../../../components/basic-header/basic-hea
 import { CommentBoxComponent } from './components/comment-box/comment-box.component';
 import { SquareSkeletonComponent } from '../../../../shared/components/square-skeleton/square-skeleton.component';
 import { CommentSectionComponent } from './components/comment-section/comment-section.component';
+import { IComment } from '../../../../../core/comments/domain/comment.model';
 
 @Component({
   selector: 'app-blogs-details',
@@ -41,7 +42,7 @@ export class BlogsDetailsComponent implements OnInit {
       .subscribe(this.blog.set)
   }
 
-  onCommentCreated() {
-    this.commentSection.getComments();
+  onCommentCreated($event: IComment) {
+    this.commentSection.comments.set([...this.commentSection.comments(), $event]);
   }
 }

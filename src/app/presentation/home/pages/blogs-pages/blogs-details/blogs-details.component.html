@@ -16,5 +16,5 @@
     <app-comment-section #comments class="block mt-4" [blogId]="id!"/>
     </div>
   </main>
-    <app-comment-box [blogId]="id!" (commentCreated)="onCommentCreated()"/>
+    <app-comment-box [blogId]="id!" (commentCreated)="onCommentCreated($event)"/>
 </div>

@@ -27,7 +27,7 @@ export class CommentSectionComponent implements OnInit {
   public comments = signal<IComment[]>([]);
   public isLoadingComments = signal<boolean>(false);
   public isLoadingMoreComments = signal<boolean>(false);
-  public document = inject(DOCUMENT)
+  public document = inject(DOCUMENT);
   public scrollContainer: HTMLElement | null = null;
   public hasNoMoreComments = signal<boolean>(false);
 
@@ -52,10 +52,6 @@ export class CommentSectionComponent implements OnInit {
         if(comment.length === 0) this.hasNoMoreComments.set(true);
         this.comments.set([...this.comments(), ...comment]);
       });
-  }
-
-  onClick() {
-    console.log(this.document.getElementById('scrollBlogCommentContainer'));
   }
 
 }
