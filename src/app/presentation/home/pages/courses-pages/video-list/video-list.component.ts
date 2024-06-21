@@ -34,8 +34,6 @@ export class VideoListComponent {
   public fetchedCategories= signal<Category[]>([])
   public selectedCategory?: Category;
   public isLoadingCategories = false;
-  private param?: string
-  private currentPage = 1;
   public coursesUseCaseService = inject(CourseUsecaseProvider);
   public isLoadingCourses = false;
   public coursesByCategory = signal<PartialCourse[]>([]);
@@ -52,7 +50,7 @@ export class VideoListComponent {
     });
   }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.getCategories();
   }
 
@@ -89,7 +87,7 @@ export class VideoListComponent {
       ).subscribe(c => this.coursesByCategory.set([...this.coursesByCategory(), ...c]))
   }
 
-  
+
   onCategorySelected(category: Category) {
     this.router.navigate([] ,{queryParams: {category: category.name}, queryParamsHandling: 'merge'});
     this.setSelectedCategory(category);
