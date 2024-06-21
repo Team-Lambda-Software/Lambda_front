@@ -4,22 +4,36 @@
 @if (isLoadingComments()) {
   <div class="flex gap-4 flex-col mt-4">
     @for (c of [1,2,3,4,5,6]; track $index) {
-      <app-square-skeleton [dimensions]="{width: '100%', heigth: '60px'}" />
+     <app-square-skeleton [dimensions]="{width: '100%', heigth: '60px'}" />
     }
   </div>
-} @else {
-  @if (comments().length) {
+} @else if (comments().length) {
+  <div
+    infiniteScroll
+    [infiniteScrollContainer]="scrollContainer"
+    [infiniteScrollDistance]=".25"
+    [infiniteScrollThrottle]="0"
+    [horizontal]="false"
+    (scrolled)="!hasNoMoreComments() && !isLoadingMoreComments() && !isLoadingComments() && getComments()"
+  >
     @for (comment of comments(); track $index) {
       <div class="bg-gray-200 dark:bg-custom-light-dark rounded-xl p-4 w-full my-3 animate__animated animate__fadeIn">
         <p class="text-gray-700 text-base dark:text-gray-100 font-semibold">{{comment.userName}}</p>
         <p class="text-gray-500 text-sm dark:text-gray-100">{{comment.content}}</p>
       </div>
     }
-  } @else {
-    <div class="flex justify-center items-center w-full p-6 border-gray-300 border-dashed border-2 mt-4">
-      <p class="text-gray-500 text-lg dark:text-gray-100">No comments yet. You can be the first one!</p>
-    </div>
-  }
+    @if (isLoadingMoreComments()) {
+      @for (_ of [1,2,3,4,5]; track $index) {
+        <app-square-skeleton class="block my-3" [dimensions]="{width: '100%', heigth: '60px'}" />
+      }
+    }
+    @if (hasNoMoreComments()) {
+      <p class="animate__animated animate__fadeIn text-gray-500 text-lg dark:text-gray-100 text-center mt-4">No more comments</p>
+    }
+  </div>
+  
+} @else {
+  <div class="flex justify-center items-center w-full p-6 border-gray-300 border-dashed border-2 mt-4">
+    <p class="text-gray-500 text-lg dark:text-gray-100">No comments yet. You can be the first one!</p>
+  </div>
 }
-
-
