@@ -25,6 +25,7 @@ export class VideoListComponent {
   public isLoadingCategories = false;
 
   private param?: string
+  private currentPage = 1;
 
   public coursesUseCaseService = inject(CourseUsecaseProvider);
   public isLoadingCourses = false;
@@ -62,7 +63,7 @@ export class VideoListComponent {
 
   public getCoursesByCategory() {
     this.isLoadingCourses = true
-    this.coursesUseCaseService.usecase.getCoursesByParams(`?filter=RECENT&category=${this.selectedCategory?.id}`)
+    this.coursesUseCaseService.usecase.getCoursesByParams(`?filter=RECENT&page=${this.currentPage}&category=${this.selectedCategory?.id}`)
       .pipe(
         finalize(() => this.isLoadingCourses = false),
       ).subscribe(c => this.coursesByCategory.set(c))

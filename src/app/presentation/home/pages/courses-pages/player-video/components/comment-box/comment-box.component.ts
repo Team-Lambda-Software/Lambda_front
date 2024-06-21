@@ -31,7 +31,7 @@ export class CommentBoxComponent {
     this.isLoadingComment.set(true);
     let comment = new CommentFeatureDto(this.sectionId(), ETarget.section, newComment)
     this.commentUseCase.usecase.createComment(comment)
-      .pipe(delay(1000))
+      .pipe()
       .subscribe({
         next: () => {
           this.isLoadingComment.set(false);
