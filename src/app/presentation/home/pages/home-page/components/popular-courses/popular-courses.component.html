@@ -7,7 +7,7 @@
     </div>
   </div>
   @if (isLoadingPopularCourses) {
-    <div class="carrousel flex gap-5 mt-4">
+    <div class="carrousel mt-4">
       @for (item of [1,2,3,4]; track $index) {
         <app-square-skeleton [dimensions]="{width: '164px', heigth: '150px'}" />
       }
