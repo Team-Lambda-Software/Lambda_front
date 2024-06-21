@@ -19,7 +19,7 @@ animate__animated animate__fadeIn input-dark"
     (ngSubmit)="register()"
     >
 
-      <div class="mt-5">
+      <div class="mt-5 input-container">
         <mat-form-field appearance="outline"
         class="text-base w-80 h-16">
           <mat-label>Full Name</mat-label>
@@ -28,7 +28,6 @@ animate__animated animate__fadeIn input-dark"
             formControlName="name"
             placeholder="Your name here">
         </mat-form-field>
-
         @if (isValidField('name')) {
           @if (validatorService.getFieldError(signUpForm,'name').hasValue()){
             @if (validatorService.getFieldError(signUpForm,'name').getValue()==='Invalid pattern'){
@@ -36,8 +35,7 @@ animate__animated animate__fadeIn input-dark"
             {{validatorService.firstNameAndLastnamePatternMessage}}</mat-error>
             }
             @else {
-              <mat-error class="bg-custom-dark-purple border border-red-400 rounded input-error
-              font-bold relative">{{validatorService.getFieldError(signUpForm,'name').getValue()}}</mat-error>
+              <mat-error>{{validatorService.getFieldError(signUpForm,'name').getValue()}}</mat-error>
             }
           }
         }
@@ -142,8 +140,6 @@ animate__animated animate__fadeIn input-dark"
           type="submit">
           {{SignUpbuttonName | transloco}}
         </button>
-
-        <!-- <pre>{{signUpForm.valid}}</pre> -->
 
       </div>
 

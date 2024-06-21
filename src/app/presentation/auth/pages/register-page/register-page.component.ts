@@ -4,7 +4,6 @@ import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.se
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ValidatorService } from '../../../shared/services/validator/validator.service';
-import { ErrorComponent } from '../../../shared/components/error/error.component';
 import { SignUpEntryDomainDTO } from '../../../../core/user/domain/interfaces/entry/signup-entry.dto';
 
 import { SignUpForm } from '../../interfaces/forms/signup-form.interface';
@@ -27,7 +26,7 @@ import { UserStatusService } from '../../../../core/user/infraestructure/service
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.css',
   standalone: true,
-  imports: [ RouterLink,FormsModule,ReactiveFormsModule ,HttpClientModule,ErrorComponent,MatFormFieldModule, MatInputModule, MatIconModule,CommonModule,MatCheckboxModule,TranslocoModule]
+  imports: [ RouterLink,FormsModule,ReactiveFormsModule ,HttpClientModule,MatFormFieldModule, MatInputModule, MatIconModule,CommonModule,MatCheckboxModule,TranslocoModule]
 
 })
 export class RegisterPageComponent {

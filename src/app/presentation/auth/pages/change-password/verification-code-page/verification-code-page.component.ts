@@ -75,7 +75,7 @@ export class VerificationCodePageComponent{
       let code = this.getCode(this.verificationCodeForm)
       this.authUseCaseService.usecase.verificateCode(code).subscribe({
         next:(value)=>{
-          if (value==201){
+          if (value>=200 && value<=299){
             this.router.navigateByUrl('/auth/createpassword')
             this.popupService.displayBelowModal(this.codeSendSuccsessfully,'success')
           }

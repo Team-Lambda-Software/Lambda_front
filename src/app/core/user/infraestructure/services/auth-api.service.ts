@@ -22,8 +22,6 @@ import { Injectable, Optional, inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponseBase } from '@angular/common/http';
 import { GetCodeResponse } from '../dto/response/getCode-response.interface';
 import { UserStatusService } from './user-status.service';
-import { AuthLoadingStore } from '../auth-loading-store';
-import { AuthStatus } from '../../domain/interfaces/auth-status.enum';
 
 
 @Injectable({
@@ -35,26 +33,25 @@ export class AuthApiService implements IAuthApiService {
   readonly BASE_URL:string= enviroment.baseUrl+`/auth`
   private _authRepository:IAuthRepository= new AuthLocalStorageService()
   private _userStatus:UserStatusService = inject(UserStatusService)
-  private _status:AuthLoadingStore=AuthLoadingStore.getInstance()
 
   constructor() {}
 
   login(LoginEntryDomainDTO: LoginEntryDomainDTO): Observable<Result<AppUser>> {
     const body={...LoginEntryDomainDTO}
     const url=`${this.BASE_URL}/login`
-    this._status.store(AuthStatus.checking)
+    this._userStatus.setChecking()
     return this._httpClient.post<LoginResponse>(url,body)
       .pipe(
         map((response)=>{
           this._authRepository.saveToken(response.token)
-          this._status.store(AuthStatus.authenticated)
+          this._userStatus.setAuthenticated()
           let type:Type=Type.CLIENT
           if(response.type===Type.CLIENT) type=Type.CLIENT
           if(response.type===Type.ADMIN) type=Type.ADMIN
           return Result.makeResult(new AppUser({...response.user,type}))
         }),
         catchError(error=>{
-          this._status.store(AuthStatus.notAuthenticated)
+          this._userStatus.setNotAuthenticated()
           return throwError(()=>Result.makeError(new Error(error.error.message)))
         })
       )
@@ -74,6 +71,8 @@ export class AuthApiService implements IAuthApiService {
     return this._httpClient.get<User>(url,{headers})
       .pipe(
         map((response)=>{
+          console.log(response);
+
           let type= Type.CLIENT
           this._userStatus.setAuthenticated()
           console.log(this._userStatus.currentStatus());
@@ -148,7 +147,7 @@ export class AuthApiService implements IAuthApiService {
 
   }
 
-    updatePassword(password:string):Observable<Number>{
+    updatePassword(password:string):Observable<number>{
 
       const url=`${this.BASE_URL}/change/password`
       let email=this._authRepository.getEmail()

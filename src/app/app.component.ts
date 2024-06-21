@@ -1,5 +1,5 @@
-import { Component, HostBinding, OnInit, inject } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Component, HostBinding, OnInit, computed, inject } from '@angular/core';
+import { Router, RouterOutlet, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { SidebarService } from './presentation/shared/services/sidebar/sidebar.service';
 import { NgClass } from '@angular/common';
 import { DarkModeService } from './presentation/shared/services/dark-mode/dark-mode.service';
@@ -10,6 +10,10 @@ import { getMessaging, onMessage } from 'firebase/messaging';
 import { enviroment } from '../environments/environment';
 import { AuthUsecaseProvider } from './core/user/infraestructure/providers/auth-use-case-provider';
 import { UserStatusService } from './core/user/infraestructure/services/user-status.service';
+import { Result } from './common/helpers/Result';
+import { PopupInfoModalService } from './presentation/shared/services/popup-info-modal/popup-info-modal.service';
+import { IRouterRepository } from './core/shared/application/ports/IRouterRepository.interface';
+import { routerLocalStorageRepository } from './core/shared/infraestructure/local-storage/router-local-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -34,20 +38,34 @@ export class AppComponent implements OnInit {
   private swUpdate = inject(SwUpdate);
   public sidebarService = inject(SidebarService);
   public darkModeService = inject(DarkModeService);
+  // Remove this option to use app local without notification
   private notification=inject(NotificationService)
   private authUseCaseService = inject(AuthUsecaseProvider);
   private userStatusService=inject(UserStatusService);
+  private popupService=inject(PopupInfoModalService);
+  private _routerRepository:IRouterRepository= new routerLocalStorageRepository()
 
   constructor(private router: Router){
+    const _lastUrl=this._routerRepository.getLastLink();
+
     this.authUseCaseService.usecase.currentUser().subscribe({
       next:(value)=>{
         if (!value.isError()){
-          this.userStatusService.setUser(value.getValue())
-          this.router.navigateByUrl('/home')
-        }}
+          this.userStatusService.setUser(value.getValue());
+          if(!_lastUrl.hasValue()) this.router.navigateByUrl('/home');
+          this.router.navigateByUrl(_lastUrl.getValue());
+        }
+        else {
+          if(!_lastUrl.hasValue()) this.router.navigateByUrl('/'),
+          this.router.navigateByUrl(_lastUrl.getValue());
+          this.popupService.displayErrorModal(value.getError().message)
+        }},
+      error:(error:Result<Error>)=>{
+        this.router.navigateByUrl('/'),
+        this.popupService.displayErrorModal(error.getError().message)
+       }
       }
     )
-    this.router.navigateByUrl('/')
   }
 
   @HostBinding('class.dark') get mode() {
