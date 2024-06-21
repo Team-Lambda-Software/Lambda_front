@@ -50,7 +50,7 @@ export class VideoListComponent {
     });
   }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.getCategories();
   }
 
@@ -76,10 +76,8 @@ export class VideoListComponent {
   }
 
   public getCoursesByCategory() {
-    if (this.currentPage === 1) this.isLoadingCourses = true;
-    else this.isLoadingMoreCoursesByCategory = true;
-    this.coursesUseCaseService.usecase
-      .getCoursesByParams(`?filter=RECENT&category=${this.selectedCategory?.id}&page=${this.currentPage}&perPage=10`)
+    this.isLoadingCourses = true
+    this.coursesUseCaseService.usecase.getCoursesByParams(`?filter=RECENT&page=${this.currentPage}&category=${this.selectedCategory?.id}`)
       .pipe(
         finalize(() => {
           this.isLoadingCourses = false;
@@ -89,7 +87,7 @@ export class VideoListComponent {
       ).subscribe(c => this.coursesByCategory.set([...this.coursesByCategory(), ...c]))
   }
 
-  
+
   onCategorySelected(category: Category) {
     this.router.navigate([] ,{queryParams: {category: category.name}, queryParamsHandling: 'merge'});
     this.setSelectedCategory(category);
