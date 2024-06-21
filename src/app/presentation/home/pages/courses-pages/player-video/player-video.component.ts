@@ -7,6 +7,7 @@ import { CommentsComponent } from './components/comments/comments.component';
 import { Course, Lesson } from '../../../../../core/course/domain/course.model';
 import { CourseUsecaseProvider } from '../../../../../core/course/infrastructure/providers/course-usecase-provider';
 import { CommentBoxComponent } from './components/comment-box/comment-box.component';
+import { IComment } from '../../../../../core/comments/domain/comment.model';
 
 
 @Component({
@@ -94,7 +95,7 @@ export class PlayerVideoComponent {
     }
   }
 
-  onCommentCreated() {
-    this.commentSection.getComments();
+  onCommentCreated($event: IComment) {
+    this.commentSection.comments.set([...this.commentSection.comments(), $event]);
   }
 }
