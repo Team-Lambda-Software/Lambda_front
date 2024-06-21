@@ -10,7 +10,7 @@
   <div 
     class="carrousel mt-4"
     infiniteScroll
-    [infiniteScrollDistance]="0"
+    [infiniteScrollDistance]=".25"
     [infiniteScrollThrottle]="0"
     (scrolled)="!isLoading() && !isLoadingMoreCourses() && getCourses()" 
     [horizontal]="true"
