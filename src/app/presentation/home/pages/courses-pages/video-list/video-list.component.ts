@@ -42,10 +42,12 @@ export class VideoListComponent {
 
   constructor(private router:Router, private route:ActivatedRoute) {
     this.route.queryParams.subscribe((params: { [key: string ]: string }) => {
-      console.log('params');
-      console.log(params);
       if(params['category']) {
         this.param = params['category'];
+        const category = this.fetchedCategories().find(category => category.name == this.param);
+        this.setSelectedCategory(category!)
+      } else if(this.fetchedCategories().length) {
+        this.setSelectedCategory(this.fetchedCategories()[0]);
       }
     });
   }
@@ -59,7 +61,7 @@ export class VideoListComponent {
   }
 
   public getCategories(params?: string) {
-    this.isLoadingCategories = true
+    this.isLoadingCategories = true;
     this.categoryUseCaseService.usecase.getByParams(params)
       .pipe(finalize(() => this.isLoadingCategories = false))
       .subscribe(
