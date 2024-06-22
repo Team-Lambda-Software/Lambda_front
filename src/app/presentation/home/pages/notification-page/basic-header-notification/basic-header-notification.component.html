@@ -5,8 +5,9 @@
       <span class="font-medium text-lg" [innerHTML]="options.name | transloco"></span>
     </div>
     <div class="derecha">
-      <span class="font-medium text-lg"[innerHTML]="'Inbox' | transloco"></span>
-      <button class="material-symbols-outlined">delete</button>
+      <span class="font-medium text-lg mr-3">{{options.inbox}}</span>
+      <span class="font-medium text-lg mr-3"[innerHTML]="'Inbox' | transloco"></span>
+      <button class="fa-solid fa-trash-can mr-3 text-2xl" (click)="emitClearEvent()"></button>
     </div>
   </div>
   </nav>

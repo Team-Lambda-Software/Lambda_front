@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { BasicHeaderNotificationComponent } from '../../components/basic-header-notification/basic-header-notification.component';
+import { BasicHeaderNotificationComponent } from './basic-header-notification/basic-header-notification.component';
 import { TranslocoModule } from '@jsverse/transloco';
 import { NotificationUseCaseProvider } from '../../../../core/notification/infrastructure/providers/notification-usecase-provider';
 import { Notification } from '../../../../core/notification/domain/notification.model';
@@ -26,6 +26,12 @@ export class NotificationPageComponent {
         this.structure.push(...notifications);
 
   });
+ }
 
+  public clearNotifications(): void {
+    this.structure = []; 
+  }
 }
-}
+
+
+

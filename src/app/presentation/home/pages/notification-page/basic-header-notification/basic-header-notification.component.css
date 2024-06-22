@@ -1,12 +1,3 @@
-
-.material-symbols-outlined {
-
-  font-size: 25px;
-  width: 70px;
-  color: rgb(255, 255, 255), 255);
-  cursor: pointer;
-}
-
 .contenedor {
   display: flex;
   justify-content: space-between;

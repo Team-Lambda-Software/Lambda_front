@@ -21,7 +21,19 @@ export class NotificationApiService implements INotificationApiService {
         return responses.map(NotificationResponseToNotification);
       })
     );
-  }  
 
+  }
   
+  getNotificationCountNotRead(): Observable<number>{
+    return this._httpClient.get<any>(`${this.BASE_URL}/count/not-readed`)
+    .pipe(
+      map((response)=>{
+        const count = response.count; 
+        return count;
+      }),
+      catchError(error=> {
+        return throwError(()=>error.error.message)
+      })
+    )
+  }
 }
