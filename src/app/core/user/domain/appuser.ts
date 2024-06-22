@@ -15,7 +15,7 @@ export class AppUser implements IAppUser{
     this.name=data.name
     this.phone=data.phone
     this.type=data.type
-    if(data.image==null || data.image==undefined) this.image="https://via.placeholder.com/40"
+    if(data.image==null || data.image==undefined || data.image=='null') this.image="https://via.placeholder.com/40"
     else this.image=data.image
     console.log(this.image);
 

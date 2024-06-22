@@ -44,7 +44,9 @@ export class CreatePasswordPageComponent {
   public title='create Password'
   public subtitle='create a new password and please never share it with anyone for safe use'
   public updatePassword='update password'
-  private errorStatusCode='The status response is not 200'
+  private errorStatusCode='The response was not successful'
+  private correctStatusCode='The response was successful'
+
 
 
   isValidField(field:string){
@@ -61,7 +63,11 @@ export class CreatePasswordPageComponent {
             next:(value)=>{
               if (value>=200 && value<=299){
               this.router.navigateByUrl('/auth/confirmpassword')
-              this.popupService.displayErrorModal(this.errorStatusCode)}},
+              this.popupService.displayInfoModal(this.correctStatusCode)}
+              else{
+                this.popupService.displayErrorModal(this.errorStatusCode)
+              }
+            },
             error:(error)=>{
               this.popupService.displayErrorModal(error)
             }

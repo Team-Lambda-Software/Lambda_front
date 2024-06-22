@@ -113,8 +113,9 @@ export class RegisterPageComponent {
       this.authUseCaseService.usecase.signup(newUser)
         .subscribe({
           next:(answer)=>{
-            if(!answer.isError()) {this.router.navigateByUrl('/auth/on-boarding'),
-              this.userStatusService.setUser(answer.getValue())}
+            if(!answer.isError()) {
+            this.router.navigateByUrl('/auth/on-boarding')
+            this.userStatusService.setUser(answer.getValue())}
             else this.popupService.displayErrorModal(answer.getError().message)
           },
           error:(error:Result<Error>)=>{

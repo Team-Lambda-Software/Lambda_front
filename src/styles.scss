@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
-/* @import './custom-theme.scss'; */
+// @import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import './custom-theme.scss';
 
 @tailwind base;
 @tailwind components;
@@ -42,19 +42,13 @@ html, body {
 .input-ligth:invalid {
   color: red;
   background-color: pink;
-
 }
 
-.input-ligth{
-  color: #677294;
-}
-
-.input-dark{
-  color: #F2F2F2
-}
 
 .md-18 {
   font-size: 18px !important;
 }
+
+
 /* html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
