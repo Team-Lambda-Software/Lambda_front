@@ -16,6 +16,7 @@
     <app-carrusel-bg-img 
       [items]="popularCourses" 
       [loadingQuantity]="isLoadingMorePopularCourses ? 2 : undefined"
+      [route]="'/home/main-course'"
       (scrolled)="!isLoadingMorePopularCourses && getPopulars()" 
     />
   }

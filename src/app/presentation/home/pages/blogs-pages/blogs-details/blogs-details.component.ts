@@ -7,6 +7,10 @@ import { CommentBoxComponent } from './components/comment-box/comment-box.compon
 import { SquareSkeletonComponent } from '../../../../shared/components/square-skeleton/square-skeleton.component';
 import { CommentSectionComponent } from './components/comment-section/comment-section.component';
 import { IComment } from '../../../../../core/comments/domain/comment.model';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ImgCarrouselComponent } from './components/img-carrousel/img-carrousel.component';
+
+type BlogSafeHtml = Omit<Blog, 'description'> & { description: SafeHtml }; 
 
 @Component({
   selector: 'app-blogs-details',
@@ -15,7 +19,8 @@ import { IComment } from '../../../../../core/comments/domain/comment.model';
     BasicHeaderComponent,
     CommentBoxComponent,
     SquareSkeletonComponent,
-    CommentSectionComponent
+    CommentSectionComponent,
+    ImgCarrouselComponent
   ],
   templateUrl: './blogs-details.component.html',
   styleUrl: './blogs-details.component.css'
@@ -25,9 +30,9 @@ export class BlogsDetailsComponent implements OnInit {
   private blogUseCase = inject(BlogUsecaseProvider);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private sanitizer = inject(DomSanitizer);
   public id?: string;
-  public blog = signal<Blog | null>(null);
-
+  public blog = signal<BlogSafeHtml | null>(null);
 
   constructor() {
     this.route.queryParams.subscribe((params) => {
@@ -39,10 +44,20 @@ export class BlogsDetailsComponent implements OnInit {
 
   ngOnInit () {
     this.blogUseCase.usecase.getById(this.id!)
-      .subscribe(this.blog.set)
+      .subscribe({
+        next: (blog) => {
+          const blogDescription = blog.description.replace(/\\n/g, '<br>');
+          const sanitizedDescription = this.sanitizer.bypassSecurityTrustHtml(blogDescription);
+          this.blog.set({...blog, description: sanitizedDescription});
+        },
+        error: (error) => {
+          console.log(error);
+        }
+      })
   }
 
   onCommentCreated($event: IComment) {
     this.commentSection.comments.set([...this.commentSection.comments(), $event]);
   }
+
 }

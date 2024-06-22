@@ -8,7 +8,7 @@
   [scrollWindow]="false"
 >
   @for (item of items; track item.id) {
-    <app-litle-card [item]="item" />
+    <app-litle-card [item]="item" [route]="route"/>
   }
   @if (loadingQuantity) {
     @for (item of createArrayByNumber(); track $index) {
