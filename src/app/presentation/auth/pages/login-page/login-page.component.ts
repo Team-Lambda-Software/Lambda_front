@@ -60,7 +60,7 @@ export class LoginPageComponent {
     this.authUseCaseService.usecase.login({email,password}).subscribe({
       next:(answer)=>{
         if(!answer.isError()) {this.router.navigateByUrl('/home'),
-          this.userStatusService.setUser(answer.getValue()),
+          this.userStatusService.setUser(answer.getValue())
           this.notification.saveNotificationToken().then( token => {})
         }
       },

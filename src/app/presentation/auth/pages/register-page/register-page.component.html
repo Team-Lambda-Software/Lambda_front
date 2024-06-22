@@ -10,7 +10,7 @@ animate__animated animate__fadeIn input-dark"
   <!-- NT: es mt-12 abajo pero para design mientras pongo mt-20 -->
 
   <div class="mt-12 m-10 justify-center items-center text-center h-screen w-80">
-    <h1 class="text-4xl mb-4 text-wrap text-center w-auto font-bold text-ce  text-custom-light">{{title | transloco}}</h1>
+    <h1 class="text-4xl mb-4 text-wrap text-center w-auto font-bold  text-custom-light">{{title | transloco}}</h1>
 
     <div>
 
@@ -19,7 +19,7 @@ animate__animated animate__fadeIn input-dark"
     (ngSubmit)="register()"
     >
 
-      <div class="mt-5">
+      <div class="mt-5 input-container">
         <mat-form-field appearance="outline"
         class="text-base w-80 h-16">
           <mat-label>Full Name</mat-label>
@@ -28,11 +28,11 @@ animate__animated animate__fadeIn input-dark"
             formControlName="name"
             placeholder="Your name here">
         </mat-form-field>
-
         @if (isValidField('name')) {
           @if (validatorService.getFieldError(signUpForm,'name').hasValue()){
             @if (validatorService.getFieldError(signUpForm,'name').getValue()==='Invalid pattern'){
-            <mat-error class="font-bold relative">
+            <mat-error class="bg-custom-dark-purple border border-red-400 rounded input-error
+            font-bold relative">
             {{validatorService.firstNameAndLastnamePatternMessage}}</mat-error>
             }
             @else {
@@ -137,13 +137,11 @@ animate__animated animate__fadeIn input-dark"
           }
         }
 
-        <button class="btn mt-9 w-80 h-16 lg:w-36  align-middle bg-custom-light  text-custom-dark-purple"
+        <button class="btn mt-9 w-80 h-16 lg:w-36  align-middle bg-custom-light  text-custom-dark-purple rounded-[50px]"
           [disabled]="signUpForm.invalid"
           type="submit">
           {{SignUpbuttonName | transloco}}
         </button>
-
-        <!-- <pre>{{signUpForm.valid}}</pre> -->
 
       </div>
 

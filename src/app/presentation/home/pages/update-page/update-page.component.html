@@ -1,0 +1,148 @@
+<header class="bg-gradient-purple rounded-br-[50px] text-white">
+  <div class="py-5 px-4 text-white bg-main-bg bg-cover flex justify-between items-start">
+    <div class="flex items-center">
+        <h1 class="fas fa-chevron-left pr-4" [routerLink]="['/home/main']"></h1>
+        <p class="font-medium text-lg">{{updateUser | transloco}}</p>
+    </div>
+  </div>
+
+<div class="flex items-center ml-4" *ngIf="user.hasValue()">
+  <span class="profile-picture">
+     <img src="{{user.getValue().image}}" class="w-[69px] h-[69px] rounded-full" align="left"/>
+  </span>
+  <div class="flex flex-col items-start ml-4">
+     <span class="font-bold">{{user.getValue().name || 'No name'}}</span>
+     <p class=" flex flex-col items-start " style="display:inline">
+       <span class="font-bold text-lg text-left">{{'email' | transloco}}</span>
+       <span class="text-lg text-left mx-5">{{user.getValue().email || 'No email'}}</span>
+     </p>
+     <p class="follower-counts flex flex-col items-start " style="display:inline">
+      <span class="font-bold text-left">{{'phone' | transloco}}</span>
+      <span class="font-medium mx-5 text-left">{{user.getValue().phone || 'No phone'}}</span>
+    </p>
+  </div>
+</div>
+
+<div class="mx-4 py-4"></div>
+<div class="bar-wrapper w-[202px] h-[28px] mx-20 flex justify-between items-center">
+</div>
+<div class="mx-2 py-2"></div>
+</header>
+<body class="flex flex-col w-auto items-center justify-center
+bg-custom-light dark:bg-custom-dark"
+[ngClass]="{'input-ligth':!darkModeService.isDarkMode(),'input-dark':darkModeService.isDarkMode()}"
+>
+  <div class="columns-sm">
+
+    <mat-card class="card m-10 rounded-[50px]">
+      <div class="card-body text-wrap text-left w-auto font-bold text-custom-dark dark:text-custom-light">
+        <mat-card-header>
+          <mat-card-title-group>
+            <mat-card-title>
+              <h4 class="card-title text-xl">My Avatar</h4>
+            </mat-card-title>
+
+            <mat-card-subtitle>
+              <h6 class="card-subtitle">My user Image</h6>
+            </mat-card-subtitle>
+
+            <div class="rounded-full">
+              @if (user.hasValue()) {
+                <img mat-card-md-image src={{user.getValue().image}} alt="Profile user photo" >
+                }@else {
+                <img mat-card-md-image src="https://via.placeholder.com/40" alt="Profile user photo" >
+                }
+            </div>
+
+          </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content class="items-center">
+          <form class="form mt-5">
+
+          <label class="block mb-2 text-xl text-custom-dark font-bold dark:text-white" for="file_input">
+            Upload file
+          </label>
+
+          <input class="block w-full text-lg dark:text-custom-dark-purple text-white border rounded-lg cursor-pointer"
+          [ngClass]="{'bg-custom-gradient-purple':!darkModeService.isDarkMode(),'bg-custom-light ':darkModeService.isDarkMode()}"
+          id="file_input" type="file">
+
+            <button class="btn mt-9 w-full h-16 align-middle  dark:text-custom-dark-purple text-custom-light rounded-[50px]"
+            [ngClass]="{'bg-custom-gradient-purple':!darkModeService.isDarkMode(),'bg-custom-light ':darkModeService.isDarkMode()}"
+            [disabled]="updateUserForm.invalid"
+            type="button">
+            {{saveProfileImage | transloco}}
+          </button>
+          </form>
+        </mat-card-content>
+
+      </div>
+  </mat-card>
+
+
+    <mat-card class="card m-10 rounded-[50px]">
+        <div class="card-body text-wrap text-left w-auto font-bold text-custom-dark dark:text-custom-light">
+          <mat-card-header>
+
+            <mat-card-title>
+              <h4 class="card-title text-xl">My Profile</h4>
+            </mat-card-title>
+
+            <mat-card-subtitle>
+              <h6 class="card-subtitle">Configuration</h6>
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content class="items-center">
+            <form class="form mt-5">
+              <mat-form-field appearance="outline"
+              class="text-base w-full h-16">
+                <mat-label>Full Name</mat-label>
+                  <input matInput
+                   type="text"
+                   formControlName="name"
+                   placeholder="Your name here">
+              </mat-form-field>
+
+
+              <mat-form-field appearance="outline" class="text-base mt-6 w-full h-16">
+                <mat-icon matPrefix class="material-icons md-18 ml-4">mail</mat-icon>
+                <mat-label>Email</mat-label>
+                  <input matInput
+                  type="email"
+                  formControlName="email"
+                  placeholder="your email@gmail.com">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="text-base w-full mt-6 h-16">
+                <mat-label>Phone</mat-label>
+                  <input matInput
+                  type="tel"
+                  formControlName="phone"
+                  placeholder="0414240808">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="text-base w-full mt-6 h-16">
+                  <mat-label>Password</mat-label>
+                  <mat-icon matPrefix class="material-icons md-18 ml-4">lock</mat-icon>
+                    <input matInput
+                    [type]="hideFirstPasswordInput ? 'password' : 'text'"
+                    formControlName="password"
+                    placeholder="•••••••••">
+                    <button class="mr-6" mat-icon-button matSuffix type="button" (click)="hideFirstPasswordInput = !hideFirstPasswordInput">
+                    <mat-icon>{{hideFirstPasswordInput ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </button>
+              </mat-form-field>
+
+              <button class="btn mt-9 w-full h-16 align-middle  dark:text-custom-dark-purple text-custom-light rounded-[50px]"
+              [ngClass]="{'bg-custom-gradient-purple':!darkModeService.isDarkMode(),'bg-custom-light ':darkModeService.isDarkMode()}"
+              [disabled]="updateUserForm.invalid"
+              type="submit">
+              {{saveProfileInfo | transloco}}
+              </button>
+            </form>
+          </mat-card-content>
+
+        </div>
+    </mat-card>
+</div>
+</body>

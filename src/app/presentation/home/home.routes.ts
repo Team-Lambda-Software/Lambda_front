@@ -13,6 +13,7 @@ import { BlogsDetailsComponent } from './pages/blogs-pages/blogs-details/blogs-d
 import { MainBlogsComponent } from './pages/blogs-pages/main-blogs/main-blogs.component';
 import { NotificationPageComponent } from './pages/notification-page/notification-page.component';
 import { StructureNotificationComponent } from './pages/notification-page/structure-notification/structure-notification.component';
+import { UpdatePageComponent } from './pages/update-page/update-page.component';
 
 export const HomeRoutes: Routes = [
   {
@@ -71,6 +72,10 @@ export const HomeRoutes: Routes = [
       {
         path: 'notifications',
         component: StructureNotificationComponent
+      },
+      {
+        path:'update',
+        component:UpdatePageComponent
       }
     ]
   }

@@ -34,7 +34,7 @@ export class AuthUseCaseService implements IAuthUseCase {
     return this._loginApiService.verificateCode(code)
   }
 
-  updatePassword(password:string):Observable<Number>{
+  updatePassword(password:string):Observable<number>{
     return this._loginApiService.updatePassword(password)
   }
 
