@@ -10,7 +10,7 @@ animate__animated animate__fadeIn input-dark"
   <!-- NT: es mt-12 abajo pero para design mientras pongo mt-20 -->
 
   <div class="mt-12 m-10 justify-center items-center text-center h-screen w-80">
-    <h1 class="text-4xl mb-4 text-wrap text-center w-auto font-bold text-ce  text-custom-light">{{title | transloco}}</h1>
+    <h1 class="text-4xl mb-4 text-wrap text-center w-auto font-bold  text-custom-light">{{title | transloco}}</h1>
 
     <div>
 
@@ -31,11 +31,13 @@ animate__animated animate__fadeIn input-dark"
         @if (isValidField('name')) {
           @if (validatorService.getFieldError(signUpForm,'name').hasValue()){
             @if (validatorService.getFieldError(signUpForm,'name').getValue()==='Invalid pattern'){
-            <mat-error class="font-bold relative">
+            <mat-error class="bg-custom-dark-purple border border-red-400 rounded input-error
+            font-bold relative">
             {{validatorService.firstNameAndLastnamePatternMessage}}</mat-error>
             }
             @else {
-              <mat-error>{{validatorService.getFieldError(signUpForm,'name').getValue()}}</mat-error>
+              <mat-error class="bg-custom-dark-purple border border-red-400 rounded input-error
+              font-bold relative">{{validatorService.getFieldError(signUpForm,'name').getValue()}}</mat-error>
             }
           }
         }
