@@ -12,11 +12,11 @@
   [style.background-image]="'linear-gradient(45deg, #00000044, #00000044), url(' + course?.image + ')'"
   style="margin-top: -50px;"
 >
-  <div class="h-[350px] flex flex-col justify-between z-10">
-    <div class="flex flex-row justify-between items-center w-full mt-20">
+  <div class="h-[350px] flex flex-col justify-end z-10"> <!--Poner justify between si activamos los span-->
+    <!-- <div class="flex flex-row justify-between items-center w-full mt-20">
       <span class="bg-[#7351e6] text-white text-s px-6 py-2 rounded-full ml-5">New</span>
       <span class="bg-[#7351e6] text-white text-s px-4 py-2 rounded-full mr-5">3/5</span>
-    </div>
+    </div> -->
     <div class="flex flex-col items-start m-6 ">
       <h1 class="text-white text-3xl font-bold">{{course?.trainer?.name}}</h1>
       <h3 class="text-white text-lg font-light">{{course?.title}}</h3>
@@ -89,6 +89,17 @@
           <span class="fas fa-chevron-right"></span>
         </div>
       </div>
-      <app-carrusel-bg-img [items]="(popularCourses$ | async) || []" />
+      @if (isLoadingPopulars) {
+        <div class="carrousel mt-4">
+          @for (item of [1,2,3,4]; track $index) {
+            <app-square-skeleton [dimensions]="{width: '164px', heigth: '150px'}" />
+          }
+        </div>
+      }
+      <app-carrusel-bg-img 
+        [items]="popularCourses"
+        [loadingQuantity]="isLoadingMorePopulars ? 2 : undefined"
+        (scrolled)="!isLoadingPopulars && !isLoadingMorePopulars && getPopulars()" 
+        />
     </section>
 }

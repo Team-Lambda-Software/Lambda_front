@@ -2,13 +2,21 @@
   <div class="flex justify-between items-end dark:text-white">
     <h1 class="text-xl font-bold">{{'video-courses' | transloco}}</h1>
     <div class="flex items-center text-gray-500 pr-2" [routerLink]="['/home/video-list']">
-      <a class="text-sm mx-2 dark:text-white">{{'see-all' | transloco}}</a>
+      <a class="text-sm mx-2 dark:text-white cursor-pointer">{{'see-all' | transloco}}</a>
       <span class="fas fa-chevron-right"></span>
     </div>
   </div>
 
-  <div class="carrousel mt-4">
-    @if (isLoading) {
+  <div 
+    class="carrousel mt-4"
+    infiniteScroll
+    [infiniteScrollDistance]=".25"
+    [infiniteScrollThrottle]="0"
+    (scrolled)="!isLoading() && !isLoadingMoreCourses() && getCourses()" 
+    [horizontal]="true"
+    [scrollWindow]="false"
+  >
+    @if (isLoading()) {
       @for (i of [1,2,3,4,5,6,7,8,9]; track $index) {
         <app-square-skeleton [dimensions]="{width: '200px', heigth: '150px'}"/>
       }
@@ -17,6 +25,11 @@
         <article class="w-[200px] h-[150]">
           <app-player-card [item]="c"/>
         </article>
+      }
+      @if (isLoadingMoreCourses()) {
+        @for (c of [1,2]; track $index) {
+          <app-square-skeleton [dimensions]="{width: '200px', heigth: '150px'}"/>
+        }
       }
     }
   </div>

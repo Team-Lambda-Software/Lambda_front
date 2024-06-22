@@ -1,10 +1,10 @@
 <div id="container" class="animate__animated animate__fadeIn">
-  <main>
+  <main id="scrollBlogCommentContainer">
     <app-basic-header [options]="{redirect: '/home/main-blogs', name:'Tips & Topic Details'}"/>
     
     <div class="mt-6 p-4 pb-12">
       @if (blog()) {
-        <img class="w-full aspect-video rounded-md" [src]="blog()?.images?.[0]" [alt]="blog()?.title">
+        <img class="w-full aspect-video rounded-md object-cover" [src]="blog()?.images?.[0]" [alt]="blog()?.title">
         <p class="text-gray-500 dark:text-gray-200 mt-4"> {{blog()?.description}} </p>
       } @else {
         <app-square-skeleton [dimensions]="{width: '100%', heigth: '300px'}" />
@@ -16,5 +16,5 @@
     <app-comment-section #comments class="block mt-4" [blogId]="id!"/>
     </div>
   </main>
-    <app-comment-box [blogId]="id!" (commentCreated)="onCommentCreated()"/>
+    <app-comment-box [blogId]="id!" (commentCreated)="onCommentCreated($event)"/>
 </div>

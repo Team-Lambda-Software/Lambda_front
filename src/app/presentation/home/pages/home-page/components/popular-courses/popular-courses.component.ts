@@ -7,6 +7,7 @@ import { CourseUsecaseProvider } from '../../../../../../core/course/infrastruct
 import { finalize, map } from 'rxjs';
 import { PartialCourseToILittleCard } from '../../../../adapters/LitleCardAdapter';
 import { CarruselBgImgComponent } from '../../../../components/carrusel-bg-img/carrusel-bg-img.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @Component({
   selector: 'app-popular-courses',
@@ -15,7 +16,8 @@ import { CarruselBgImgComponent } from '../../../../components/carrusel-bg-img/c
     RouterLink,
     SquareSkeletonComponent,
     TranslocoModule,
-    CarruselBgImgComponent
+    CarruselBgImgComponent,
+    InfiniteScrollModule
   ],
   templateUrl: './popular-courses.component.html',
   styleUrl: './popular-courses.component.css'
@@ -23,20 +25,27 @@ import { CarruselBgImgComponent } from '../../../../components/carrusel-bg-img/c
 export class PopularCoursesComponent implements OnInit {
   
   private courseUseCaseService = inject(CourseUsecaseProvider);
+  private currentPage = 1;
   public popularCourses: ILittleCard[] = [];
   public isLoadingPopularCourses = false;
-
+  public isLoadingMorePopularCourses = false;
 
   ngOnInit(): void {
     this.getPopulars();
   }
 
   public getPopulars(): void {
-    this.isLoadingPopularCourses = true
-    this.courseUseCaseService.usecase.getCoursesByParams('?filter=POPULAR&perPage=5')
+    if(this.currentPage === 1) this.isLoadingPopularCourses = true;
+    else this.isLoadingMorePopularCourses = true;
+    this.courseUseCaseService.usecase
+      .getCoursesByParams(`?perPage=3&page=${this.currentPage}&filter=POPULAR`)
       .pipe(
         map(courses => courses.map(PartialCourseToILittleCard)),
-        finalize(() => this.isLoadingPopularCourses = false),
-      ).subscribe(pc => this.popularCourses = pc)
+        finalize(() => {
+          this.isLoadingPopularCourses = false
+          this.isLoadingMorePopularCourses = false
+          this.currentPage++;
+        }),
+      ).subscribe(pc => this.popularCourses = [...this.popularCourses, ...pc])
   }
 }

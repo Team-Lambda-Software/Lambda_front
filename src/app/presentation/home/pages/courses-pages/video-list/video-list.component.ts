@@ -1,5 +1,5 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject, signal } from '@angular/core';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { TranslocoModule } from '@jsverse/transloco';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { PartialCourseToPlayerCard } from '../../../adapters/PlayerCardAdapter';
@@ -9,34 +9,49 @@ import { CategoyUseCaseProvider } from '../../../../../core/categories/infrastru
 import { finalize } from 'rxjs';
 import { CourseUsecaseProvider } from '../../../../../core/course/infrastructure/providers/course-usecase-provider';
 import { PartialCourse } from '../../../../../core/course/domain/course.model';
+import { SquareSkeletonComponent } from '../../../../shared/components/square-skeleton/square-skeleton.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @Component({
   selector: 'app-video-list',
   standalone: true,
-  imports: [RouterLink, TranslocoModule, CommonModule, PlayerCardComponent],
+  imports: [
+    RouterLink,
+    TranslocoModule,
+    CommonModule,
+    PlayerCardComponent,
+    SquareSkeletonComponent,
+    InfiniteScrollModule
+  ],
   templateUrl: './video-list.component.html',
   styleUrl: './video-list.component.css'
 })
 export class VideoListComponent {
 
-  public fetchedCategories= signal<Category[]>([])
+  private currentPage = 1;
   private categoryUseCaseService = inject(CategoyUseCaseProvider);
+  private param?: string
+  public fetchedCategories= signal<Category[]>([])
   public selectedCategory?: Category;
   public isLoadingCategories = false;
-
-  private param?: string
-
   public coursesUseCaseService = inject(CourseUsecaseProvider);
   public isLoadingCourses = false;
   public coursesByCategory = signal<PartialCourse[]>([]);
+  public isLoadingMoreCoursesByCategory = false;
+  public scrollContainer = inject(DOCUMENT).getElementById('scrollContainer');
 
   constructor(private router:Router, private route:ActivatedRoute) {
     this.route.queryParams.subscribe((params: { [key: string ]: string }) => {
+      console.log('params');
+      console.log(params);
       if(params['category']) {
-        this.param = params['category']
+        this.param = params['category'];
       }
-      this.getCategories();
     });
+  }
+
+  ngOnInit() {
+    this.getCategories();
   }
 
   adaptToPlayerCard(video: PartialCourse) {
@@ -62,20 +77,26 @@ export class VideoListComponent {
 
   public getCoursesByCategory() {
     this.isLoadingCourses = true
-    this.coursesUseCaseService.usecase.getCoursesByParams(`?filter=RECENT&category=${this.selectedCategory?.id}`)
+    this.coursesUseCaseService.usecase.getCoursesByParams(`?filter=RECENT&page=${this.currentPage}&category=${this.selectedCategory?.id}`)
       .pipe(
-        finalize(() => this.isLoadingCourses = false),
-      ).subscribe(c => this.coursesByCategory.set(c))
+        finalize(() => {
+          this.isLoadingCourses = false;
+          this.isLoadingMoreCoursesByCategory = false;
+          this.currentPage++;
+        }),
+      ).subscribe(c => this.coursesByCategory.set([...this.coursesByCategory(), ...c]))
   }
 
-  
+
   onCategorySelected(category: Category) {
     this.router.navigate([] ,{queryParams: {category: category.name}, queryParamsHandling: 'merge'});
     this.setSelectedCategory(category);
   }
 
-  private setSelectedCategory(category : Category) {    
-    this.selectedCategory = category;    
+  private setSelectedCategory(category : Category) {
+    this.selectedCategory = category;
+    this.currentPage = 1;
+    this.coursesByCategory.set([]);
     this.getCoursesByCategory();
   }
 }

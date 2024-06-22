@@ -62,7 +62,6 @@ export class SidebarComponent {
     const target = event.currentTarget as HTMLElement;
     target.children[0].children[1].classList.toggle('max-h-max')
     target.children[0].children[0].classList.toggle('pb-4');
-    console.log(target)
   }
 
   logout() {
