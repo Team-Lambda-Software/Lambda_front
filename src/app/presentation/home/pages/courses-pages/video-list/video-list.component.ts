@@ -76,8 +76,10 @@ export class VideoListComponent {
   }
 
   public getCoursesByCategory() {
-    this.isLoadingCourses = true
-    this.coursesUseCaseService.usecase.getCoursesByParams(`?filter=RECENT&page=${this.currentPage}&category=${this.selectedCategory?.id}`)
+    if(this.currentPage === 1) this.isLoadingCourses = true;
+    else this.isLoadingMoreCoursesByCategory = true;
+    this.coursesUseCaseService.usecase
+      .getCoursesByParams(`?filter=RECENT&page=${this.currentPage}&category=${this.selectedCategory?.id}`)
       .pipe(
         finalize(() => {
           this.isLoadingCourses = false;
