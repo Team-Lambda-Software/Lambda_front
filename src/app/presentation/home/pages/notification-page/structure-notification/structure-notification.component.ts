@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { BasicHeaderNotificationComponent } from '../../../components/basic-header-notification/basic-header-notification.component';
-import { RouterLink } from '@angular/router';
+import { BasicHeaderNotificationComponent } from '../basic-header-notification/basic-header-notification.component';
+import { RouterLink, Router } from '@angular/router';
 import { Notification } from '../../../../../core/notification/domain/notification.model';
 import { MatDialog } from '@angular/material/dialog';
 import { StructureDetailComponent } from '../structure-detail/structure-detail.component';
@@ -16,14 +16,17 @@ import { StructureDetailComponent } from '../structure-detail/structure-detail.c
 export class StructureNotificationComponent {
   @Input({required:true})
   public structure: Notification[] = [];
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private router: Router) {}
 
-openDialog(st: any): void {
-  this.dialog.open(StructureDetailComponent, {
-    width: '250px',
-    data: st
-  });
+  openDialog(st: any): void {
+    const dialogRef = this.dialog.open(StructureDetailComponent, {
+      width: '250px',
+      data: st 
+    });
   
-
-  } 
+    dialogRef.afterClosed().subscribe(() => {
+      st.userReaded = false;
+      this.router.navigate([this.router.url]);
+    });
+  }
 }

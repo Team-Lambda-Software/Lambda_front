@@ -2,6 +2,7 @@ export interface Notification {
   title: string,
   body: string,
   date: string,
+  userReaded: boolean
 }
 
 export interface NotificationToken {

@@ -10,4 +10,7 @@ export class NotificationUseCaseService implements INotificationUseCase {
 		return this._notificationApiService.getNotificationByParams(params);
 	}
 
+	getNotificationCountNotRead(): Observable<number> {
+		return this._notificationApiService.getNotificationCountNotRead();
+	}
 }
