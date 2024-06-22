@@ -1,11 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { BasicHeaderComponent } from '../../../components/basic-header/basic-header.component';
-import { ICourse } from '../../../interfaces/course-model';
 import { ILittleCard } from '../../../interfaces/ILittleCard';
 import { LitleCardComponent } from '../../../components/litle-card/litle-card.component';
-import { CourseLitleCardAdapter, PartialCourseToILittleCard } from '../../../adapters/LitleCardAdapter';
+import { PartialCourseToILittleCard } from '../../../adapters/LitleCardAdapter';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Observable, finalize, map, of } from 'rxjs';
+import { finalize, map } from 'rxjs';
 import { CarruselBgImgComponent } from '../../../components/carrusel-bg-img/carrusel-bg-img.component';
 import { TranslocoModule } from '@jsverse/transloco';
 import { AsyncPipe } from '@angular/common';
@@ -80,7 +79,7 @@ export class MainCourseComponent implements OnInit {
     if (this.currentPopularPage === 1) this.isLoadingPopulars = true;
     else this.isLoadingMorePopulars = true;
     this.courseUseCaseService.usecase
-      .getCoursesByParams(`?filter=POPULAR&perPage=3&page=${this.currentPopularPage}`)
+      .getCoursesByParams(`?filter=POPULAR&perPage=4&page=${this.currentPopularPage}`)
       .pipe(
         map(courses => courses.map(PartialCourseToILittleCard)),
         finalize(() => {
@@ -88,7 +87,11 @@ export class MainCourseComponent implements OnInit {
           this.isLoadingPopulars = false;
           this.currentPopularPage++;
         })
-      ).subscribe(courses => this.popularCourses = [...this.popularCourses, ...courses])
+      ).subscribe(courses => 
+        this.popularCourses = [
+          ...this.popularCourses,
+          ...courses.filter(course => this.id! !== course.id)
+        ])
   }
 
 }
