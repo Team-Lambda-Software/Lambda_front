@@ -35,7 +35,8 @@
       [infiniteScrollDistance]=".15"
       [infiniteScrollThrottle]="300"
       [horizontal]="false"
-      (scrolled)="!isLoadingMoreCoursesByCategory && getCoursesByCategory()"
+      [alwaysCallback]="true"
+      (scrolled)="!hasNoMoreCourses && !isLoadingMoreCoursesByCategory && getCoursesByCategory()"
     >
       @for (course of coursesByCategory(); track $index) {
         <app-player-card [item]="adaptToPlayerCard(course)" class="w-full h-auto" />

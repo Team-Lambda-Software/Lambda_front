@@ -39,6 +39,7 @@ export class VideoListComponent {
   public coursesByCategory = signal<PartialCourse[]>([]);
   public isLoadingMoreCoursesByCategory = false;
   public scrollContainer = inject(DOCUMENT).getElementById('scrollContainer');
+  public hasNoMoreCourses = false;
 
   constructor(private router:Router, private route:ActivatedRoute) {
     this.route.queryParams.subscribe((params: { [key: string ]: string }) => {
@@ -48,12 +49,10 @@ export class VideoListComponent {
         this.setSelectedCategory(category!)
       } else if(this.fetchedCategories().length) {
         this.setSelectedCategory(this.fetchedCategories()[0]);
+      } else {
+        this.getCategories();
       }
     });
-  }
-
-  ngOnInit() {
-    this.getCategories();
   }
 
   adaptToPlayerCard(video: PartialCourse) {
@@ -88,18 +87,21 @@ export class VideoListComponent {
           this.isLoadingMoreCoursesByCategory = false;
           this.currentPage++;
         }),
-      ).subscribe(c => this.coursesByCategory.set([...this.coursesByCategory(), ...c]))
+      ).subscribe(c => {
+        if(c.length === 0) this.hasNoMoreCourses = true;
+        this.coursesByCategory.set([...this.coursesByCategory(), ...c])
+      })
   }
 
 
   onCategorySelected(category: Category) {
-    this.router.navigate([] ,{queryParams: {category: category.name}, queryParamsHandling: 'merge'});
-    this.setSelectedCategory(category);
+    this.router.navigate([] ,{queryParams: {category: category.name}, queryParamsHandling: 'merge'}); 
   }
 
   private setSelectedCategory(category : Category) {
     this.selectedCategory = category;
     this.currentPage = 1;
+    this.hasNoMoreCourses = false;
     this.coursesByCategory.set([]);
     this.getCoursesByCategory();
   }
