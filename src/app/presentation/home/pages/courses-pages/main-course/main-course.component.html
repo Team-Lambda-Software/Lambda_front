@@ -99,6 +99,7 @@
       <app-carrusel-bg-img 
         [items]="popularCourses"
         [loadingQuantity]="isLoadingMorePopulars ? 2 : undefined"
+        [route]="'/home/main-course'"
         (scrolled)="!isLoadingPopulars && !isLoadingMorePopulars && getPopulars()" 
         />
     </section>

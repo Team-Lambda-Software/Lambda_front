@@ -8,6 +8,7 @@ import { PartialBlogToILittleCardAdapter } from '../../../../adapters/BlogAdapte
 import { ILittleCard } from '../../../../interfaces/ILittleCard';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { DOCUMENT } from '@angular/common';
+import { BlogArticleComponent } from '../blog-article/blog-article.component';
 
 @Component({
   selector: 'app-blogs',
@@ -16,7 +17,8 @@ import { DOCUMENT } from '@angular/common';
     TranslocoModule,
     RouterLink,
     SquareSkeletonComponent,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    BlogArticleComponent
   ],
   templateUrl: './blogs.component.html',
   styleUrl: './blogs.component.css'
