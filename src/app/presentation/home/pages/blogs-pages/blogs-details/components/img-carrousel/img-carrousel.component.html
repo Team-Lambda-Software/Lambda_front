@@ -1,0 +1,17 @@
+<div class="carrousel" (scroll)="onScroll($event)">
+  @for (img of images ; track $index) {
+    <img 
+      class="w-full aspect-video rounded-md object-cover" 
+      [src]="img" 
+      [alt]="'imagen '+$index"
+    >
+  }
+</div>
+<div class="navigation-dots">
+  @for (_ of images; track _; let i = $index) {
+    <span
+      [class.bg-gradient-purple]="i === currentIndexImage"
+      class="dot">
+    </span>
+  }
+</div>

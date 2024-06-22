@@ -13,4 +13,5 @@ import { RouterLink } from '@angular/router';
 export class LitleCardComponent {
 
   @Input({ required: true }) public item!: ILittleCard;
+  @Input({ required: true }) public route!: string;
 }

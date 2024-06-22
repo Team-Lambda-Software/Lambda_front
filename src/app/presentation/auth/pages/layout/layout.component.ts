@@ -1,9 +1,12 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { ActivatedRoute, EventType, Router, RouterOutlet } from '@angular/router';
 import { AuthStatus } from '../../../../core/user/domain/interfaces/auth-status.enum';
 import { LoaderComponent } from '../../components/loader/loader.component';
 import { AuthLoadingStore } from '../../../../core/user/infraestructure/auth-loading-store';
 import {toSignal} from '@angular/core/rxjs-interop'
+import { filter } from 'rxjs';
+import { IRouterRepository } from '../../../../core/shared/application/ports/IRouterRepository.interface';
+import { routerLocalStorageRepository } from '../../../../core/shared/infraestructure/local-storage/router-local-storage.service';
 
 @Component({
   selector: 'app-layout-page',
@@ -13,13 +16,23 @@ import {toSignal} from '@angular/core/rxjs-interop'
   imports: [ RouterOutlet ,LoaderComponent]
 })
 
-export class LayoutComponent {
-  public router=inject(Router)
-  public lastLink=this.router.url
-  public AuthLoadingStore=AuthLoadingStore.getInstance();
-  public UserStatus= toSignal(this.AuthLoadingStore.getObservable())
+export class LayoutComponent implements OnInit{
+
+  private AuthLoadingStore=AuthLoadingStore.getInstance();
+  private UserStatus= toSignal(this.AuthLoadingStore.getObservable())
   public finishedAuthCheck= computed<boolean>(()=>{
     if (this.UserStatus()===AuthStatus.checking) return false
     return true
   })
+  private _routerRepository:IRouterRepository= new routerLocalStorageRepository()
+  constructor(private router:Router) {}
+
+  ngOnInit(): void {
+    this.router.events.pipe(
+      filter(event => event.type===EventType.NavigationEnd)
+    ).subscribe((event) => {
+      if(event.type===EventType.NavigationEnd){
+        this._routerRepository.saveLastLink(event.url)
+      }
+    });}
  }

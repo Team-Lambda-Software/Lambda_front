@@ -1,69 +1,50 @@
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
-// Plus imports for other components in your app.
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
 @include mat.core();
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$Lambda_front-primary: mat.define-palette(mat.$indigo-palette);
-$Lambda_front-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$Lambda_front-primary-light: mat.define-palette(mat.$deep-purple-palette, 500);
+$Lambda_front-accent-light: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$Lambda_front-warn-light: mat.define-palette(mat.$red-palette);
 
-// The warn palette is optional (defaults to red).
-$Lambda_front-warn: mat.define-palette(mat.$red-palette);
-
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$Lambda_front-theme: mat.define-light-theme((
-  colors: (
-    primary: $Lambda_front-primary,
-    accent: $Lambda_front-accent,
-    warn: $Lambda_front-warn,
-    custom-dark: '#2D2D3A',
-    custom-light: '#F2F2F2',
-    custom-dark-purple: '#4F14A0',
-    custom-light-purple: '#8066FF',
-    custom-black: '#222222',
-    custom-light-dark: '#4E546A',
-    custom-ligth-gray: '#677294',
-  ),
+$Lambda_front-light-theme: mat.define-light-theme((
+ color: (
+   primary: $Lambda_front-primary-light,
+   accent: $Lambda_front-accent-light,
+   warn: $Lambda_front-warn-light
+ ),
   typography: mat.define-typography-config(),
-  density: 0
+  density: 0,
 ));
 
-$Lambda_front-primary-dark: mat.define-palette(mat.$indigo-palette);
+
+$Lambda_front-primary-dark: mat.define-palette(mat.$gray-palette, 50);
 $Lambda_front-accent-dark: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$Lambda_front-warn-dark: mat.define-palette(mat.$red-palette);
 
-// The warn palette is optional (defaults to red).
-$Lambda_front-warn: mat.define-palette(mat.$red-palette);
-
-$Lambda_front-theme: mat.define-light-theme((
-  colors: (
-    primary: $Lambda_front-primary-dark,
-    accent: $Lambda_front-accent-dark,
-    warn: $Lambda_front-warn,
-    custom-dark: '#2D2D3A',
-    custom-light: '#F2F2F2',
-    custom-dark-purple: '#4F14A0',
-    custom-light-purple: '#8066FF',
-    custom-black: '#222222',
-    custom-light-dark: '#4E546A',
-    custom-ligth-gray: '#677294',
-  ),
-  typography: mat.define-typography-config(),
-  density: 0
+$Lambda_front-dark-theme: mat.define-dark-theme((
+ color: (
+   primary: $Lambda_front-primary-dark,
+   accent: $Lambda_front-accent-dark,
+   warn: $Lambda_front-warn-dark
+ ),
+ typography: mat.define-typography-config(),
+ density: 0,
 ));
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-// @include angular-material-theme($Lambda_front-theme);
+@include mat.all-component-themes($Lambda_front-light-theme);
+@include mat.checkbox-color($Lambda_front-light-theme);
 
-.dark {
-  @include mat.all-component-themes($Lambda_front-theme);
+.input-dark{
+  @include mat.form-field-color($Lambda_front-dark-theme);
+  color: #F2F2F2
+}
+
+.input-ligth{
+  @include mat.form-field-color($Lambda_front-light-theme);
+  color: #677294;
+}
+
+.dark{
+  @include mat.all-component-colors($Lambda_front-dark-theme);
+  @include mat.strong-focus-indicators-theme($Lambda_front-dark-theme);
 }

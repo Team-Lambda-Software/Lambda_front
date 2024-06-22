@@ -8,7 +8,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { VerificationPasswordForm } from '../../../interfaces/forms/createPassword-form.interface';
-import { ErrorComponent } from '../../../../shared/components/error/error.component';
 import { TranslocoModule } from '@jsverse/transloco';
 import { PopupInfoModalService } from '../../../../shared/services/popup-info-modal/popup-info-modal.service';
 import { AuthUsecaseProvider } from '../../../../../core/user/infraestructure/providers/auth-use-case-provider';
@@ -20,7 +19,7 @@ import { AuthUsecaseProvider } from '../../../../../core/user/infraestructure/pr
     styleUrl: './create-password-page.component.css',
     imports: [
         CommonModule, MatFormFieldModule, MatInputModule, MatIconModule, ReactiveFormsModule,
-        ErrorComponent,TranslocoModule
+        TranslocoModule
     ]
 })
 export class CreatePasswordPageComponent {
@@ -45,7 +44,9 @@ export class CreatePasswordPageComponent {
   public title='create Password'
   public subtitle='create a new password and please never share it with anyone for safe use'
   public updatePassword='update password'
-  private errorStatusCode='The status response is not 200'
+  private errorStatusCode='The response was not successful'
+  private correctStatusCode='The response was successful'
+
 
 
   isValidField(field:string){
@@ -59,7 +60,14 @@ export class CreatePasswordPageComponent {
         if (password){
           this.authUseCaseService.usecase.updatePassword(password)
           .subscribe({
-            next:(value)=>value==200 ? this.router.navigateByUrl('/auth/confirmpassword') : this.popupService.displayErrorModal(this.errorStatusCode),
+            next:(value)=>{
+              if (value>=200 && value<=299){
+              this.router.navigateByUrl('/auth/confirmpassword')
+              this.popupService.displayInfoModal(this.correctStatusCode)}
+              else{
+                this.popupService.displayErrorModal(this.errorStatusCode)
+              }
+            },
             error:(error)=>{
               this.popupService.displayErrorModal(error)
             }
