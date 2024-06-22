@@ -18,7 +18,7 @@ export class StructureNotificationComponent {
   public structure: Notification[] = [];
   constructor(public dialog: MatDialog, private router: Router) {}
 
-  openDialog(st: any): void {
+  openDialog(st: Notification): void {
     const dialogRef = this.dialog.open(StructureDetailComponent, {
       width: '250px',
       data: st 

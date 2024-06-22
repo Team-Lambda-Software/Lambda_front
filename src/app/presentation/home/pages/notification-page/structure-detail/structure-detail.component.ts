@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
+import { Notification } from '../../../../../core/notification/domain/notification.model';
 @Component({
   selector: 'app-structure-detail',
   standalone: true,
@@ -11,7 +11,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class StructureDetailComponent {
   constructor(
     public dialogRef: MatDialogRef<StructureDetailComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: Notification
   ) {}
 
   onNoClick(): void {

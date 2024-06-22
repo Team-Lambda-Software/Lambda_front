@@ -11,3 +11,7 @@ export interface NotificationTokenResponse {
   address:string,
   message:string
 }
+
+export interface NotificationCountResponse{
+  count:number
+}
