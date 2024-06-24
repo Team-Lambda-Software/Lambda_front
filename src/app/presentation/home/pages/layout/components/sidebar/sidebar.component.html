@@ -16,7 +16,7 @@
           }
         </button>
       </div>
-      <li><a routerLink="">
+      <li><a [routerLink]="['/home/profile']" (click)="this.sidebarService.setSidebarState(false)">
           <span class="fas fa-user pr-6"></span>
           {{ 'account' | transloco }}
         </a>
@@ -27,7 +27,7 @@
         </a>
       </li>
       <li>
-        <a routerLink="">
+        <a [routerLink]="['/home/settings']" (click)="this.sidebarService.setSidebarState(false)">
           <span class="fas fa-lock pr-6"></span>
           {{ 'privacy' | transloco }}
         </a>
