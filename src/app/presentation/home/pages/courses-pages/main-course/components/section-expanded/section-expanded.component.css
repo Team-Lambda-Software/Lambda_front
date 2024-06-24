@@ -1,0 +1,7 @@
+mat-expansion-panel {
+  margin: 2px;
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+  background-color: transparent;
+}

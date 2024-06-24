@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { BasicHeaderComponent } from '../../components/basic-header/basic-header.component';
@@ -24,8 +24,8 @@ interface ITag {
   templateUrl: './search-page.component.html',
   styleUrl: './search-page.component.css'
 })
-export class SearchPageComponent {
-
+export class SearchPageComponent implements AfterViewInit {
+  @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
   public inputSearch: string = '';
   public _tag: string[] = new Array<string>();
   public program: SearchModel = { blogs: [], courses: [] };
@@ -45,6 +45,10 @@ export class SearchPageComponent {
   ];
 
   constructor() { }
+
+  ngAfterViewInit(): void {
+    this.searchInput.nativeElement.focus();
+  }
 
   getBySearch(): void {
     if(this.inputSearch.length === 0 && this._tag.length === 0) return;

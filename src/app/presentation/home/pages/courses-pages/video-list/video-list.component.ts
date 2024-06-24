@@ -43,15 +43,15 @@ export class VideoListComponent {
 
   constructor(private router:Router, private route:ActivatedRoute) {
     this.route.queryParams.subscribe((params: { [key: string ]: string }) => {
-      if(params['category']) {
-        this.param = params['category'];
-        const category = this.fetchedCategories().find(category => category.name == this.param);
-        this.setSelectedCategory(category!)
-      } else if(this.fetchedCategories().length) {
-        this.setSelectedCategory(this.fetchedCategories()[0]);
-      } else {
-        this.getCategories();
-      }
+      const categories = this.fetchedCategories();
+      const categoryParam = params['category'];
+      if (categoryParam) {
+        this.param = categoryParam;
+        const category = categories.find(c => c.name === this.param);
+        if (category) this.setSelectedCategory(category);
+        else if (categories.length === 0) this.getCategories();
+      } else if (categories.length) this.setSelectedCategory(categories[0]);
+      else this.getCategories(); 
     });
   }
 

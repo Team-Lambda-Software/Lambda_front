@@ -14,6 +14,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { PlayerVideoComponent } from '../player-video/player-video.component';
 import { NavigationExtras } from '@angular/router';
 import { SquareSkeletonComponent } from '../../../../shared/components/square-skeleton/square-skeleton.component';
+import { SectionExpandedComponent } from './components/section-expanded/section-expanded.component';
+import { CourseDescriptionComponent } from './components/course-description/course-description.component';
+import { CourseHeaderComponent } from './components/course-header/course-header.component';
 
 @Component({
   selector: 'app-main-course',
@@ -25,9 +28,11 @@ import { SquareSkeletonComponent } from '../../../../shared/components/square-sk
     TranslocoModule,
     RouterLink,
     AsyncPipe,
-    MatExpansionModule,
     PlayerVideoComponent,
-    SquareSkeletonComponent
+    SquareSkeletonComponent,
+    SectionExpandedComponent,
+    CourseDescriptionComponent,
+    CourseHeaderComponent
   ],
   templateUrl: './main-course.component.html',
   styleUrl: './main-course.component.css'
@@ -41,7 +46,7 @@ export class MainCourseComponent implements OnInit {
   public courseUseCaseService = inject(CourseUsecaseProvider);
   public logoPath = 'assets/icons/app-logo.svg'
   public course?: Course;
-  public popularCourses: ILittleCard[] = []
+  public popularCourses: ILittleCard[] = [];
   public isLoading = false;
 
   constructor(private router: Router, private route: ActivatedRoute) {
@@ -49,6 +54,7 @@ export class MainCourseComponent implements OnInit {
       if (params['id']) {
         this.currentPopularPage = 1;
         this.id = params['id'];
+        this.popularCourses = [];
         this.getById();
         this.getPopulars();
       } else this.router.navigate(['/home'])
@@ -76,6 +82,7 @@ export class MainCourseComponent implements OnInit {
   }
 
   public getPopulars() {
+    console.log(this.id)
     if (this.currentPopularPage === 1) this.isLoadingPopulars = true;
     else this.isLoadingMorePopulars = true;
     this.courseUseCaseService.usecase
