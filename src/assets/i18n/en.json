@@ -73,6 +73,8 @@
   "add-a-comment": "Add a comment...",
   "go-to-course": "go to course",
   "next": "Next",
-  "prev": "Prev"
+  "prev": "Prev",
+  "no-courses-to-show": "No courses to show",
+  "no-blogs-to-show": "No blogs to show"
 }
 

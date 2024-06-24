@@ -3,7 +3,10 @@
 
     <div class="absolute top-[80px] left-1/2 transform -translate-x-1/2 w-full">
         <div class="rounded-lg bg-slate-100 shadow-md p-4 flex items-center mx-5 gap-2">
-            <input [(ngModel)]="inputSearch" type="text"
+            <input 
+                #searchInput
+                [(ngModel)]="inputSearch" 
+                type="text"
                 class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
                 placeholder="Search">
             <span class="fas fa-search fa-xl text-gray-400 aria-disabled:text-gray-200 aria-disabled:cursor-not-allowed"
