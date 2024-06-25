@@ -36,4 +36,14 @@ export class NotificationApiService implements INotificationApiService {
       })
     )
   }
+
+  getNotificationById(id: string): Observable<Notification> {
+    return this._httpClient.get<NotificationResponse>(`${this.BASE_URL}/one/${id}`)
+      .pipe(map(NotificationResponseToNotification))
+  };
+
+  deleteAllNotifications(): Observable<void> {
+    return this._httpClient.get<void>(`${this.BASE_URL}/delete/all`);
+  }
+
 }

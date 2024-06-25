@@ -1,6 +1,7 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
+import { NotificationUseCaseProvider } from '../../../../../core/notification/infrastructure/providers/notification-usecase-provider';
 
 interface BasicHeaderNotificationOptions {
   redirect: string;
@@ -17,11 +18,10 @@ interface BasicHeaderNotificationOptions {
 export class BasicHeaderNotificationComponent {
 
   @Input({ required: true }) public options!: BasicHeaderNotificationOptions
-  @Output() notifyClear: EventEmitter<void> = new EventEmitter<void>();
-
-  public emitClearEvent(): void {
-    this.notifyClear.emit();
-  }
+  private notificationUseCase = inject (NotificationUseCaseProvider)
   
-
+  borrarNotificaciones(): void {
+    this.notificationUseCase.usecase.deleteAllNotifications().subscribe(
+    );
+  }
 }

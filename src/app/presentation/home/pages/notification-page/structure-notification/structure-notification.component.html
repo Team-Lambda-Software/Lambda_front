@@ -5,14 +5,14 @@
                 <div class="flex items-center gap-6">
                     <div>
                         @if (st.userReaded) {     
-                            <span class="fa-regular fa-bell text-gray-400 text-2xl dark:text-white ml-3"></span>
+                            <span class="fa-solid fa-bell text-gray-400 text-2xl dark:text-white ml-3"></span>
                         }
                         @else {
-                            <span class="fa-solid fa-bell text-gray-400 text-2xl dark:text-white ml-3"></span>    
+                            <span class="fa-regular fa-bell text-gray-400 text-2xl dark:text-white ml-3"></span>    
                         }
                     </div>
                     <div>
-                        <span class="dark:text-white">{{ st.date }}</span><br>
+                        <span class="dark:text-white">{{ formatearFecha(st.date) }}</span><br>
                         <span class="dark:text-white font-bold">{{ st.title }}</span><br>
                         <span class="dark:text-white block overflow-hidden text-ellipsis whitespace-nowrap" style="max-width: 300px;">{{ st.body }}</span>
                     </div>
