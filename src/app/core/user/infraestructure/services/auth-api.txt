@@ -1,11 +1,4 @@
-import { IAuthApiService } from '../../domain/interfaces/auth-api.interface';
-import { LoginEntryDomainDTO  } from '../../domain/interfaces/entry/login-entry.dto';
-import { SignUpEntryDomainDTO } from '../../domain/interfaces/entry/signup-entry.dto';
-import { Type } from '../../domain/interfaces/type.interface';
 import { AppUser } from '../../domain/appuser';
-
-
-
 
 import { LoginResponse } from '../dto/response/login-response.interface';
 import { SignUpResponse } from '../dto/response/signup-response.interface';
@@ -27,13 +20,11 @@ import { UserStatusService } from './user-status.service';
 @Injectable({
   providedIn: 'root'
 })
-
 export class AuthApiService implements IAuthApiService {
   private _httpClient = inject(HttpClient);
-  readonly BASE_URL:string= enviroment.baseUrl+`/auth`
-  private _authRepository:IAuthRepository= new AuthLocalStorageService()
   private _userStatus:UserStatusService = inject(UserStatusService)
-
+  private _authRepository:IAuthRepository= new AuthLocalStorageService()
+  
   constructor() {}
 
   login(LoginEntryDomainDTO: LoginEntryDomainDTO): Observable<Result<AppUser>> {

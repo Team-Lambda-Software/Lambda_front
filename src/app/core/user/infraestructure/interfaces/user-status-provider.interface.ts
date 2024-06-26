@@ -1,6 +1,6 @@
 import { Optional } from "../../../../common/helpers/Optional"
-import { AppUser } from "../appuser"
-import { AuthStatus } from "./auth-status.enum"
+import { AppUser } from "../../domain/appuser"
+import { AuthStatus } from "../../domain/enum/auth-status.enum"
 
 export interface IUserStatusProvider{
   setChecking():void

@@ -1,6 +1,6 @@
-import { AuthStatus } from '../../domain/interfaces/auth-status.enum';
+import { AuthStatus } from '../../domain/enum/auth-status.enum';
 import { AppUser } from '../../domain/appuser';
-import { IUserStatusProvider } from '../../domain/interfaces/user-status-provider.interface';
+import { IUserStatusProvider } from '../interfaces/user-status-provider.interface';
 
 import { AuthLoadingStore } from '../auth-loading-store';
 import { UserStore } from '../user-store';

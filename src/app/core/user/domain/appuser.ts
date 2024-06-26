@@ -1,15 +1,22 @@
-import { IAppUser } from "./appuser.model";
-import { Type } from "./interfaces/type.interface";
+import { UserType } from "./enum/type.enum";
 
-export class AppUser implements IAppUser{
+export class AppUser{
   id: string;
   email: string;
   name: string;
   phone: string;
   image?: string;
-  type:Type
+  type:UserType
 
-  constructor(data:IAppUser){
+  constructor(data: {
+    id:    string,
+    email: string,
+    name:  string,
+    phone: string,
+    image?: string,
+    type: UserType
+  }  
+  ){
     this.id=data.id
     this.email=data.email
     this.name=data.name

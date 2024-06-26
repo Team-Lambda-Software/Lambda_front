@@ -4,7 +4,7 @@ import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.se
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ValidatorService } from '../../../shared/services/validator/validator.service';
-import { SignUpEntryDomainDTO } from '../../../../core/user/domain/interfaces/entry/signup-entry.dto';
+import { SignUpEntryDomainDTO } from '../../../../core/user/infraestructure/interfaces/entry/signup-entry.dto';
 
 import { SignUpForm } from '../../interfaces/forms/signup-form.interface';
 
@@ -15,7 +15,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { CommonModule } from '@angular/common';
 import { TranslocoModule } from '@jsverse/transloco';
-import { Type } from '../../../../core/user/domain/interfaces/type.interface';
+import { Type } from '../../../../core/user/infraestructure/interfaces/type.interface';
 import { PopupInfoModalService } from '../../../shared/services/popup-info-modal/popup-info-modal.service';
 import { AuthUsecaseProvider } from '../../../../core/user/infraestructure/providers/auth-use-case-provider';
 import { Result } from '../../../../common/helpers/Result';
