@@ -5,6 +5,9 @@ import { Notification } from '../../../../../core/notification/domain/notificati
 import { MatDialog } from '@angular/material/dialog';
 import { StructureDetailComponent } from '../structure-detail/structure-detail.component';
 import { NotificationUseCaseProvider } from '../../../../../core/notification/infrastructure/providers/notification-usecase-provider';
+import { Location } from '@angular/common';
+
+
 @Component({
   selector: 'app-structure-notification',
   standalone: true,
@@ -17,7 +20,7 @@ export class StructureNotificationComponent {
   @Input({required:true})
   public structure: Notification[] = [];
   private notificationUseCase = inject (NotificationUseCaseProvider)
-  constructor(public dialog: MatDialog, private router: Router) {}
+  constructor(public dialog: MatDialog, private location: Location) {}
   
   openDialog(st: Notification): void {
     this.notificationUseCase.usecase.getNotificationById(st.id)
@@ -28,7 +31,8 @@ export class StructureNotificationComponent {
       });
 
         dialogRef.afterClosed().subscribe(() => {
-          this.router.navigate([this.router.url]);
+          console.log('Entre aqui :D')
+          this.location.replaceState(this.location.path());
       });
     });
   }
