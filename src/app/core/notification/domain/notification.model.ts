@@ -1,7 +1,8 @@
 export interface Notification {
+  id: string,
   title: string,
   body: string,
-  date: string,
+  date: Date,
   userReaded: boolean
 }
 

@@ -4,7 +4,7 @@ import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { INotificationApiService } from '../../domain/interfaces/notification-api.interface';
 import { enviroment } from '../../../../../environments/environment';
 import { Notification } from '../../domain/notification.model';
-import { NotificationTokenResponse, NotificationResponse } from '../adapters/dtos/notification.dto';
+import { NotificationTokenResponse, NotificationResponse, NotificationCountResponse } from '../adapters/dtos/notification.dto';
 import { NotificationResponseToNotification, NotificationTokenResponseToNotificationToken } from '../adapters/converters/NotificationResponseToNotification';
 import { Optional } from '../../../../common/helpers/Optional';
 
@@ -25,7 +25,7 @@ export class NotificationApiService implements INotificationApiService {
   }
   
   getNotificationCountNotRead(): Observable<number>{
-    return this._httpClient.get<any>(`${this.BASE_URL}/count/not-readed`)
+    return this._httpClient.get<NotificationCountResponse>(`${this.BASE_URL}/count/not-readed`)
     .pipe(
       map((response)=>{
         const count = response.count; 
@@ -36,4 +36,14 @@ export class NotificationApiService implements INotificationApiService {
       })
     )
   }
+
+  getNotificationById(id: string): Observable<Notification> {
+    return this._httpClient.get<NotificationResponse>(`${this.BASE_URL}/one/${id}`)
+      .pipe(map(NotificationResponseToNotification))
+  };
+
+  deleteAllNotifications(): Observable<void> {
+    return this._httpClient.get<void>(`${this.BASE_URL}/delete/all`);
+  }
+
 }

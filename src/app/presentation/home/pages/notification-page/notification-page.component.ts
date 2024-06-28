@@ -24,9 +24,18 @@ export class NotificationPageComponent {
     this.notificationUseCase.usecase.getNotificationByParams('?page=0&perPage=0')
       .subscribe(notifications => {
         this.structure.push(...notifications);
+        this.sortNotificationsByDate();
 
   });
  }
+
+  private sortNotificationsByDate(): void {
+    this.structure.sort((a, b) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+     return dateB.getTime() - dateA.getTime();
+    });
+  }
 
   public clearNotifications(): void {
     this.structure = []; 
