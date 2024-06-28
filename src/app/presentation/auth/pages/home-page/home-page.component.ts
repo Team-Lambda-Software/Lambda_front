@@ -3,6 +3,7 @@ import { Component, HostBinding, OnChanges, OnInit, SimpleChanges, effect, injec
 import { RouterLink } from '@angular/router';
 import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.service';
 import { TranslocoModule } from '@jsverse/transloco';
+import { AuthLocalStorageService } from '../../../../core/shared/infraestructure/local-storage/auth-local-storage.service';
 
 @Component({
   selector: 'app-home-page',
@@ -13,7 +14,11 @@ import { TranslocoModule } from '@jsverse/transloco';
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })
-export class HomePageComponent {
+export class HomePageComponent implements OnInit {
+  ngOnInit(): void {
+    this._authRepository.deleteToken()
+  }
+  private _authRepository= new AuthLocalStorageService()
   public darkModeService = inject(DarkModeService);
   public mainTitle="welcome to yoga Online class"
   public LogInbuttonName="login"

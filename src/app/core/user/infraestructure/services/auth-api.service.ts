@@ -66,7 +66,8 @@ export class AuthApiService implements IAuthApiComunication {
 
     signup(email: string,name: string, password: string, phone: string, type: UserType): Observable<Result<string>> {
       const url=`${this.BASE_URL}/register`
-      const body={email,name,password,phone,type}
+      const body={email:email,name:name,password:password,phone:phone,type:type}
+      console.log(body);
 
       return this._httpClient.post<SignUpResponse>(url,body)
         .pipe(
@@ -80,7 +81,7 @@ export class AuthApiService implements IAuthApiComunication {
         )
     }
 
-    getCodeUpdatePassword(email:string):Observable<void>{
+    getCodeUpdatePassword(email:string):Observable<Result<string>>{
       const url=`${this.BASE_URL}/forget/password`;
       const body={email}
       return this._httpClient.post<GetCodeResponse>(url,body)
@@ -88,7 +89,7 @@ export class AuthApiService implements IAuthApiComunication {
         map((response)=>{
           // this._authRepository.saveEmail(email)
           // this._authRepository.saveDateCode(response.date.toString())
-          return
+          return Result.makeResult(response.date.toString());
         }),
         catchError(error=>{
           return throwError(()=>error.error.message)
@@ -97,7 +98,7 @@ export class AuthApiService implements IAuthApiComunication {
     }
 
 
-  verificateCode(email:string,code:string):Observable<number>{
+  verificateCode(email:string,code:string):Observable<Result<number>>{
     // let email=this._authRepository.getEmail()
     const url=`${this.BASE_URL}/code/validate`
     const body={email,code}
@@ -106,15 +107,15 @@ export class AuthApiService implements IAuthApiComunication {
       .pipe(
         map((response)=>{
           // this._authRepository.saveCode(code)
-          return response.status
+          return Result.makeResult(response.status)
         }),
         catchError(error=>{
-          return throwError(()=>error.error.message)
+          return throwError(()=> Result.makeError(error.error.message))
         })
       )
   }
 
-    updatePassword(email:string,code:string,password:string):Observable<number>{
+    updatePassword(email:string,code:string,password:string):Observable<Result<number>>{
       const url=`${this.BASE_URL}/change/password`
       const body={
         email:email,
@@ -124,15 +125,11 @@ export class AuthApiService implements IAuthApiComunication {
       return this._httpClient.put<HttpResponseBase>(url,body,{ observe: 'response' })
         .pipe(
           map((response)=>{
-            return response.status
+            return Result.makeResult(response.status)
           }),
           catchError(error=>{
-            return throwError(()=>error.error.message)
+            return throwError(()=> Result.makeError(error.error.message))
           })
         )
       }
-
-      // logout (): void {
-      //   this._authRepository.deleteToken();
-      // }
 }

@@ -38,7 +38,7 @@ export class LoginPageComponent {
   private router= inject(Router)
   private userStatusService=inject(UserStatusService)
   private loginUsecaseService=new LoginUseCaseService(
-    new AuthLocalStorageService(),this.userStatusService, new AuthApiService);
+    new AuthLocalStorageService(),this.userStatusService, new AuthApiService());
   private notification=inject(NotificationService)
 
   private popupService=inject(PopupInfoModalService)

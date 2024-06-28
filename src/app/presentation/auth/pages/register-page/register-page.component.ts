@@ -20,6 +20,9 @@ import { PopupInfoModalService } from '../../../shared/services/popup-info-modal
 import { AuthUsecaseProvider } from '../../../../core/user/infraestructure/providers/auth-use-case-provider';
 import { Result } from '../../../../common/helpers/Result';
 import { UserStatusService } from '../../../../core/user/infraestructure/services/user-status.service';
+import { SignUpUseCaseService } from '../../../../core/user/application/signup-use-case.service';
+import { AuthLocalStorageService } from '../../../../core/shared/infraestructure/local-storage/auth-local-storage.service';
+import { AuthApiService } from '../../../../core/user/infraestructure/services/auth-api.service';
 
 @Component({
   selector: 'app-register-page',
@@ -37,6 +40,7 @@ export class RegisterPageComponent {
   private popupService=inject(PopupInfoModalService)
   private authUseCaseService = inject(AuthUsecaseProvider);
   private userStatusService=inject(UserStatusService)
+  private signUpUseCaseService= new SignUpUseCaseService(new AuthLocalStorageService(),this.userStatusService,new AuthApiService())
 
 
   public hide:boolean=false
@@ -110,12 +114,12 @@ export class RegisterPageComponent {
 
     if(this.signUpForm.valid){
       let newUser:SignUpEntryDomainDTO=this.createSignUpEntryDomainDTO(this.signUpForm)
-      this.authUseCaseService.usecase.signup(newUser)
+      this.signUpUseCaseService.execute(newUser)
         .subscribe({
           next:(answer)=>{
             if(!answer.isError()) {
             this.router.navigateByUrl('/auth/on-boarding')
-            this.userStatusService.setUser(answer.getValue())}
+            }
             else this.popupService.displayErrorModal(answer.getError().message)
           },
           error:(error:Result<Error>)=>{

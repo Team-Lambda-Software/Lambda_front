@@ -8,7 +8,6 @@ import { NotificationService } from './presentation/home/services/notifications/
 import { initializeApp } from '@firebase/app';
 import { getMessaging, onMessage } from 'firebase/messaging';
 import { enviroment } from '../environments/environment';
-import { AuthUsecaseProvider } from './core/user/infraestructure/providers/auth-use-case-provider';
 import { UserStatusService } from './core/user/infraestructure/services/user-status.service';
 import { Result } from './common/helpers/Result';
 import { PopupInfoModalService } from './presentation/shared/services/popup-info-modal/popup-info-modal.service';
@@ -43,7 +42,6 @@ export class AppComponent implements OnInit {
   public darkModeService = inject(DarkModeService);
   // Remove this option to use app local without notification
   private notification=inject(NotificationService)
-  private authUseCaseService = inject(AuthUsecaseProvider);
   private userStatusService=inject(UserStatusService);
   private currentUseCaseService=new CurrentUserUseCaseService(
     new AuthLocalStorageService(),this.userStatusService, new AuthApiService);
@@ -58,11 +56,11 @@ export class AppComponent implements OnInit {
         if (!value.isError()){
           this.userStatusService.setUser(value.getValue());
           if(!_lastUrl.hasValue()) this.router.navigateByUrl('/home');
-          this.router.navigateByUrl(_lastUrl.getValue());
+          else this.router.navigateByUrl(_lastUrl.getValue());
         }
         else {
-          if(!_lastUrl.hasValue()) this.router.navigateByUrl('/'),
-          this.router.navigateByUrl(_lastUrl.getValue());
+          if(!_lastUrl.hasValue()) this.router.navigateByUrl('/')
+          else this.router.navigateByUrl(_lastUrl.getValue());
           this.popupService.displayErrorModal(value.getError().message)
         }},
       error:(error:Result<Error>)=>{

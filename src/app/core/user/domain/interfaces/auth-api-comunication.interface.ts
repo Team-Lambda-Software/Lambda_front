@@ -15,7 +15,7 @@ export interface IAuthApiComunication{
     type: UserType
   ):Observable<Result<string>>;
 
-  getCodeUpdatePassword(email:string):Observable<void>;
-  verificateCode(email:string,code:string):Observable<number>;
-  updatePassword(email:string,code:string,password:string):Observable<number>;
+  getCodeUpdatePassword(email:string):Observable<Result<string>>;
+  verificateCode(email:string,code:string):Observable<Result<number>>;
+  updatePassword(email:string,code:string,password:string):Observable<Result<number>>;
 }

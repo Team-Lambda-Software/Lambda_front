@@ -28,7 +28,7 @@ export class SidebarComponent {
   private threshold = SLIP_THRESHOLD;
   // private authUseCaseService = inject(AuthUsecaseProvider);
   private userStatus=inject(UserStatusService)
-  private logOutUseCase= new LogoutUseCaseService(new AuthLocalStorageService(),this.userStatus,new AuthApiService())
+  private logOutUseCase= new LogoutUseCaseService(new AuthLocalStorageService(),this.userStatus)
   private router=inject(Router)
   public sidebarService = inject(SidebarService);
   public darkModeService = inject(DarkModeService);

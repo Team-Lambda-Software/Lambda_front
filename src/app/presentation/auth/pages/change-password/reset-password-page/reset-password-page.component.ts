@@ -12,6 +12,10 @@ import { PopupInfoModalService } from '../../../../shared/services/popup-info-mo
 import { AuthUsecaseProvider } from '../../../../../core/user/infraestructure/providers/auth-use-case-provider';
 import { IAuthRepository } from '../../../../../core/shared/application/ports/IAuthRepository.interface';
 import { AuthLocalStorageService } from '../../../../../core/shared/infraestructure/local-storage/auth-local-storage.service';
+import { GetCodeUpdatePasswordUseCase } from '../../../../../core/user/application/get-code-update-password-use-case.service';
+import { UserStatusService } from '../../../../../core/user/infraestructure/services/user-status.service';
+import { AuthApiService } from '../../../../../core/user/infraestructure/services/auth-api.service';
+import { Result } from '../../../../../common/helpers/Result';
 
 @Component({
   selector: 'app-reset-password-page',
@@ -29,7 +33,8 @@ export class ResetPasswordPageComponent implements OnInit {
   }
   public darkModeService = inject(DarkModeService);
   private fb = inject(FormBuilder)
-  private authUseCaseService = inject(AuthUsecaseProvider);
+  private userStatus=inject(UserStatusService)
+  private getCodeUpdatePasswordUseCase = new GetCodeUpdatePasswordUseCase(new AuthLocalStorageService(),this.userStatus,new AuthApiService())
   private router= inject(Router)
   private popupService=inject(PopupInfoModalService)
   private _authRepository:IAuthRepository= new AuthLocalStorageService()
@@ -49,14 +54,18 @@ export class ResetPasswordPageComponent implements OnInit {
 
   resetPassword(){
     const {email}=this.resetPasswordForm.value;
-    this.authUseCaseService.usecase.getCodeUpdatePassword(email)
+    this.getCodeUpdatePasswordUseCase.execute(email)
     .subscribe({
-      next:()=>{
-        this.popupService.displayBelowModal(this.codeSendSuccsessfully,'info')
-        this.router.navigateByUrl('/auth/verificationcode')
+      next:(response)=>{
+        if(!response.isError()){
+          this.popupService.displayBelowModal(this.codeSendSuccsessfully,'info')
+          this.router.navigateByUrl('/auth/verificationcode')
+        }else{
+          this.popupService.displayErrorModal(response.getError().message)
+        }
       },
-      error:(error)=>{
-        this.popupService.displayErrorModal(error)
+      error:(error:Result<Error>)=>{
+        this.popupService.displayErrorModal(error.getError().message)
       }
     })
   }

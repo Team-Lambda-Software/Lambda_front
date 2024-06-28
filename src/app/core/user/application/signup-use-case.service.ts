@@ -9,11 +9,12 @@ import { UserStatusService } from '../infraestructure/services/user-status.servi
 import { IUseCase } from '../../shared/application/ports/IUseCase.interface';
 import { IAuthApiComunication } from '../domain/interfaces/auth-api-comunication.interface';
 import { SignUpEntryDomainDTO } from '../domain/interfaces/entry/signup-entry.dto';
+import { IUserStatusProvider } from '../domain/interfaces/user-status-provider.interface';
 
 
-export class SingUpUseCaseService implements IUseCase<SignUpEntryDomainDTO,Observable<Result<string>>> {
+export class SignUpUseCaseService implements IUseCase<SignUpEntryDomainDTO,Observable<Result<string>>> {
 
-  constructor(private _authRepository:IAuthRepository, private _userStatus:UserStatusService,
+  constructor(private _authRepository:IAuthRepository, private _userStatus:IUserStatusProvider,
     private _authApiComunication:IAuthApiComunication) {}
 
   execute(data:SignUpEntryDomainDTO): Observable<Result<string>> {
