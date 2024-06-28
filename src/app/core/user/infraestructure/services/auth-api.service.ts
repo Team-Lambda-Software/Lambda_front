@@ -22,6 +22,7 @@ import { Injectable, Optional, inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponseBase } from '@angular/common/http';
 import { GetCodeResponse } from '../dto/response/getCode-response.interface';
 import { UserStatusService } from './user-status.service';
+import { NotificationService } from '../../../../presentation/home/services/notifications/Notification.service';
 
 
 @Injectable({
@@ -33,7 +34,8 @@ export class AuthApiService implements IAuthApiService {
   readonly BASE_URL:string= enviroment.baseUrl+`/auth`
   private _authRepository:IAuthRepository= new AuthLocalStorageService()
   private _userStatus:UserStatusService = inject(UserStatusService)
-
+  private notification=inject(NotificationService)
+  
   constructor() {}
 
   login(LoginEntryDomainDTO: LoginEntryDomainDTO): Observable<Result<AppUser>> {
@@ -48,6 +50,7 @@ export class AuthApiService implements IAuthApiService {
           let type:Type=Type.CLIENT
           if(response.type===Type.CLIENT) type=Type.CLIENT
           if(response.type===Type.ADMIN) type=Type.ADMIN
+          this.notification.saveNotificationToken()
           return Result.makeResult(new AppUser({...response.user,type}))
         }),
         catchError(error=>{

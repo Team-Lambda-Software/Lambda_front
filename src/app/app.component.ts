@@ -78,12 +78,13 @@ export class AppComponent implements OnInit {
 
     this.notification.requestPermission().then( token => {})
 
-    onMessage(messaging, (payload) => {
+    onMessage(messaging, async (payload) => {
       const title = payload.notification?.title
       const body = payload.notification?.body
-      const icon='https://firebasestorage.googleapis.com/v0/b/chat-realtime-5e9cc.appspot.com/o/icon-128x128.png?alt=media&token=073a48a1-3adf-4bd8-a259-2ee99daf55c7'
-      const noti = new Notification( title ?? 'title_dont_received' , { body: body, icon:icon})
-      console.log('Message received. ', payload.notification);
+      console.log('title', title)
+      console.log('body', body)
+      const swRegistration = await navigator.serviceWorker.register('../firebase-messaging-sw.js')
+      swRegistration.showNotification( title??'title_dont_receiver', { body: body } )
     })
 
     this.swUpdate.versionUpdates.subscribe(event => {
