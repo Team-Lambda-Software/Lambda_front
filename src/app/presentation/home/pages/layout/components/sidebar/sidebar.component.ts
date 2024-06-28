@@ -7,6 +7,10 @@ import { AvailableLangs } from '../../../../../shared/interfaces/available-lang.
 import { Router, RouterLink } from '@angular/router';
 import { AuthUsecaseProvider } from '../../../../../../core/user/infraestructure/providers/auth-use-case-provider';
 import { UserStatusService } from '../../../../../../core/user/infraestructure/services/user-status.service';
+import { LogoutUseCaseService } from '../../../../../../core/user/application/logout-use-case.service';
+import { IAuthRepository } from '../../../../../../core/shared/application/ports/IAuthRepository.interface';
+import { AuthLocalStorageService } from '../../../../../../core/shared/infraestructure/local-storage/auth-local-storage.service';
+import { AuthApiService } from '../../../../../../core/user/infraestructure/services/auth-api.service';
 
 const LIMIT_TOUCHED_FOR_OPEN_SIDEBAR = 80;
 const SLIP_THRESHOLD = 80;
@@ -22,9 +26,10 @@ export class SidebarComponent {
 
   private startX: number = 0;
   private threshold = SLIP_THRESHOLD;
-  private authUseCaseService = inject(AuthUsecaseProvider);
+  // private authUseCaseService = inject(AuthUsecaseProvider);
+  private userStatus=inject(UserStatusService)
+  private logOutUseCase= new LogoutUseCaseService(new AuthLocalStorageService(),this.userStatus,new AuthApiService())
   private router=inject(Router)
-  private user=inject(UserStatusService)
   public sidebarService = inject(SidebarService);
   public darkModeService = inject(DarkModeService);
   public translocoService = inject(TranslocoService);
@@ -65,7 +70,7 @@ export class SidebarComponent {
   }
 
   logout() {
-    this.authUseCaseService.usecase.logout();
+    this.logOutUseCase.execute();
     this.router.navigate(['/auth'])
   }
 

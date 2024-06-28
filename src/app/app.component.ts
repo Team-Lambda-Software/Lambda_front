@@ -14,6 +14,9 @@ import { Result } from './common/helpers/Result';
 import { PopupInfoModalService } from './presentation/shared/services/popup-info-modal/popup-info-modal.service';
 import { IRouterRepository } from './core/shared/application/ports/IRouterRepository.interface';
 import { routerLocalStorageRepository } from './core/shared/infraestructure/local-storage/router-local-storage.service';
+import { CurrentUserUseCaseService } from './core/user/application/current-use-case.service';
+import { AuthLocalStorageService } from './core/shared/infraestructure/local-storage/auth-local-storage.service';
+import { AuthApiService } from './core/user/infraestructure/services/auth-api.service';
 
 @Component({
   selector: 'app-root',
@@ -42,13 +45,15 @@ export class AppComponent implements OnInit {
   private notification=inject(NotificationService)
   private authUseCaseService = inject(AuthUsecaseProvider);
   private userStatusService=inject(UserStatusService);
+  private currentUseCaseService=new CurrentUserUseCaseService(
+    new AuthLocalStorageService(),this.userStatusService, new AuthApiService);
   private popupService=inject(PopupInfoModalService);
   private _routerRepository:IRouterRepository= new routerLocalStorageRepository()
 
   constructor(private router: Router){
     const _lastUrl=this._routerRepository.getLastLink();
 
-    this.authUseCaseService.usecase.currentUser().subscribe({
+    this.currentUseCaseService.execute().subscribe({
       next:(value)=>{
         if (!value.isError()){
           this.userStatusService.setUser(value.getValue());

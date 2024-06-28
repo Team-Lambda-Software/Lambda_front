@@ -15,7 +15,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { CommonModule } from '@angular/common';
 import { TranslocoModule } from '@jsverse/transloco';
-import { Type } from '../../../../core/user/domain/interfaces/type.interface';
+import { UserType } from '../../../../core/user/domain/interfaces/Usertype.interface';
 import { PopupInfoModalService } from '../../../shared/services/popup-info-modal/popup-info-modal.service';
 import { AuthUsecaseProvider } from '../../../../core/user/infraestructure/providers/auth-use-case-provider';
 import { Result } from '../../../../common/helpers/Result';
@@ -101,7 +101,7 @@ export class RegisterPageComponent {
       password,
       name,
       phone,
-      type: Type.CLIENT
+      type: UserType.CLIENT
     }
     return (newUser);
   }

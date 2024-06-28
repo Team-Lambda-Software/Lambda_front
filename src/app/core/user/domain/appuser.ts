@@ -1,5 +1,5 @@
 import { IAppUser } from "./appuser.model";
-import { Type } from "./interfaces/type.interface";
+import { UserType } from "./interfaces/Usertype.interface";
 
 export class AppUser implements IAppUser{
   id: string;
@@ -7,7 +7,7 @@ export class AppUser implements IAppUser{
   name: string;
   phone: string;
   image?: string;
-  type:Type
+  type: UserType
 
   constructor(data:IAppUser){
     this.id=data.id
