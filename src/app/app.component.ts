@@ -81,10 +81,11 @@ export class AppComponent implements OnInit {
     onMessage(messaging, async (payload) => {
       const title = payload.notification?.title
       const body = payload.notification?.body
-      const icon = payload.notification?.icon
+      const icon = 'https://firebasestorage.googleapis.com/v0/b/chat-realtime-5e9cc.appspot.com/o/icon-128x128.png?alt=media&token=073a48a1-3adf-4bd8-a259-2ee99daf55c7'
+      const badge = 'https://firebasestorage.googleapis.com/v0/b/chat-realtime-5e9cc.appspot.com/o/logo-ligth.png?alt=media&token=75d987b9-5c25-4abb-a457-7f885c076fb2'
       console.log(' get onmessage: ', payload.notification)
       const swRegistration = await navigator.serviceWorker.register('../firebase-messaging-sw.js')
-      swRegistration.showNotification( title??'title_dont_receiver', { body: body, badge: icon, icon: icon } )
+      swRegistration.showNotification( title??'title_dont_receiver', { body: body, badge: badge, icon: icon } )
     })
 
     this.swUpdate.versionUpdates.subscribe(event => {
