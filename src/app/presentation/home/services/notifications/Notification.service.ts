@@ -44,7 +44,7 @@ export class NotificationService {
       if (permission=="granted"){
         const tokenFirebase= await getToken(this.messaggingFirebase,{vapidKey:enviroment.firebase.vpaidKey})
         this._notificationToken=new Optional(tokenFirebase)
-        this._notificationToken.setValue(tokenFirebase)
+        this._notifactionRepository.saveNotificationToken( tokenFirebase )
         console.log(tokenFirebase)
         resolve( tokenFirebase )
       } else reject( new Error ('No se aceptaron los permisos'))
