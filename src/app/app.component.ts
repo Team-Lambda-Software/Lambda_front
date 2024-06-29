@@ -82,8 +82,8 @@ export class AppComponent implements OnInit {
       const title = payload.notification?.title
       const body = payload.notification?.body
       console.log(' get onmessage: ', title)
-      //const swRegistration = await navigator.serviceWorker.register('../firebase-messaging-sw.js')
-      //swRegistration.showNotification( title??'title_dont_receiver', { body: body } )
+      const swRegistration = await navigator.serviceWorker.register('../firebase-messaging-sw.js')
+      swRegistration.showNotification( title??'title_dont_receiver', { body: body } )
     })
 
     this.swUpdate.versionUpdates.subscribe(event => {
