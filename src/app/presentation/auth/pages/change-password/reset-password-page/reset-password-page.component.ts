@@ -9,7 +9,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslocoModule } from '@jsverse/transloco';
 import { PopupInfoModalService } from '../../../../shared/services/popup-info-modal/popup-info-modal.service';
-import { AuthUsecaseProvider } from '../../../../../core/user/infraestructure/providers/auth-use-case-provider';
 import { IAuthRepository } from '../../../../../core/shared/application/ports/IAuthRepository.interface';
 import { AuthLocalStorageService } from '../../../../../core/shared/infraestructure/local-storage/auth-local-storage.service';
 import { GetCodeUpdatePasswordUseCase } from '../../../../../core/user/application/get-code-update-password-use-case.service';

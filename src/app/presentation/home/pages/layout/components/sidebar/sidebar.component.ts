@@ -5,12 +5,9 @@ import { DarkModeService } from '../../../../../shared/services/dark-mode/dark-m
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AvailableLangs } from '../../../../../shared/interfaces/available-lang.model';
 import { Router, RouterLink } from '@angular/router';
-import { AuthUsecaseProvider } from '../../../../../../core/user/infraestructure/providers/auth-use-case-provider';
 import { UserStatusService } from '../../../../../../core/user/infraestructure/services/user-status.service';
 import { LogoutUseCaseService } from '../../../../../../core/user/application/logout-use-case.service';
-import { IAuthRepository } from '../../../../../../core/shared/application/ports/IAuthRepository.interface';
 import { AuthLocalStorageService } from '../../../../../../core/shared/infraestructure/local-storage/auth-local-storage.service';
-import { AuthApiService } from '../../../../../../core/user/infraestructure/services/auth-api.service';
 
 const LIMIT_TOUCHED_FOR_OPEN_SIDEBAR = 80;
 const SLIP_THRESHOLD = 80;

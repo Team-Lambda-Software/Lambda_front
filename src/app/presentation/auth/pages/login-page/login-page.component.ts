@@ -11,7 +11,6 @@ import { CommonModule } from '@angular/common';
 import { ValidatorService } from '../../../shared/services/validator/validator.service';
 import { TranslocoModule } from '@jsverse/transloco';
 import { PopupInfoModalService } from '../../../shared/services/popup-info-modal/popup-info-modal.service';
-import { AuthUsecaseProvider } from '../../../../core/user/infraestructure/providers/auth-use-case-provider';
 import { Result } from '../../../../common/helpers/Result';
 import { UserStatusService } from '../../../../core/user/infraestructure/services/user-status.service';
 import { NotificationService } from '../../../home/services/notifications/Notification.service';
@@ -34,7 +33,6 @@ export class LoginPageComponent {
 
   public darkModeService = inject(DarkModeService);
   private fb = inject(FormBuilder)
-  private authUseCaseService = inject(AuthUsecaseProvider);
   private router= inject(Router)
   private userStatusService=inject(UserStatusService)
   private loginUsecaseService=new LoginUseCaseService(

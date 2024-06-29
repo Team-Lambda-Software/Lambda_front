@@ -3,9 +3,8 @@ import { EventType, NavigationEnd, Router, RouterOutlet } from '@angular/router'
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { BottomBarComponent } from './components/bottom-bar/bottom-bar.component';
 import { Subscription, filter } from 'rxjs';
-import { AuthStatus } from '../../../../core/user/domain/interfaces/auth-status.enum';
+import { AuthStatus } from '../../../../core/user/domain/enum/auth-status.enum';
 import { LoaderComponent } from "../../../auth/components/loader/loader.component";
-import { UserStatusService } from '../../../../core/user/infraestructure/services/user-status.service';
 import { AuthLoadingStore } from '../../../../core/user/infraestructure/auth-loading-store';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NgClass } from '@angular/common';

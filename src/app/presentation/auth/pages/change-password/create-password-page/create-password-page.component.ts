@@ -10,7 +10,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { VerificationPasswordForm } from '../../../interfaces/forms/createPassword-form.interface';
 import { TranslocoModule } from '@jsverse/transloco';
 import { PopupInfoModalService } from '../../../../shared/services/popup-info-modal/popup-info-modal.service';
-import { AuthUsecaseProvider } from '../../../../../core/user/infraestructure/providers/auth-use-case-provider';
+import { AuthLocalStorageService } from '../../../../../core/shared/infraestructure/local-storage/auth-local-storage.service';
+import { UserStatusService } from '../../../../../core/user/infraestructure/services/user-status.service';
+import { AuthApiService } from '../../../../../core/user/infraestructure/services/auth-api.service';
+import { Result } from '../../../../../common/helpers/Result';
+import { UpdatePasswordUseCase } from '../../../../../core/user/application/update-password-use-case.service';
 
 @Component({
     selector: 'app-create-password-page',
@@ -23,7 +27,8 @@ import { AuthUsecaseProvider } from '../../../../../core/user/infraestructure/pr
     ]
 })
 export class CreatePasswordPageComponent {
-  private authUseCaseService = inject(AuthUsecaseProvider);
+  private userStatus=inject(UserStatusService)
+  private updatePasswordUseCase= new UpdatePasswordUseCase(new AuthLocalStorageService(),this.userStatus,new AuthApiService)
   public darkModeService = inject(DarkModeService);
   private router= inject(Router)
   public validatorService= inject(ValidatorService)
@@ -58,18 +63,22 @@ export class CreatePasswordPageComponent {
       {
         let {password}=this.createPasswordForm.value
         if (password){
-          this.authUseCaseService.usecase.updatePassword(password)
+          this.updatePasswordUseCase.execute(password)
           .subscribe({
             next:(value)=>{
-              if (value>=200 && value<=299){
-              this.router.navigateByUrl('/auth/confirmpassword')
-              this.popupService.displayInfoModal(this.correctStatusCode)}
+              if(!value.isError()){
+                let code=value.getValue()
+                if (code>=200 && code<=299){
+                  this.router.navigateByUrl('/auth/confirmpassword')
+                  this.popupService.displayInfoModal(this.correctStatusCode)}
+                else this.popupService.displayErrorModal(this.errorStatusCode)
+              }
               else{
                 this.popupService.displayErrorModal(this.errorStatusCode)
               }
             },
-            error:(error)=>{
-              this.popupService.displayErrorModal(error)
+            error:(error:Result<Error>)=>{
+              this.popupService.displayErrorModal(error.getError().message)
             }
           })
         }

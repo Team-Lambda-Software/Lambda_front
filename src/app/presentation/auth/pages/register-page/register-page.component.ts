@@ -17,7 +17,6 @@ import { CommonModule } from '@angular/common';
 import { TranslocoModule } from '@jsverse/transloco';
 import { UserType } from '../../../../core/user/domain/interfaces/Usertype.interface';
 import { PopupInfoModalService } from '../../../shared/services/popup-info-modal/popup-info-modal.service';
-import { AuthUsecaseProvider } from '../../../../core/user/infraestructure/providers/auth-use-case-provider';
 import { Result } from '../../../../common/helpers/Result';
 import { UserStatusService } from '../../../../core/user/infraestructure/services/user-status.service';
 import { SignUpUseCaseService } from '../../../../core/user/application/signup-use-case.service';
@@ -38,7 +37,6 @@ export class RegisterPageComponent {
   public validatorService= inject(ValidatorService)
   private router= inject(Router)
   private popupService=inject(PopupInfoModalService)
-  private authUseCaseService = inject(AuthUsecaseProvider);
   private userStatusService=inject(UserStatusService)
   private signUpUseCaseService= new SignUpUseCaseService(new AuthLocalStorageService(),this.userStatusService,new AuthApiService())
 

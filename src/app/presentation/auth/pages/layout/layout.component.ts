@@ -1,6 +1,6 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, EventType, Router, RouterOutlet } from '@angular/router';
-import { AuthStatus } from '../../../../core/user/domain/interfaces/auth-status.enum';
+import { AuthStatus } from '../../../../core/user/domain/enum/auth-status.enum';
 import { LoaderComponent } from '../../components/loader/loader.component';
 import { AuthLoadingStore } from '../../../../core/user/infraestructure/auth-loading-store';
 import {toSignal} from '@angular/core/rxjs-interop'
