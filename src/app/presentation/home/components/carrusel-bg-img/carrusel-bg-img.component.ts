@@ -20,6 +20,7 @@ export class CarruselBgImgComponent {
   @Output() public scrolled = new EventEmitter<void>();
   @Input({required: false}) public loadingQuantity?: number;
   @Input({ required: true }) public items!: ILittleCard[];
+  @Input({ required: true }) public route!: string;
 
   onScroll(): void {
     this.scrolled.emit();

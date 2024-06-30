@@ -1,5 +1,5 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
-import { EventType, NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { Component, ElementRef, ViewChild, computed, signal } from '@angular/core';
+import { EventType, Router, RouterOutlet } from '@angular/router';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { BottomBarComponent } from './components/bottom-bar/bottom-bar.component';
 import { Subscription, filter } from 'rxjs';
@@ -31,6 +31,7 @@ const BOTTOM_NAVIGATION_BAR_BLACK_LIST: RegExp[] = [
 })
 
 export class LayoutComponent {
+  @ViewChild('scrollContainer') scrollContainer!: ElementRef;
   public subscriber?: Subscription;
   public isBottombarActive = signal<boolean>(false);
   constructor(private router: Router) { }
@@ -50,7 +51,8 @@ export class LayoutComponent {
     ).subscribe((event) => {
       if(event.type===EventType.NavigationEnd){
         this.checkBottomBarStatus(event.url)
-        this._routerRepository.saveLastLink(event.url)
+        this._routerRepository.saveLastLink(event.url);
+        this.scrollContainer.nativeElement.scrollTop = 0;
       }
     });
   }

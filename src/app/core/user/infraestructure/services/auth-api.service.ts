@@ -15,6 +15,7 @@ import { GetCodeResponse } from '../dto/response/getCode-response.interface';
 import { UserStatusService } from './user-status.service';
 import { IAuthApiComunication } from '../../domain/interfaces/auth-api-comunication.interface';
 import { IUserStatusProvider } from '../../domain/interfaces/user-status-provider.interface';
+import { NotificationService } from '../../../../presentation/home/services/notifications/Notification.service';
 
 
 @Injectable({
@@ -25,6 +26,7 @@ export class AuthApiService implements IAuthApiComunication {
   private _httpClient = inject(HttpClient);
   readonly BASE_URL:string= enviroment.baseUrl+`/auth`
   private _userState:IUserStatusProvider=new UserStatusService()
+  private notification=inject(NotificationService)
   constructor() {}
 
   login(email:string,password:string): Observable<Result<string>> {
@@ -33,11 +35,12 @@ export class AuthApiService implements IAuthApiComunication {
     return this._httpClient.post<LoginResponse>(url,body)
       .pipe(
         map((response)=>{
-          // this._authRepository.saveToken(response.token)
           let type:UserType=UserType.CLIENT
           if(response.type===UserType.CLIENT) type=UserType.CLIENT
           if(response.type===UserType.ADMIN) type=UserType.ADMIN
           this._userState.setUser(new AppUser({...response.user,type}))
+          this.notification.saveNotificationToken()
+
           return Result.makeResult(response.token)
         }),
         catchError(error=>{

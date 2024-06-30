@@ -1,15 +1,20 @@
 <div class="mt-8 font-medium max-w-[800px] m-auto mb-[175px]">
-    @for (st of structure; track st.title) {
-        <div class="px-4  justify-between items-center py-6 border-b-[1px] border-b-[rgba(0,0,0,.2)] cursor-pointer hover:bg-white dark:hover:bg-black">
+    @for (st of structure; track st.date) {
+        <div (click)="openDialog(st)" class="px-4  justify-between items-center py-6 border-b-[1px] border-b-[rgba(0,0,0,.2)] cursor-pointer hover:bg-white dark:hover:bg-black">
 
                 <div class="flex items-center gap-6">
-                    <div> 
-                        <span class="fas fa-bell text-gray-400 text-2xl dark:text-white"></span>
+                    <div>
+                        @if (st.userReaded) {     
+                            <span class="fa-regular fa-bell text-gray-400 text-2xl dark:text-white ml-3"></span>
+                        }
+                        @else {
+                            <span class="fa-solid fa-bell text-gray-400 text-2xl dark:text-white ml-3"></span>    
+                        }
                     </div>
                     <div>
-                        <span class="dark:text-white">{{ st.date }}</span><br>
+                        <span class="dark:text-white">{{ formatearFecha(st.date) }}</span><br>
                         <span class="dark:text-white font-bold">{{ st.title }}</span><br>
-                        <span class="dark:text-white block overflow-hidden text-ellipsis whitespace-nowrap" style="max-width: 300px;">{{ st.body }}</span>
+                        <span class="dark:text-white block overflow-hidden text-ellipsis whitespace-nowrap" style="max-width: 250px;">{{ st.body }}</span>
                     </div>
                 </div>
         </div>

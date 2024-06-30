@@ -1,11 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { BasicHeaderComponent } from '../../../components/basic-header/basic-header.component';
-import { ICourse } from '../../../interfaces/course-model';
 import { ILittleCard } from '../../../interfaces/ILittleCard';
 import { LitleCardComponent } from '../../../components/litle-card/litle-card.component';
-import { CourseLitleCardAdapter, PartialCourseToILittleCard } from '../../../adapters/LitleCardAdapter';
+import { PartialCourseToILittleCard } from '../../../adapters/LitleCardAdapter';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Observable, finalize, map, of } from 'rxjs';
+import { finalize, map } from 'rxjs';
 import { CarruselBgImgComponent } from '../../../components/carrusel-bg-img/carrusel-bg-img.component';
 import { TranslocoModule } from '@jsverse/transloco';
 import { AsyncPipe } from '@angular/common';
@@ -15,6 +14,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { PlayerVideoComponent } from '../player-video/player-video.component';
 import { NavigationExtras } from '@angular/router';
 import { SquareSkeletonComponent } from '../../../../shared/components/square-skeleton/square-skeleton.component';
+import { SectionExpandedComponent } from './components/section-expanded/section-expanded.component';
+import { CourseDescriptionComponent } from './components/course-description/course-description.component';
+import { CourseHeaderComponent } from './components/course-header/course-header.component';
 
 @Component({
   selector: 'app-main-course',
@@ -26,9 +28,11 @@ import { SquareSkeletonComponent } from '../../../../shared/components/square-sk
     TranslocoModule,
     RouterLink,
     AsyncPipe,
-    MatExpansionModule,
     PlayerVideoComponent,
-    SquareSkeletonComponent
+    SquareSkeletonComponent,
+    SectionExpandedComponent,
+    CourseDescriptionComponent,
+    CourseHeaderComponent
   ],
   templateUrl: './main-course.component.html',
   styleUrl: './main-course.component.css'
@@ -42,7 +46,7 @@ export class MainCourseComponent implements OnInit {
   public courseUseCaseService = inject(CourseUsecaseProvider);
   public logoPath = 'assets/icons/app-logo.svg'
   public course?: Course;
-  public popularCourses: ILittleCard[] = []
+  public popularCourses: ILittleCard[] = [];
   public isLoading = false;
 
   constructor(private router: Router, private route: ActivatedRoute) {
@@ -50,6 +54,7 @@ export class MainCourseComponent implements OnInit {
       if (params['id']) {
         this.currentPopularPage = 1;
         this.id = params['id'];
+        this.popularCourses = [];
         this.getById();
         this.getPopulars();
       } else this.router.navigate(['/home'])
@@ -77,10 +82,11 @@ export class MainCourseComponent implements OnInit {
   }
 
   public getPopulars() {
+    console.log(this.id)
     if (this.currentPopularPage === 1) this.isLoadingPopulars = true;
     else this.isLoadingMorePopulars = true;
     this.courseUseCaseService.usecase
-      .getCoursesByParams(`?filter=POPULAR&perPage=3&page=${this.currentPopularPage}`)
+      .getCoursesByParams(`?filter=POPULAR&perPage=4&page=${this.currentPopularPage}`)
       .pipe(
         map(courses => courses.map(PartialCourseToILittleCard)),
         finalize(() => {
@@ -88,7 +94,11 @@ export class MainCourseComponent implements OnInit {
           this.isLoadingPopulars = false;
           this.currentPopularPage++;
         })
-      ).subscribe(courses => this.popularCourses = [...this.popularCourses, ...courses])
+      ).subscribe(courses => 
+        this.popularCourses = [
+          ...this.popularCourses,
+          ...courses.filter(course => this.id! !== course.id)
+        ])
   }
 
 }

@@ -73,5 +73,7 @@
   "add-a-comment": "Añadir un comentario...",
   "go-to-course": "ir al gurso",
   "next": "Sig.",
-  "prev": "Ant."
+  "prev": "Ant.",
+  "no-courses-to-show": "No hay cursos para mostrar",
+  "no-blogs-to-show": "No hay blogs para mostrar"
 }

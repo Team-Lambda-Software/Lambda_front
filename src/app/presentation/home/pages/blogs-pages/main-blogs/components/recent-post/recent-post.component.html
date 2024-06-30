@@ -18,7 +18,7 @@
         <app-litle-card 
           class="animate__animated animate__fadeIn"
           [item]="blog" class="flex justify-center"
-          [routerLink]="['/home/blogs', blog.id]" 
+          [route]="'/home/blogs-details'" 
         />
       }
       @if (isLoadingMoreBlogs()) {

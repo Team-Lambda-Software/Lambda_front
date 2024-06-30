@@ -11,7 +11,6 @@ import { NotificationLocalStorageService } from '../../../../core/shared/infraes
 import { IAuthRepository } from '../../../../core/shared/application/ports/IAuthRepository.interface';
 import { AuthLocalStorageService } from '../../../../core/shared/infraestructure/local-storage/auth-local-storage.service';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -39,33 +38,14 @@ export class NotificationService {
 
     }
 
-    sendGoodDayNotification():Observable<boolean>{
-
-      const url=`${this.baseUrl}/notifications/goodday`
-
-      if (!this._notificationToken.hasValue()) return (
-        of(false))
-
-    return this.http.get<NotificationTokenResponse>(url)
-      .pipe(
-        map((response)=>{
-          console.log(response);
-          return true
-        }),
-        catchError((error)=>
-          {
-            return throwError(()=>error.error.message)
-          }
-        )
-      )
-    }
-
-  public async requestPermission(){
+    public async requestPermission(){
     return new Promise(async (resolve,reject)=>{
       const permission=await Notification.requestPermission()
       if (permission=="granted"){
         const tokenFirebase= await getToken(this.messaggingFirebase,{vapidKey:enviroment.firebase.vpaidKey})
         this._notificationToken=new Optional(tokenFirebase)
+        this._notifactionRepository.saveNotificationToken( tokenFirebase )
+        console.log(tokenFirebase)
         resolve( tokenFirebase )
       } else reject( new Error ('No se aceptaron los permisos'))
     })
