@@ -1,4 +1,4 @@
-import { Type } from "./interfaces/type.interface";
+import { UserType } from "./interfaces/Usertype.interface";
 
 export interface IAppUser {
   id:    string;
@@ -6,5 +6,5 @@ export interface IAppUser {
   name:  string;
   phone: string;
   image?: string;
-  type: Type
+  type: UserType
 }

@@ -1,4 +1,4 @@
-import { AuthStatus } from "../domain/interfaces/auth-status.enum";
+import { AuthStatus } from "../domain/enum/auth-status.enum";
 import { Store } from "./Store";
 
 export class AuthLoadingStore extends Store<AuthStatus> {

@@ -14,8 +14,6 @@ import { TRAINER_API_PROVIDER } from './core/trainer/infrastructure/providers/tr
 import { BLOG_API_PROVIDER } from './core/blog/infrastructure/providers/blog-api-provider';
 import { SEARCH_API_PROVIDER } from './core/search/infraestructure/providers/search-api-provider';
 import { NOTIFICATION_API_PROVIDER } from './core/notification/infrastructure/providers/notification-api-provider';
-import { AUTH_API_PROVIDER } from './core/user/infraestructure/providers/auth-api-provider';
-import { USER_API_PROVIDER } from './core/user/infraestructure/providers/user-status-provider';
 import { COMMENT_API_PROVIDER } from './core/comments/infraestructure/providers/comment-api-provider';
 import { TAGS_API_PROVIDER } from './core/search/infraestructure/providers/tags-api-provider';
 
@@ -45,8 +43,6 @@ export const appConfig: ApplicationConfig = {
     SEARCH_API_PROVIDER,
     TAGS_API_PROVIDER,
     NOTIFICATION_API_PROVIDER,
-    AUTH_API_PROVIDER,
-    USER_API_PROVIDER,
     COMMENT_API_PROVIDER
   ]
 };

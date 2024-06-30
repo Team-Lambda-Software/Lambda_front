@@ -11,10 +11,12 @@ import { CommonModule } from '@angular/common';
 import { ValidatorService } from '../../../shared/services/validator/validator.service';
 import { TranslocoModule } from '@jsverse/transloco';
 import { PopupInfoModalService } from '../../../shared/services/popup-info-modal/popup-info-modal.service';
-import { AuthUsecaseProvider } from '../../../../core/user/infraestructure/providers/auth-use-case-provider';
 import { Result } from '../../../../common/helpers/Result';
 import { UserStatusService } from '../../../../core/user/infraestructure/services/user-status.service';
 import { NotificationService } from '../../../home/services/notifications/Notification.service';
+import { AuthLocalStorageService } from '../../../../core/shared/infraestructure/local-storage/auth-local-storage.service';
+import { AuthApiService } from '../../../../core/user/infraestructure/services/auth-api.service';
+import { LoginUseCaseService } from '../../../../core/user/application/login-use-case.service';
 
 
 
@@ -31,9 +33,10 @@ export class LoginPageComponent {
 
   public darkModeService = inject(DarkModeService);
   private fb = inject(FormBuilder)
-  private authUseCaseService = inject(AuthUsecaseProvider);
   private router= inject(Router)
   private userStatusService=inject(UserStatusService)
+  private loginUsecaseService=new LoginUseCaseService(
+    new AuthLocalStorageService(),this.userStatusService, new AuthApiService());
   private notification=inject(NotificationService)
 
   private popupService=inject(PopupInfoModalService)
@@ -57,12 +60,10 @@ export class LoginPageComponent {
 
   login(){
     const {email,password}=this.loginForm.value;
-    this.authUseCaseService.usecase.login({email,password}).subscribe({
+    this.loginUsecaseService.execute({email,password}).subscribe({
       next:(answer)=>{
-        if(!answer.isError()) {this.router.navigateByUrl('/home'),
-          this.userStatusService.setUser(answer.getValue())
-          this.notification.saveNotificationToken().then( token => {})
-        }
+        if(!answer.isError()) {this.router.navigateByUrl('/home')}
+          // this.notification.saveNotificationToken().then( token => {})
       },
       error:(error:Result<Error>)=>{
          this.popupService.displayErrorModal(error.getError().message)

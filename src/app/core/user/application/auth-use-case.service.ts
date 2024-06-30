@@ -13,19 +13,19 @@ import { Result } from "../../../common/helpers/Result";
 export class AuthUseCaseService implements IAuthUseCase {
 
   constructor(private _loginApiService: IAuthApiService) { }
-
+  //
   currentUser(): Observable<Result<AppUser>> {
     return this._loginApiService.currentUser()
   }
-
+  //
   login(loginData:LoginEntryDomainDTO): Observable<Result<AppUser>> {
     return this._loginApiService.login(loginData)
   }
-
+  //
   signup(user: SignUpEntryDomainDTO): Observable<Result<AppUser>>{
     return this._loginApiService.signup(user)
   }
-
+  //
   getCodeUpdatePassword(email:string):Observable<void>{
     return this._loginApiService.getCodeUpdatePassword(email)
   }
@@ -37,7 +37,7 @@ export class AuthUseCaseService implements IAuthUseCase {
   updatePassword(password:string):Observable<number>{
     return this._loginApiService.updatePassword(password)
   }
-
+  //
   logout (): void {
     this._loginApiService.logout()
   }
