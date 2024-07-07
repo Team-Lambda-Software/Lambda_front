@@ -1,4 +1,4 @@
-import { LoginEntryDomainDTO  } from '../domain/interfaces/entry/login-entry.dto';
+import { LoginEntryApplicationDTO  } from './entry/login-entry.dto';
 import { AppUser } from '../domain/appuser';
 
 import { IAuthRepository } from '../../shared/application/ports/IAuthRepository.interface';
@@ -10,12 +10,12 @@ import { IAuthApiComunication } from '../domain/interfaces/auth-api-comunication
 import { IUserStatusProvider } from '../domain/interfaces/user-status-provider.interface';
 
 
-export class LoginUseCaseService implements IUseCase<LoginEntryDomainDTO,Observable<Result<string>>> {
+export class LoginUseCaseService implements IUseCase<LoginEntryApplicationDTO,Observable<Result<string>>> {
 
   constructor(private _authRepository:IAuthRepository, private _userStatus:IUserStatusProvider,
     private _authApiComunication:IAuthApiComunication) {}
 
-  execute(data: LoginEntryDomainDTO): Observable<Result<string>> {
+  execute(data: LoginEntryApplicationDTO): Observable<Result<string>> {
     this._userStatus.setChecking();
     return this._authApiComunication.login(data.email,data.password).pipe(
       (observable)=>{

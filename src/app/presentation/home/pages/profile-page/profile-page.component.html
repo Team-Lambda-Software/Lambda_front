@@ -1,42 +1,5 @@
 <header class="bg-gradient-purple rounded-br-[50px] text-white">
-  <div class="py-5 px-4 text-white bg-main-bg bg-cover flex justify-between items-start">
-    <div class="flex items-center">
-        <h1 class="fas fa-chevron-left pr-4" [routerLink]="['/home/main']"></h1>
-        <p class="font-medium text-lg">{{'profile' | transloco}}</p>
-    </div>
-    <div class="fas fa-edit flex items-center py-2 pr-4" [routerLink]="['/home/update']">
-    </div>
-</div>
-<div>
-
-</div>
-<div class="flex items-center ml-4" *ngIf="user.hasValue()">
-  <span class="profile-picture">
-     <img src="{{user.getValue().image}}" class="w-[69px] h-[69px] rounded-full" align="left"/>
-  </span>
-  <div class="flex flex-col items-start ml-4">
-     <span class="font-bold">{{user.getValue().name}}</span>
-     <p class=" flex flex-col items-start " style="display:inline">
-       <span class="font-bold text-lg">{{userInfoProfile.getUserInfoProfile().followers}}</span>
-       <span class="font-bold text-lg mx-11">{{userInfoProfile.getUserInfoProfile().following}}</span>
-     </p>
-     <p class="follower-counts flex flex-col items-start " style="display:inline">
-      <span class="font-medium">{{'followers' | transloco}}</span>
-      <span class="font-medium mx-5">{{'following' | transloco}}</span>
-    </p>
-  </div>
-</div>
-<div class="mx-4 py-4"></div>
-<div class="bar-wrapper w-[202px] h-[28px] mx-20 flex justify-between items-center" >
-  <h1 class="fas fa-smile"></h1>
-  <span class="font-bold">90hrs</span>
-</div>
-<div class="bar-wrapper w-[202px] h-[28px] mx-20 flex justify-between items-center">
-
-  <progress [value]="progressValue" max="100"></progress>
-
-</div>
-<div class="mx-2 py-2"></div>
+  <app-header-card redirectLastPage="/home/main" redirectNextPage="/home/update"></app-header-card>
 </header>
 
 <div class="animate__animated animate__fadeIn">

@@ -4,7 +4,7 @@ import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.se
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ValidatorService } from '../../../shared/services/validator/validator.service';
-import { SignUpEntryDomainDTO } from '../../../../core/user/domain/interfaces/entry/signup-entry.dto';
+import { SignUpEntryApplicationDTO } from '../../../../core/user/application/entry/signup-entry.dto';
 
 import { SignUpForm } from '../../interfaces/forms/signup-form.interface';
 
@@ -91,14 +91,14 @@ export class RegisterPageComponent {
   }
 
 
-  createSignUpEntryDomainDTO(registerData:FormGroup<SignUpForm>):SignUpEntryDomainDTO{
+  createSignUpEntryApplicationDTO(registerData:FormGroup<SignUpForm>):SignUpEntryApplicationDTO{
     const data= registerData
     const email=data.value.email || ''
     const name=data.value.name  || ''
     const phone=data.value.phone  || ''
     const password=data.value.password || ''
 
-    let newUser:SignUpEntryDomainDTO={
+    let newUser:SignUpEntryApplicationDTO={
       email,
       password,
       name,
@@ -111,7 +111,7 @@ export class RegisterPageComponent {
   register(){
 
     if(this.signUpForm.valid){
-      let newUser:SignUpEntryDomainDTO=this.createSignUpEntryDomainDTO(this.signUpForm)
+      let newUser:SignUpEntryApplicationDTO=this.createSignUpEntryApplicationDTO(this.signUpForm)
       this.signUpUseCaseService.execute(newUser)
         .subscribe({
           next:(answer)=>{

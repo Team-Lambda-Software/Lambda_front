@@ -12,6 +12,7 @@ import { CoursesMyTrainingService } from '../../services/courses/getTraining/cou
 import { IUserProfile } from '../../interfaces/user-info-model';
 import { UserInfoService } from '../../services/user/getUserInfo/user-info.service';
 import { UserStatusService } from '../../../../core/user/infraestructure/services/user-status.service';
+import { HeaderCardComponent } from '../../components/header-card/header-card.component';
 
 
 @Component({
@@ -19,7 +20,7 @@ import { UserStatusService } from '../../../../core/user/infraestructure/service
     templateUrl: './profile-page.component.html',
     styleUrl: './profile-page.component.css',
     standalone: true,
-    imports: [RouterLink, CommonModule, CarruselBgImgComponent, TranslocoModule, NgxChartsModule]
+    imports: [RouterLink, CommonModule, CarruselBgImgComponent, TranslocoModule, NgxChartsModule,HeaderCardComponent]
 })
 export class ProfilePageComponent {
 

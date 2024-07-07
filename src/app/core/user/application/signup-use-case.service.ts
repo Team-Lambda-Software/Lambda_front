@@ -1,23 +1,19 @@
-import { LoginEntryDomainDTO  } from '../domain/interfaces/entry/login-entry.dto';
-import { AppUser } from '../domain/appuser';
-
 import { IAuthRepository } from '../../shared/application/ports/IAuthRepository.interface';
 import { Result } from '../../../common/helpers/Result';
 
-import { Observable, of } from 'rxjs';
-import { UserStatusService } from '../infraestructure/services/user-status.service';
+import { Observable} from 'rxjs';
 import { IUseCase } from '../../shared/application/ports/IUseCase.interface';
 import { IAuthApiComunication } from '../domain/interfaces/auth-api-comunication.interface';
-import { SignUpEntryDomainDTO } from '../domain/interfaces/entry/signup-entry.dto';
+import { SignUpEntryApplicationDTO } from './entry/signup-entry.dto';
 import { IUserStatusProvider } from '../domain/interfaces/user-status-provider.interface';
 
 
-export class SignUpUseCaseService implements IUseCase<SignUpEntryDomainDTO,Observable<Result<string>>> {
+export class SignUpUseCaseService implements IUseCase<SignUpEntryApplicationDTO,Observable<Result<string>>> {
 
   constructor(private _authRepository:IAuthRepository, private _userStatus:IUserStatusProvider,
     private _authApiComunication:IAuthApiComunication) {}
 
-  execute(data:SignUpEntryDomainDTO): Observable<Result<string>> {
+  execute(data:SignUpEntryApplicationDTO): Observable<Result<string>> {
     this._userStatus.setChecking();
     return this._authApiComunication.signup(data.email,data.name,data.password,data.phone,data.type).pipe(
       (observable)=>{

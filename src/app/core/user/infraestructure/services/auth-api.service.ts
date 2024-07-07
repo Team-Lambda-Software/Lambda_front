@@ -90,8 +90,6 @@ export class AuthApiService implements IAuthApiComunication {
       return this._httpClient.post<GetCodeResponse>(url,body)
       .pipe(
         map((response)=>{
-          // this._authRepository.saveEmail(email)
-          // this._authRepository.saveDateCode(response.date.toString())
           return Result.makeResult(response.date.toString());
         }),
         catchError(error=>{
@@ -102,14 +100,12 @@ export class AuthApiService implements IAuthApiComunication {
 
 
   verificateCode(email:string,code:string):Observable<Result<number>>{
-    // let email=this._authRepository.getEmail()
     const url=`${this.BASE_URL}/code/validate`
     const body={email,code}
 
     return this._httpClient.post<HttpResponseBase>(url,body,{ observe: 'response' })
       .pipe(
         map((response)=>{
-          // this._authRepository.saveCode(code)
           return Result.makeResult(response.status)
         }),
         catchError(error=>{
