@@ -18,7 +18,9 @@ export class UserApiService implements IUSerApiComunication {
 
   updateUser(data: UpdateUSerEntryApplicationDTO): Observable<Result<string>> {
     const body={...data}
-    return this._httpClient.patch<UpdateUserResponse>(this.BASE_URL,body)
+    console.log(data);
+
+    return this._httpClient.put<UpdateUserResponse>(this.BASE_URL,body)
       .pipe(
         map((response)=>{
           return Result.makeResult(response.id)

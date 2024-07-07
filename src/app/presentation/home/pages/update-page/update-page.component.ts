@@ -43,6 +43,8 @@ export class UpdatePageComponent {
   public SubmitButtonName='Submit'
   public succsesUpdateUser="User Updated successfully"
   public errorUploadingUserImage="Error uploading the new user image"
+  public errorUploadingTypeImage="Error uploading the new user image, must be png or jpg"
+
 
   public userStatusService = inject(UserStatusService);
   public validatorService= inject(ValidatorService);
@@ -107,17 +109,27 @@ export class UpdatePageComponent {
   }
 
   loadImage(event:any){
-    let file=event.target.files[0]
+    let file:File=event.target.files[0]
     if(!file) {
       this.UserPhotoUploadFile=new Optional()
       this.previewUploadFile=''
       return this.popupService.displayErrorModal(this.errorUploadingUserImage)}
+
+
+    const isValidImageExtension = /\.(jpg|jpeg|png)$/.test(file.name);
+    console.log(file.name);
+
+
+    if(isValidImageExtension)
+      return this.popupService.displayErrorModal(this.errorUploadingTypeImage)
+
     this.UserPhotoUploadFile=new Optional<File>(file);
-    if(this.UserPhotoUploadFile.getValue().type)
+    console.log(file);
+
     this.convertFileToBase64(file).then(imagen=>{
-      console.log(imagen);
       this.previewUploadFile=imagen.base
     })
+
   }
 
   public updateEmailPhoneName(){

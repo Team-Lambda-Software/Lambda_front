@@ -11,7 +11,6 @@ export class ValidatorService {
   public emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
   public passwordPattern: string = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+=-])\\S{8,16}$";
   public phoneNumberPattern: string = "^(0412|0414|0416|0424|0426)\\d{7}$";
-
   public numberPattern:string="\\d*";
 
   public firstNameAndLastnamePatternMessage: string = 'Must have first and last name';
