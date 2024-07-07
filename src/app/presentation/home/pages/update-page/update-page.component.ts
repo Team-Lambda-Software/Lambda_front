@@ -11,7 +11,6 @@ import { UpdateForm } from '../../../auth/interfaces/forms/updateUser-form.inter
 import { ValidatorService } from '../../../shared/services/validator/validator.service';
 import {MatCardModule} from '@angular/material/card';
 import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.service';
-import { routerLocalStorageRepository } from '../../../../core/shared/infraestructure/local-storage/router-local-storage.service';
 import { HeaderCardComponent } from '../../components/header-card/header-card.component';
 import { UpdateUserUseCase } from '../../../../core/user/application/update-user-use-case.service';
 import { UserApiService } from '../../../../core/user/infraestructure/services/user-api.service';
@@ -20,7 +19,7 @@ import { PopupInfoModalService } from '../../../shared/services/popup-info-modal
 import { Result } from '../../../../common/helpers/Result';
 import { Optional } from '../../../../common/helpers/Optional';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import * as pako from 'pako';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 
@@ -56,6 +55,7 @@ export class UpdatePageComponent {
   private updateUserUseCase= new UpdateUserUseCase(this.userStatusService,new UserApiService())
   private popupService=inject(PopupInfoModalService)
   public UserPhotoUploadFile:Optional<File>=new Optional();
+  public previewUploadFile:string=''
 
 
 
@@ -67,15 +67,7 @@ export class UpdatePageComponent {
 
   private createDTOUpdate():UpdateUSerEntryApplicationDTO{
     let image=''
-    if(this.UserPhotoUploadFile.hasValue())
-    this.convertFileToBase64(this.UserPhotoUploadFile.getValue()).subscribe({
-      next:(base64)=>{
-         console.log(base64)
-         console.log(image);
-
-        },
-      error:(error)=> this.popupService.displayErrorModal(this.errorUploadingUserImage)
-    })
+    if(this.UserPhotoUploadFile.hasValue()) image=this.previewUploadFile
     if(image==='') image===undefined
     let {email,name,phone}=this.updateUserForm.value
     let Data={email:email||undefined,
@@ -85,18 +77,26 @@ export class UpdatePageComponent {
     return Data
   }
 
-  private convertFileToBase64(file: File): Observable<string> {
-    return new Observable<string>((observer) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const base64String = reader.result as string;
-        observer.next(base64String);
-        observer.complete();
-      };
-      reader.onerror = (error) => {
-        observer.error(error);
-      };
-      reader.readAsDataURL(file);
+  private async convertFileToBase64(event:any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      try{
+        const unsafeImg=window.URL.createObjectURL(event);
+        const image=this.sanitizer.bypassSecurityTrustUrl(event);
+        const reader = new FileReader();
+        reader.readAsDataURL(event);
+        reader.onload = () => {
+          resolve({
+            base:reader.result
+          });
+        };
+        reader.onerror = (error) => {
+          reject({
+            base:null
+          });
+        };
+      } catch(error){
+        this.popupService.displayErrorModal(this.errorUploadingUserImage)
+      }
     });
   }
 
@@ -108,10 +108,16 @@ export class UpdatePageComponent {
 
   loadImage(event:any){
     let file=event.target.files[0]
-    if(!file) { this.UserPhotoUploadFile=new Optional()
+    if(!file) {
+      this.UserPhotoUploadFile=new Optional()
+      this.previewUploadFile=''
       return this.popupService.displayErrorModal(this.errorUploadingUserImage)}
     this.UserPhotoUploadFile=new Optional<File>(file);
-    console.log('hola:',this.UserPhotoUploadFile.getValue());
+    if(this.UserPhotoUploadFile.getValue().type)
+    this.convertFileToBase64(file).then(imagen=>{
+      console.log(imagen);
+      this.previewUploadFile=imagen.base
+    })
   }
 
   public updateEmailPhoneName(){
@@ -129,4 +135,6 @@ export class UpdatePageComponent {
       this.isLoadingUpdateUserFomr=false
     }
   }
+
+  constructor(private sanitizer:DomSanitizer){}
 }

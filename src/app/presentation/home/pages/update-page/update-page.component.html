@@ -17,10 +17,10 @@ bg-custom-light dark:bg-custom-dark animate__animated animate__fadeIn">
             </mat-card-subtitle>
 
             <div class="rounded-full">
-              @if (user.hasValue()) {
+              @if (previewUploadFile==='') {
                 <img mat-card-md-image src={{user.getValue().image}} alt="Profile user photo" >
                 }@else {
-                <img mat-card-md-image src="https://via.placeholder.com/40" alt="Profile user photo" >
+                <img mat-card-md-image src={{previewUploadFile}} alt="Profile user photo to update" >
                 }
             </div>
 
