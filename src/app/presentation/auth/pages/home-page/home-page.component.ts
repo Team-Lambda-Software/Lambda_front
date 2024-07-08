@@ -14,11 +14,7 @@ import { AuthLocalStorageService } from '../../../../core/shared/infraestructure
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })
-export class HomePageComponent implements OnInit {
-  ngOnInit(): void {
-    this._authRepository.deleteToken()
-  }
-  private _authRepository= new AuthLocalStorageService()
+export class HomePageComponent{
   public darkModeService = inject(DarkModeService);
   public mainTitle="welcome to yoga Online class"
   public LogInbuttonName="login"

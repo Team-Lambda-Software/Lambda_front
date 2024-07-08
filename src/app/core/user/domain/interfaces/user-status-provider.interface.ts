@@ -9,5 +9,9 @@ export interface IUserStatusProvider{
   deleteUser():void
   setUser(user:AppUser):void
   currentStatus():AuthStatus
-  currentUser():Optional<AppUser>
+  currentUser():Optional<AppUser>;
+  updateEmail(email:string):void
+  updateName(name:string):void
+  updateImage(image:string):void
+  updatePhone(phone:string):void
 }

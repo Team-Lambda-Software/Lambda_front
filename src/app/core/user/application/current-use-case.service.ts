@@ -6,11 +6,11 @@ import { Result } from '../../../common/helpers/Result';
 import { Observable, of } from 'rxjs';
 import { IUseCase } from '../../shared/application/ports/IUseCase.interface';
 import { IAuthApiComunication } from '../domain/interfaces/auth-api-comunication.interface';
-import { SignUpEntryDomainDTO } from '../domain/interfaces/entry/signup-entry.dto';
+import { SignUpEntryApplicationDTO } from './entry/signup-entry.dto';
 import { IUserStatusProvider } from '../domain/interfaces/user-status-provider.interface';
 
 
-export class CurrentUserUseCaseService implements IUseCase<SignUpEntryDomainDTO,Observable<Result<AppUser>>> {
+export class CurrentUserUseCaseService implements IUseCase<SignUpEntryApplicationDTO,Observable<Result<AppUser>>> {
 
   constructor(private _authRepository:IAuthRepository, private _userStatus:IUserStatusProvider,
     private _authApiComunication:IAuthApiComunication) {}
