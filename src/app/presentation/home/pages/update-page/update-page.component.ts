@@ -20,6 +20,7 @@ import { Result } from '../../../../common/helpers/Result';
 import { Optional } from '../../../../common/helpers/Optional';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AuthLocalStorageService } from '../../../../core/shared/infraestructure/local-storage/auth-local-storage.service';
 
 
 
@@ -54,7 +55,7 @@ export class UpdatePageComponent {
   public hideFirstPasswordInput:boolean=false
   public hideSecondPasswordInput:boolean=false
   public isLoadingUpdateUserFomr = false;
-  private updateUserUseCase= new UpdateUserUseCase(this.userStatusService,new UserApiService())
+  private updateUserUseCase= new UpdateUserUseCase(this.userStatusService,new UserApiService(new AuthLocalStorageService()),new AuthLocalStorageService())
   private popupService=inject(PopupInfoModalService)
   public UserPhotoUploadFile:Optional<File>=new Optional();
   public previewUploadFile:string=''
@@ -71,11 +72,12 @@ export class UpdatePageComponent {
     let image=''
     if(this.UserPhotoUploadFile.hasValue()) image=this.previewUploadFile
     if(image==='') image===undefined
+    const cleanBase64 = image.replace(this.validatorService.Base64Extension,'');
     let {email,name,phone}=this.updateUserForm.value
     let Data={email:email||undefined,
       name:name||undefined,
       phone:phone||undefined,
-      image:image||undefined}
+      image:cleanBase64||undefined}
     return Data
   }
 
@@ -116,12 +118,15 @@ export class UpdatePageComponent {
       return this.popupService.displayErrorModal(this.errorUploadingUserImage)}
 
 
-    const isValidImageExtension = /\.(jpg|jpeg|png)$/.test(file.name);
+    const isValidImageExtension = this.validatorService.isValidImageExtension.test(file.name);
     console.log(file.name);
 
 
-    if(isValidImageExtension)
+    if(!isValidImageExtension){
+      this.previewUploadFile=''
+      event.target.value = ''
       return this.popupService.displayErrorModal(this.errorUploadingTypeImage)
+    }
 
     this.UserPhotoUploadFile=new Optional<File>(file);
     console.log(file);

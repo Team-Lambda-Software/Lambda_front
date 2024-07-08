@@ -1,6 +1,8 @@
-<div class="w-full h-screen">
+<div class="w-full h-[100dvh]">
   @if (!finishedAuthCheck()) {
     <app-loader></app-loader>
   }
-  <router-outlet></router-outlet>
+  <div [hidden]="!finishedAuthCheck()">
+    <router-outlet></router-outlet>
+  </div>
 </div>
