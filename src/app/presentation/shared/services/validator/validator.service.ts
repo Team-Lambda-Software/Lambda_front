@@ -13,7 +13,10 @@ export class ValidatorService {
   public phoneNumberPattern: string = "^(0412|0414|0416|0424|0426)\\d{7}$";
   public numberPattern:string="\\d*";
   public isValidImageExtension = /\.(jpg|jpeg|png)$/i;
-  public Base64Extension = /\/9j\//;
+  public Base64ExtensionPattern = /\/9j\//;
+  public Base64Pattern =/^data:image\/png;base64,/;
+
+
 
   public firstNameAndLastnamePatternMessage: string = 'Must have first and last name';
   public emailPatternMessage: string = "Must be acceted email. Ex:youremail@gmail.com";

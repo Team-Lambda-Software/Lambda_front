@@ -15,6 +15,7 @@ import { NotificationPageComponent } from './pages/notification-page/notificatio
 import { StructureNotificationComponent } from './pages/notification-page/structure-notification/structure-notification.component';
 import { UpdatePageComponent } from './pages/update-page/update-page.component';
 import { UpdateLoginPageComponent } from './pages/update-login-page/update-login-page.component';
+import { UpdateChangePasswordPageComponent } from './pages/update-change-password-page/update-change-password-page.component';
 
 export const HomeRoutes: Routes = [
   {
@@ -81,7 +82,12 @@ export const HomeRoutes: Routes = [
       {
         path:'update/login',
         component:UpdateLoginPageComponent
-      }
+      },
+      {
+        path:'update/changepassword',
+        component:UpdateChangePasswordPageComponent
+      },
+
     ]
   }
 ]

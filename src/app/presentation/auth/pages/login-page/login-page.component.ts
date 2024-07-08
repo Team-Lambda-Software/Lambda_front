@@ -36,7 +36,7 @@ export class LoginPageComponent {
   private router= inject(Router)
   private userStatusService=inject(UserStatusService)
   private loginUsecaseService=new LoginUseCaseService(
-    new AuthLocalStorageService(),this.userStatusService, new AuthApiService());
+    new AuthLocalStorageService(), new AuthApiService());
   private notification=inject(NotificationService)
 
   private popupService=inject(PopupInfoModalService)
@@ -60,12 +60,16 @@ export class LoginPageComponent {
 
   login(){
     const {email,password}=this.loginForm.value;
+    this.userStatusService.setNotAuthenticated()
     this.loginUsecaseService.execute({email,password}).subscribe({
       next:(answer)=>{
-        if(!answer.isError()) {this.router.navigateByUrl('/home')}
+        if(!answer.isError()) {
+          this.userStatusService.setAuthenticated()
+          this.router.navigateByUrl('/home')}
           // this.notification.saveNotificationToken().then( token => {})
       },
       error:(error:Result<Error>)=>{
+        this.userStatusService.setNotAuthenticated()
          this.popupService.displayErrorModal(error.getError().message)
       }
     })

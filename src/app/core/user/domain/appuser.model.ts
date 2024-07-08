@@ -1,4 +1,4 @@
-import { UserType } from "./interfaces/Usertype.interface";
+import { UserType } from "./enum/Usertype.interface";
 
 export interface IAppUser {
   id:    string;

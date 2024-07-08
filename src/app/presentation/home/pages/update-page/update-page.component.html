@@ -1,9 +1,10 @@
-<header class="bg-gradient-purple rounded-br-[50px] text-white">
+<header class="bg-gradient-purple rounded-br-[50px] text-white" [hidden]="isLoadingUpdateUserForm">
   <app-header-card redirectLastPage="/home/profile" redirectNextPage="/home/update/login"></app-header-card>
 </header>
 <body class="flex flex-col w-auto items-center justify-center
-bg-custom-light dark:bg-custom-dark animate__animated animate__fadeIn">
-  <div class="columns-sm">
+bg-custom-light dark:bg-custom-dark animate__animated animate__fadeIn"
+[hidden]="isLoadingUpdateUserForm">
+  <div class="columns-sm" [hidden]="isLoadingUpdateUserForm">
     <mat-card class="card m-10 rounded-[50px]">
       <div class="card-body text-wrap text-left w-auto font-bold text-custom-dark dark:text-custom-light">
         <mat-card-header>
@@ -41,7 +42,7 @@ bg-custom-light dark:bg-custom-dark animate__animated animate__fadeIn">
             <button class="btn mt-9 w-full h-16 align-middle  dark:text-custom-dark-purple text-custom-light rounded-[50px]"
             [ngClass]="{'bg-custom-gradient-purple':!darkModeService.isDarkMode(),'bg-custom-light ':darkModeService.isDarkMode()}"
             (click)="updatePhoto()"
-            [disabled]="!UserPhotoUploadFile.hasValue()"
+            [disabled]="!UserPhotoUploadFile.hasValue() || isLoadingUpdateUserForm"
             type="button">
             {{saveProfileImage | transloco}}
           </button>
@@ -98,7 +99,7 @@ bg-custom-light dark:bg-custom-dark animate__animated animate__fadeIn">
 
               <button class="btn mt-9 w-full h-16 align-middle  dark:text-custom-dark-purple text-custom-light rounded-[50px]"
               [ngClass]="{'bg-custom-gradient-purple':!darkModeService.isDarkMode(),'bg-custom-light ':darkModeService.isDarkMode()}"
-              [disabled]="updateUserForm.invalid"
+              [disabled]="updateUserForm.invalid || isLoadingUpdateUserForm"
               type="submit">
               {{saveProfileInfo | transloco}}
               </button>
@@ -106,5 +107,9 @@ bg-custom-light dark:bg-custom-dark animate__animated animate__fadeIn">
           </mat-card-content>
         </div>
     </mat-card>
-</div>
+  </div>
 </body>
+
+@if (isLoadingUpdateUserForm) {
+  <app-loader></app-loader>
+}

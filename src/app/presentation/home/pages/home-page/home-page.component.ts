@@ -37,7 +37,6 @@ import { UserStatusService } from '../../../../core/user/infraestructure/service
 export class HomePageComponent implements OnInit{
   ngOnInit(): void {
     this.user = this.userStatusService.currentUser();
-    console.log(this.user.getValue());
   }
 
   public popularService = inject(CoursesPopularService);

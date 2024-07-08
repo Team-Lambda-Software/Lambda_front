@@ -27,8 +27,6 @@ export class CurrentUserUseCaseService implements IUseCase<SignUpEntryApplicatio
       (observable)=>{
         observable.subscribe({
           next:(value)=>{
-            console.log(value);
-
             if (!value.isError()) this._userStatus.setUser(value.getValue());
             else this._userStatus.setNotAuthenticated()
           },

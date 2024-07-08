@@ -21,6 +21,7 @@ import { Optional } from '../../../../common/helpers/Optional';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AuthLocalStorageService } from '../../../../core/shared/infraestructure/local-storage/auth-local-storage.service';
+import { LoaderComponent } from '../../../auth/components/loader/loader.component';
 
 
 
@@ -31,6 +32,7 @@ import { AuthLocalStorageService } from '../../../../core/shared/infraestructure
     CommonModule,
     RouterLink,
     MatFormFieldModule, MatInputModule, MatIconModule,CommonModule,TranslocoModule,
+    LoaderComponent,
     HeaderCardComponent,
     MatCardModule,ReactiveFormsModule
   ],
@@ -54,12 +56,11 @@ export class UpdatePageComponent {
   public user = this.userStatusService.currentUser();
   public hideFirstPasswordInput:boolean=false
   public hideSecondPasswordInput:boolean=false
-  public isLoadingUpdateUserFomr = false;
+  public isLoadingUpdateUserForm = false;
   private updateUserUseCase= new UpdateUserUseCase(this.userStatusService,new UserApiService(new AuthLocalStorageService()),new AuthLocalStorageService())
   private popupService=inject(PopupInfoModalService)
   public UserPhotoUploadFile:Optional<File>=new Optional();
   public previewUploadFile:string=''
-
 
 
   public updateUserForm :FormGroup<UpdateForm>=this.fb.group<UpdateForm>({
@@ -72,20 +73,18 @@ export class UpdatePageComponent {
     let image=''
     if(this.UserPhotoUploadFile.hasValue()) image=this.previewUploadFile
     if(image==='') image===undefined
-    const cleanBase64 = image.replace(this.validatorService.Base64Extension,'');
+
     let {email,name,phone}=this.updateUserForm.value
     let Data={email:email||undefined,
       name:name||undefined,
       phone:phone||undefined,
-      image:cleanBase64||undefined}
+      image:image||undefined}
     return Data
   }
 
   private async convertFileToBase64(event:any): Promise<any> {
     return new Promise((resolve, reject) => {
       try{
-        const unsafeImg=window.URL.createObjectURL(event);
-        const image=this.sanitizer.bypassSecurityTrustUrl(event);
         const reader = new FileReader();
         reader.readAsDataURL(event);
         reader.onload = () => {
@@ -104,12 +103,6 @@ export class UpdatePageComponent {
     });
   }
 
-  updatePhoto(){
-    console.log(this.UserPhotoUploadFile);
-    console.log(this.createDTOUpdate());
-
-  }
-
   loadImage(event:any){
     let file:File=event.target.files[0]
     if(!file) {
@@ -117,10 +110,7 @@ export class UpdatePageComponent {
       this.previewUploadFile=''
       return this.popupService.displayErrorModal(this.errorUploadingUserImage)}
 
-
     const isValidImageExtension = this.validatorService.isValidImageExtension.test(file.name);
-    console.log(file.name);
-
 
     if(!isValidImageExtension){
       this.previewUploadFile=''
@@ -129,7 +119,6 @@ export class UpdatePageComponent {
     }
 
     this.UserPhotoUploadFile=new Optional<File>(file);
-    console.log(file);
 
     this.convertFileToBase64(file).then(imagen=>{
       this.previewUploadFile=imagen.base
@@ -139,19 +128,28 @@ export class UpdatePageComponent {
 
   public updateEmailPhoneName(){
     if(this.updateUserForm.valid){
-      this.isLoadingUpdateUserFomr=true
-      this.updateUserUseCase.execute(this.createDTOUpdate()).subscribe({
-        next:(value)=>{
-          if(!value.isError()){ this.popupService.displayInfoModal(this.succsesUpdateUser) }
-          else this.popupService.displayErrorModal(value.getError().message)
-        },
-        error:(error:Result<Error>)=>{
-          this.popupService.displayErrorModal(error.getError().message)
-        }
-      })
-      this.isLoadingUpdateUserFomr=false
+      this.isLoadingUpdateUserForm=true
+      this.sendUpdatePettition()
     }
   }
 
+  private sendUpdatePettition(){
+    this.updateUserUseCase.execute(this.createDTOUpdate()).subscribe({
+      next:(value)=>{
+        this.isLoadingUpdateUserForm=false
+        if(!value.isError()){ this.popupService.displayInfoModal(this.succsesUpdateUser) }
+        else this.popupService.displayErrorModal(value.getError().message)
+      },
+      error:(error:Result<Error>)=>{
+        this.isLoadingUpdateUserForm=false
+        this.popupService.displayErrorModal(error.getError().message)
+      },
+    })
+  }
+
+  public updatePhoto(){
+    this.isLoadingUpdateUserForm=true
+    this.sendUpdatePettition();
+  }
   constructor(private sanitizer:DomSanitizer){}
 }

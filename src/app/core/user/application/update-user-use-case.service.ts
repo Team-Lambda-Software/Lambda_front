@@ -13,7 +13,6 @@ export class UpdateUserUseCase implements IUseCase<UpdateUSerEntryApplicationDTO
 
   execute(data:UpdateUSerEntryApplicationDTO): Observable<Result<string>> {
     this._userStatus.setChecking();
-    console.log(data);
 
     return this._authApiComunication.updateUser(data).pipe(
       (observable)=>{
