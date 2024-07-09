@@ -15,7 +15,7 @@ export default class ProgressApiComunication implements IProgressApiComunication
   constructor(private _authRepository:IAuthRepository){}
 
   getProgressTrending(): Observable<Result<ProgressTrending>> {
-    const url=`${this.BASE_URL}/user/follow`
+    const url=`${this.BASE_URL}/trending`
     let token=this._authRepository.getToken()
     if (!token.hasValue()) return of(Result.makeError<ProgressTrending>(new Error('Error No tiene Token')))
 

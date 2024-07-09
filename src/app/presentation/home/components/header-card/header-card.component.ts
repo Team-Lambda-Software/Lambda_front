@@ -44,8 +44,6 @@ export class HeaderCardComponent implements OnDestroy{
   constructor(){
     this.userFollowSubscription=this.userFollowUseCase.usecase.execute().subscribe({
       next:(value)=>{
-        console.log(value);
-
         if(!value.isError()) this.userFollow=value.getValue()
         else this.popupService.displayErrorModal(value.getError().message)
       },
