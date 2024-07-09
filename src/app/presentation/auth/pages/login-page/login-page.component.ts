@@ -17,6 +17,7 @@ import { NotificationService } from '../../../home/services/notifications/Notifi
 import { AuthLocalStorageService } from '../../../../core/shared/infraestructure/local-storage/auth-local-storage.service';
 import { AuthApiService } from '../../../../core/user/infraestructure/services/auth-api.service';
 import { LoginUseCaseService } from '../../../../core/user/application/login-use-case.service';
+import { UserType } from '../../../../core/user/domain/interfaces/Usertype.interface';
 
 
 
@@ -62,7 +63,13 @@ export class LoginPageComponent {
     const {email,password}=this.loginForm.value;
     this.loginUsecaseService.execute({email,password}).subscribe({
       next:(answer)=>{
-        if(!answer.isError()) {this.router.navigateByUrl('/home')}
+        if(!answer.isError()) {
+          let user=this.userStatusService.currentUser()
+          if (user.hasValue()){
+            if(user.getValue().type===UserType.CLIENT)this.router.navigateByUrl('/home')
+            if(user.getValue().type===UserType.ADMIN)this.router.navigateByUrl('/admin')
+            }
+          }
           // this.notification.saveNotificationToken().then( token => {})
       },
       error:(error:Result<Error>)=>{

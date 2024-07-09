@@ -40,6 +40,7 @@ export class AuthApiService implements IAuthApiComunication {
           if(response.type===UserType.ADMIN) type=UserType.ADMIN
           this._userState.setUser(new AppUser({...response.user,type}))
           this.notification.saveNotificationToken()
+          console.log(response);
 
           return Result.makeResult(response.token)
         }),
