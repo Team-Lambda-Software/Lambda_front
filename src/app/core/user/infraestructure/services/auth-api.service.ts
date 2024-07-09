@@ -1,4 +1,4 @@
-import { UserType } from '../../domain/interfaces/Usertype.interface';
+import { UserType } from '../../domain/enum/Usertype.interface';
 import { AppUser } from '../../domain/appuser';
 
 import { LoginResponse } from '../dto/response/login-response.interface';
@@ -9,7 +9,7 @@ import { enviroment } from '../../../../../environments/environment';
 import { Result } from '../../../../common/helpers/Result';
 
 import { Observable, catchError, map, of, switchMap, throwError } from 'rxjs';
-import { Injectable, Optional, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponseBase } from '@angular/common/http';
 import { GetCodeResponse } from '../dto/response/getCode-response.interface';
 import { UserStatusService } from './user-status.service';
@@ -102,7 +102,6 @@ export class AuthApiService implements IAuthApiComunication {
   verificateCode(email:string,code:string):Observable<Result<number>>{
     const url=`${this.BASE_URL}/code/validate`
     const body={email,code}
-
     return this._httpClient.post<HttpResponseBase>(url,body,{ observe: 'response' })
       .pipe(
         map((response)=>{
@@ -121,6 +120,8 @@ export class AuthApiService implements IAuthApiComunication {
         password:password,
         code:code
       }
+      console.log(body);
+
       return this._httpClient.put<HttpResponseBase>(url,body,{ observe: 'response' })
         .pipe(
           map((response)=>{

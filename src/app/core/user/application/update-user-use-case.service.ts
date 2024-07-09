@@ -4,14 +4,16 @@ import { Result } from "../../../common/helpers/Result";
 import { IUserStatusProvider } from "../domain/interfaces/user-status-provider.interface";
 import { UpdateUSerEntryApplicationDTO } from "./entry/update-user-entry.dto";
 import { IUSerApiComunication } from "../domain/interfaces/user-api-comunication.interface";
+import { IAuthRepository } from "../../shared/application/ports/IAuthRepository.interface";
 
 export class UpdateUserUseCase implements IUseCase<UpdateUSerEntryApplicationDTO,Observable<Result<string>>> {
 
   constructor( private _userStatus:IUserStatusProvider,
-    private _authApiComunication:IUSerApiComunication) {}
+    private _authApiComunication:IUSerApiComunication, private _AuthRepository:IAuthRepository) {}
 
   execute(data:UpdateUSerEntryApplicationDTO): Observable<Result<string>> {
     this._userStatus.setChecking();
+
     return this._authApiComunication.updateUser(data).pipe(
       (observable)=>{
         observable.subscribe({

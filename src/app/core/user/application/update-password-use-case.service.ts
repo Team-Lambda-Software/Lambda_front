@@ -7,11 +7,10 @@ import { IAuthApiComunication } from "../domain/interfaces/auth-api-comunication
 
 export class UpdatePasswordUseCase implements IUseCase<string,Observable<Result<number>>> {
 
-  constructor(private _authRepository:IAuthRepository, private _userStatus:IUserStatusProvider,
+  constructor(private _authRepository:IAuthRepository,
     private _authApiComunication:IAuthApiComunication) {}
 
   execute(password:string): Observable<Result<number>> {
-    this._userStatus.setChecking();
     let email= this._authRepository.getEmail();
     let code= this._authRepository.getCode();
     if (!email.hasValue()) return of(Result.makeError<number>(new Error('No se encuentra el email')));
@@ -19,7 +18,6 @@ export class UpdatePasswordUseCase implements IUseCase<string,Observable<Result<
     return this._authApiComunication.updatePassword(email.getValue(),code.getValue(),password).pipe(
       (observable)=>{
         observable.subscribe()
-        this._userStatus.setNotAuthenticated();
         return observable
       }
     )

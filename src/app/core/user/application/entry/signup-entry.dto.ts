@@ -1,4 +1,4 @@
-import { UserType } from "../../domain/interfaces/Usertype.interface"
+import { UserType } from "../../domain/enum/Usertype.interface"
 
 export interface SignUpEntryApplicationDTO {
   email: string

@@ -2,7 +2,7 @@
 import { AppUser } from "../appuser";
 import { Result } from "../../../../common/helpers/Result";
 import { Observable } from "rxjs";
-import { UserType } from "./Usertype.interface";
+import { UserType } from "../enum/Usertype.interface";
 
 export interface IAuthApiComunication{
   login(email:string,password:string): Observable<Result<string>>

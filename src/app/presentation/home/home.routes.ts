@@ -14,6 +14,9 @@ import { MainBlogsComponent } from './pages/blogs-pages/main-blogs/main-blogs.co
 import { NotificationPageComponent } from './pages/notification-page/notification-page.component';
 import { StructureNotificationComponent } from './pages/notification-page/structure-notification/structure-notification.component';
 import { UpdatePageComponent } from './pages/update-page/update-page.component';
+import { UpdateLoginPageComponent } from './pages/update-login-page/update-login-page.component';
+import { UpdateChangePasswordPageComponent } from './pages/update-change-password-page/update-change-password-page.component';
+import { hasConfirm } from './guards/hasConfirm.guard';
 
 export const HomeRoutes: Routes = [
   {
@@ -76,7 +79,17 @@ export const HomeRoutes: Routes = [
       {
         path:'update',
         component:UpdatePageComponent
-      }
+      },
+      {
+        path:'update/login',
+        component:UpdateLoginPageComponent
+      },
+      {
+        path:'update/changepassword',
+        canActivate:[hasConfirm],
+        component:UpdateChangePasswordPageComponent
+      },
+
     ]
   }
 ]

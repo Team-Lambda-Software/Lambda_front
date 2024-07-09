@@ -1,0 +1,68 @@
+<header class="bg-gradient-purple rounded-br-[50px] text-white" [hidden]="isLoadingUpdatePassword">
+  <app-header-card redirectLastPage="/home/update" redirectNextPage=""></app-header-card>
+</header>
+<body class="flex flex-col w-auto items-center justify-center
+bg-custom-light dark:bg-custom-dark animate__animated animate__fadeIn"
+  [hidden]="isLoadingUpdatePassword" [hidden]="isLoadingUpdatePassword">
+  <div class="columns-sm" [hidden]="isLoadingUpdatePassword">
+
+
+    <mat-card class="card m-10 rounded-[50px]">
+
+      <div class="card m-10 rounded-[50px] flex items-center justify-center">
+        @if (darkModeService.isDarkMode()) {
+          <img class="w-1/2 h-3/5" src="assets/icons/logo-dark.png" alt="logo">
+        } @else {
+          <img class="w-1/2 h-3/5" src="assets/icons/logo-ligth.png" alt="logo">
+        }
+        </div>
+
+      <div class="card-body text-wrap text-left w-auto font-bold text-custom-dark dark:text-custom-light">
+
+        <mat-card-header>
+
+          <mat-card-title>
+            <h4 class="card-title text-xl">{{ChangePasswordTitle | transloco}}</h4>
+          </mat-card-title>
+
+          <mat-card-subtitle>
+            <h6 class="card-subtitle">{{ChangePasswordSubtitle | transloco}}</h6>
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="items-center">
+          <form class="form mt-5"
+          autocomplete="off"
+          [formGroup]="UpdatePasswordLoginForm"
+          (ngSubmit)="updatePassword()"
+          >
+          <mat-form-field appearance="outline" class="text-base mt-6 w-80 h-16">
+
+            <mat-label>Password</mat-label>
+            <mat-icon matPrefix class="material-icons md-18 ml-4">lock</mat-icon>
+              <input matInput
+              [type]="hide ? 'password' : 'text'"
+              formControlName="password"
+              placeholder="•••••••••">
+              <button class="mr-6" type="button"  mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+
+            </button>
+
+          </mat-form-field>
+
+            <button class="btn mt-9 w-full h-16 align-middle  dark:text-custom-dark-purple text-custom-light rounded-[50px]"
+            [ngClass]="{'bg-custom-gradient-purple':!darkModeService.isDarkMode(),'bg-custom-light ':darkModeService.isDarkMode()}"
+            type="submit">
+            {{ChangePasswordTitle | transloco}}
+            </button>
+          </form>
+        </mat-card-content>
+      </div>
+  </mat-card>
+  </div>
+</body>
+
+@if (isLoadingUpdatePassword) {
+  <app-loader></app-loader>
+}

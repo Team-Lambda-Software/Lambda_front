@@ -35,7 +35,7 @@ export class VerificationCodePageComponent{
   private popupService=inject(PopupInfoModalService)
   private _authRepository:IAuthRepository= new AuthLocalStorageService();
   private userStatus=inject(UserStatusService)
-  private getUpdateCodeUseCase= new GetCodeUpdatePasswordUseCase(new AuthLocalStorageService,this.userStatus,new AuthApiService());
+  private getUpdateCodeUseCase= new GetCodeUpdatePasswordUseCase(new AuthLocalStorageService,new AuthApiService());
   private verificationCodeUseCase= new VerificateCodeUseCase(new AuthLocalStorageService,this.userStatus,new AuthApiService());
 
   public email=this._authRepository.getEmail()
@@ -67,10 +67,14 @@ export class VerificationCodePageComponent{
   resendCode(){
     const email=this.email;
     if (email.hasValue())
+      this.userStatus.setChecking()
       this.getUpdateCodeUseCase.execute(email.getValue())
     .subscribe({
-      next:(value)=>{ this.popupService.displayInfoModal(this.codeResendto) },
+      next:(value)=>{ this.popupService.displayInfoModal(this.codeResendto)
+      this.userStatus.setNotAuthenticated()
+       },
       error:(error:Result<Error>)=>{
+        this.userStatus.setNotAuthenticated()
         this.popupService.displayErrorModal(error.getError().message)
       }
     })
@@ -79,6 +83,7 @@ export class VerificationCodePageComponent{
   verificateCode(){
     if (this.verificationCodeForm.valid){
       let code = this.getCode(this.verificationCodeForm)
+      this.userStatus.setChecking()
       this.verificationCodeUseCase.execute(code).subscribe({
         next:(value)=>{
           if (!value.isError()){
@@ -87,11 +92,15 @@ export class VerificationCodePageComponent{
             this.router.navigateByUrl('/auth/createpassword')
             this.popupService.displayBelowModal(this.codeSendSuccsessfully,'success')
           }
+          this.userStatus.setNotAuthenticated()
           }
           else this.popupService.displayErrorModal(this.errorStatusCode)
+          this.userStatus.setNotAuthenticated()
+
         },
         error:(error:Result<Error>)=>{
           this.popupService.displayErrorModal(error.getError().message)
+          this.userStatus.setNotAuthenticated()
         }
       })
     }

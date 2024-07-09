@@ -33,7 +33,7 @@ export class ResetPasswordPageComponent implements OnInit {
   public darkModeService = inject(DarkModeService);
   private fb = inject(FormBuilder)
   private userStatus=inject(UserStatusService)
-  private getCodeUpdatePasswordUseCase = new GetCodeUpdatePasswordUseCase(new AuthLocalStorageService(),this.userStatus,new AuthApiService())
+  private getCodeUpdatePasswordUseCase = new GetCodeUpdatePasswordUseCase(new AuthLocalStorageService(),new AuthApiService())
   private router= inject(Router)
   private popupService=inject(PopupInfoModalService)
   private _authRepository:IAuthRepository= new AuthLocalStorageService()
@@ -53,6 +53,7 @@ export class ResetPasswordPageComponent implements OnInit {
 
   resetPassword(){
     const {email}=this.resetPasswordForm.value;
+    this.userStatus.setChecking()
     this.getCodeUpdatePasswordUseCase.execute(email)
     .subscribe({
       next:(response)=>{
@@ -62,8 +63,10 @@ export class ResetPasswordPageComponent implements OnInit {
         }else{
           this.popupService.displayErrorModal(response.getError().message)
         }
+        this.userStatus.setNotAuthenticated()
       },
       error:(error:Result<Error>)=>{
+        this.userStatus.setNotAuthenticated()
         this.popupService.displayErrorModal(error.getError().message)
       }
     })
