@@ -120,7 +120,6 @@ export class AuthApiService implements IAuthApiComunication {
         password:password,
         code:code
       }
-      console.log(body);
 
       return this._httpClient.put<HttpResponseBase>(url,body,{ observe: 'response' })
         .pipe(

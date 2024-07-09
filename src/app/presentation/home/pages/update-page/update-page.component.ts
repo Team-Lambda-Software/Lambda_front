@@ -64,9 +64,9 @@ export class UpdatePageComponent {
 
 
   public updateUserForm :FormGroup<UpdateForm>=this.fb.group<UpdateForm>({
-    name:new FormControl(this.user.getValue().name,{validators:[Validators.pattern(this.validatorService.firstNameAndLastnamePattern)]}),
-    email:new FormControl(this.user.getValue().email,{validators:[Validators.pattern(this.validatorService.emailPattern)]}),
-    phone:new FormControl(this.user.getValue().phone,{validators:[Validators.pattern(this.validatorService.phoneNumberPattern)]})
+    name:new FormControl(this.user.getValue().name || '',{nonNullable:true,validators:[Validators.pattern(this.validatorService.firstNameAndLastnamePattern)]}),
+    email:new FormControl(this.user.getValue().email ||'',{nonNullable:true,validators:[Validators.pattern(this.validatorService.emailPattern)]}),
+    phone:new FormControl(this.user.getValue().phone || '',{nonNullable:true,validators:[Validators.pattern(this.validatorService.phoneNumberPattern)]})
   })
 
   private createDTOUpdate():UpdateUSerEntryApplicationDTO{
