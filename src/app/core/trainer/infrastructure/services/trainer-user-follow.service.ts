@@ -6,7 +6,7 @@ import { Trainer } from '../../domain/trainer.model';
 import { Result } from '../../../../common/helpers/Result';
 import { IAuthRepository } from '../../../shared/application/ports/IAuthRepository.interface';
 import { UserFollowResponse } from '../adapters/dtos/userFollow.dto';
-import { ITrainerUserFollowService } from '../../domain/interfaces/usecases/trainer-user-follow.service';
+import { ITrainerUserFollowService } from '../../domain/interfaces/trainer-user-follow.service';
 
 export class TrainerUserFollowService implements ITrainerUserFollowService {
 

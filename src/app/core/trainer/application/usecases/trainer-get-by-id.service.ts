@@ -1,8 +1,8 @@
 import { Observable } from "rxjs";
 import { IUseCase } from "../../../shared/application/ports/IUseCase.interface";
 import { Result } from "../../../../common/helpers/Result";
-import { ITrainerGetByIdService } from "../../domain/interfaces/usecases/trainer-get-by-id.service";
 import { TrainerDetail } from "../../domain/trainer.model";
+import { ITrainerGetByIdService } from "../../domain/interfaces/trainer-get-by-id.service";
 
 export class TrainerGetByIdUseCase implements IUseCase<string,Observable<Result<TrainerDetail>>> {
 

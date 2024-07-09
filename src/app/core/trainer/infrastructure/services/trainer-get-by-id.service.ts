@@ -4,9 +4,9 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 import { enviroment } from '../../../../../environments/environment';
 import { TrainerDetail } from '../../domain/trainer.model';
 import { Result } from '../../../../common/helpers/Result';
-import { ITrainerGetByIdService } from '../../domain/interfaces/usecases/trainer-get-by-id.service';
 import { TrainerResponse } from '../adapters/dtos/trainer.dto';
 import { TrainerResponseToDetailTrainer } from '../adapters/converters/TrainerResponseToDetailTrainer';
+import { ITrainerGetByIdService } from '../../domain/interfaces/trainer-get-by-id.service';
 
 export class TrainerGetByIdService implements ITrainerGetByIdService {
 

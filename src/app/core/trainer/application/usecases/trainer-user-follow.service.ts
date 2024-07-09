@@ -1,7 +1,7 @@
 import { Observable } from "rxjs";
 import { IUseCase } from "../../../shared/application/ports/IUseCase.interface";
 import { Result } from "../../../../common/helpers/Result";
-import { ITrainerUserFollowService } from "../../domain/interfaces/usecases/trainer-user-follow.service";
+import { ITrainerUserFollowService } from "../../domain/interfaces/trainer-user-follow.service";
 
 export class TrainerUserFollowUseCase implements IUseCase<void,Observable<Result<number>>>{
 
