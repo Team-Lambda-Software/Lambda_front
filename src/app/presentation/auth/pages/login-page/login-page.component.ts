@@ -66,7 +66,7 @@ export class LoginPageComponent {
         if(!answer.isError()) {
           this.userStatusService.setAuthenticated()
           this.router.navigateByUrl('/home')}
-          // this.notification.saveNotificationToken().then( token => {})
+          this.notification.saveNotificationToken().then( token => {})
       },
       error:(error:Result<Error>)=>{
         this.userStatusService.setNotAuthenticated()
