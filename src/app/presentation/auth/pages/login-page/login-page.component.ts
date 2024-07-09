@@ -60,7 +60,7 @@ export class LoginPageComponent {
 
   login(){
     const {email,password}=this.loginForm.value;
-    this.userStatusService.setNotAuthenticated()
+    this.userStatusService.setChecking()
     this.loginUsecaseService.execute({email,password}).subscribe({
       next:(answer)=>{
         if(!answer.isError()) {

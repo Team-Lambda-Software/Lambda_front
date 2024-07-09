@@ -9,7 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.service';
 import { ValidatorService } from '../../../shared/services/validator/validator.service';
-import { UpdatePasswordForm } from '../../interfaces/forms/updatePassword-form.interface';
+import { UpdatePasswordLoginForm } from '../../interfaces/forms/updatePasswordLogin-form.interface';
 import { LoginUseCaseService } from '../../../../core/user/application/login-use-case.service';
 import { AuthLocalStorageService } from '../../../../core/shared/infraestructure/local-storage/auth-local-storage.service';
 import { UserStatusService } from '../../../../core/user/infraestructure/services/user-status.service';
@@ -47,12 +47,12 @@ export class UpdateLoginPageComponent {
   private popupService=inject(PopupInfoModalService)
   public isLoadingUpdatePassword=false
 
-  public updatePasswordForm :FormGroup<UpdatePasswordForm>=this.fb.group<UpdatePasswordForm>({
+  public UpdatePasswordLoginForm :FormGroup<UpdatePasswordLoginForm>=this.fb.group<UpdatePasswordLoginForm>({
     password:new FormControl(null,{nonNullable:true, validators:[Validators.required]})
   })
 
   private createLoginDTO(){
-    let data=this.updatePasswordForm.value
+    let data=this.UpdatePasswordLoginForm.value
     let user=this.userStatusService.currentUser()
     if (!user.hasValue()) this.popupService.displayErrorModal('Error no user found')
     let LoginDTO:LoginEntryApplicationDTO={
@@ -63,15 +63,19 @@ export class UpdateLoginPageComponent {
   }
 
   updatePassword(){
-    if (this.updatePasswordForm.valid){
+    if (this.UpdatePasswordLoginForm.valid){
       this.isLoadingUpdatePassword=true
-      let data=this.updatePasswordForm.value
+      let data=this.UpdatePasswordLoginForm.value
       if(!data) return this.popupService.displayErrorModal('Error there is no password')
       let loginDTO=this.createLoginDTO()
       this.loginUsecaseService.execute(this.createLoginDTO()).subscribe({
         next:(answer)=>{
           this.isLoadingUpdatePassword=false
-          if(!answer.isError()) {this.router.navigateByUrl('/home/update/changepassword')}
+          if(!answer.isError()) {
+            let authrepo=new AuthLocalStorageService()
+            authrepo.saveDateCode(new Date().toString())
+            this.router.navigateByUrl('/home/update/changepassword')
+          }
           else this.popupService.displayErrorModal(answer.getError().message)
         },
         error:(error:Result<Error>)=>{

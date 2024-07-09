@@ -16,6 +16,7 @@ import { StructureNotificationComponent } from './pages/notification-page/struct
 import { UpdatePageComponent } from './pages/update-page/update-page.component';
 import { UpdateLoginPageComponent } from './pages/update-login-page/update-login-page.component';
 import { UpdateChangePasswordPageComponent } from './pages/update-change-password-page/update-change-password-page.component';
+import { hasConfirm } from './guards/hasConfirm.guard';
 
 export const HomeRoutes: Routes = [
   {
@@ -85,6 +86,7 @@ export const HomeRoutes: Routes = [
       },
       {
         path:'update/changepassword',
+        canActivate:[hasConfirm],
         component:UpdateChangePasswordPageComponent
       },
 
