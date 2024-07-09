@@ -3,6 +3,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { LayoutComponent } from './layout/layout.component';
 import { AddCoursePageComponent } from './add-course-page/add-course.component';
 import { AddBlogPageComponent } from './add-blog-page/add-blog.component';
+import { AddSectionPageComponent } from './add-section-page/add-section.component';
 
 export const AdminRoutes: Routes = [
   {
@@ -21,6 +22,10 @@ export const AdminRoutes: Routes = [
       {
         path: 'addblog',
         component: AddBlogPageComponent
+      },
+      {
+        path: 'addsectioncourse',
+        component: AddSectionPageComponent
       }
     ]
   }
