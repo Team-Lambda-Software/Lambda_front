@@ -5,7 +5,7 @@ export interface Course {
   description: string
   category: string
   image: string
-  trainer: Trainer
+  trainer: Pick<Trainer, "id" | "name">
   level: string
   durationWeeks: number
   durationMinutes: number

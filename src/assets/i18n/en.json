@@ -11,7 +11,7 @@
   "spanish": "Spanish",
   "video-course": "Video Course",
   "popular-search": "Popular Search",
-  "popular-courses": "Popular-Courses",
+  "popular-courses": "Popular Courses",
   "program-master": "Program-Master",
   "level": "Level",
   "welcome to yoga Online class":"Welcome to yoga Online class",
@@ -75,6 +75,14 @@
   "next": "Next",
   "prev": "Prev",
   "no-courses-to-show": "No courses to show",
-  "no-blogs-to-show": "No blogs to show"
+  "no-blogs-to-show": "No blogs to show",
+  "trainer": "Trainer",
+  "follow": "Follow",
+  "unfollow": "unfollow",
+  "courses-by-trainer": "Courses by trainer",
+  "blogs-by-trainer": "Blogs by trainer",
+  "no-blogs-by-trainer": "No blogs by trainer",
+  "no-courses-by-trainer": "No courses by trainer"
+
 }
 
