@@ -13,6 +13,11 @@
 </header>
 
 <div class="animate__animated animate__fadeIn">
+  
+  <form class="form"
+    autocomplete="off"
+    (ngSubmit)="showData()"
+  > 
 
   <section class="mx-4 py-7">
     <div class="gap-2 grid dark:text-white">
@@ -22,7 +27,9 @@
       <div class="bg-slate-100 shadow-md p-2 w-full">
         <input type="text"
               class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
-              placeholder="Titulo">
+              placeholder="Titulo"
+              formControlName="titulo"
+              >
       </div>
 
       <p class="font-medium text-lg">Contenido del Blog</p>
@@ -30,6 +37,7 @@
       <div class="bg-slate-100 shadow-md w-full h-200">
         <textarea rows="8"
               class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
+              formControlName="contenido"
               >
               </textarea>
       </div>
@@ -46,21 +54,27 @@
         <div class="bg-slate-100 shadow-md p-2 w-full">
           <input type="text"
               class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
-              placeholder="Categoria">
+              placeholder="Categoria"
+              formControlName="categoria"
+              >
         </div>
 
       <p class="font-medium text-lg">Entrenador</p>
         <div class="bg-slate-100 shadow-md p-2 w-full">
           <input type="text"
               class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
-              placeholder="Entrenador">
+              placeholder="Entrenador"
+              formControlName="entrenador"
+              >
         </div>
 
       <p class="font-medium text-lg">Etiquetas del Blog</p>
         <div class="bg-slate-100 shadow-md p-2 w-full">
           <input type="text"
               class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
-              placeholder="Etiquetas">
+              placeholder="Etiquetas"
+              formControlName="etiquetas"
+              >
         </div>
 
     </div> 
@@ -72,13 +86,17 @@
           Cancelar
       </button>
       
-      <button class="rounded-[7px] btn w-40 h-10 align-middle dark:bg-custom-light bg-custom-dark-purple  text-custom-light dark:text-custom-dark-purple">
+      <button 
+        (click)="showData()"
+        class="rounded-[7px] btn w-40 h-10 align-middle dark:bg-custom-light bg-custom-dark-purple  text-custom-light dark:text-custom-dark-purple">
           Confirmar
       </button>
     </div>
 
     <div class="mx-2 py-2"></div>
-
+    
+    
   </section>
+  </form>
 
 </div>
