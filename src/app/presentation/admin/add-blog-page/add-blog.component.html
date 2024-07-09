@@ -1,0 +1,72 @@
+<header class="bg-gradient-purple text-white">
+  <div class="p-6 flex items-center gap-5">  
+
+    <div class="flex items-end dark:text-gray-500" [routerLink]="['']" >
+      <span class="fas fa-chevron-left"></span>
+    </div>
+  
+    <div class=""></div>
+      <div class="font-medium text-lg"> Add Blog </div> 
+    <div class=""></div>
+
+  </div>
+</header>
+
+<div class="animate__animated animate__fadeIn">
+
+  <section class="mx-4 py-7">
+    <div class="gap-2 grid dark:text-white">
+      
+      <p class="font-medium text-lg">Titulo del Blog</p>
+
+      <div class="bg-slate-100 shadow-md p-2 w-full">
+        <input type="text"
+              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
+              placeholder="Titulo">
+      </div>
+
+      <p class="font-medium text-lg">Contenido del Blog</p>
+
+      <div class="bg-slate-100 shadow-md w-full h-200">
+        <textarea rows="8"
+              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
+              >
+              </textarea>
+      </div>
+      
+      <p class="font-medium text-lg">Imágenes que quiera mostrar en el Blog</p>
+
+      <div class="bg-slate-100 shadow-md p-2 w-full">
+        <input multiple type="file"
+              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
+              placeholder="Subir Imagen">
+      </div>
+      
+      <p class="font-medium text-lg">Categoria del Blog</p>
+        <div class="bg-slate-100 shadow-md p-2 w-full">
+          <input type="text"
+              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
+              placeholder="Categoria">
+        </div>
+
+      <p class="font-medium text-lg">Entrenador</p>
+        <div class="bg-slate-100 shadow-md p-2 w-full">
+          <input type="text"
+              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
+              placeholder="Entrenador">
+        </div>
+
+      <p class="font-medium text-lg">Etiquetas del Blog</p>
+        <div class="bg-slate-100 shadow-md p-2 w-full">
+          <input type="text"
+              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
+              placeholder="Etiquetas">
+        </div>
+
+    </div> 
+
+    <div class="mx-6 py-6"></div>
+    
+  </section>
+
+</div>

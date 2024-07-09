@@ -11,7 +11,7 @@ import { isNotAuthenticatedGuard } from './presentation/auth/guards/isNotAuthent
 export const routes: Routes = [
   {
     path:'',
-    redirectTo: 'auth',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
@@ -21,8 +21,10 @@ export const routes: Routes = [
   },
   {
     path: 'home',
-    canActivate:[isAuthenticatedGuard],
-    loadChildren: ()=> import('./presentation/home/home.routes').then((routes) => routes.HomeRoutes)
+    //canActivate:[isAuthenticatedGuard],
+    canActivate:[isNotAuthenticatedGuard],
+    //loadChildren: ()=> import('./presentation/home/home.routes').then((routes) => routes.HomeRoutes)
+    loadChildren: ()=> import('./presentation/admin/admin.routes').then((routes) => routes.AdminRoutes)
   },
   {
     path: '404-not-found',
