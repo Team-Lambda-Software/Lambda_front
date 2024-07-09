@@ -1,12 +1,13 @@
-import { 
+import {
   InMemoryScrollingFeature,
   InMemoryScrollingOptions,
   Routes,
-  withInMemoryScrolling 
+  withInMemoryScrolling
 } from '@angular/router';
 import { NotFoundComponent } from './presentation/shared/pages/not-found-page/not-found.component';
-import { isAuthenticatedGuard } from './presentation/auth/guards/isAuthenticated.guard';
 import { isNotAuthenticatedGuard } from './presentation/auth/guards/isNotAuthenticated.guard';
+import { isAuthenticatedClientGuard } from './presentation/auth/guards/isAuthenticatedClient.guard';
+import { isAuthenticatedAdminGuard } from './presentation/auth/guards/isAuthenticatedAdmin.guard';
 
 export const routes: Routes = [
   {
@@ -21,9 +22,12 @@ export const routes: Routes = [
   },
   {
     path: 'home',
-    //canActivate:[isAuthenticatedGuard],
-    canActivate:[isNotAuthenticatedGuard],
-    //loadChildren: ()=> import('./presentation/home/home.routes').then((routes) => routes.HomeRoutes)
+    canActivate:[isAuthenticatedClientGuard],
+    loadChildren: ()=> import('./presentation/home/home.routes').then((routes) => routes.HomeRoutes)
+  },
+  {
+    path: 'admin',
+    canActivate:[isAuthenticatedAdminGuard],
     loadChildren: ()=> import('./presentation/admin/admin.routes').then((routes) => routes.AdminRoutes)
   },
   {
