@@ -46,7 +46,7 @@ export class UpdatePageComponent {
   public SubmitButtonName='Submit'
   public succsesUpdateUser="User Updated successfully"
   public errorUploadingUserImage="Error uploading the new user image"
-  public errorUploadingTypeImage="Error uploading the new user image, must be png or jpg"
+  public errorUploadingTypeImage="Error uploading the new user image, must be jpg jpeg png"
 
 
   public userStatusService = inject(UserStatusService);
