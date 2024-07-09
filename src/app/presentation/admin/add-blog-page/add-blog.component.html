@@ -1,34 +1,35 @@
 <header class="bg-gradient-purple text-white">
-  <div class="p-6 flex items-center gap-5">  
+  <div class="p-6 flex items-center gap-5">
 
     <div class="flex items-end dark:text-gray-500" [routerLink]="['']" >
       <span class="fas fa-chevron-left"></span>
     </div>
-  
+
     <div class=""></div>
-      <div class="font-medium text-lg"> Crear Blog </div> 
+      <div class="font-medium text-lg"> Crear Blog </div>
     <div class=""></div>
 
   </div>
 </header>
 
 <div class="animate__animated animate__fadeIn">
-  
+
   <form class="form"
     autocomplete="off"
+    [formGroup]="addBlogForm"
     (ngSubmit)="showData()"
-  > 
+  >
 
   <section class="mx-4 py-7">
     <div class="gap-2 grid dark:text-white">
-      
+
       <p class="font-medium text-lg">Titulo del Blog</p>
 
       <div class="bg-slate-100 shadow-md p-2 w-full">
         <input type="text"
               class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
               placeholder="Titulo"
-              formControlName="titulo"
+              formControlName="title"
               >
       </div>
 
@@ -37,25 +38,32 @@
       <div class="bg-slate-100 shadow-md w-full h-200">
         <textarea rows="8"
               class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
-              formControlName="contenido"
+              formControlName="content"
               >
               </textarea>
       </div>
-      
+
       <p class="font-medium text-lg">Imágenes que quiera mostrar en el Blog</p>
 
       <div class="bg-slate-100 shadow-md p-2 w-full">
         <input multiple type="file"
               class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
-              placeholder="Subir Imagen">
+              placeholder="Subir Imagen"
+              formControlName="images">
       </div>
-      
+
       <p class="font-medium text-lg">Categoria del Blog</p>
         <div class="bg-slate-100 shadow-md p-2 w-full">
+
+          @for (category of categories; track category.id) {
+            <p>{{category.name}}</p>
+            <img src={{category.icon}}>
+          }
+
           <input type="text"
               class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
               placeholder="Categoria"
-              formControlName="categoria"
+              formControlName="category"
               >
         </div>
 
@@ -64,7 +72,7 @@
           <input type="text"
               class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
               placeholder="Entrenador"
-              formControlName="entrenador"
+              formControlName="trainer"
               >
         </div>
 
@@ -73,11 +81,14 @@
           <input type="text"
               class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
               placeholder="Etiquetas"
-              formControlName="etiquetas"
+              formControlName="tags"
               >
+              @for (tag of tags; track tag.name) {
+                <p>{{tag.name}}</p>
+              }
         </div>
 
-    </div> 
+    </div>
 
     <div class="mx-3 py-3"></div>
 
@@ -85,8 +96,8 @@
       <button [routerLink]="['']" class="rounded-[7px] btn w-40 h-10 align-middle dark:bg-custom-light bg-custom-dark-purple text-custom-light dark:text-custom-dark-purple ">
           Cancelar
       </button>
-      
-      <button 
+
+      <button
         (click)="showData()"
         class="rounded-[7px] btn w-40 h-10 align-middle dark:bg-custom-light bg-custom-dark-purple  text-custom-light dark:text-custom-dark-purple">
           Confirmar
@@ -94,8 +105,8 @@
     </div>
 
     <div class="mx-2 py-2"></div>
-    
-    
+
+
   </section>
   </form>
 

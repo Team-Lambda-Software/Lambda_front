@@ -11,8 +11,9 @@ import { isAuthenticatedAdminGuard } from './presentation/auth/guards/isAuthenti
 
 export const routes: Routes = [
   {
+    // TODO OJO esto cambiarlo
     path:'',
-    redirectTo: 'home',
+    redirectTo: 'admin',
     pathMatch: 'full'
   },
   {
@@ -27,7 +28,7 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
-    canActivate:[isAuthenticatedAdminGuard],
+    // canActivate:[isAuthenticatedAdminGuard],
     loadChildren: ()=> import('./presentation/admin/admin.routes').then((routes) => routes.AdminRoutes)
   },
   {
