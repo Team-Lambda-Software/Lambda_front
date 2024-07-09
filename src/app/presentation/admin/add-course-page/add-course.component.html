@@ -6,23 +6,88 @@
     </div>
   
     <div class=""></div>
-      <div class="font-medium text-lg"> Add Course </div> 
+      <div class="font-medium text-lg"> Crear Curso </div> 
     <div class=""></div>
 
   </div>
-
 </header>
 
 <div class="animate__animated animate__fadeIn">
 
   <section class="mx-4 py-7">
-    <div class="flex justify-between items-end dark:text-white">
-      Cominio
+    <div class="gap-2 grid dark:text-white">
+      
+      <p class="font-medium text-lg">Titulo del Course</p>
+
+      <div class="bg-slate-100 shadow-md p-2 w-full">
+        <input type="text"
+              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
+              placeholder="Titulo">
+      </div>
+
+      <p class="font-medium text-lg">Descripcion del Curso</p>
+
+      <div class="bg-slate-100 shadow-md w-full h-200">
+        <textarea rows="8"
+              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
+              ></textarea>
+      </div>
+      
+      <p class="font-medium text-lg">Categoria del Curso</p>
+        <div class="bg-slate-100 shadow-md p-2 w-full">
+          <input type="text"
+              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
+              placeholder="Categoria">
+        </div>
+
+      <p class="font-medium text-lg">Entrenador</p>
+        <div class="bg-slate-100 shadow-md p-2 w-full">
+          <input type="text"
+              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
+              placeholder="Entrenador">
+        </div>
+
+      <p class="font-medium text-lg">Tiempo recomendado para el completamiento del Curso en Semanas</p>
+        <div class="bg-slate-100 shadow-md p-2 w-full">
+          <input type="text"
+              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
+              placeholder="Duración del Curso en Semanas">
+        </div>
+
+
+        <p class="font-medium text-lg">Cantidad de Minutos en Contenido</p>
+
+        <div class="bg-slate-100 shadow-md p-2 w-full">
+          <input type="text"
+                class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
+                placeholder="Minutos en Contenido">
+        </div>
+
+        
+      <p class="font-medium text-lg">Nivel de Dificultad</p>
+
+      <div class="bg-slate-100 shadow-md p-2 w-full">
+        <input type="text"
+              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
+              placeholder="Nivel de Dificultad">
+      </div>
+
+    </div> 
+
+    <div class="mx-3 py-3"></div>
+
+    <div class="w-full flex justify-center gap-3">
+      <button [routerLink]="['']" class="rounded-[7px] btn w-40 h-10 align-middle dark:bg-custom-light bg-custom-dark-purple text-custom-light dark:text-custom-dark-purple ">
+          Cancelar
+      </button>
+      
+      <button class="rounded-[7px] btn w-40 h-10 align-middle dark:bg-custom-light bg-custom-dark-purple  text-custom-light dark:text-custom-dark-purple">
+          Confirmar
+      </button>
     </div>
-  
-  
-    <div class="mx-4 py-4"></div>
-  
+
+    <div class="mx-2 py-2"></div>
+
   </section>
 
 </div>
