@@ -48,7 +48,6 @@ export class HomePageComponent implements OnInit{
         else this.popupService.displayErrorModal(value.getError().message)
       },
       error:(error:Result<Error>)=>{
-         this.popupService.displayErrorModal(error.getError().message)
       }
     })
 
