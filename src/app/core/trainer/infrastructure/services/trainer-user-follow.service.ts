@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { enviroment } from '../../../../../environments/environment';
-import { Trainer } from '../../domain/trainer.model';
 import { Result } from '../../../../common/helpers/Result';
 import { IAuthRepository } from '../../../shared/application/ports/IAuthRepository.interface';
 import { UserFollowResponse } from '../adapters/dtos/userFollow.dto';
