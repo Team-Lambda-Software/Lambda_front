@@ -5,8 +5,8 @@ import { enviroment } from '../../../../../environments/environment';
 import { Trainer } from '../../domain/trainer.model';
 import { ITrainerApiComunication } from '../../domain/interfaces/trainer-api-comunication';
 import { Result } from '../../../../common/helpers/Result';
-import { UserFollowResponse } from '../adapters/dtos/UserFollow.dto';
 import { IAuthRepository } from '../../../shared/application/ports/IAuthRepository.interface';
+import { UserFollowResponse } from '../adapters/dtos/userFollow.dto';
 
 export class TrainerApiService implements ITrainerApiComunication {
 

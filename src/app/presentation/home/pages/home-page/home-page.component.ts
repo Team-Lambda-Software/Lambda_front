@@ -13,6 +13,11 @@ import { CategoriesComponent } from './components/categories/categories.componen
 import { PopularCoursesComponent } from './components/popular-courses/popular-courses.component';
 import { VideoCoursesComponent } from './components/video-courses/video-courses.component';
 import { UserStatusService } from '../../../../core/user/infraestructure/services/user-status.service';
+import { ProgressTrendingUseCaseInfraestructure } from '../../../../core/progress/infraestructure/providers/progress-trending-use-case';
+import { ProgressTrending } from '../../../../core/progress/application/interfaces/dto/progress-trending.interface';
+import { Optional } from '../../../../common/helpers/Optional';
+import { PopupInfoModalService } from '../../../shared/services/popup-info-modal/popup-info-modal.service';
+import { Result } from '../../../../common/helpers/Result';
 
 @Component({
   selector: 'app-home-page',
@@ -37,11 +42,29 @@ import { UserStatusService } from '../../../../core/user/infraestructure/service
 export class HomePageComponent implements OnInit{
   ngOnInit(): void {
     this.user = this.userStatusService.currentUser();
+    this.progressTrendingUseCase.usecase.execute().subscribe({
+      next:(value)=>{
+        if(!value.isError()) this.progressTrending={...value.getValue()}
+        else this.popupService.displayErrorModal(value.getError().message)
+      },
+      error:(error:Result<Error>)=>{
+         this.popupService.displayErrorModal(error.getError().message)
+      }
+    })
+
   }
 
   public popularService = inject(CoursesPopularService);
   public userInfo = inject(UserInfoService);
   public userStatusService = inject(UserStatusService)
+  private popupService=inject(PopupInfoModalService)
   public user = this.userStatusService.currentUser();
+  public progressTrending:ProgressTrending={
+    Percent: 0,
+    courseTitle: 'No course',
+    courseId: 'No course Id',
+    lastTime: new Date()
+  }
+  public progressTrendingUseCase=inject(ProgressTrendingUseCaseInfraestructure)
 
 }
