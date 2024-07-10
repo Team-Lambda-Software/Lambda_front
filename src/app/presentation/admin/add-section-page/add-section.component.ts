@@ -4,18 +4,29 @@ import { RouterLink } from '@angular/router';
 import { AddSectionAdminDto } from '../../../core/admin/application/dto/add-section-dto';
 import { Course, PartialCourse } from '../../../core/course/domain/course.model';
 import { CourseUsecaseProvider } from '../../../core/course/infrastructure/providers/course-usecase-provider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+
+export interface MiniCourse {
+    name: string
+    id: string
+}
 
 @Component({
     selector: 'add-section-page',
     templateUrl: './add-section.component.html',
     styleUrl: './add-section.component.css',
     standalone: true,
-    imports: [RouterLink, CommonModule]
+    imports: [RouterLink, CommonModule,FormsModule,ReactiveFormsModule,MatFormFieldModule,
+        MatInputModule, MatIconModule,MatSelectModule]
 })
 export class AddSectionPageComponent {
 
     public fileToUpload=[]
-    public courses:PartialCourse[]=[]
+    public courses:MiniCourse[]=[]
     private courseInjection=inject(CourseUsecaseProvider);
   
     loadVideo(event:any){
@@ -40,10 +51,8 @@ export class AddSectionPageComponent {
 
     constructor() {
         this.courseInjection.usecase.getCoursesByParams('').subscribe({
-            next:(value)=>{ 
-                console.log(value)
-                this.courses=value
-            
+            next:(value)=>{  
+                value.forEach( e => this.courses.push( { name:e.title, id:e.id  } ) )
             }
         })
 

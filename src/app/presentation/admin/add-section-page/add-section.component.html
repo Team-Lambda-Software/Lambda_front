@@ -16,14 +16,19 @@
 
   <section class="mx-4 py-7">
     <div class="gap-2 grid dark:text-white">
-      
-      <p class="font-medium text-lg">Curso al cual se añade Sección</p>
 
-      <div class="bg-slate-100 shadow-md p-2 w-full">
-        <input type="text"
-              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
-              placeholder="Nombre del Curso">
-      </div>
+
+      <p class="font-medium text-lg">Trainer del Curso</p>
+      <mat-form-field appearance="outline">
+        <mat-label>Select an option</mat-label>
+        <mat-select>
+          @for (trainer of courses; track trainer.id) {
+            <mat-option [value]="trainer">{{trainer.name}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+
 
       <p class="font-medium text-lg">Nombre de la Sección</p>
 
