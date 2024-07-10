@@ -14,10 +14,14 @@ export class CircularProgressComponent {
   @Input() progress: number = 0;
 
  getCircumference(): number {
-    return 2 * Math.PI * 40; 
+    return 2 * Math.PI * 40;
  }
 
  getStrokeDashoffset(): number {
     return this.getCircumference() - (this.progress / 100) * this.getCircumference();
+ }
+ constructor(){
+  console.log(this.progress);
+
  }
 }

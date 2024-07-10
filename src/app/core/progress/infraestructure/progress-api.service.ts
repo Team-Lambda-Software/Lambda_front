@@ -10,6 +10,7 @@ import { ProgressTrending } from "../application/interfaces/dto/progress-trendin
 import { CourseProgressResponse } from "./adapters/dto/CourseProgressResponse";
 import { ProgressCourse } from "../application/interfaces/dto/progress-course.interface";
 import { SaveProgressCourse } from "../application/interfaces/dto/save-progress-course.interface";
+import { CoursesByUserProgress } from "../domain/progress.model";
 
 export default class ProgressApiComunication implements IProgressApiComunication {
 
@@ -17,7 +18,6 @@ export default class ProgressApiComunication implements IProgressApiComunication
   private readonly BASE_URL = enviroment.baseUrl + '/progress'
 
   constructor(private _authRepository: IAuthRepository) { }
-  
 
   getProgressTrending(): Observable<Result<ProgressTrending>> {
     const url = `${this.BASE_URL}/trending`
@@ -30,7 +30,7 @@ export default class ProgressApiComunication implements IProgressApiComunication
       .pipe(
         map((response) => {
           return Result.makeResult({
-            Percent: response.Percent,
+            Percent: response.percent,
             courseTitle: response.courseTitle,
             courseId: response.courseId,
             lastTime: response.lastTime
@@ -41,7 +41,6 @@ export default class ProgressApiComunication implements IProgressApiComunication
         })
       )
   }
-
 
   async initializeProgressCourse(idCourse: string): Promise<Result<void>> {
     return firstValueFrom(
@@ -56,7 +55,7 @@ export default class ProgressApiComunication implements IProgressApiComunication
   }
 
   getProgressCourse(idCourse: string): Observable<Result<ProgressCourse>> {
-    
+
         return this._httpClient.get<CourseProgressResponse>(`${this.BASE_URL}/one/${idCourse}`)
         .pipe(
           map((res) => {
@@ -76,21 +75,6 @@ export default class ProgressApiComunication implements IProgressApiComunication
         );
   }
 
-      // .pipe(
-      //   map((res) => {
-      //     return Result.makeResult({
-      //       lessons: res.lessons.map((lesson) => ({
-      //         lessonId: lesson.lessonId,
-      //         time: lesson.time,
-      //       })),
-      //     });
-      //   }),
-      //   catchError((err) => {
-      //     return throwError(() => Result.makeError(new Error(err.error.message)));
-      //   })
-      // )
-      
-
   saveProgress(data: SaveProgressCourse): Observable<Result<void>> {
 
     return this._httpClient.post(`${this.BASE_URL}/mark/end`, data)
@@ -99,6 +83,17 @@ export default class ProgressApiComunication implements IProgressApiComunication
         catchError((err) => {
           console.log(err.error.message);
           return throwError(() => Result.makeError(new Error(err.error.message)));
+        })
+      )
+  }
+
+  getCoursesByUserProgress(params: string): Observable<Result<CoursesByUserProgress[]>> {
+    return this._httpClient.get<CoursesByUserProgress[]>(`${this.BASE_URL}/courses${params}`)
+      .pipe(
+        map((res) => Result.makeResult(res)),
+        catchError((err) => {
+          console.log(err.error.message);
+          return of(Result.makeError<CoursesByUserProgress[]>(new Error(err.error.message)));
         })
       )
   }
