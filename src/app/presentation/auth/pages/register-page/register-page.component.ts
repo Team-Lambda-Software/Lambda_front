@@ -15,7 +15,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { CommonModule } from '@angular/common';
 import { TranslocoModule } from '@jsverse/transloco';
-import { UserType } from '../../../../core/user/domain/interfaces/Usertype.interface';
+import { UserType } from '../../../../core/user/domain/enum/Usertype.interface';
 import { PopupInfoModalService } from '../../../shared/services/popup-info-modal/popup-info-modal.service';
 import { Result } from '../../../../common/helpers/Result';
 import { UserStatusService } from '../../../../core/user/infraestructure/services/user-status.service';

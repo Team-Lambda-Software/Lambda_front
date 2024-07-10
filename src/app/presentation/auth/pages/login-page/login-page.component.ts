@@ -17,7 +17,7 @@ import { NotificationService } from '../../../home/services/notifications/Notifi
 import { AuthLocalStorageService } from '../../../../core/shared/infraestructure/local-storage/auth-local-storage.service';
 import { AuthApiService } from '../../../../core/user/infraestructure/services/auth-api.service';
 import { LoginUseCaseService } from '../../../../core/user/application/login-use-case.service';
-import { UserType } from '../../../../core/user/domain/interfaces/Usertype.interface';
+import { UserType } from '../../../../core/user/domain/enum/Usertype.interface';
 
 
 
@@ -37,7 +37,7 @@ export class LoginPageComponent {
   private router= inject(Router)
   private userStatusService=inject(UserStatusService)
   private loginUsecaseService=new LoginUseCaseService(
-    new AuthLocalStorageService(),this.userStatusService, new AuthApiService());
+    new AuthLocalStorageService(), new AuthApiService());
   private notification=inject(NotificationService)
 
   private popupService=inject(PopupInfoModalService)
@@ -61,18 +61,20 @@ export class LoginPageComponent {
 
   login(){
     const {email,password}=this.loginForm.value;
+    this.userStatusService.setChecking()
     this.loginUsecaseService.execute({email,password}).subscribe({
       next:(answer)=>{
         if(!answer.isError()) {
           let user=this.userStatusService.currentUser()
           if (user.hasValue()){
+            this.notification.saveNotificationToken().then( token => {})
             if(user.getValue().type===UserType.CLIENT)this.router.navigateByUrl('/home')
             if(user.getValue().type===UserType.ADMIN)this.router.navigateByUrl('/admin')
             }
           }
-          // this.notification.saveNotificationToken().then( token => {})
       },
       error:(error:Result<Error>)=>{
+        this.userStatusService.setNotAuthenticated()
          this.popupService.displayErrorModal(error.getError().message)
       }
     })

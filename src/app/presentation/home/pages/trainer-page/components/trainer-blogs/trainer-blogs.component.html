@@ -1,0 +1,34 @@
+<section class="mx-4 py-7">
+  <div class="flex justify-between items-end dark:text-white">
+    <h1 class="text-xl font-bold">{{'blogs-by-trainer'| transloco}}</h1>
+  </div>
+
+  <div 
+    class="grid grid-cols-2 mt-4 gap-2 justify-center"
+    infiniteScroll
+    [infiniteScrollContainer]="scrollContainer"
+    [infiniteScrollDistance]=".25"
+    [infiniteScrollThrottle]="300"
+    [horizontal]="false"
+    (scrolled)="!isLoadingBlogs() && !isLoadingMoreBlogs() && getBlogs()"
+  >
+    @if (isLoadingBlogs()) {
+      @for (item of [1,2,3,4]; track $index) {
+        <app-square-skeleton [dimensions]="{width: '175px', heigth: '175px'}" />
+      }
+    } @else {
+      @for (blog of latestBlogs(); track blog.id) {
+        <app-blog-article [blog]="blog"/>
+      } @empty {
+        <div class="text-center text-gray-500 dark:text-gray-300 text-xl">
+          {{'no-blogs-by-trainer'| transloco}}
+        </div>
+      }
+      @if (isLoadingMoreBlogs()) {
+        @for (item of [1]; track $index) {
+          <app-square-skeleton [dimensions]="{width: '175px', heigth: '175px'}" />
+        }
+      }
+    }
+  </div>
+</section>

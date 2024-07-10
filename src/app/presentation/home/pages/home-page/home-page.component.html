@@ -21,10 +21,10 @@
   <section>
     <div class="mx-4 py-7 flex justify-between items-center">
       <div>
-        <h1 class="text-xl font-bold dark:text-white">{{'fitness' | transloco}}</h1>
-        <p class="text-sm text-gray-500 dark:text-white">{{'update' | transloco}}</p>
+        <h1 class="text-xl font-bold dark:text-white">{{progressTrending.courseTitle}}</h1>
+        <p class="text-sm text-gray-500 dark:text-white">{{progressTrending.lastTime}}</p>
       </div>
-      <app-circular-progress [progress]="76"></app-circular-progress>
+      <app-circular-progress [progress]="progressTrending.Percent"></app-circular-progress>
     </div>
     <div class="border-t border-gray-300 my-2"></div>
   </section>

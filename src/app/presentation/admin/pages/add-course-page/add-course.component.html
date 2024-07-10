@@ -1,0 +1,128 @@
+<header class="bg-gradient-purple text-white" [hidden]="isLoadingAddCourse">
+  <div class="p-6 flex items-center gap-5">
+
+    <div class="flex items-end dark:text-gray-500" [routerLink]="['']" >
+      <span class="fas fa-chevron-left"></span>
+    </div>
+
+    <div class=""></div>
+      <div class="font-medium text-lg"> Crear Curso </div>
+    <div class=""></div>
+
+  </div>
+</header>
+
+<div class="animate__animated animate__fadeIn h-[100dvh]" [hidden]="isLoadingAddCourse">
+  <section class="mx-4 py-7">
+
+    <form
+    [formGroup]="addCourseForm"
+    (ngSubmit)="addCourse()"
+    >
+
+
+    <div class="gap-2 grid dark:text-white">
+
+
+      <p class="font-medium text-lg">Titulo del Curso</p>
+
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Tite</mat-label>
+        <input matInput
+        formControlName="title"
+               placeholder="The best course ever">
+      </mat-form-field>
+
+      <p class="font-medium text-lg">Descripcion del Curso</p>
+
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matInput placeholder="This course is about of how to survive to software development"
+        formControlName="description"
+        ></textarea>
+      </mat-form-field>
+
+      <p class="font-medium text-lg">Categoria del Curso</p>
+        <mat-form-field appearance="outline">
+          <mat-label>Select an option</mat-label>
+          <mat-select formControlName="category">
+            @for (category of categories; track category.id) {
+              <mat-option [value]="category">{{category.name}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+
+        <p class="font-medium text-lg">Trainer del Curso</p>
+        <mat-form-field appearance="outline">
+          <mat-label>Select an option</mat-label>
+          <mat-select formControlName="trainer">
+            @for (trainer of trainers; track trainer.id) {
+              <mat-option [value]="trainer">{{trainer.name}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+
+      <p class="font-medium text-lg">Time to fullfill in weeks</p>
+      <mat-form-field appearance="outline">
+        <mat-label>Weeks</mat-label>
+        <input matInput #duration maxlength="2" placeholder="" formControlName="weeks">
+        <mat-hint align="end">{{duration.value.length}} / 2</mat-hint>
+      </mat-form-field>
+
+      <p class="font-medium text-lg">Tags of the Blog</p>
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Tags</mat-label>
+        <textarea formControlName="tags"   matInput placeholder="Relax and chill"></textarea>
+      </mat-form-field>
+
+      <p class="font-medium text-lg">Nivel de Dificultad</p>
+      <mat-form-field appearance="outline">
+        <mat-label>Level</mat-label>
+        <input matInput #dificulty maxlength="2" placeholder="" formControlName="level">
+        <mat-hint align="end">{{dificulty.value.length}} / 2</mat-hint>
+      </mat-form-field>
+
+      <p class="font-medium text-lg">Imagen que quiera mostrar en el Curso</p>
+
+      <div class="bg-slate-100 shadow-md p-2 w-full">
+        <input type="file"
+              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
+              placeholder="Subir Imagen"
+              formControlName="image"
+              (change)="loadImage($event)"
+              >
+      </div>
+
+    </div>
+
+    <div class="mx-2 py-2"></div>
+
+
+    <div class="w-full flex">
+      <button [routerLink]="['']" class="btn w-1/2 h-16 lg:w-36 m-4 align-middle dark:bg-custom-light text-custom-light dark:text-custom-dark-purple rounded-[50px]"
+      [ngClass]="{'bg-custom-gradient-purple': !darkModeService.isDarkMode()}">
+        Cancelar
+      </button>
+
+      <button
+        (submit)="addCourse()"
+        class="btn w-1/2 h-16 lg:w-36 m-4 align-middle dark:bg-custom-light text-custom-light dark:text-custom-dark-purple rounded-[50px]"
+        [ngClass]="{'bg-custom-gradient-purple': !darkModeService.isDarkMode()}">
+          Confirmar
+      </button>
+    </div>
+
+  </form>
+
+  </section>
+
+  <pre>{{addCourseForm.value|json}}</pre>
+  <pre>{{addCourseForm.valid|json}}</pre>
+
+</div>
+
+@if (isLoadingAddCourse) {
+  <app-loader></app-loader>
+}

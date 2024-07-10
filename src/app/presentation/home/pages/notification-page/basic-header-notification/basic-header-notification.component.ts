@@ -2,6 +2,7 @@ import { Component, Input, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { NotificationUseCaseProvider } from '../../../../../core/notification/infrastructure/providers/notification-usecase-provider';
+import { PopupInfoModalService } from '../../../../shared/services/popup-info-modal/popup-info-modal.service';
 
 interface BasicHeaderNotificationOptions {
   redirect: string;
@@ -17,10 +18,15 @@ interface BasicHeaderNotificationOptions {
 })
 export class BasicHeaderNotificationComponent {
 
+  private popupService=inject(PopupInfoModalService)
+  public notificationDeleteAll='All your notifications were deleted'
+
+
   @Input({ required: true }) public options!: BasicHeaderNotificationOptions
   private notificationUseCase = inject (NotificationUseCaseProvider)
-  
+
   borrarNotificaciones(): void {
+    this.popupService.displayInfoModal(this.notificationDeleteAll)
     this.notificationUseCase.usecase.deleteAllNotifications().subscribe(
     );
   }

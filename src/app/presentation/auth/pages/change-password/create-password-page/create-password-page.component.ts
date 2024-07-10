@@ -28,7 +28,7 @@ import { UpdatePasswordUseCase } from '../../../../../core/user/application/upda
 })
 export class CreatePasswordPageComponent {
   private userStatus=inject(UserStatusService)
-  private updatePasswordUseCase= new UpdatePasswordUseCase(new AuthLocalStorageService(),this.userStatus,new AuthApiService)
+  private updatePasswordUseCase= new UpdatePasswordUseCase(new AuthLocalStorageService(),new AuthApiService)
   public darkModeService = inject(DarkModeService);
   private router= inject(Router)
   public validatorService= inject(ValidatorService)
@@ -61,6 +61,7 @@ export class CreatePasswordPageComponent {
   createPassword(){
     if(this.createPasswordForm.valid)
       {
+        this.userStatus.setChecking()
         let {password}=this.createPasswordForm.value
         if (password){
           this.updatePasswordUseCase.execute(password)
@@ -76,8 +77,10 @@ export class CreatePasswordPageComponent {
               else{
                 this.popupService.displayErrorModal(this.errorStatusCode)
               }
+              this.userStatus.setNotAuthenticated();
             },
             error:(error:Result<Error>)=>{
+              this.userStatus.setNotAuthenticated();
               this.popupService.displayErrorModal(error.getError().message)
             }
           })

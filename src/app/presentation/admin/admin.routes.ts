@@ -1,9 +1,10 @@
 import { Routes } from '@angular/router';
-import { HomePageComponent } from './home-page/home-page.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LayoutComponent } from './layout/layout.component';
-import { AddCoursePageComponent } from './add-course-page/add-course.component';
-import { AddBlogPageComponent } from './add-blog-page/add-blog.component';
-import { AddSectionPageComponent } from './add-section-page/add-section.component';
+import { AddCoursePageComponent } from './pages/add-course-page/add-course.component';
+import { AddBlogPageComponent } from './pages/add-blog-page/add-blog.component';
+import { AddSectionPageComponent } from './pages/add-section-page/add-section.component';
+
 
 export const AdminRoutes: Routes = [
   {
