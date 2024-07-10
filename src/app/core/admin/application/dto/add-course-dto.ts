@@ -8,4 +8,5 @@ export interface AddCourseAdminDto {
     level: number
     categoryId: string
     tags: string[]
+    image: File
 }
