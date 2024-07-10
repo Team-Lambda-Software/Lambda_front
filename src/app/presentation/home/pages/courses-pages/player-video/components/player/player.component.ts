@@ -46,8 +46,7 @@ export class PlayerComponent {
   ngAfterViewInit() {
     fromEvent(this.videoPlayer.nativeElement, 'ended').subscribe(() => {
       console.log('El video ha finalizado');
-      this.videoEnded = true;
-      this.saveProgress();
+      this.markAsCompleted();
       // Opcional: realizar otras acciones
     });
   }
@@ -77,8 +76,7 @@ export class PlayerComponent {
       return;
     }
 
-    if (!this.videoPlayer.nativeElement.paused) {
-      
+    if (!this.videoPlayer.nativeElement.paused || this.videoEnded) {
         const videoDuration = this.getVideoDurationInSec()
         if (typeof videoDuration !== 'number' || isNaN(videoDuration)) return;
 
@@ -137,7 +135,7 @@ export class PlayerComponent {
 
           const lesson = progressCourse.lessons.find(lesson => lesson.lessonId === this._properties().idLesson)
           if(lesson){
-            if(lesson.percent === 100) {
+            if(lesson.percent === 100) { //1 porsia lo devuelven en decimal
               console.log('La lección ya está completada');
               this.videoEnded = true
               this.savedProgress = true
