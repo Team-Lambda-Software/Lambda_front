@@ -8,6 +8,7 @@ import { Course, Lesson } from '../../../../../core/course/domain/course.model';
 import { CourseUsecaseProvider } from '../../../../../core/course/infrastructure/providers/course-usecase-provider';
 import { CommentBoxComponent } from './components/comment-box/comment-box.component';
 import { IComment } from '../../../../../core/comments/domain/comment.model';
+import { ProgressCourseUseCaseProvider } from '../../../../../core/progress/infraestructure/providers/progress-course-usecase.provider';
 
 
 @Component({
@@ -21,13 +22,17 @@ export class PlayerVideoComponent {
 
   @ViewChild('videoPlayer') videoPlayer!: ElementRef;
   @ViewChild('comments') commentSection!: CommentsComponent;
+  
   public courseUseCaseService = inject(CourseUsecaseProvider);
+
   public lesson?: Lesson;
   public course? : Course;
   public idCourse?: string;
   public idLesson = signal('');
   public indexLesson: number = 1
   public video = signal('')
+  public propertiesSection = signal({idCourse: '', idLesson: '', indexLesson: 0})
+
   public isLoading = false;
   
   constructor(private route: ActivatedRoute, private router: Router) {
@@ -58,6 +63,7 @@ export class PlayerVideoComponent {
         this.indexLesson = 1
       }
       this.video.set(this.lesson?.video)
+      this.propertiesSection.set({idCourse: this.idCourse!, idLesson: this.idLesson(), indexLesson: this.indexLesson})
     }).add(() => this.isLoading = false)
   }
 
@@ -82,6 +88,7 @@ export class PlayerVideoComponent {
       this.lesson = this.course?.lessons[indexLesson! + 1];
       this.indexLesson = indexLesson! + 1
       this.video.set(this.lesson?.video)
+      this.propertiesSection.set({idCourse: this.idCourse!, idLesson: this.idLesson(), indexLesson: this.indexLesson})
     }
   }
 
@@ -92,6 +99,7 @@ export class PlayerVideoComponent {
       this.lesson = this.course?.lessons[indexLesson! - 1];
       this.indexLesson = indexLesson! - 1
       this.video.set(this.lesson?.video)
+      this.propertiesSection.set({idCourse: this.idCourse!, idLesson: this.idLesson(), indexLesson: this.indexLesson})
     }
   }
 

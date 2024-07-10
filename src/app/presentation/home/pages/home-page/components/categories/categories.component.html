@@ -18,7 +18,7 @@
             [routerLink]="['/home/video-list']"
             [queryParams]="{'category': c.name}">
               <img [src]="c.icon" alt="category" class="object-cover rounded-xl w-[30px] m-auto">
-              <span class="block">{{c.name}}</span>
+              <span class="line-clamp-1 text-center">{{c.name}}</span>
             </div>
           </article>
         }
