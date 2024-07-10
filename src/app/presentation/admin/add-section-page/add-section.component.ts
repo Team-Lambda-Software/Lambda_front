@@ -42,6 +42,7 @@ export class AddSectionPageComponent {
     private adminUseCase = new AddSectionAdminUseCase( new AuthLocalStorageService() )
     public sectionCreatedSucsessfully='Section created succsessfully'
     public isLoading=false
+    private videoDuration = 0
 
 
     public addSectionForm :FormGroup<AddSectionForm>=this.fb.group<AddSectionForm>({
@@ -51,21 +52,6 @@ export class AddSectionPageComponent {
       duration:new FormControl(null,{validators:[Validators.required,Validators.pattern(this.validatorService.numberPattern)]}),
       video:new FormControl(null,{validators:[Validators.required]}),
     })
-
-    private getVideoDuration(filesRecieved:File[]):number {
-      let files = filesRecieved
-      let duration=0
-      this.videos.push(files[0]);
-      var video = document.createElement('video');
-      video.preload = 'metadata';
-
-      video.onloadedmetadata = function() {
-        window.URL.revokeObjectURL(video.src);
-        duration=video.duration
-      }
-      video.src = URL.createObjectURL(files[0]);;
-      return(this.videos[0].duration)
-    }
 
     loadVideo(event:any):void{
       let files:any = []
@@ -81,10 +67,7 @@ export class AddSectionPageComponent {
       })
       console.log(cleanedFiles);
       this.videosBase64=videosBase64
-      console.log(this.getVideoDuration(cleanedFiles));
-
-      this.addSectionForm.get('duration')?.setValue(3)
-
+      this.addSectionForm.get('duration')?.setValue(this.videoDuration)
       this.addSectionForm.get('video')?.setValue(cleanedFiles[0])
       // let duration=this.getVideoDuration(cleanedFiles)
       // console.log(duration);
@@ -95,6 +78,8 @@ export class AddSectionPageComponent {
       // Validar Formato del Archivo
       //const isValidImageExtension = this.validatorService.vali.test(file.name);
   }
+
+    onMetadata(e:any, video:any) { this.videoDuration = video.duration }
 
     private createDTO(): AddSectionAdminDto {
       let userForm=this.addSectionForm.value
