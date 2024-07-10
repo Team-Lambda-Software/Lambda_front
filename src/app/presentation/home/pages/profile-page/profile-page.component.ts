@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
@@ -7,12 +7,17 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.service';
 import { ILittleCard } from '../../interfaces/ILittleCard';
-import { CourseLitleCardAdapter } from '../../adapters/LitleCardAdapter';
+import { CourseLitleCardAdapter, CoursesByUserProgressToILittleCard } from '../../adapters/LitleCardAdapter';
 import { CoursesMyTrainingService } from '../../services/courses/getTraining/courses-mytraining.service';
 import { IUserProfile } from '../../interfaces/user-info-model';
 import { UserInfoService } from '../../services/user/getUserInfo/user-info.service';
 import { UserStatusService } from '../../../../core/user/infraestructure/services/user-status.service';
 import { HeaderCardComponent } from '../../components/header-card/header-card.component';
+import { ProgressCourseUseCaseProvider } from '../../../../core/progress/infraestructure/providers/progress-course-usecase.provider';
+import { ProgressByUserUseCaseProvider } from '../../../../core/progress/infraestructure/providers/progress-by-user-usecase.provider';
+import { finalize } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SquareSkeletonComponent } from '../../../shared/components/square-skeleton/square-skeleton.component';
 
 
 @Component({
@@ -20,15 +25,30 @@ import { HeaderCardComponent } from '../../components/header-card/header-card.co
     templateUrl: './profile-page.component.html',
     styleUrl: './profile-page.component.css',
     standalone: true,
-    imports: [RouterLink, CommonModule, CarruselBgImgComponent, TranslocoModule, NgxChartsModule,HeaderCardComponent]
+    imports: [
+      RouterLink,
+      CommonModule,
+      CarruselBgImgComponent,
+      TranslocoModule,
+      NgxChartsModule,
+      HeaderCardComponent,
+      SquareSkeletonComponent
+    ]
 })
-export class ProfilePageComponent {
+export class ProfilePageComponent implements OnInit{
 
   public myTrainingService = inject(CoursesMyTrainingService);
   public userInfoProfile =inject(UserInfoService);
   public userStatusService = inject(UserStatusService)
   public user = this.userStatusService.currentUser();
+  public progressService = inject(ProgressByUserUseCaseProvider)
 
+  public currentPage = 1;
+  public courses = signal<ILittleCard[]>([]);
+  public isLoading = signal(false);
+  public isLoadingMoreCourses = signal(false);
+  private snackbar = inject(MatSnackBar);
+  public isErrorCourses = signal(false);
 
   public progressValue = 50;
 
@@ -92,9 +112,35 @@ export class ProfilePageComponent {
   }
 
 
-  public getMyTraining(): ILittleCard[] {
-    let popular= this.myTrainingService.getMyTraining();
-    return popular.map((course) => CourseLitleCardAdapter(course));
+  ngOnInit(): void {
+    this.getMyTraining();
+  }
+
+  public getMyTraining() {
+    if(this.currentPage === 1) this.isLoading.set(true);
+    else this.isLoadingMoreCourses.set(true);
+    this.progressService.usecase
+      .execute(`?perPage=3&page=${this.currentPage}`)
+      .pipe(finalize(() => {
+        this.isLoading.set(false)
+        this.isLoadingMoreCourses.set(false)
+        this.currentPage++;
+      }))
+      .subscribe((result) => {
+        if(result.isError()) {
+          this.isErrorCourses.set(true);
+          this.snackbar.open('Error al cargar los cursos...', 'Cerrar');
+        } else {
+          let courses = result.getValue();
+          this.courses.set([
+            ...this.courses(),
+            ...courses.map(c => CoursesByUserProgressToILittleCard(c))
+          ]);
+        }
+      })
+    this.progressService.usecase.execute('?perPage=3&page=1').subscribe((data) => {
+
+    });
   }
 
   public getUserInfoProfile(): IUserProfile {
