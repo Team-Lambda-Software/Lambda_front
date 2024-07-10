@@ -18,6 +18,7 @@ import { AuthLocalStorageService } from '../../../../core/shared/infraestructure
 import { AuthApiService } from '../../../../core/user/infraestructure/services/auth-api.service';
 import { LoginUseCaseService } from '../../../../core/user/application/login-use-case.service';
 import { UserType } from '../../../../core/user/domain/enum/Usertype.interface';
+import { CurrentUserUseCaseService } from '../../../../core/user/application/current-use-case.service';
 
 
 
@@ -39,6 +40,8 @@ export class LoginPageComponent {
   private loginUsecaseService=new LoginUseCaseService(
     new AuthLocalStorageService(), new AuthApiService());
   private notification=inject(NotificationService)
+  private currentUseCaseService=new CurrentUserUseCaseService(
+    new AuthLocalStorageService(),this.userStatusService, new AuthApiService);
 
   private popupService=inject(PopupInfoModalService)
   public validatorService= inject(ValidatorService);
@@ -68,7 +71,14 @@ export class LoginPageComponent {
           let user=this.userStatusService.currentUser()
           if (user.hasValue()){
             this.notification.saveNotificationToken().then( token => {})
-            if(user.getValue().type===UserType.CLIENT)this.router.navigateByUrl('/home')
+            if(user.getValue().type===UserType.CLIENT){
+              this.currentUseCaseService.execute().subscribe({
+                next:(value)=>{this.router.navigateByUrl('/home')},
+                error:(error:Result<Error>)=>{
+                  this.userStatusService.setNotAuthenticated()
+                   this.popupService.displayErrorModal(error.getError().message)}
+            })
+            }
             if(user.getValue().type===UserType.ADMIN)this.router.navigateByUrl('/admin')
             }
           }

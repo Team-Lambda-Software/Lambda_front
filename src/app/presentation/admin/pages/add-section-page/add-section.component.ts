@@ -74,7 +74,6 @@ export class AddSectionPageComponent {
       })
       const url = window.URL.createObjectURL(files[0])
       document.getElementById('video_tester')?.setAttribute('src', url)
-
       this.videosBase64=videosBase64
       this.addSectionForm.get('duration')?.setValue(this.videoDuration)
       this.addSectionForm.get('video')?.setValue(cleanedFiles[0])

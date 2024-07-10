@@ -62,7 +62,7 @@
     </div>
 
     <div class="mx-4 items-center mt-5">
-      <button [routerLink]="['']" class="btn w-80 h-16 lg:w-36  align-middle dark:bg-custom-light text-custom-light dark:text-custom-dark-purple rounded-[50px]"
+      <button (click)="logout()" class="btn w-80 h-16 lg:w-36  align-middle dark:bg-custom-light text-custom-light dark:text-custom-dark-purple rounded-[50px]"
       [ngClass]="{'bg-custom-gradient-purple': !darkModeService.isDarkMode()}">
         Logout
       </button>
