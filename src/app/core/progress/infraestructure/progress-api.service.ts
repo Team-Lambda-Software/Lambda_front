@@ -30,7 +30,7 @@ export default class ProgressApiComunication implements IProgressApiComunication
       .pipe(
         map((response) => {
           return Result.makeResult({
-            Percent: response.Percent,
+            Percent: response.percent,
             courseTitle: response.courseTitle,
             courseId: response.courseId,
             lastTime: response.lastTime
@@ -55,7 +55,7 @@ export default class ProgressApiComunication implements IProgressApiComunication
   }
 
   getProgressCourse(idCourse: string): Observable<Result<ProgressCourse>> {
-    
+
         return this._httpClient.get<CourseProgressResponse>(`${this.BASE_URL}/one/${idCourse}`)
         .pipe(
           map((res) => {

@@ -1,5 +1,5 @@
 export interface ProgressTrendingResponse {
-  Percent: number
+  percent: number
   courseTitle: string
   courseId: string
   lastTime: Date
