@@ -82,5 +82,6 @@
   "courses-by-trainer": "Cursos del entrenador",
   "blogs-by-trainer": "Blogs del entrenador",
   "no-blogs-by-trainer": "No hay blogs del entrenador",
-  "no-courses-by-trainer": "No hay cursos del entrenador"
+  "no-courses-by-trainer": "No hay cursos del entrenador",
+  "no-courses-by-user": "No hay cursos del usuario"
 }

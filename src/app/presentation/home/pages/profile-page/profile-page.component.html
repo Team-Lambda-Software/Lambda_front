@@ -6,43 +6,50 @@
   <section>
     <div class="mx-4 py-7 flex justify-between items-center">
       <div>
-          <h1 class="text-xl font-bold dark:text-white">{{'statistics' | transloco}}</h1>
-          <p class="text-sm text-gray-500 dark:text-white">{{'week' | transloco}}</p>
+        <h1 class="text-xl font-bold dark:text-white">{{'statistics' | transloco}}</h1>
+        <p class="text-sm text-gray-500 dark:text-white">{{'week' | transloco}}</p>
       </div>
-      <div class="flex items-end text-gray-500 pr-2" [routerLink]="['']" >
-        <a  class="text-sm mx-2 dark:text-white">{{'see-all' | transloco}}</a>
+      <div class="flex items-end text-gray-500 pr-2" [routerLink]="['']">
+        <a class="text-sm mx-2 dark:text-white">{{'see-all' | transloco}}</a>
         <span class="fas fa-chevron-right"></span>
+      </div>
     </div>
-  </div>
-  <div class="chart-wrapper max-w-screen-sm h-[126px] mx-4 flex justify-between items-center bg-white dark:text-white dark:bg-gray-500">
-    <div>
-      <h1 class="text-sm mx-2">{{'time' | transloco}}</h1>
-      <p class="text-lg font-bold mx-2">{{'1:03:30'}}</p>
-    </div>
-    <ngx-charts-bar-vertical [ngClass]="{'dark-text': isDarkMode }"
-        [view]="[210, 79]"
-        [scheme]="colorSchemeStatistics"
-        [results]="chartDataStatistics"
-        [xAxis]="true"
-        [yAxis]="false"
-        [legend]="false"
-        [showGridLines]="false"
-        [showXAxisLabel]="false"
-        [showYAxisLabel]="false"
-        [barPadding]="20"
-        (select)="onBarSelect($event)"
-        ></ngx-charts-bar-vertical>
+    <div
+      class="chart-wrapper max-w-screen-sm h-[126px] mx-4 flex justify-between items-center bg-white dark:text-white dark:bg-gray-500">
+      <div>
+        <h1 class="text-sm mx-2">{{'time' | transloco}}</h1>
+        <p class="text-lg font-bold mx-2">{{'1:03:30'}}</p>
+      </div>
+      <ngx-charts-bar-vertical [ngClass]="{'dark-text': isDarkMode }" [view]="[210, 79]"
+        [scheme]="colorSchemeStatistics" [results]="chartDataStatistics" [xAxis]="true" [yAxis]="false" [legend]="false"
+        [showGridLines]="false" [showXAxisLabel]="false" [showYAxisLabel]="false" [barPadding]="20"
+        (select)="onBarSelect($event)"></ngx-charts-bar-vertical>
     </div>
   </section>
 
   <section class="mx-4 py-7">
     <div class="flex justify-between items-end dark:text-white">
       <h1 class="text-xl font-bold">{{'my-training' | transloco}}</h1>
-      <div class="flex items-center text-gray-500 pr-2" [routerLink]="['/home/training']" >
-          <a  class="text-sm mx-2 dark:text-white">{{'see-all' | transloco}}</a>
-          <span class="fas fa-chevron-right"></span>
+    </div>
+
+    @if (isLoading()) {
+      <div class="carrousel mt-4">
+        @for (item of [1,2,3,4]; track $index) {
+          <app-square-skeleton [dimensions]="{width: '164px', heigth: '150px'}" />
+        }
       </div>
-  </div>
-  <app-carrusel-bg-img [items]="getMyTraining()" [route]="'/home/main-course'"/>
+    } @else if (!isErrorCourses()){
+      <app-carrusel-bg-img 
+        [items]="courses()" 
+        [loadingQuantity]="isLoadingMoreCourses() ? 2 : undefined"
+        [route]="'/home/main-course'" 
+        (scrolled)="!isLoadingMoreCourses() && getMyTraining()" 
+      />
+    } @else {
+      <div class="text-center text-xl text-gray-400/75 mt-2">
+        {{'no-courses-by-user' | transloco}}
+      </div>
+    }
+
   </section>
 </div>
