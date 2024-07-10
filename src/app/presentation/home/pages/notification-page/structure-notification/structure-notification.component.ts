@@ -21,7 +21,7 @@ export class StructureNotificationComponent {
   public structure: Notification[] = [];
   private notificationUseCase = inject (NotificationUseCaseProvider)
   constructor(public dialog: MatDialog, private location: Location) {}
-  
+
   openDialog(st: Notification): void {
     this.notificationUseCase.usecase.getNotificationById(st.id)
       .subscribe((notification) => {
@@ -29,9 +29,9 @@ export class StructureNotificationComponent {
           width: '250px',
           data: notification,
       });
+      st.userReaded=true
 
         dialogRef.afterClosed().subscribe(() => {
-          console.log('Entre aqui :D')
           this.location.replaceState(this.location.path());
       });
     });
@@ -40,15 +40,15 @@ export class StructureNotificationComponent {
   formatearFecha(fecha: Date | string | null): string {
     if (fecha instanceof Date) {
       const opciones: Intl.DateTimeFormatOptions = {
-        weekday: 'long', 
-        hour: 'numeric', 
-        minute: 'numeric', 
-        hour12: true, 
+        weekday: 'long',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
       };
       return fecha.toLocaleDateString('es-ES', opciones);
     } else if (typeof fecha === 'string') {
-      const fechaObjeto = new Date(fecha); 
-      return this.formatearFecha(fechaObjeto); 
+      const fechaObjeto = new Date(fecha);
+      return this.formatearFecha(fechaObjeto);
     } else {
       return 'Fecha no válida';
     }

@@ -1,0 +1,39 @@
+<div class="animate__animated animate__fadeIn mt-6">
+  @if (trainerDetail()) {
+    <img src="../../../../../assets/images/no-profile-img.jpg" class="block mx-auto w-[120px] h-[120px] rounded-full"/>
+    <h1 class="dark:text-white text-center text-2xl font-semibold mt-4">{{trainerDetail()!.name}}</h1>
+    <div class="dark:text-white flex justify-center items-center mt-4 gap-6">
+      <div class="flex flex-col gap-1 items-center">
+        <span class="font-semibold">{{trainerDetail()!.followers}}</span>
+        <span class="text-sm">{{'followers' | transloco}}</span>
+      </div>
+      <button 
+        class="cursor-pointer rounded-full px-6 py-2 text-white "
+        [class.bg-gradient-purple]="!trainerDetail()!.userFollow"
+        [class.bg-unfollow]="trainerDetail()!.userFollow"
+        [class.opacity-50]="isLoading()"
+        [class.cursor-not-allowed]="isLoading()"
+        (click)="onToggleFollow()"
+        [disabled]="isLoading()"
+      >
+        {{ (trainerDetail()!.userFollow ? 'unfollow' : 'follow') | transloco }}
+        @if (isLoading()) {
+          <svg class="ml-2 inline animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+          </svg>
+        }
+      </button>
+    </div>
+  } @else {
+    <div class="p-4">
+      <app-circle-skeleton class="flex justify-center" [radio]="'120px'"/>
+      <app-square-skeleton class="block mt-4" [dimensions]="{width: '100%', heigth: '25px'}"/>
+      <div class="flex gap-4 mt-4 justify-center">
+        <app-square-skeleton [dimensions]="{width: '100px', heigth: '25px'}"/>
+        <app-square-skeleton [dimensions]="{width: '100px', heigth: '25px'}"/>
+      </div>
+    </div>
+  }
+  
+</div>

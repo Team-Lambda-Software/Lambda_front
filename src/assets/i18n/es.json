@@ -75,5 +75,12 @@
   "next": "Sig.",
   "prev": "Ant.",
   "no-courses-to-show": "No hay cursos para mostrar",
-  "no-blogs-to-show": "No hay blogs para mostrar"
+  "no-blogs-to-show": "No hay blogs para mostrar",
+  "trainer": "Entrenador",
+  "follow": "Seguir",
+  "unfollow": "Dejar de seguir",
+  "courses-by-trainer": "Cursos del entrenador",
+  "blogs-by-trainer": "Blogs del entrenador",
+  "no-blogs-by-trainer": "No hay blogs del entrenador",
+  "no-courses-by-trainer": "No hay cursos del entrenador"
 }

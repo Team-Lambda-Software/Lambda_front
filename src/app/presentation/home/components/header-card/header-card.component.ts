@@ -7,7 +7,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { UserStore } from '../../../../core/user/infraestructure/user-store';
 import { PopupInfoModalService } from '../../../shared/services/popup-info-modal/popup-info-modal.service';
 import { Result } from '../../../../common/helpers/Result';
-import { TrainerFollowUseCaseInfraestructure } from '../../../../core/trainer/infrastructure/providers/trainer-follow-use-case';
+import { TrainerFollowUseCaseProvider } from '../../../../core/trainer/infrastructure/providers/trainer-follow-use-case';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -40,7 +40,7 @@ export class HeaderCardComponent implements OnDestroy{
   private userFollowSubscription:Subscription
   private popupService=inject(PopupInfoModalService)
   public changePassword='Change Password'
-  public userFollowUseCase=inject(TrainerFollowUseCaseInfraestructure)
+  public userFollowUseCase=inject(TrainerFollowUseCaseProvider)
   constructor(){
     this.userFollowSubscription=this.userFollowUseCase.usecase.execute().subscribe({
       next:(value)=>{
