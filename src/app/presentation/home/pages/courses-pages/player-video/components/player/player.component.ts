@@ -1,8 +1,9 @@
 import { Component, ElementRef, Input, Signal, ViewChild, effect, inject, OnDestroy } from '@angular/core';
 import { ProgressCourseUseCaseProvider } from '../../../../../../../core/progress/infraestructure/providers/progress-course-usecase.provider';
 import { ProgressCourse } from '../../../../../../../core/progress/application/interfaces/dto/progress-course.interface';
-import { interval, Subscription } from 'rxjs';
+import { fromEvent, interval, Subscription } from 'rxjs';
 import { SaveProgressUseCaseProvider } from '../../../../../../../core/progress/infraestructure/providers/save-progress-usecase.provider';
+import { PopupInfoModalService } from '../../../../../../shared/services/popup-info-modal/popup-info-modal.service';
 
 export interface SectionProperties {
   idCourse: string,
@@ -23,10 +24,14 @@ export class PlayerComponent {
   @Input({required: true}) _properties!: Signal<SectionProperties>
   @ViewChild('videoPlayer') videoPlayer!: ElementRef;
 
+
+  private popupService=inject(PopupInfoModalService)
+
   public progressUseCaseService = inject(ProgressCourseUseCaseProvider);
   public saveProgressUseCaseService = inject(SaveProgressUseCaseProvider);
   private intervalId!: Subscription;
   private videoEnded = false;
+  private savedProgress = false;
 
   public videoUrl : string = ''
   
@@ -34,14 +39,16 @@ export class PlayerComponent {
   ngOnInit(){
     this.intervalId = interval(10000).subscribe(() => this.saveProgress())
 
-    this.videoPlayer.nativeElement.addEventListener('ended', () => {
+    this.getProgress(this._properties().idCourse);
+  }
+
+  ngAfterViewInit() {
+    fromEvent(this.videoPlayer.nativeElement, 'ended').subscribe(() => {
       console.log('El video ha finalizado');
       this.videoEnded = true;
       this.saveProgress();
-      // Opcional: realizar otras acciones, como detener el intervalo de guardado de datos o mostrar un mensaje al usuario.
+      // Opcional: realizar otras acciones
     });
-
-    this.getProgress(this._properties().idCourse);
   }
 
   ngOnDestroy() {
@@ -52,16 +59,19 @@ export class PlayerComponent {
 
   constructor() {
     effect(() => {
+      console.log('Cambiando de video');
+      this.savedProgress = false;
+      this.videoEnded = false;
       this.getProgress(this._properties().idCourse);
     })
   }
 
   saveProgress(): void {
-    if (!this.videoPlayer || !this.videoPlayer.nativeElement || this.videoEnded) {
+    if (!this.videoPlayer || !this.videoPlayer.nativeElement) {
       return;
     }
 
-    if (!this.videoPlayer.nativeElement.paused) {
+    if (!this.videoPlayer.nativeElement.paused || (!this.savedProgress && this.videoEnded)) {
     
       const videoElement = this.videoPlayer.nativeElement;
       const videoDuration = videoElement.duration;
@@ -85,6 +95,7 @@ export class PlayerComponent {
           console.log(result.getError().message);
         }else{
           console.log('Progreso guardado correctamente');
+          this.videoEnded ? this.savedProgress = true : this.savedProgress = false;
         }
       
       })
@@ -92,23 +103,25 @@ export class PlayerComponent {
   }
 
   async getProgress(id: string) {
-    let req = await this.progressUseCaseService.usecase.execute(id)
+    let req = await this.progressUseCaseService.usecase.execute(id);
+    
+      req.subscribe( res=> {
+        if (res.isError()){
+          this.popupService.displayErrorModal(res.getError().message)
+        }else{
+          const progressCourse = res.getValue() as ProgressCourse;
 
-    req.subscribe( progress =>{
-      if (progress.isError()){
-        console.log(progress.getError().message);
-      }else{
-        const progressCourse = progress.getValue() as ProgressCourse;
-        
-        const lesson = progressCourse.lessons.find(lesson => lesson.lessonId == this._properties().idLesson)
-        if(lesson){
-          console.log(`La lección ${lesson.lessonId} tiene un progreso de ${lesson.time} segundos`);
-          if (lesson.time === this.getVideoDurationInSec()) this.videoEnded = true;
-          this.setVideoStartTime(lesson.time)
+          progressCourse.percent === 100 ? this.savedProgress = true : this.savedProgress = false;
+
+          const lesson = progressCourse.lessons.find(lesson => lesson.lessonId == this._properties().idLesson)
+          if(lesson){
+            console.log(`La lección ${lesson.lessonId} tiene un progreso de ${lesson.time} segundos`);
+            if (lesson.time === this.getVideoDurationInSec()) this.videoEnded = true;
+            this.setVideoStartTime(lesson.time)
+          }
         }
-      }
-    }
-    )
+
+      })
   }
 
   private getVideoDurationInSec(): number {
@@ -124,9 +137,11 @@ export class PlayerComponent {
   setVideoStartTime(seconds: number) {
     if (this.videoPlayer && this.videoPlayer.nativeElement) {
       this.videoUrl = this._inputVideo()
+
       if(this.videoUrl){
-        this.videoPlayer.nativeElement.currentTime = seconds;
         this.videoPlayer.nativeElement.load();
+
+        this.videoPlayer.nativeElement.currentTime = seconds;
         this.videoPlayer.nativeElement.play();
       }
     }

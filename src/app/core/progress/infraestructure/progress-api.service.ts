@@ -1,4 +1,4 @@
-import { catchError, map, Observable, of, switchMap, throwError } from "rxjs";
+import { catchError, firstValueFrom, map, Observable, of, switchMap, throwError } from "rxjs";
 import { Result } from "../../../common/helpers/Result";
 import { IProgressApiComunication } from "../application/interfaces/progress-api-comunication";
 import { inject } from "@angular/core";
@@ -44,14 +44,15 @@ export default class ProgressApiComunication implements IProgressApiComunication
 
 
   async initializeProgressCourse(idCourse: string): Promise<Result<void>> {
-
-    this._httpClient.post(`${this.BASE_URL}/start/${idCourse}`, { courseId: idCourse }).subscribe({
-      next: () => console.log('Petición exitosa'),
-      error: (err) => {
-        return Result.makeError(new Error(err.error.message))
-      }
-    });
-    return Result.makeResult(undefined)
+    return firstValueFrom(
+      this._httpClient.post(`${this.BASE_URL}/start/${idCourse}`, { courseId: idCourse })
+      .pipe(
+        map(() => Result.makeResult(undefined)),
+        catchError((err) => {
+          return of(Result.makeError<void>(new Error(err.error.message)));
+        })
+      )
+    )
   }
 
   getProgressCourse(idCourse: string): Observable<Result<ProgressCourse>> {
@@ -59,7 +60,9 @@ export default class ProgressApiComunication implements IProgressApiComunication
         return this._httpClient.get<CourseProgressResponse>(`${this.BASE_URL}/one/${idCourse}`)
         .pipe(
           map((res) => {
+            console.log(res); // para ver si funciona esta wea
             return Result.makeResult<ProgressCourse>({
+              percent: res.percent,
               lessons: res.lessons.map((lesson) => ({
                 lessonId: lesson.lessonId,
                 time: lesson.time,

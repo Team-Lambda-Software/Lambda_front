@@ -1,4 +1,4 @@
-import { catchError, from, map, Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IUseCase } from '../../shared/application/ports/IUseCase.interface';
 import { Result } from '../../../common/helpers/Result';
 import { IProgressApiComunication } from './interfaces/progress-api-comunication';
@@ -12,9 +12,7 @@ export class ProgressCourseUseCaseService implements IUseCase<string, Promise<Ob
 
         let init = await this._progressApiComunication.initializeProgressCourse(data)
 
-        if(init.isError()){
-            console.log(init.getError());
-        }
+        init.isError() ? console.error(init.getError()) : console.log('ProgressCourseUseCaseService: ProgressCourse initialized')
 
         return this._progressApiComunication.getProgressCourse(data)
     }

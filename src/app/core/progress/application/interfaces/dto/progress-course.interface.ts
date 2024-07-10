@@ -1,4 +1,5 @@
 export interface ProgressCourse {
+    percent: number;
     lessons: LessonProgress[];
 }
 export interface LessonProgress {
