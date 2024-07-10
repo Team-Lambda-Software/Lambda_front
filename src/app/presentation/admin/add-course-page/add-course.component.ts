@@ -12,6 +12,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { AddCourseForm } from '../add-blog-page/interfaces/add-course-form-interface';
 import { CategoyUseCaseProvider } from '../../../core/categories/infrastructure/providers/category-usecase-provider';
 import { Category } from '../../../core/categories/domain/category.model';
+import { ManyTrainersApiService } from '../../../core/trainer/infrastructure/services/many-trainer-api.service';
+import { TrainerComplete } from '../../../core/trainer/domain/trainer.model';
+import { AddCourseAdminDto } from '../../../core/admin/application/dto/add-course-dto';
 
 @Component({
     selector: 'add-course-page',
@@ -27,6 +30,8 @@ export class AddCoursePageComponent {
   public validatorService= inject(ValidatorService)
   private categoryUseCaseService=inject(CategoyUseCaseProvider);
   public categories:Category[]=[]
+  public trainers:TrainerComplete[]=[]
+  public fileToUpload=[]
 
   public addCourseForm :FormGroup<AddCourseForm>=this.fb.group<AddCourseForm>({
     title:new FormControl(null,{validators:[Validators.required,Validators.nullValidator]}),
@@ -39,13 +44,40 @@ export class AddCoursePageComponent {
     image:new FormControl(null,{validators:[Validators.required]}),
   })
 
+  loadImage(event:any){
+    let files:any = []
+    for ( let i of event.target.files ) { files.push( i ) }
+    this.fileToUpload = files
+    //if (!file) console.log('file nulo')
+    //return this.popupService.displayErrorModal(this.errorUploadingUserImage)}
+    // Validar Formato del Archivo
+    //const isValidImageExtension = this.validatorService.vali.test(file.name);
+  }
+
+  private createDTO(): AddCourseAdminDto {
+    let data:AddCourseAdminDto = {    
+        categoryId: '',
+        trainerId: '',
+        name: '',
+        description: '',
+        weeksDuration: 0,
+        minutesDuration: 0,
+        level: 1,
+        tags: [], // this.tagsBlog.split(',')
+        image: this.fileToUpload[0]
+    
+    }
+    return data
+  }
+
   constructor(){
-    this.categoryUseCaseService.usecase.getByParams('').subscribe(
-      {
-        next:(value)=>{
-          this.categories=value
-        }
-      }
-    )
+    this.categoryUseCaseService.usecase.getByParams('').subscribe({
+        next:(value)=>{ this.categories=value }
+    })
+    const trainerMany = new ManyTrainersApiService()
+        
+    trainerMany.execute().subscribe({
+        next:(value)=>{ this.trainers=value }
+    })
   }
 }

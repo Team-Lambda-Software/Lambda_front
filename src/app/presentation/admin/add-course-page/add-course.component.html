@@ -42,12 +42,17 @@
           </mat-select>
         </mat-form-field>
 
-      <p class="font-medium text-lg">Entrenador</p>
-        <div class="bg-slate-100 shadow-md p-2 w-full">
-          <input type="text"
-              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
-              placeholder="Entrenador">
-        </div>
+
+        <p class="font-medium text-lg">Trainer del Curso</p>
+        <mat-form-field appearance="outline">
+          <mat-label>Select an option</mat-label>
+          <mat-select>
+            @for (trainer of trainers; track trainer.id) {
+              <mat-option [value]="trainer">{{trainer.name}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
 
       <p class="font-medium text-lg">Time to fullfill in weeks</p>
       <mat-form-field appearance="outline">
@@ -78,7 +83,9 @@
       <div class="bg-slate-100 shadow-md p-2 w-full">
         <input type="file"
               class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
-              placeholder="Subir Imagen">
+              placeholder="Subir Imagen"
+              (change)="loadImage($event)"
+              >
       </div>
 
     </div>
