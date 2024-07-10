@@ -1,0 +1,13 @@
+.skeleton {
+  background-color: #c7c7c79c;
+  animation: skeleton 1.5s infinite  alternate;
+}
+
+@keyframes skeleton {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: .3;
+  }
+}
