@@ -40,8 +40,8 @@ export class AddBlogPageComponent {
     public TitleOnChange = (event:any) => this.titleBlog = event.target.value
     public BodyOnChange = (event:any) => this.bodyBlog = event.target.value
     public TagsOnChange = (event:any) => this.tagsBlog = event.target.value
-    public loadCategory(event:any) { console.log(event) }
-    public loadTrainer(event:any) { console.log(event) }
+    public loadCategory(event:any) { this.categoryBlog = event }
+    public loadTrainer(event:any) { this.trainerBlog = event }
     
     showData(){
         console.log( this.createDTO() )        
@@ -82,6 +82,13 @@ export class AddBlogPageComponent {
           //this.popupService.displayErrorModal(error.getError().message)
         },
       })
+    }
+
+    constructor(){
+        this.categoryUseCaseService.usecase.getByParams('').subscribe({
+            next:(value)=>{ this.categories=value }
+        })
+
     }
 
 }
