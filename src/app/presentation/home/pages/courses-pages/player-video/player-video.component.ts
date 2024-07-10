@@ -9,6 +9,7 @@ import { CourseUsecaseProvider } from '../../../../../core/course/infrastructure
 import { CommentBoxComponent } from './components/comment-box/comment-box.component';
 import { IComment } from '../../../../../core/comments/domain/comment.model';
 import { ProgressCourseUseCaseProvider } from '../../../../../core/progress/infraestructure/providers/progress-course-usecase.provider';
+import { PopupInfoModalService } from '../../../../shared/services/popup-info-modal/popup-info-modal.service';
 
 
 @Component({
@@ -24,14 +25,14 @@ export class PlayerVideoComponent {
   @ViewChild('comments') commentSection!: CommentsComponent;
   
   public courseUseCaseService = inject(CourseUsecaseProvider);
+  public popUpService = inject(PopupInfoModalService);
 
   public lesson?: Lesson;
   public course? : Course;
   public idCourse?: string;
   public idLesson = signal('');
   public indexLesson: number = 1
-  public video = signal('')
-  public propertiesSection = signal({idCourse: '', idLesson: '', indexLesson: 0})
+  public propertiesSection = signal({idCourse: '', idLesson: '', indexLesson: 0, video: ''})
 
   public isLoading = false;
   
@@ -40,6 +41,7 @@ export class PlayerVideoComponent {
       if(params['course']) {
         this.idCourse = params['course'];
       }else{
+        this.popUpService.displayErrorModal('No se ha seleccionado un curso')
         this.router.navigate(['/home'])
       }
       if(params['lesson']) {
@@ -54,16 +56,21 @@ export class PlayerVideoComponent {
     this.courseUseCaseService.usecase.getById(id)
     .subscribe( course =>{
       this.course = course
+
+      if(!course.lessons.length){
+        this.popUpService.displayErrorModal('No hay lecciones en este curso :(')
+        this.router.navigate(['/home'])
+      }
+
       if(this.idLesson()){
         this.lesson = course.lessons.find(lesson => lesson.id == this.idLesson())
-        this.indexLesson = course.lessons.findIndex(lesson => lesson.id == this.idLesson()) + 1
+        this.indexLesson = course.lessons.findIndex(lesson => lesson.id == this.idLesson())+1
       }else{
         this.lesson = course.lessons[0]
         this.idLesson.set(this.lesson.id)
         this.indexLesson = 1
       }
-      this.video.set(this.lesson?.video)
-      this.propertiesSection.set({idCourse: this.idCourse!, idLesson: this.idLesson(), indexLesson: this.indexLesson})
+      this.propertiesSection.set({idCourse: this.idCourse!, idLesson: this.lesson?.id!, indexLesson: this.indexLesson, video: this.lesson?.video})
     }).add(() => this.isLoading = false)
   }
 
@@ -84,11 +91,10 @@ export class PlayerVideoComponent {
   public setNextLesson(): void{
     if(this.hasNext()){
       let indexLesson = this.course?.lessons.findIndex(lesson => lesson.id == this.lesson?.id)
-      this.router.navigate([] ,{queryParams: {course: this.idCourse, lesson: this.course?.lessons[indexLesson! + 1].id}, queryParamsHandling: 'merge'});
+      this.router.navigate([] ,{queryParams: {course: this.idCourse, lesson: this.course?.lessons[indexLesson! +1].id}, queryParamsHandling: 'merge'});
       this.lesson = this.course?.lessons[indexLesson! + 1];
       this.indexLesson = indexLesson! + 1
-      this.video.set(this.lesson?.video)
-      this.propertiesSection.set({idCourse: this.idCourse!, idLesson: this.idLesson(), indexLesson: this.indexLesson})
+      this.propertiesSection.set({idCourse: this.idCourse!, idLesson: this.lesson?.id!, indexLesson: this.indexLesson, video: this.lesson?.video})
     }
   }
 
@@ -98,8 +104,7 @@ export class PlayerVideoComponent {
       this.router.navigate([] ,{queryParams: { lesson: this.course?.lessons[indexLesson! - 1].id}, queryParamsHandling: 'merge'});
       this.lesson = this.course?.lessons[indexLesson! - 1];
       this.indexLesson = indexLesson! - 1
-      this.video.set(this.lesson?.video)
-      this.propertiesSection.set({idCourse: this.idCourse!, idLesson: this.idLesson(), indexLesson: this.indexLesson})
+      this.propertiesSection.set({idCourse: this.idCourse!, idLesson: this.lesson?.id!, indexLesson: this.indexLesson, video: this.lesson?.video})
     }
   }
 

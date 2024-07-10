@@ -5,4 +5,5 @@ export interface ProgressCourse {
 export interface LessonProgress {
     lessonId: string;
     time: number;
+    percent: number;
 }
