@@ -1,103 +1,106 @@
 <header class="bg-gradient-purple text-white">
-  <div class="p-6 flex items-center gap-5">  
+  <div class="p-6 flex items-center gap-5">
 
     <div class="flex items-end dark:text-gray-500" [routerLink]="['']" >
       <span class="fas fa-chevron-left"></span>
     </div>
-  
+
     <div class=""></div>
-      <div class="font-medium text-lg"> Crear Blog </div> 
+      <div class="font-medium text-lg"> Create Blog </div>
     <div class=""></div>
 
   </div>
 </header>
 
 <div class="animate__animated animate__fadeIn">
-  
+
   <section class="mx-4 py-7">
-    <div class="gap-2 grid dark:text-white">
-      
-      <p class="font-medium text-lg">Titulo del Blog</p>
 
-      <div class="bg-slate-100 shadow-md p-2 w-full">
-        <input type="text"
-              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
-              placeholder="Titulo"
-              (change)="TitleOnChange($event)"
-              >
-      </div>
+    <form
+    [formGroup]="addBlogForm"
+    (ngSubmit)="showData()"
+    >
 
-      <p class="font-medium text-lg">Contenido del Blog</p>
+    <div class="gap-2 grid dark:text-custom-light">
 
-      <div class="bg-slate-100 shadow-md w-full h-200">
-        <textarea rows="8"
-              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
-              (change)="BodyOnChange($event)"
-              > </textarea>
-      </div>
-      
-      <p class="font-medium text-lg">Imágenes que quiera mostrar en el Blog</p>
+      <p class="font-medium text-lg">Blog Title</p>
+
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Title</mat-label>
+        <input matInput
+              formControlName="title"
+              placeholder="The best course ever">
+      </mat-form-field>
+
+      <p class="font-medium text-lg">Blog content</p>
+
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea formControlName="content" matInput placeholder="This course is about of how to survive to software development"></textarea>
+      </mat-form-field>
+
+
+      <p class="font-medium text-lg">Blogs images to upload</p>
 
       <div class="bg-slate-100 shadow-md p-2 w-full">
         <input multiple type="file"
               class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
               placeholder="Subir Imagen"
+              formControlName="images"
               (change)="loadImage($event)"
               >
       </div>
-      
-      <p class="font-medium text-lg">Categoria del Blog</p>
-      
-      <p> {{showCategory()}} </p>
 
-      <div class="bg-slate-100 shadow-md p-2 w-full grid">
-        @for (category of categories; track category.id) {
-          <button 
-          class="bg-custom-light shadow-md p-2 hover:bg-custom-dark-purple "
-          (click)="loadCategory(category)" >{{category.name}}</button>
-        }
-      </div>
- 
+      <p class="font-medium text-lg">Categories of the Blog</p>
+        <mat-form-field appearance="outline">
+          <mat-label>Select an option</mat-label>
+          <mat-select formControlName="category">
+            @for (category of categories; track category.id) {
+              <mat-option [value]="category" >{{category.name}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
 
-      <p class="font-medium text-lg">Entrenador</p>
-      <p> {{showTrainer()}} </p>
-      
-      <div class="bg-slate-100 shadow-md p-2 w-full grid">
-        @for (trainer of trainers; track trainer.id) {
-          <button 
-          class="bg-custom-light shadow-md p-2 hover:bg-custom-dark-purple "
-          (click)="loadTrainer(trainer)" >{{trainer.name}}</button>
-        }
-      </div>
 
-      <p class="font-medium text-lg">Etiquetas del Blog</p>
-        <div class="bg-slate-100 shadow-md p-2 w-full">
-          <input type="text"
-              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
-              placeholder="Etiquetas"
-              (change)="TagsOnChange($event)"
-              >
-        </div>
+      <p class="font-medium text-lg">Trainer</p>
+      <mat-form-field appearance="outline">
+        <mat-label>Select an option</mat-label>
+        <mat-select formControlName="trainer" >
+          @for (trainer of trainers; track trainer.id) {
+            <mat-option [value]="trainer" >{{trainer.name}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
 
-    </div> 
+      <p class="font-medium text-lg">Tags of the Blog</p>
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Tags</mat-label>
+        <textarea formControlName="tags"   matInput placeholder="Relax and chill"></textarea>
+      </mat-form-field>
+
+    </div>
 
     <div class="mx-3 py-3"></div>
 
     <div class="w-full flex justify-center gap-3">
-      <button [routerLink]="['']" class="rounded-[7px] btn w-40 h-10 align-middle dark:bg-custom-light bg-custom-dark-purple text-custom-light dark:text-custom-dark-purple ">
-          Cancelar
+
+      <button [routerLink]="['']" class="btn w-1/2 h-16 lg:w-36  align-middle dark:bg-custom-light text-custom-light dark:text-custom-dark-purple rounded-[50px]"
+      [ngClass]="{'bg-custom-gradient-purple': !darkModeService.isDarkMode()}">
+        Cancelar
       </button>
-      
-      <button 
-        (click)="showData()"
-        class="rounded-[7px] btn w-40 h-10 align-middle dark:bg-custom-light bg-custom-dark-purple  text-custom-light dark:text-custom-dark-purple">
+
+      <button
+        (submit)="showData()"
+        class="btn w-1/2 h-16 lg:w-36  align-middle dark:bg-custom-light text-custom-light dark:text-custom-dark-purple rounded-[50px]"
+        [ngClass]="{'bg-custom-gradient-purple': !darkModeService.isDarkMode()}">
           Confirmar
       </button>
     </div>
 
+  </form>
+
     <div class="mx-2 py-2"></div>
-    
-    
+
   </section>
 
 </div>

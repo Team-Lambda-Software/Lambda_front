@@ -18,6 +18,10 @@ import { AuthLocalStorageService } from '../../../core/shared/infraestructure/lo
 import { ValidatorService } from '../../shared/services/validator/validator.service';
 import { Trainer } from '../../../core/trainer/domain/trainer.model';
 import { ManyTrainersApiService } from '../../../core/trainer/infrastructure/services/many-trainer-api.service';
+import { MatSelectModule } from '@angular/material/select';
+import { DarkModeService } from '../../shared/services/dark-mode/dark-mode.service';
+import { PopupInfoModalService } from '../../shared/services/popup-info-modal/popup-info-modal.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'add-blog-page',
@@ -25,74 +29,110 @@ import { ManyTrainersApiService } from '../../../core/trainer/infrastructure/ser
     styleUrl: './add-blog.component.css',
     standalone: true,
     imports: [RouterLink, CommonModule,FormsModule,ReactiveFormsModule,MatFormFieldModule,
-      MatInputModule, MatIconModule]
+      MatInputModule, MatIconModule,MatSelectModule]
 })
 export class AddBlogPageComponent {
     private categoryUseCaseService=inject(CategoyUseCaseProvider);
+    private fb = inject(FormBuilder)
+    public validatorService= inject(ValidatorService)
+    public darkModeService = inject(DarkModeService);
+    private popupService=inject(PopupInfoModalService)
+    public errorUploadingImage="Error uploading the image"
+
+
 
     public categories:Category[]=[]
     public trainers:Trainer[]=[]
+    public images:string[]=[]
 
-    private titleBlog = ''
-    private bodyBlog = ''
-    private tagsBlog = ''
-    public trainerBlog = { id: 'null', name: 'Trainer' }
-    public categoryBlog = { id: 'null', name: 'Category', icon: "string" }
-    public TitleOnChange = (event:any) => this.titleBlog = event.target.value
-    public BodyOnChange = (event:any) => this.bodyBlog = event.target.value
-    public TagsOnChange = (event:any) => this.tagsBlog = event.target.value
-    public loadCategory(event:any) { this.categoryBlog = event }
-    public loadTrainer(event:any) { this.trainerBlog = event }
-    public showCategory() { return this.categoryBlog.name }
-    public showTrainer() { return this.trainerBlog.name }
-    
+    public addBlogForm :FormGroup<AddBlogForm>=this.fb.group<AddBlogForm>({
+      title:new FormControl(null,{validators:[Validators.required]}),
+      content:new FormControl(null,{validators:[Validators.required]}),
+      category:new FormControl(null,{validators:[Validators.required]}),
+      trainer:new FormControl(null,{validators:[Validators.required]}),
+      tags:new FormControl(null,{validators:[Validators.required]}),
+      images:new FormControl(null,{validators:[Validators.required]}),
+    })
+
     showData(){
-        console.log( this.createDTO() )        
-    }
-    
-    private adminUseCase = new AddBlogAdminUseCase( new AuthLocalStorageService() )
-    public validatorService= inject(ValidatorService);
-    public fileToUpload=[]
-
-    private createDTO(): AddBlogAdminDto {
-        let data:AddBlogAdminDto = {    
-            images: this.fileToUpload,
-            title: this.titleBlog,
-            body: this.bodyBlog,
-            tags: this.tagsBlog.split(','),
-            categoryId: this.categoryBlog.id,
-            trainerId: this.trainerBlog.id
+        if(this.addBlogForm.valid){
+          let formData=this.addBlogForm.value
+          let sendData:AddBlogAdminDto={
+            trainerId: formData.trainer!.id,
+            title: formData.title!,
+            body: formData.content!,
+            categoryId: formData.category!.id,
+            tags: formData.tags!,
+            images: this.images
+          }
+          this.sendUpdatePettition(sendData)
         }
-        return data
     }
-  
-    loadImage(event:any){
+
+    private adminUseCase = new AddBlogAdminUseCase( new AuthLocalStorageService() )
+
+    private async convertFileToBase64(event:any): Promise<any> {
+      return new Promise((resolve, reject) => {
+        try{
+          const unsafeImg=window.URL.createObjectURL(event);
+          const image=this.sanitizer.bypassSecurityTrustUrl(event);
+          const reader = new FileReader();
+          reader.readAsDataURL(event);
+          reader.onload = () => {
+            resolve({
+              base:reader.result
+            });
+          };
+          reader.onerror = (error) => {
+            reject({
+              base:null
+            });
+          };
+        } catch(error){
+          this.popupService.displayErrorModal(this.errorUploadingImage)
+        }
+      });
+    }
+
+    loadImage(event:any):void{
         let files:any = []
         for ( let i of event.target.files ) { files.push( i ) }
-        this.fileToUpload = files
+        const cleanedFiles:File[]=files
+        let imagesBase64:string[]=[]
+
+        cleanedFiles.forEach((file)=>{
+          this.convertFileToBase64(file).then(imagen=>{
+            imagesBase64.push(imagen.base)
+            console.log(imagesBase64);
+
+          })
+        })
+        this.images=imagesBase64
+        this.addBlogForm.get('images')?.setValue(cleanedFiles)
+
         //if (!file) console.log('file nulo')
         //return this.popupService.displayErrorModal(this.errorUploadingUserImage)}
         // Validar Formato del Archivo
         //const isValidImageExtension = this.validatorService.vali.test(file.name);
     }
-  
-    private sendUpdatePettition(){
-      this.adminUseCase.execute( this.createDTO() ).subscribe({
+
+    private sendUpdatePettition(data:AddBlogAdminDto){
+      this.adminUseCase.execute(data).subscribe({
         next:(value) => {
             console.log(value)
         },
         error:(error:Result<Error>)=>{
-          //this.popupService.displayErrorModal(error.getError().message)
+          this.popupService.displayErrorModal(error.getError().message)
         },
       })
     }
 
-    constructor(){
+    constructor(private sanitizer:DomSanitizer){
         this.categoryUseCaseService.usecase.getByParams('').subscribe({
             next:(value)=>{ this.categories=value }
         })
         const trainerMany = new ManyTrainersApiService()
-        
+
         trainerMany.execute().subscribe({
             next:(value)=>{ this.trainers=value }
         })

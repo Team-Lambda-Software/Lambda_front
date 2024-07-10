@@ -4,6 +4,6 @@ export interface AddBlogAdminDto {
     title: string
     body: string
     categoryId: string
-    tags: string[]
-    images: File[]
+    tags: string
+    images: string[]
 }

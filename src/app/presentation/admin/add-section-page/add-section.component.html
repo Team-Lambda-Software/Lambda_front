@@ -1,12 +1,12 @@
 <header class="bg-gradient-purple text-white">
-  <div class="p-6 flex items-center gap-5">  
+  <div class="p-6 flex items-center gap-5">
 
     <div class="flex items-end dark:text-gray-500" [routerLink]="['']" >
       <span class="fas fa-chevron-left"></span>
     </div>
-  
+
     <div class=""></div>
-      <div class="font-medium text-lg"> Añadir Sección </div> 
+      <div class="font-medium text-lg"> Añadir Sección </div>
     <div class=""></div>
 
   </div>
@@ -15,54 +15,59 @@
 <div class="animate__animated animate__fadeIn">
 
   <section class="mx-4 py-7">
+    <form
+    [formGroup]="addSectionBlog">
+
     <div class="gap-2 grid dark:text-white">
 
 
       <p class="font-medium text-lg">Trainer del Curso</p>
       <mat-form-field appearance="outline">
         <mat-label>Select an option</mat-label>
-        <mat-select>
+        <mat-select formControlName="trainer">
           @for (trainer of courses; track trainer.id) {
             <mat-option [value]="trainer">{{trainer.name}}</mat-option>
           }
         </mat-select>
       </mat-form-field>
 
-      <p class="font-medium text-lg">Nombre de la Sección</p>
+      <p class="font-medium text-lg">Section Name</p>
 
-      <div class="bg-slate-100 shadow-md p-2 w-full">
-        <input type="text"
-              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
-              placeholder="Nombre de la Sección">
-      </div>
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput
+              formControlName="name"
+               placeholder="The best course ever">
+      </mat-form-field>
 
-      <p class="font-medium text-lg">Descripción de la Sección</p>
+      <p class="font-medium text-lg">Section Description</p>
 
-      <div class="bg-slate-100 shadow-md w-full h-200">
-        <textarea rows="8"
-              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
-              >
-              </textarea>
-      </div>
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matInput placeholder="This course is about of how to survive to software development"
+        formControlName="description"
+        ></textarea>
+      </mat-form-field>
 
       <p class="font-medium text-lg">Duración de la Sección</p>
 
-      <div class="bg-slate-100 shadow-md p-2 w-full">
-        <input type="text"
-              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
-              placeholder="Duración">
-      </div>
-      
+      <mat-form-field appearance="outline">
+        <mat-label>Duaration</mat-label>
+        <input matInput #duration maxlength="2" placeholder="" formControlName="duration">
+        <mat-hint align="end">{{duration.value.length}} / 2</mat-hint>
+      </mat-form-field>
+
       <p class="font-medium text-lg">Video que quiera mostrar en el Blog</p>
 
       <div class="bg-slate-100 shadow-md p-2 w-full">
         <input type="file"
               class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
               placeholder="Subir Video"
-              (change)="loadVideo($event)">
+              (change)="loadVideo($event)"
+              formControlName="image">
       </div>
-      
-    </div> 
+
+    </div>
 
     <div class="mx-3 py-3"></div>
 
@@ -70,14 +75,17 @@
       <button [routerLink]="['']" class="rounded-[7px] btn w-40 h-10 align-middle dark:bg-custom-light bg-custom-dark-purple text-custom-light dark:text-custom-dark-purple ">
           Cancelar
       </button>
-      
+
       <button class="rounded-[7px] btn w-40 h-10 align-middle dark:bg-custom-light bg-custom-dark-purple  text-custom-light dark:text-custom-dark-purple">
           Confirmar
       </button>
     </div>
 
     <div class="mx-2 py-2"></div>
+  </form>
 
   </section>
+
+  <pre>{{addSectionBlog.value|json}}</pre>
 
 </div>

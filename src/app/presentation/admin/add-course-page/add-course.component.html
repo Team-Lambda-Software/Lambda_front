@@ -13,15 +13,23 @@
 </header>
 
 <div class="animate__animated animate__fadeIn h-[100dvh]">
-
   <section class="mx-4 py-7">
+
+    <form
+    [formGroup]="addCourseForm"
+    (ngSubmit)="addCourse()"
+    >
+
+
     <div class="gap-2 grid dark:text-white">
+
 
       <p class="font-medium text-lg">Titulo del Curso</p>
 
       <mat-form-field class="w-full" appearance="outline">
         <mat-label>Tite</mat-label>
         <input matInput
+        formControlName="title"
                placeholder="The best course ever">
       </mat-form-field>
 
@@ -29,13 +37,15 @@
 
       <mat-form-field class="w-full" appearance="outline">
         <mat-label>Description</mat-label>
-        <textarea matInput placeholder="This course is about of how to survive to software development"></textarea>
+        <textarea matInput placeholder="This course is about of how to survive to software development"
+        formControlName="description"
+        ></textarea>
       </mat-form-field>
 
       <p class="font-medium text-lg">Categoria del Curso</p>
         <mat-form-field appearance="outline">
           <mat-label>Select an option</mat-label>
-          <mat-select>
+          <mat-select formControlName="category">
             @for (category of categories; track category.id) {
               <mat-option [value]="category">{{category.name}}</mat-option>
             }
@@ -46,7 +56,7 @@
         <p class="font-medium text-lg">Trainer del Curso</p>
         <mat-form-field appearance="outline">
           <mat-label>Select an option</mat-label>
-          <mat-select>
+          <mat-select formControlName="trainer">
             @for (trainer of trainers; track trainer.id) {
               <mat-option [value]="trainer">{{trainer.name}}</mat-option>
             }
@@ -57,7 +67,7 @@
       <p class="font-medium text-lg">Time to fullfill in weeks</p>
       <mat-form-field appearance="outline">
         <mat-label>Weeks</mat-label>
-        <input matInput #duration maxlength="2" placeholder="">
+        <input matInput #duration maxlength="2" placeholder="" formControlName="weeks">
         <mat-hint align="end">{{duration.value.length}} / 2</mat-hint>
       </mat-form-field>
 
@@ -66,7 +76,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Mins</mat-label>
-        <input matInput #minutes maxlength="2" placeholder="">
+        <input matInput #minutes maxlength="2" placeholder="" formControlName="mins">
         <mat-hint align="end">{{minutes.value.length}} / 2</mat-hint>
       </mat-form-field>
 
@@ -74,7 +84,7 @@
       <p class="font-medium text-lg">Nivel de Dificultad</p>
       <mat-form-field appearance="outline">
         <mat-label>Level</mat-label>
-        <input matInput #dificulty maxlength="2" placeholder="">
+        <input matInput #dificulty maxlength="2" placeholder="" formControlName="level">
         <mat-hint align="end">{{dificulty.value.length}} / 2</mat-hint>
       </mat-form-field>
 
@@ -84,26 +94,35 @@
         <input type="file"
               class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
               placeholder="Subir Imagen"
+              formControlName="image"
               (change)="loadImage($event)"
               >
       </div>
 
     </div>
 
-    <div class="mx-3 py-3"></div>
+    <div class="mx-2 py-2"></div>
 
-    <div class="w-full flex justify-center gap-3">
-      <button [routerLink]="['']" class="rounded-[7px] btn w-40 h-10 align-middle dark:bg-custom-light bg-custom-dark-purple text-custom-light dark:text-custom-dark-purple ">
-          Cancelar
+
+    <div class="w-full flex">
+      <button [routerLink]="['']" class="btn w-1/2 h-16 lg:w-36 m-4 align-middle dark:bg-custom-light text-custom-light dark:text-custom-dark-purple rounded-[50px]"
+      [ngClass]="{'bg-custom-gradient-purple': !darkModeService.isDarkMode()}">
+        Cancelar
       </button>
 
-      <button class="rounded-[7px] btn w-40 h-10 align-middle dark:bg-custom-light bg-custom-dark-purple  text-custom-light dark:text-custom-dark-purple">
+      <button
+        (submit)="addCourse()"
+        class="btn w-1/2 h-16 lg:w-36 m-4 align-middle dark:bg-custom-light text-custom-light dark:text-custom-dark-purple rounded-[50px]"
+        [ngClass]="{'bg-custom-gradient-purple': !darkModeService.isDarkMode()}">
           Confirmar
       </button>
     </div>
 
-    <div class="mx-2 py-2"></div>
+  </form>
 
   </section>
+
+  <pre>{{addCourseForm.value|json}}</pre>
+  <pre>{{addCourseForm.valid|json}}</pre>
 
 </div>
