@@ -1,4 +1,4 @@
-<header class="bg-gradient-purple text-white">
+<header class="bg-gradient-purple text-white" [hidden]="isLoadingSection">
   <div class="p-6 flex items-center gap-5">
 
     <div class="flex items-end dark:text-gray-500" [routerLink]="['']" >
@@ -12,7 +12,7 @@
   </div>
 </header>
 
-<div class="animate__animated animate__fadeIn">
+<div class="animate__animated animate__fadeIn" [hidden]="isLoadingSection">
 
   <section class="mx-4 py-7">
     <form
@@ -73,7 +73,7 @@
       <button
         type="submit"
         class="btn w-1/2 h-16 lg:w-36 m-4 align-middle dark:bg-custom-light text-custom-light dark:text-custom-dark-purple rounded-[50px]"
-        [disabled]="addSectionForm.valid || isLoadingSection"
+        [disabled]="addSectionForm.invalid || isLoadingSection"
         [ngClass]="{'bg-custom-gradient-purple': !darkModeService.isDarkMode()}">
         Confirm
       </button>
@@ -90,4 +90,7 @@
 
 </div>
 
-<video id="video_tester" width="0" controls #video (loadedmetadata)="onMetadata($event, video)"></video>
+<video id="video_tester" width="0" controls #video (loadedmetadata)="onMetadata($event, video)" [hidden]="true"></video>
+@if (isLoadingSection) {
+  <app-loader></app-loader>
+}

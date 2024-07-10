@@ -13,7 +13,7 @@ export const routes: Routes = [
   {
     // TODO OJO esto cambiarlo admin por auth
     path:'',
-    redirectTo: 'admin',
+    redirectTo: 'auth',
     pathMatch: 'full'
   },
   {

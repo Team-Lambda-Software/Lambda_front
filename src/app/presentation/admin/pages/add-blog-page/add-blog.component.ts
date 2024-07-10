@@ -14,12 +14,13 @@ import { FileService } from '../../../shared/services/file/file.service';
 import { Category } from '../../../../core/categories/domain/category.model';
 import { Trainer } from '../../../../core/trainer/domain/trainer.model';
 import { AddBlogForm } from '../../interfaces/add-blog-form-interface';
-import { AddBlogAdminDto } from '../../../../core/admin/application/dto/add-blog-dto';
-import { AddBlogAdminUseCase } from '../../../../core/admin/application/add-blog-use-case';
+import { AddBlogAdminDto } from '../../../../core/admin/application/interfaces/dto/add-blog-dto';
+import { AddBlogAdminUseCase } from '../../../../core/admin/application/add-blog-use-case.service';
 import { AuthLocalStorageService } from '../../../../core/shared/infraestructure/local-storage/auth-local-storage.service';
 import { Result } from '../../../../common/helpers/Result';
 import { TrainerGetManyProvider } from '../../../../core/trainer/infrastructure/providers/trainer-get-many.service';
 import { LoaderComponent } from '../../../auth/components/loader/loader.component';
+import { AddBlogApiProvider } from '../../../../core/admin/infraestructure/providers/AddBlogApiService.service';
 
 
 @Component({
@@ -72,7 +73,7 @@ export class AddBlogPageComponent {
         }
     }
 
-    private adminUseCase = new AddBlogAdminUseCase( new AuthLocalStorageService() )
+    private adminUseCase = inject(AddBlogApiProvider)
 
 
     loadImage(event:any):void{
@@ -98,7 +99,7 @@ export class AddBlogPageComponent {
     }
 
     private sendAddBlog(data:AddBlogAdminDto){
-      this.adminUseCase.execute(data).subscribe({
+      this.adminUseCase.usecase.execute(data).subscribe({
         next:(value) => {
           this.popupService.displayInfoModal(this.BlogCreatedSucsessfully)
             this.isLoadingAddCourse=false

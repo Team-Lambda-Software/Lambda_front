@@ -15,9 +15,11 @@ import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.se
 import { PopupInfoModalService } from '../../../shared/services/popup-info-modal/popup-info-modal.service';
 import { FileService } from '../../../shared/services/file/file.service';
 import { AuthLocalStorageService } from '../../../../core/shared/infraestructure/local-storage/auth-local-storage.service';
-import { AddSectionAdminUseCase } from '../../../../core/admin/application/add-section-use-case';
+import { AddSectionAdminUseCase } from '../../../../core/admin/application/add-section-use-case.service';
 import { AddSectionForm } from '../../interfaces/add-section-form-interface';
-import { AddSectionAdminDto } from '../../../../core/admin/application/dto/add-section-dto';
+import { AddSectionAdminDto } from '../../../../core/admin/application/interfaces/dto/add-section-dto';
+import { AddSectionApiService } from '../../../../core/admin/infraestructure/services/AddSectionApiService.service';
+import { AddSectionApiProvider } from '../../../../core/admin/infraestructure/providers/AddSectionApiService.service';
 
 
 
@@ -41,8 +43,10 @@ export class AddSectionPageComponent {
     private fileToBase64Service=inject(FileService)
     public videosBase64:string[]=[]
     public videos:any[]=[]
-    private adminUseCase = new AddSectionAdminUseCase( new AuthLocalStorageService() )
+    private adminUseCase = inject(AddSectionApiProvider)
     public sectionCreatedSucsessfully='Section created succsessfully'
+    public sectionCreatedError='Something went wrong creating the section, please try again'
+
     public isLoadingSection=false
     private videoDuration = 0
 
@@ -69,7 +73,7 @@ export class AddSectionPageComponent {
         })
       })
       const url = window.URL.createObjectURL(files[0])
-      let doc=document.getElementById('video_tester')?.setAttribute('src', url)
+      document.getElementById('video_tester')?.setAttribute('src', url)
 
       this.videosBase64=videosBase64
       this.addSectionForm.get('duration')?.setValue(this.videoDuration)
@@ -105,14 +109,14 @@ export class AddSectionPageComponent {
 
       if(this.addSectionForm.valid){
         this.isLoadingSection=true
-        this.adminUseCase.execute(this.createDTO()).subscribe({
+        this.adminUseCase.usecase.execute(this.createDTO()).subscribe({
           next:(value)=>{
             this.isLoadingSection=false
             this.popupService.displayInfoModal(this.sectionCreatedSucsessfully)
           }
           ,error:(error)=>{
-            this.popupService.displayErrorModal('Error uploading the section')
             this.isLoadingSection=false
+            this.popupService.displayErrorModal(this.sectionCreatedError)
           }
         })
       }

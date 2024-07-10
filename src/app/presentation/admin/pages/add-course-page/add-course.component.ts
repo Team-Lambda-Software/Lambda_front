@@ -1,4 +1,4 @@
-import { AddCourseAdminUseCase } from '../../../../core/admin/application/add-course-use-case';
+import { AddCourseAdminUseCase } from '../../../../core/admin/application/add-course-use-case.service';
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -15,7 +15,7 @@ import { CategoyUseCaseProvider } from '../../../../core/categories/infrastructu
 import { Category } from '../../../../core/categories/domain/category.model';
 import { ManyTrainersApiService } from '../../../../core/trainer/infrastructure/services/many-trainer-api.service';
 import { TrainerComplete } from '../../../../core/trainer/domain/trainer.model';
-import { AddCourseAdminDto } from '../../../../core/admin/application/dto/add-course-dto';
+import { AddCourseAdminDto } from '../../../../core/admin/application/interfaces/dto/add-course-dto';
 import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.service';
 import { AuthLocalStorageService } from '../../../../core/shared/infraestructure/local-storage/auth-local-storage.service';
 import { PopupInfoModalService } from '../../../shared/services/popup-info-modal/popup-info-modal.service';
@@ -24,6 +24,7 @@ import { FileService } from '../../../shared/services/file/file.service';
 import { TrainerGetManyProvider } from '../../../../core/trainer/infrastructure/providers/trainer-get-many.service';
 import { Result } from '../../../../common/helpers/Result';
 import { LoaderComponent } from '../../../auth/components/loader/loader.component';
+import { AddCourseApiProvider } from '../../../../core/admin/infraestructure/providers/AddCourseApiService.service';
 
 @Component({
     selector: 'add-course-page',
@@ -63,7 +64,7 @@ export class AddCoursePageComponent {
     image:new FormControl(null,{validators:[Validators.required]}),
   })
 
-  private adminUseCase = new AddCourseAdminUseCase( new AuthLocalStorageService() )
+  private adminUseCase = inject(AddCourseApiProvider)
 
 
   loadImage(event:any):void{
@@ -109,7 +110,7 @@ export class AddCoursePageComponent {
   addCourse(){
     if(this.addCourseForm.valid){
       this.isLoadingAddCourse=true
-      this.adminUseCase.execute(this.createDTO()).subscribe({
+      this.adminUseCase.usecase.execute(this.createDTO()).subscribe({
         next:(value)=>{
           this.isLoadingAddCourse=false
           this.popupService.displayInfoModal(this.CourseCreatedSucsessfully)
