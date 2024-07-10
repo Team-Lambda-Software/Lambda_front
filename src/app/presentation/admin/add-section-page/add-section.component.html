@@ -73,6 +73,7 @@
       <button
         type="submit"
         class="btn w-1/2 h-16 lg:w-36 m-4 align-middle dark:bg-custom-light text-custom-light dark:text-custom-dark-purple rounded-[50px]"
+        [disabled]="addSectionForm.valid || isLoadingSection"
         [ngClass]="{'bg-custom-gradient-purple': !darkModeService.isDarkMode()}">
         Confirm
       </button>

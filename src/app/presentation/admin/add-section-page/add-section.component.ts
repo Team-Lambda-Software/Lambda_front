@@ -17,6 +17,7 @@ import { FileService } from '../../shared/services/file/file.service';
 import { MiniCourse } from '../interfaces/minicourse.interface';
 import { AddSectionAdminUseCase } from '../../../core/admin/application/add-section-use-case';
 import { AuthLocalStorageService } from '../../../core/shared/infraestructure/local-storage/auth-local-storage.service';
+import { LoaderComponent } from "../../auth/components/loader/loader.component";
 
 
 @Component({
@@ -24,8 +25,8 @@ import { AuthLocalStorageService } from '../../../core/shared/infraestructure/lo
     templateUrl: './add-section.component.html',
     styleUrl: './add-section.component.css',
     standalone: true,
-    imports: [RouterLink, CommonModule,FormsModule,ReactiveFormsModule,MatFormFieldModule,
-        MatInputModule, MatIconModule,MatSelectModule]
+    imports: [RouterLink, CommonModule, FormsModule, ReactiveFormsModule, MatFormFieldModule,
+    MatInputModule, MatIconModule, MatSelectModule, LoaderComponent]
 })
 export class AddSectionPageComponent {
 
@@ -41,7 +42,7 @@ export class AddSectionPageComponent {
     public videos:any[]=[]
     private adminUseCase = new AddSectionAdminUseCase( new AuthLocalStorageService() )
     public sectionCreatedSucsessfully='Section created succsessfully'
-    public isLoading=false
+    public isLoadingSection=false
     private videoDuration = 0
 
 
@@ -54,6 +55,7 @@ export class AddSectionPageComponent {
     })
 
     loadVideo(event:any):void{
+      this.videosBase64=[]
       let files:any = []
       for ( let i of event.target.files ) { files.push( i ) }
       const cleanedFiles:File[]=files
@@ -65,7 +67,9 @@ export class AddSectionPageComponent {
           console.log(videosBase64);
         })
       })
-      console.log(cleanedFiles);
+      const url = window.URL.createObjectURL(files[0])
+      let doc=document.getElementById('video_tester')?.setAttribute('src', url)
+
       this.videosBase64=videosBase64
       this.addSectionForm.get('duration')?.setValue(this.videoDuration)
       this.addSectionForm.get('video')?.setValue(cleanedFiles[0])
@@ -99,11 +103,16 @@ export class AddSectionPageComponent {
       console.log('hola');
 
       if(this.addSectionForm.valid){
+        this.isLoadingSection=true
         this.adminUseCase.execute(this.createDTO()).subscribe({
           next:(value)=>{
+            this.isLoadingSection=false
             this.popupService.displayInfoModal(this.sectionCreatedSucsessfully)
           }
-          ,error:(error)=>{this.popupService.displayErrorModal('error')}
+          ,error:(error)=>{
+            this.popupService.displayErrorModal('Error uploading the section')
+            this.isLoadingSection=false
+          }
         })
       }
     }
