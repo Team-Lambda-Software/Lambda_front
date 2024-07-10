@@ -5,4 +5,5 @@ export interface AddBlogAdminDto {
     body: string
     categoryId: string
     tags: string[]
+    images: File[]
 }
