@@ -3,9 +3,9 @@ export interface AddCourseAdminDto {
     trainerId: string
     name: string
     description: string
-    weeksDuration: string
-    minutesDuration: string
-    level: string
+    tags:string
+    weeksDuration: number
+    level: number
     categoryId: string
     image: string
 }

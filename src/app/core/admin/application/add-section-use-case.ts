@@ -12,12 +12,15 @@ export class AddSectionAdminUseCase  {
 	_httpClient = inject(HttpClient);
 
    	execute(params: AddSectionAdminDto): Observable<any> {
+    const url=this.BASE_URL+`${params.id_course}`
 		const body = {
 			name: params.name,
 			description: params.description,
 			duration: params.duration,
-			file: params.file
+			video: params.video
 		}
+    console.log(body);
+
 
 		let token=this.authRepository.getToken()
 		if (!token.hasValue()) return of(Result.makeError<string>(new Error('Error: no tiene Token')))

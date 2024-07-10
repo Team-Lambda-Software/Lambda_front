@@ -71,15 +71,11 @@
         <mat-hint align="end">{{duration.value.length}} / 2</mat-hint>
       </mat-form-field>
 
-
-      <p class="font-medium text-lg">Quantity of minutes of content</p>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Mins</mat-label>
-        <input matInput #minutes maxlength="2" placeholder="" formControlName="mins">
-        <mat-hint align="end">{{minutes.value.length}} / 2</mat-hint>
+      <p class="font-medium text-lg">Tags of the Blog</p>
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Tags</mat-label>
+        <textarea formControlName="tags"   matInput placeholder="Relax and chill"></textarea>
       </mat-form-field>
-
 
       <p class="font-medium text-lg">Nivel de Dificultad</p>
       <mat-form-field appearance="outline">

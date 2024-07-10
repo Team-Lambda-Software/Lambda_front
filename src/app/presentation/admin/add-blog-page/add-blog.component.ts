@@ -2,7 +2,7 @@ import { Component, inject, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AddBlogForm } from './interfaces/add-blog-form-interface';
+import { AddBlogForm } from '../interfaces/add-blog-form-interface';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -22,6 +22,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { DarkModeService } from '../../shared/services/dark-mode/dark-mode.service';
 import { PopupInfoModalService } from '../../shared/services/popup-info-modal/popup-info-modal.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { FileService } from '../../shared/services/file/file.service';
 
 @Component({
     selector: 'add-blog-page',
@@ -37,6 +38,7 @@ export class AddBlogPageComponent {
     public validatorService= inject(ValidatorService)
     public darkModeService = inject(DarkModeService);
     private popupService=inject(PopupInfoModalService)
+    private fileService=inject(FileService)
     public errorUploadingImage="Error uploading the image"
 
 
@@ -71,28 +73,6 @@ export class AddBlogPageComponent {
 
     private adminUseCase = new AddBlogAdminUseCase( new AuthLocalStorageService() )
 
-    private async convertFileToBase64(event:any): Promise<any> {
-      return new Promise((resolve, reject) => {
-        try{
-          const unsafeImg=window.URL.createObjectURL(event);
-          const image=this.sanitizer.bypassSecurityTrustUrl(event);
-          const reader = new FileReader();
-          reader.readAsDataURL(event);
-          reader.onload = () => {
-            resolve({
-              base:reader.result
-            });
-          };
-          reader.onerror = (error) => {
-            reject({
-              base:null
-            });
-          };
-        } catch(error){
-          this.popupService.displayErrorModal(this.errorUploadingImage)
-        }
-      });
-    }
 
     loadImage(event:any):void{
         let files:any = []
@@ -101,12 +81,12 @@ export class AddBlogPageComponent {
         let imagesBase64:string[]=[]
 
         cleanedFiles.forEach((file)=>{
-          this.convertFileToBase64(file).then(imagen=>{
-            imagesBase64.push(imagen.base)
+          this.fileService.convertFileToBase64(file).then(imagen=>{
+            imagesBase64.push(imagen.model)
             console.log(imagesBase64);
-
           })
         })
+
         this.images=imagesBase64
         this.addBlogForm.get('images')?.setValue(cleanedFiles)
 

@@ -13,6 +13,8 @@ export class AddCourseAdminUseCase  {
 
    	execute(params: AddCourseAdminDto): Observable<any> {
 
+      console.log('params',params);
+
 		let token=this.authRepository.getToken()
 		if (!token.hasValue()) return of(Result.makeError<string>(new Error('Error: no tiene Token')))
 

@@ -16,15 +16,16 @@
 
   <section class="mx-4 py-7">
     <form
-    [formGroup]="addSectionBlog">
+    (ngSubmit)="addSection()"
+    [formGroup]="addSectionForm">
 
     <div class="gap-2 grid dark:text-white">
 
 
-      <p class="font-medium text-lg">Trainer del Curso</p>
+      <p class="font-medium text-lg">Course name</p>
       <mat-form-field appearance="outline">
         <mat-label>Select an option</mat-label>
-        <mat-select formControlName="trainer">
+        <mat-select formControlName="course">
           @for (trainer of courses; track trainer.id) {
             <mat-option [value]="trainer">{{trainer.name}}</mat-option>
           }
@@ -49,14 +50,6 @@
         ></textarea>
       </mat-form-field>
 
-      <p class="font-medium text-lg">Duración de la Sección</p>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Duaration</mat-label>
-        <input matInput #duration maxlength="2" placeholder="" formControlName="duration">
-        <mat-hint align="end">{{duration.value.length}} / 2</mat-hint>
-      </mat-form-field>
-
       <p class="font-medium text-lg">Video que quiera mostrar en el Blog</p>
 
       <div class="bg-slate-100 shadow-md p-2 w-full">
@@ -64,20 +57,24 @@
               class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
               placeholder="Subir Video"
               (change)="loadVideo($event)"
-              formControlName="image">
+              formControlName="video">
       </div>
 
     </div>
 
     <div class="mx-3 py-3"></div>
 
-    <div class="w-full flex justify-center gap-3">
-      <button [routerLink]="['']" class="rounded-[7px] btn w-40 h-10 align-middle dark:bg-custom-light bg-custom-dark-purple text-custom-light dark:text-custom-dark-purple ">
-          Cancelar
+    <div class="w-full flex">
+      <button [routerLink]="['']" class="btn w-1/2 h-16 lg:w-36 m-4 align-middle dark:bg-custom-light text-custom-light dark:text-custom-dark-purple rounded-[50px]"
+      [ngClass]="{'bg-custom-gradient-purple': !darkModeService.isDarkMode()}">
+        Cancel
       </button>
 
-      <button class="rounded-[7px] btn w-40 h-10 align-middle dark:bg-custom-light bg-custom-dark-purple  text-custom-light dark:text-custom-dark-purple">
-          Confirmar
+      <button
+        type="submit"
+        class="btn w-1/2 h-16 lg:w-36 m-4 align-middle dark:bg-custom-light text-custom-light dark:text-custom-dark-purple rounded-[50px]"
+        [ngClass]="{'bg-custom-gradient-purple': !darkModeService.isDarkMode()}">
+        Confirm
       </button>
     </div>
 
@@ -86,6 +83,8 @@
 
   </section>
 
-  <pre>{{addSectionBlog.value|json}}</pre>
+  <pre>{{addSectionForm.value|json}}</pre>
+  <pre>{{addSectionForm.valid|json}}</pre>
+
 
 </div>

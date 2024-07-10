@@ -3,14 +3,14 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AddBlogForm } from '../add-blog-page/interfaces/add-blog-form-interface';
+import { AddBlogForm } from '../interfaces/add-blog-form-interface';
 import { ValidatorService } from '../../shared/services/validator/validator.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 
 import { MatIconModule } from '@angular/material/icon';
-import { AddCourseForm } from '../add-blog-page/interfaces/add-course-form-interface';
+import { AddCourseForm } from '../interfaces/add-course-form-interface';
 import { CategoyUseCaseProvider } from '../../../core/categories/infrastructure/providers/category-usecase-provider';
 import { Category } from '../../../core/categories/domain/category.model';
 import { ManyTrainersApiService } from '../../../core/trainer/infrastructure/services/many-trainer-api.service';
@@ -20,6 +20,7 @@ import { DarkModeService } from '../../shared/services/dark-mode/dark-mode.servi
 import { AuthLocalStorageService } from '../../../core/shared/infraestructure/local-storage/auth-local-storage.service';
 import { PopupInfoModalService } from '../../shared/services/popup-info-modal/popup-info-modal.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { FileService } from '../../shared/services/file/file.service';
 
 @Component({
     selector: 'add-course-page',
@@ -36,6 +37,7 @@ export class AddCoursePageComponent {
   private categoryUseCaseService=inject(CategoyUseCaseProvider);
   public darkModeService = inject(DarkModeService);
   private popupService=inject(PopupInfoModalService)
+  private fileservice=inject(FileService)
 
   public categories:Category[]=[]
   public trainers:TrainerComplete[]=[]
@@ -48,35 +50,13 @@ export class AddCoursePageComponent {
     category:new FormControl(null,{validators:[Validators.required]}),
     trainer:new FormControl(null,{validators:[Validators.required]}),
     weeks:new FormControl(null,{validators:[Validators.required,Validators.pattern(this.validatorService.numberPattern)]}),
-    mins:new FormControl(null,{validators:[Validators.required,Validators.pattern(this.validatorService.numberPattern)]}),
+    tags:new FormControl(null,{validators:[Validators.required]}),
     level:new FormControl(null,{validators:[Validators.required,Validators.pattern(this.validatorService.numberPattern)]}),
     image:new FormControl(null,{validators:[Validators.required]}),
   })
 
   private adminUseCase = new AddCourseAdminUseCase( new AuthLocalStorageService() )
 
-  private async convertFileToBase64(event:any): Promise<any> {
-    return new Promise((resolve, reject) => {
-      try{
-        const unsafeImg=window.URL.createObjectURL(event);
-        const image=this.sanitizer.bypassSecurityTrustUrl(event);
-        const reader = new FileReader();
-        reader.readAsDataURL(event);
-        reader.onload = () => {
-          resolve({
-            base:reader.result
-          });
-        };
-        reader.onerror = (error) => {
-          reject({
-            base:null
-          });
-        };
-      } catch(error){
-        this.popupService.displayErrorModal('error')
-      }
-    });
-  }
 
   loadImage(event:any):void{
     let files:any = []
@@ -85,13 +65,13 @@ export class AddCoursePageComponent {
     let imagesBase64:string[]=[]
 
     cleanedFiles.forEach((file)=>{
-      this.convertFileToBase64(file).then(imagen=>{
-        imagesBase64.push(imagen.base)
+      this.fileservice.convertFileToBase64(file).then(imagen=>{
+        imagesBase64.push(imagen.model)
         console.log(imagesBase64);
       })
     })
     this.images=imagesBase64
-    console.log(cleanedFiles[0]);
+    console.log(this.images);
 
     this.addCourseForm.get('image')?.setValue(cleanedFiles[0])
 
@@ -108,17 +88,18 @@ export class AddCoursePageComponent {
         trainerId: userData.trainer!.id,
         name: userData.title!,
         description: userData.description!,
-        weeksDuration: userData.weeks!,
-        minutesDuration: userData.mins!,
-        level: userData.level!,
+        tags: userData.tags!,
+        weeksDuration: parseInt(userData.weeks!),
+        level: parseInt(userData.level!),
         image: this.images[0]
     }
+    this.images=[]
+    this.addCourseForm.get('image')?.setValue(null)
     return data
   }
 
   addCourse(){
     if(this.addCourseForm.valid){
-      console.log(this.addCourseForm.value)
       this.adminUseCase.execute(this.createDTO()).subscribe({
         next:(value)=>{}
         ,error:(error)=>{this.popupService.displayErrorModal('error')}
