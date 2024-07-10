@@ -15,6 +15,7 @@ import { SEARCH_API_PROVIDER } from './core/search/infraestructure/providers/sea
 import { NOTIFICATION_API_PROVIDER } from './core/notification/infrastructure/providers/notification-api-provider';
 import { COMMENT_API_PROVIDER } from './core/comments/infraestructure/providers/comment-api-provider';
 import { TAGS_API_PROVIDER } from './core/search/infraestructure/providers/tags-api-provider';
+// import { PROGRESS_API_PROVIDER } from './core/progress/infraestructure/providers/progress-course-api-provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -41,6 +42,6 @@ export const appConfig: ApplicationConfig = {
     SEARCH_API_PROVIDER,
     TAGS_API_PROVIDER,
     NOTIFICATION_API_PROVIDER,
-    COMMENT_API_PROVIDER
+    COMMENT_API_PROVIDER,
   ]
 };
