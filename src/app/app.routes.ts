@@ -11,7 +11,7 @@ import { isAuthenticatedAdminGuard } from './presentation/auth/guards/isAuthenti
 
 export const routes: Routes = [
   {
-    // TODO OJO esto cambiarlo
+    // TODO OJO esto cambiarlo admin por auth
     path:'',
     redirectTo: 'admin',
     pathMatch: 'full'
