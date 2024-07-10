@@ -40,7 +40,8 @@ export class AddSectionPageComponent {
     }
 
     private createDTO(): AddSectionAdminDto {
-        let data:AddSectionAdminDto = {    
+        let data:AddSectionAdminDto = {  
+            id_course: '',  
             name: '',
             description: '',
             duration: 0,
