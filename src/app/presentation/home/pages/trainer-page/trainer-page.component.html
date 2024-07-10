@@ -1,7 +1,7 @@
 <app-basic-header [options]="{redirect: '/home', name: 'trainer'}" />
 
 @if (trainerDetail()) {
-  <app-trainer-detail [trainerDetail]="trainerDetail()!"/>
+  <app-trainer-detail [trainerDetail]="trainerDetail()!" (onTrainerToggleFollow)="onTrainerToggleFollow($event)"/>
   <app-trainer-courses [trainerId]="trainerId!"/>
   <app-trainer-blogs [trainerId]="trainerId!"/>
 }

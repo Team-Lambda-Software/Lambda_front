@@ -6,12 +6,22 @@
       <span class="font-semibold">{{trainerDetail().followers}}</span>
       <span class="text-sm">{{'followers' | transloco}}</span>
     </div>
-    <span 
+    <button 
       class="cursor-pointer rounded-full px-6 py-2 text-white "
       [class.bg-gradient-purple]="!trainerDetail().userFollow"
-      [class.bg-gray-400]="trainerDetail().userFollow"
-      >
-      {{ trainerDetail().userFollow ? 'unfollow'  : 'follow' | transloco }}
-    </span>
+      [class.bg-unfollow]="trainerDetail().userFollow"
+      [class.opacity-50]="isLoading()"
+      [class.cursor-not-allowed]="isLoading()"
+      (click)="onToggleFollow()"
+      [disabled]="isLoading()"
+    >
+      {{ (trainerDetail().userFollow ? 'unfollow' : 'follow') | transloco }}
+      @if (isLoading()) {
+        <svg class="ml-2 inline animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+        </svg>
+      }
+    </button>
   </div>
 </div>

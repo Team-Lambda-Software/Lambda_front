@@ -52,4 +52,11 @@ export class TrainerPageComponent implements OnInit {
       })
   }
 
+  onTrainerToggleFollow(_$event: void) {
+    const trainer = this.trainerDetail()!;
+    const updatedUserFollow = !trainer.userFollow
+    const updatedFollowers = updatedUserFollow ? trainer.followers + 1 : trainer.followers - 1;
+    this.trainerDetail.set({ ...trainer, userFollow: updatedUserFollow, followers: updatedFollowers });
+  }
+
 }
