@@ -19,21 +19,28 @@
 
       <p class="font-medium text-lg">Titulo del Curso</p>
 
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Tite</mat-label>
+        <input matInput
+               placeholder="The best course ever">
+      </mat-form-field>
 
       <p class="font-medium text-lg">Descripcion del Curso</p>
 
-      <div class="bg-slate-100 shadow-md w-full h-200">
-        <textarea rows="8"
-              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
-              ></textarea>
-      </div>
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matInput placeholder="This course is about of how to survive to software development"></textarea>
+      </mat-form-field>
 
       <p class="font-medium text-lg">Categoria del Curso</p>
-        <div class="bg-slate-100 shadow-md p-2 w-full">
-          <input type="text"
-              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
-              placeholder="Categoria">
-        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Select an option</mat-label>
+          <mat-select>
+            @for (category of categories; track category.id) {
+              <mat-option [value]="category">{{category.name}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
 
       <p class="font-medium text-lg">Entrenador</p>
         <div class="bg-slate-100 shadow-md p-2 w-full">
@@ -42,30 +49,29 @@
               placeholder="Entrenador">
         </div>
 
-      <p class="font-medium text-lg">Tiempo recomendado Culminarlo</p>
-        <div class="bg-slate-100 shadow-md p-2 w-full">
-          <input type="text"
-              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
-              placeholder="Duración del Curso en Semanas">
-        </div>
+      <p class="font-medium text-lg">Time to fullfill in weeks</p>
+      <mat-form-field appearance="outline">
+        <mat-label>Weeks</mat-label>
+        <input matInput #duration maxlength="2" placeholder="">
+        <mat-hint align="end">{{duration.value.length}} / 2</mat-hint>
+      </mat-form-field>
 
 
-        <p class="font-medium text-lg">Cantidad de Minutos en Contenido</p>
+      <p class="font-medium text-lg">Quantity of minutes of content</p>
 
-        <div class="bg-slate-100 shadow-md p-2 w-full">
-          <input type="text"
-                class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
-                placeholder="Minutos en Contenido">
-        </div>
+      <mat-form-field appearance="outline">
+        <mat-label>Mins</mat-label>
+        <input matInput #minutes maxlength="2" placeholder="">
+        <mat-hint align="end">{{minutes.value.length}} / 2</mat-hint>
+      </mat-form-field>
 
 
       <p class="font-medium text-lg">Nivel de Dificultad</p>
-
-      <div class="bg-slate-100 shadow-md p-2 w-full">
-        <input type="text"
-              class="font-medium text-xl text-gray-500 bg-transparent border-none w-full focus:outline-none"
-              placeholder="Nivel de Dificultad">
-      </div>
+      <mat-form-field appearance="outline">
+        <mat-label>Level</mat-label>
+        <input matInput #dificulty maxlength="2" placeholder="">
+        <mat-hint align="end">{{dificulty.value.length}} / 2</mat-hint>
+      </mat-form-field>
 
       <p class="font-medium text-lg">Imagen que quiera mostrar en el Curso</p>
 
