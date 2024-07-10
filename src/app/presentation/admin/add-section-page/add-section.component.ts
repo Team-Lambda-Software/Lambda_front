@@ -36,6 +36,7 @@ export class AddSectionPageComponent {
     public validatorService= inject(ValidatorService)
     public darkModeService = inject(DarkModeService);
     private popupService=inject(PopupInfoModalService)
+    private videoDuration = 0
 
     public addSectionBlog :FormGroup<AddSectionForm>=this.fb.group<AddSectionForm>({
       trainer:new FormControl(null,{validators:[Validators.required]}),
@@ -49,11 +50,17 @@ export class AddSectionPageComponent {
         let files:any = []
         for ( let i of event.target.files ) { files.push( i ) }
         this.fileToUpload = files
+        
+        const url = window.URL.createObjectURL(files[0])
+        document.getElementById('video_tester')?.setAttribute('src', url)
+        
         //if (!file) console.log('file nulo')
         //return this.popupService.displayErrorModal(this.errorUploadingUserImage)}
         // Validar Formato del Archivo
         //const isValidImageExtension = this.validatorService.vali.test(file.name);
     }
+
+    onMetadata(e:any, video:any) { this.videoDuration = video.duration }
 
     private createDTO(): AddSectionAdminDto {
         let data:AddSectionAdminDto = {
