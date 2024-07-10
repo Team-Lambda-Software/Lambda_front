@@ -17,6 +17,7 @@ import { AddBlogAdminDto } from '../../../core/admin/application/dto/add-blog-dt
 import { AuthLocalStorageService } from '../../../core/shared/infraestructure/local-storage/auth-local-storage.service';
 import { ValidatorService } from '../../shared/services/validator/validator.service';
 import { Trainer } from '../../../core/trainer/domain/trainer.model';
+import { ManyTrainersApiService } from '../../../core/trainer/infrastructure/services/many-trainer-api.service';
 
 @Component({
     selector: 'add-blog-page',
@@ -42,6 +43,8 @@ export class AddBlogPageComponent {
     public TagsOnChange = (event:any) => this.tagsBlog = event.target.value
     public loadCategory(event:any) { this.categoryBlog = event }
     public loadTrainer(event:any) { this.trainerBlog = event }
+    public showCategory() { return this.categoryBlog.name }
+    public showTrainer() { return this.trainerBlog.name }
     
     showData(){
         console.log( this.createDTO() )        
@@ -87,6 +90,11 @@ export class AddBlogPageComponent {
     constructor(){
         this.categoryUseCaseService.usecase.getByParams('').subscribe({
             next:(value)=>{ this.categories=value }
+        })
+        const trainerMany = new ManyTrainersApiService()
+        
+        trainerMany.execute().subscribe({
+            next:(value)=>{ this.trainers=value }
         })
 
     }

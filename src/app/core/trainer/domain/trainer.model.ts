@@ -3,15 +3,10 @@ export interface Trainer {
   name: string
 }
 
-// export interface Trainer {
-//   id: string
-//   firstName: string
-//   firstLastName: string
-//   secondLastName: string
-//   email: string
-//   phone: string
-//   followersID: any[]
-//   coursesID: any[]
-//   blogsID: any[]
-//   location: string
-// }
+export interface TrainerComplete {
+   id: string
+   name: string
+   followers:number;
+   userFollow: boolean;
+   location: string
+}
