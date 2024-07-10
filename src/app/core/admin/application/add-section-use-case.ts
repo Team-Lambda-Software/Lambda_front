@@ -8,18 +8,23 @@ import { IAuthRepository } from '../../shared/application/ports/IAuthRepository.
 
 export class AddSectionAdminUseCase  {
 	
-	readonly BASE_URL:string= enviroment.baseUrl+`/course/add-section/:courseId`
+	readonly BASE_URL:string= enviroment.baseUrl+`/course/add-section/`
 	_httpClient = inject(HttpClient);
 
    	execute(params: AddSectionAdminDto): Observable<any> {
-		const body={ data: '' }
+		const body = { 
+			name: params.name,
+			description: params.description,
+			duration: params.duration,
+			file: params.file
+		}
 		
 		let token=this.authRepository.getToken()
 		if (!token.hasValue()) return of(Result.makeError<string>(new Error('Error: no tiene Token')))
 
 		const headers= new HttpHeaders().set('Authorization',`Bearer ${token.getValue()}`)
 
-		return this._httpClient.put<any>(this.BASE_URL, body, {headers})
+		return this._httpClient.put<any>(this.BASE_URL+params.id_course, body, {headers})
 		  .pipe(
 			map((response)=>{
 			  return Result.makeResult(response.id)

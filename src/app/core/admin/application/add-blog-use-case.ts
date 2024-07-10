@@ -12,14 +12,13 @@ export class AddBlogAdminUseCase  {
 	_httpClient = inject(HttpClient);
 
    	execute(params: AddBlogAdminDto): Observable<any> {
-		const body={ data: '' }
 		
 		let token=this.authRepository.getToken()
 		if (!token.hasValue()) return of(Result.makeError<string>(new Error('Error: no tiene Token')))
 
 		const headers= new HttpHeaders().set('Authorization',`Bearer ${token.getValue()}`)
 
-		return this._httpClient.put<any>(this.BASE_URL, body, {headers})
+		return this._httpClient.put<any>(this.BASE_URL, params, {headers})
 		  .pipe(
 			map((response)=>{
 			  return Result.makeResult(response.id)
