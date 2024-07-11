@@ -57,9 +57,7 @@ export class HeaderCardComponent implements OnDestroy{
     this.progressTrendingUseCase.usecase.execute().subscribe({
       next:(value)=>{
         if(!value.isError()){{
-          console.log(value);
-
-          this.progressValue=value.getValue().Percent
+          this.progressValue=parseFloat(value.getValue().Percent.toFixed(1))
           this.lastTime=value.getValue().Percent
         }}
         else this.popupService.displayErrorModal(value.getError().message)
