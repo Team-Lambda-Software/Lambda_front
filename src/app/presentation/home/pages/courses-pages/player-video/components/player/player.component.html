@@ -4,4 +4,13 @@
         [src]="videoUrl" 
         type="video/mp4">
     </video>
+    <div class="flex justify-center items-center py-2">
+      <button (click)="markAsCompleted()" 
+              class="bg-gradient-purple text-white text-xs font-semibold py-1 px-2 rounded-full  disabled:opacity-40 disabled:cursor-not-allowed disabled:select-none"
+              [disabled]="this.videoEnded">
+          <span *ngIf="this.videoEnded">{{'completed' | transloco}}</span>
+          <span *ngIf="!this.videoEnded">{{'mark-as-complete' | transloco}}</span>
+        <span class="px-1 fa-solid fa-check"></span>
+      </button>
+    </div>
 </section>

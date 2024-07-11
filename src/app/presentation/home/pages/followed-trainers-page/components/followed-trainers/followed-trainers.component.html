@@ -1,0 +1,23 @@
+<section class="mx-4 py-7">
+  <div class="flex justify-between items-end dark:text-white">
+    <h1 class="text-xl font-bold">{{'followed-trainers'| transloco}}</h1>
+  </div>
+  @if (isLoadingTrainers()) {
+    <div class="carrousel mt-4">
+      @for (item of [1,2,3,4]; track $index) {
+        <app-square-skeleton [dimensions]="{width: '164px', heigth: '150px'}" />
+      }
+    </div>
+  } @else if (trainers().length) {
+    <app-carrusel-bg-img 
+      [items]="trainers()"
+      [loadingQuantity]="isLoadingMoreTrainers() ? 2 : undefined"
+      [route]="'/home/trainer'"
+      (scrolled)="!isLoadingMoreTrainers() && getTrainers()" 
+    />
+  } @else {
+    <div class="text-center text-gray-500 dark:text-gray-300 text-xl">
+      {{'no-followed-trainers'| transloco}}
+    </div>
+  }
+</section>

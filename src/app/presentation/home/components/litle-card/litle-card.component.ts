@@ -14,4 +14,8 @@ export class LitleCardComponent {
 
   @Input({ required: true }) public item!: ILittleCard;
   @Input({ required: true }) public route!: string;
+
+  fixTrainerRoute(): string {
+    return this.route.includes('trainer') ? `${this.route}/${this.item.id}` : this.route;
+  }
 }

@@ -83,7 +83,13 @@
   "blogs-by-trainer": "Blogs by trainer",
   "no-blogs-by-trainer": "No blogs by trainer",
   "no-courses-by-trainer": "No courses by trainer",
-  "no-courses-by-user": "No courses by user"
+  "completed": "Completed",
+  "no-courses-by-user": "No courses by user",
+  "followed-trainers": "Followed trainers",
+  "others-trainers": "Others trainers",
+  "no-trainers-to-show": "No trainers to show",
+  "no-followed-trainers": "No followed trainers",
+  "mark-as-complete": "Mark as complete"
 
 }
 
