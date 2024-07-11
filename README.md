@@ -5,6 +5,12 @@
   <img src="https://ginastic-center.web.app/assets/icons/512.png" width="200" alt="Descripción de la imagen" />
 </p>
 
+## Diagrama de Arquitectura Hexagonal
+[Diagrama de arquitectura](/public/Lambda_back_Diagrams%20-%20Hexagonal%20Front.svg)
+<p align="center">
+  <img src="https://ginastic-center.web.app/assets/Lambda_back_Diagrams%20-%20Hexagonal%20Front.svg" width="3000" alt="Descripción de la imagen" />
+</p>
+
 
 Repositorio del Frontend de la aplicación Gymnastic Center del Equipo Lambda, aplicación que basa su contenido en video tutoriales y blogs sobre yoga, ejercicio y semejantes.
 
@@ -27,12 +33,9 @@ $ npm install
 
 ```bash
 # development
-$ npm intall
+$ npm install
 
 ## Documentación
-
-### Diagrama de Arquitectura Hexagonal
-[App Screenshot](/public/Lambda_back_Diagrams%20-%20Hexagonal%20Front.svg)
 
 ## Aportes de cada desarrollador
 
@@ -52,28 +55,39 @@ $ npm intall
 
 ### Paul Gamboa
 
-- Capa de Aplicación: 
+- Capa de Dominio:
+  Propuesta de arquitectura inicial del proyecto. Iterada múltiples veces en el transcurso del desarrollo en conjunto con el equipo de front.
+  Creación de los modelos de dominio de trainer, blogs, cursos inicialmente, y comentarios.
+
+- Capa de Aplicación:
+  Realización de los casos de usos de trainer, blogs, cursos parcialmente, comentarios.
 
 - Capa de Infraestructura:
+  Implementación de concreta de trainer, blogs, y categorías.
 
 - Despliegue:
-
-    Encargado de la realización del github actions para el despliegue automático del frontendo, deplegado con firebase
+    Encargado de la realización del github actions para el despliegue automático del frontend, deplegado con firebase.
 
 ### Eduardo Rumbos
 
-- Capa de Dominio
-
+- Capa de Dominio:
+  Creación de los módelos de dominio de cursos y posterior refactorización, progress, categorias y search.
+  Propuesta inicial del patrón de diseño proxy para los módulos más frecuentes.
 
 - Capa de Aplicación: 
-
+  Realización de los casos de usos de cursos, progress, categorias y search.
 
 - Capa de Infraestructura:
-
+  Implementación concreta de cursos, progress, categorias, y search.
+ ```
 
 ## Autores
-| <img src="https://avatars.githubusercontent.com/u/116277334?v=4&size=64" width=115><br><sub>Alfredo Fung</sub> |  
-| <img src="https://avatars.githubusercontent.com/u/118032807?v=4&size=64" width=115><br><sub>Paul Gamboa</sub> |  
-| <img src="https://avatars.githubusercontent.com/u/117108052?v=4&size=64" width=115><br><sub>Eduardo Rumbos</sub> |  
+
+<p align="center">
+  <img src="https://avatars.githubusercontent.com/u/116277334?v=4&size=50" width=115><br><sub>Alfredo Fung</sub><br>
+  <img src="https://avatars.githubusercontent.com/u/118032807?v=4&size=50" width=115><br><sub>Paul Gamboa</sub><br>
+  <img src="https://avatars.githubusercontent.com/u/117108052?v=4&size=50" width=115><br><sub>Eduardo Rumbos</sub><br>
+</p>
+
 
 
