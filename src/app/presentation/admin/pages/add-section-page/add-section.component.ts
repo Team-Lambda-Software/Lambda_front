@@ -50,7 +50,6 @@ export class AddSectionPageComponent {
     public isLoadingSection=false
     private videoDuration = 0
 
-
     public addSectionForm :FormGroup<AddSectionForm>=this.fb.group<AddSectionForm>({
       course:new FormControl(null,{validators:[Validators.required]}),
       name:new FormControl(null,{validators:[Validators.required]}),
@@ -60,34 +59,24 @@ export class AddSectionPageComponent {
     })
 
     loadVideo(event:any):void{
+      this.videoDuration = 0 
       this.videosBase64=[]
       let files:any = []
       for ( let i of event.target.files ) { files.push( i ) }
-      const cleanedFiles:File[]=files
-      let videosBase64:string[]=[]
-
-      cleanedFiles.forEach((file)=>{
-        this.fileToBase64Service.convertFileToBase64(file).then(imagen=>{
-          videosBase64.push(imagen.model)
-          console.log(videosBase64);
-        })
-      })
+      
       const url = window.URL.createObjectURL(files[0])
       document.getElementById('video_tester')?.setAttribute('src', url)
-      this.videosBase64=videosBase64
-      this.addSectionForm.get('duration')?.setValue(this.videoDuration)
-      this.addSectionForm.get('video')?.setValue(cleanedFiles[0])
-      // let duration=this.getVideoDuration(cleanedFiles)
-      // console.log(duration);
-
-
+      this.addSectionForm.get('video')?.setValue(files[0])
       //if (!file) console.log('file nulo')
       //return this.popupService.displayErrorModal(this.errorUploadingUserImage)}
       // Validar Formato del Archivo
       //const isValidImageExtension = this.validatorService.vali.test(file.name);
   }
 
-    onMetadata(e:any, video:any) { this.videoDuration = video.duration }
+    onMetadata(e:any, video:any) { 
+      this.videoDuration = video.duration
+      this.addSectionForm.get('duration')?.setValue(Math.round( this.videoDuration))
+    }
 
     private createDTO(): AddSectionAdminDto {
       let userForm=this.addSectionForm.value
@@ -96,15 +85,12 @@ export class AddSectionPageComponent {
             name: userForm.name!,
             description: userForm.description!,
             duration: userForm.duration!,
-            video: this.videosBase64[0]
+            video: userForm.video!
         }
-        console.log(data);
-
         return data
     }
 
     addSection(){
-      console.log('hola');
 
       if(this.addSectionForm.valid){
         this.isLoadingSection=true

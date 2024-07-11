@@ -14,15 +14,20 @@ export class AddSectionApiService implements IAddminAddSection {
 
    	execute(params: AddSectionAdminDto): Observable<Result<number>> {
     const url=this.BASE_URL+`${params.id_course}`
-		const body = {
+		const body = new FormData()
+		
+		body.append('name', params.name)
+		body.append('description', params.description)
+		body.append('file', params.video)
+		body.append('duration', params.duration.toString() )
+		
+		/*const body = {
 			name: params.name,
 			description: params.description,
 			duration: params.duration,
 			video: params.video
-		}
-    console.log(body);
-
-
+		}*/
+ 
 		let token=this.authRepository.getToken()
 		if (!token.hasValue()) return of(Result.makeError<number>(new Error('Error: no tiene Token')))
 

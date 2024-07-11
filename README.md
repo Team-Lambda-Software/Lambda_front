@@ -1,27 +1,81 @@
-# LambdaFront
+# Bienvenidos al Frontend de Gymnastic Lambda
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.3.
 
-## Development server
+<p align="center">
+  <img src="../Lambda_front/src/assets/icons/icon-512x512.png" width="200" alt="Descripción de la imagen" />
+</p>
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+Repositorio del Frontend de la aplicación Gymnastic Center del Equipo Lambda, aplicación que basa su contenido en video tutoriales y blogs sobre yoga, ejercicio y semejantes.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+# Arquitectura
 
-## Build
+Nuestra aplicación utiliza varios patrones de diseño y arquitecturas para garantizar un código limpio, entre los que se encuentran la arquitectura Hexagonal y patrones de diseño como son proxy
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- **Arquitectura Hexagonal**: Esta arquitectura nos permite separar la lógica de negocio de los detalles técnicos, lo que facilita el mantenimiento y las pruebas de la aplicación.
 
-## Running unit tests
+## Instalacion
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```bash
+$ npm install
+```
 
-## Running end-to-end tests
+## Requisitos
+- Angular V.17
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Correr la aplicacion
 
-## Further help
+```bash
+# development
+$ npm intall
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Documentación
+
+### Diagrama de Arquitectura Hexagonal
+![App Screenshot](./src/assets/Lambda_Hexagonal_Front.svg)
+
+## Aportes de cada desarrollador
+
+### Alfredo Fung
+
+- Capa de Core:
+  
+    Creacion de todas las interfaces y modelos de la capa de dominio sobre los datos recibidos por el backend, asi como sus respectivas interfaces para su implementacion en infraestructura
+
+- Capa de Aplicación: 
+
+    Todos los casos de usos del user, asi como la logica del modulo de auth asi como de administrador. Implementación de la interfaz de casos de uso de dichos modulos
+
+- Capa de Infraestructura:
+
+    La implementacion de las conecciones a los servicios de la API Rest externa en dichos modulos
+
+### Paul Gamboa
+
+- Capa de Aplicación: 
+
+- Capa de Infraestructura:
+
+- Despliegue:
+
+    Encargado de la realización del github actions para el despliegue automático del frontendo, deplegado con firebase
+
+### Eduardo Rumbos
+
+- Capa de Dominio
+
+
+- Capa de Aplicación: 
+
+
+- Capa de Infraestructura:
+
+
+## Autores
+| <img src="https://avatars.githubusercontent.com/u/116277334?v=4&size=64" width=115><br><sub>Alfredo Fung</sub> |  
+| :---: | 
+| <img src="https://avatars.githubusercontent.com/u/118032807?v=4&size=64" width=115><br><sub>Paul Gamboa</sub> |  
+| :---: | 
+| <img src="https://avatars.githubusercontent.com/u/117108052?v=4&size=64" width=115><br><sub>Eduardo Rumbos</sub> |  
+
+

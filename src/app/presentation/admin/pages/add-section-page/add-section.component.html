@@ -50,7 +50,7 @@
         ></textarea>
       </mat-form-field>
 
-      <p class="font-medium text-lg">Video que quiera mostrar en el Blog</p>
+      <p class="font-medium text-lg">Section Video</p>
 
       <div class="bg-slate-100 shadow-md p-2 w-full">
         <input type="file"
@@ -83,9 +83,6 @@
   </form>
 
   </section>
-
-  <pre>{{addSectionForm.value|json}}</pre>
-  <pre>{{addSectionForm.valid|json}}</pre>
 
 </div>
   <video id="video_tester" width="0" controls #video (loadedmetadata)="onMetadata($event, video)" [hidden]="true"></video>

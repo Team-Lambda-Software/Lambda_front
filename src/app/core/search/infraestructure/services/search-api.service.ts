@@ -34,9 +34,9 @@ export class SearchApiService implements ISearchApiService {
     return req;
   }
 
-  getTags(params?: string | undefined): Observable<Result<ITag[]>> 
+  getTags(params?: string | undefined): Observable<Result<ITag[]>>
   {
-    
+
     return this._httpClient.get<string[]>(`${this.BASE_URL}/popular/tags${params ?? ''}`)
     .pipe(
       map((response)=>{
