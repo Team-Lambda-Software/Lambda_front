@@ -1,15 +1,45 @@
 <app-basic-header [options]="{name: 'account', redirect:'/home/main'}"/>
 
-<!-- TODO: agregar routerLink -->
 <div class="mt-8 font-medium max-w-[800px] m-auto animate__animated animate__fadeIn">
   @for (op of options; track op.optionName) {
-    <div (click)="onClick(op.redirect)" class="px-4 flex justify-between items-center py-6 border-b-[1px] border-b-[rgba(0,0,0,.2)] cursor-pointer hover:bg-white dark:hover:bg-black transition-all duration-300">
+    <div 
+      (click)="onClick(op)" 
+      class="px-4 flex justify-between items-center py-6 border-b-[1px] border-b-[rgba(0,0,0,.2)] cursor-pointer hover:bg-white/85 dark:hover:bg-black/15 transition-all duration-300">
       <div class="flex items-center gap-6">
         <span [ngClass]="[op.icon]" [ngStyle]="{'background-color': op.color}" class="fas fa-user w-[32px] h-[32px] rounded-full flex items-center justify-center text-white text-xs"></span>
         <span class="dark:text-white">{{ op.optionName | transloco }}</span>
       </div>
-      <span class="fas fa-chevron-right text-gray-400"></span>
+      @if (!isAccordionOpen || op.optionName !== 'language') {
+        <span class="fas fa-chevron-right text-gray-400"></span>
+      } @else if(isAccordionOpen && op.optionName === 'language') {
+        <span class="fas fa-chevron-down text-gray-400"></span>
+      }
     </div>
+    @if (op.optionName === 'language') {
+      <div 
+        #accordion 
+        class="accordion-content" 
+        [class.max-h-max]="isAccordionOpen" 
+        [class.max-h-0]="!isAccordionOpen"
+      >
+        <button 
+          [ngClass]="{'bg-gradient-purple text-white': getActiveLang() === 'en'}"
+          class="flex items-center justify-center gap-6 dark:text-white"
+          (click)="setLanguage('en'); $event.stopPropagation()"
+        >
+          <span>{{'english' | transloco}}</span>
+          <img src="../../../../../../assets/images/en.png" alt="english" width="35">
+        </button>
+        <button 
+          [ngClass]="{'bg-gradient-purple text-white': getActiveLang() === 'es'}" 
+          class="flex items-center justify-center gap-6 dark:text-white"
+          (click)="setLanguage('es'); $event.stopPropagation()"
+        >
+          <span>{{'spanish' | transloco}}</span>
+          <img src="../../../../../../assets/images/es.png" alt="spanish" width="35">
+        </button>
+      </div>
+    }
   }
 
 </div>
