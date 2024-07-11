@@ -153,7 +153,9 @@ export class PlayerComponent {
               this.videoUrl = newVideoUrl;
               this.videoPlayer.nativeElement.load();
             }
-            this.popupService.displayBelowModal('Ups... No se encontro el progreso del video', 'error')
+            this.savedProgress = true;
+            this.videoEnded = true;
+            this.popupService.displayBelowModal('Ups... No se encontro el progreso del video', 'info')
           }
         }
 
