@@ -76,10 +76,6 @@ export class AddSectionPageComponent {
       const url = window.URL.createObjectURL(files[0])
       document.getElementById('video_tester')?.setAttribute('src', url)
       this.addSectionForm.get('video')?.setValue(cleanedFiles[0])
-      // let duration=this.getVideoDuration(cleanedFiles)
-      // console.log(duration);
-
-
       //if (!file) console.log('file nulo')
       //return this.popupService.displayErrorModal(this.errorUploadingUserImage)}
       // Validar Formato del Archivo
@@ -87,12 +83,14 @@ export class AddSectionPageComponent {
   }
 
     onMetadata(e:any, video:any) { 
-      this.videoDuration = video.duration 
-      this.addSectionForm.get('duration')?.setValue(this.videoDuration)
+      this.videoDuration = video.duration
+      this.addSectionForm.get('duration')?.setValue(Math.round( this.videoDuration))
     }
 
     private createDTO(): AddSectionAdminDto {
       let userForm=this.addSectionForm.value
+
+
         let data:AddSectionAdminDto = {
             id_course: userForm.course?.id!,
             name: userForm.name!,
