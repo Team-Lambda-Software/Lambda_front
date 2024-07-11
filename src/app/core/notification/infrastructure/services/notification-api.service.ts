@@ -43,7 +43,7 @@ export class NotificationApiService implements INotificationApiService {
   };
 
   deleteAllNotifications(): Observable<void> {
-    return this._httpClient.get<void>(`${this.BASE_URL}/delete/all`);
+    return this._httpClient.delete<void>(`${this.BASE_URL}/delete/all`);
   }
 
 }

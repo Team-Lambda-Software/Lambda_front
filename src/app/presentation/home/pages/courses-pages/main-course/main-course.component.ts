@@ -17,6 +17,7 @@ import { SquareSkeletonComponent } from '../../../../shared/components/square-sk
 import { SectionExpandedComponent } from './components/section-expanded/section-expanded.component';
 import { CourseDescriptionComponent } from './components/course-description/course-description.component';
 import { CourseHeaderComponent } from './components/course-header/course-header.component';
+import { PopupInfoModalService } from '../../../../shared/services/popup-info-modal/popup-info-modal.service';
 
 @Component({
   selector: 'app-main-course',
@@ -48,6 +49,8 @@ export class MainCourseComponent implements OnInit {
   public course?: Course;
   public popularCourses: ILittleCard[] = [];
   public isLoading = false;
+
+  private popUpService = inject(PopupInfoModalService);
 
   constructor(private router: Router, private route: ActivatedRoute) {
     this.route.queryParams.subscribe((params) => {

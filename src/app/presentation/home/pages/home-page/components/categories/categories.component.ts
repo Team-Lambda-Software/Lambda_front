@@ -20,7 +20,7 @@ export class CategoriesComponent implements OnInit {
   public categories: Category[] = [];
 
   ngOnInit(): void {
-    this.getCategories()
+    this.getCategories('?perPage=10&page=1')
   }
 
   public getCategories(params?: string) {
