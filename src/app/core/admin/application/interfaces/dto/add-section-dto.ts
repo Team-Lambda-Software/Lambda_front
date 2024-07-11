@@ -4,5 +4,5 @@ export interface AddSectionAdminDto {
     name: string
     description: string
     duration: number
-    video: string
+    video: File
 }

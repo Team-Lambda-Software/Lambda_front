@@ -63,19 +63,10 @@ export class AddSectionPageComponent {
       this.videosBase64=[]
       let files:any = []
       for ( let i of event.target.files ) { files.push( i ) }
-      const cleanedFiles:File[]=files
-      let videosBase64:string[]=[]
-
-      cleanedFiles.forEach((file)=>{
-        this.fileToBase64Service.convertFileToBase64(file).then(imagen=>{
-          videosBase64.push(imagen.model)
-          console.log(videosBase64);
-        })
-      })
-      this.videosBase64=videosBase64
+      
       const url = window.URL.createObjectURL(files[0])
       document.getElementById('video_tester')?.setAttribute('src', url)
-      this.addSectionForm.get('video')?.setValue(cleanedFiles[0])
+      this.addSectionForm.get('video')?.setValue(files[0])
       //if (!file) console.log('file nulo')
       //return this.popupService.displayErrorModal(this.errorUploadingUserImage)}
       // Validar Formato del Archivo
@@ -89,22 +80,17 @@ export class AddSectionPageComponent {
 
     private createDTO(): AddSectionAdminDto {
       let userForm=this.addSectionForm.value
-
-
         let data:AddSectionAdminDto = {
             id_course: userForm.course?.id!,
             name: userForm.name!,
             description: userForm.description!,
             duration: userForm.duration!,
-            video: this.videosBase64[0]
+            video: userForm.video!
         }
-        console.log(data);
-
         return data
     }
 
     addSection(){
-      console.log('hola');
 
       if(this.addSectionForm.valid){
         this.isLoadingSection=true
