@@ -1,10 +1,12 @@
-import { Component, ElementRef, Input, Signal, ViewChild, effect, inject, OnDestroy } from '@angular/core';
+import { Component, ElementRef, Input, Signal, ViewChild, effect, inject, OnDestroy, NgModule } from '@angular/core';
 import { ProgressCourseUseCaseProvider } from '../../../../../../../core/progress/infraestructure/providers/progress-course-usecase.provider';
 import { ProgressCourse } from '../../../../../../../core/progress/application/interfaces/dto/progress-course.interface';
 import { fromEvent, interval, Subscription } from 'rxjs';
 import { SaveProgressUseCaseProvider } from '../../../../../../../core/progress/infraestructure/providers/save-progress-usecase.provider';
 import { PopupInfoModalService } from '../../../../../../shared/services/popup-info-modal/popup-info-modal.service';
 import { TranslocoModule } from '@jsverse/transloco';
+import { CommonModule } from '@angular/common';
+
 
 export interface SectionProperties {
   idCourse: string,
@@ -16,7 +18,7 @@ export interface SectionProperties {
 @Component({
   selector: 'app-player',
   standalone: true,
-  imports: [TranslocoModule],
+  imports: [TranslocoModule, CommonModule],
   templateUrl: './player.component.html',
   styleUrl: './player.component.css'
 })

@@ -18,10 +18,15 @@ export class SearchApiService implements ISearchApiService {
     if (terms) {
       params = params.append('term', terms);
     }
-    if (tags && tags.length > 0){
-      tags.forEach(tag => params = params.append('tag', tag));
+    if (tags && tags.length > 0) {
+      // Unir los tags con comas y añadir como un único parámetro
+      
+      params = params.set('tag', tags.join(','));
     }
-    let req = this._httpClient.get<SearchModel>(`${this.BASE_URL}/all`, { params });
+
+    console.log(params);
+    
+    let req = this._httpClient.get<SearchModel>(`${this.BASE_URL}/all?page=1&perPage=10`, { params });
     req.subscribe({
       next: (data) => console.log(data),
       error: (err) => console.log(err)
