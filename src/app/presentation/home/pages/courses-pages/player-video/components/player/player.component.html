@@ -4,4 +4,13 @@
         [src]="videoUrl" 
         type="video/mp4">
     </video>
+    <div class="flex justify-center items-center py-2">
+      <button (click)="markAsCompleted()" 
+              class="bg-gradient-purple text-white text-sm font-semibold py-1 px-2 rounded-full  disabled:opacity-30 disabled:cursor-not-allowed disabled:select-none"
+              [disabled]="this.videoEnded">
+        {{'completed' | transloco}}
+
+        <span class="fa-solid fa-check"></span>
+      </button>
+    </div>
 </section>

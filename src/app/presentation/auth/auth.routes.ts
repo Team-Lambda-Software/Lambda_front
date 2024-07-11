@@ -12,7 +12,7 @@ import { VerificationCodePageComponent } from './pages/change-password/verificat
 import { OnboardingPageComponent } from './pages/onboarding-page/onboarding-page.component';
 import { hasCodeGuard } from './guards/hasCode.guard';
 import { hasVerifiedCodeGuard } from './guards/hasVerifiedCode.guard';
-import { isAuthenticatedGuard } from './guards/isAuthenticated.guard';
+import { isAuthenticatedClientGuard } from './guards/isAuthenticatedClient.guard';
 
 export const AuthRoutes: Routes = [
   {
@@ -57,7 +57,7 @@ export const AuthRoutes: Routes = [
       },
       {
         path: 'on-boarding',
-        canActivate:[isAuthenticatedGuard],
+        canActivate:[isAuthenticatedClientGuard],
         component: OnboardingPageComponent
       },
     ]

@@ -48,7 +48,7 @@ export class HomePageComponent implements OnInit{
         else this.popupService.displayErrorModal(value.getError().message)
       },
       error:(error:Result<Error>)=>{
-      }
+      },
     })
 
   }
@@ -64,6 +64,7 @@ export class HomePageComponent implements OnInit{
     courseId: 'No course Id',
     lastTime: new Date()
   }
+
   public progressTrendingUseCase=inject(ProgressTrendingUseCaseInfraestructure)
 
 }

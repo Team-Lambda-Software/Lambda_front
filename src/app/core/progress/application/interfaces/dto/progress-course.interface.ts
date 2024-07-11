@@ -3,8 +3,9 @@ export interface ProgressCourse {
   lessons: LessonProgress[];
 }
 export interface LessonProgress {
-  lessonId: string;
-  time: number;
+    lessonId: string;
+    time: number;
+    percent: number;
 }
 
 export interface CoursesByUserProgressResponse {

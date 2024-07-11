@@ -1,0 +1,41 @@
+.bottombar {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 1;
+  /* box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1); */
+}
+
+.bottombar span {
+  font-size: 1.75rem;
+}
+
+#thunder {
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+#semicircle {
+  width: 80px;
+  height: 40px;
+  border-top-left-radius: 80px 80px;
+  border-top-right-radius: 80px 80px;
+  transform: translateX(-50%) rotate(180deg);
+  position: absolute;
+  top: 0%;
+  left: 50%;
+}
+
+.active.light {
+  background: linear-gradient(144.61deg, #4F14A0 3.01%, #8066FF 90.98%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.active.dark {
+  color: white;
+}

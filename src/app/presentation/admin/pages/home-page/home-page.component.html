@@ -1,0 +1,73 @@
+<header class="bg-gradient-purple text-white">
+  <div class="p-6 flex items-center gap-3">
+
+
+    <div class="mx-4 py-4"></div>
+
+    <div class="" *ngIf="user.hasValue()"></div>
+    @if(user.hasValue()){
+      <div class="font-medium text-lg text-center"> Welcome dear </div>
+      <div class="font-bold">{{user.getValue().name}}</div>
+    }@else {
+      <div class="font-medium text-lg text-center"> Welcome dear No User Name </div>
+
+    }
+    <div class=""></div>
+
+  </div>
+</header>
+
+
+<div class="animate__animated animate__fadeIn">
+
+  <section class="py-4 mt-7 grid gap-2 justify-center ">
+
+    <div class="flex justify-center mb-5">
+    @if(!darkModeService.isDarkMode()){
+      <img class="w-44 h-max" src="assets/icons/logo-ligth.png " alt="logo">
+    }@else {
+      <img class="w-44 h-max" src="assets/icons/logo-dark.png " alt="logo">
+    }
+    </div>
+
+    <h1 class="dark:text-custom-light text-custom-dark-purple text-4xl text-center font-bold"> Administrator </h1>
+
+    <button class="transition-transform hover:scale-125 align-middle text-xl" (click)="darkModeService.isDarkMode.set(!darkModeService.isDarkMode())">
+      @if (darkModeService.isDarkMode()) {
+        <span>🌙</span>
+      } @else {
+        <span>☀️</span>
+      }
+    </button>
+
+    <div class="mx-4 items-center mt-5">
+      <button [routerLink]="['/admin/addblog']" class="btn w-80 h-16 lg:w-36  align-middle dark:bg-custom-light text-custom-light dark:text-custom-dark-purple rounded-[50px]"
+      [ngClass]="{'bg-custom-gradient-purple': !darkModeService.isDarkMode()}">
+        Crear Blog
+      </button>
+    </div>
+
+    <div class="mx-4 items-center mt-5">
+      <button [routerLink]="['/admin/addcourse']" class="btn w-80 h-16 lg:w-36  align-middle dark:bg-custom-light text-custom-light dark:text-custom-dark-purple rounded-[50px]"
+      [ngClass]="{'bg-custom-gradient-purple': !darkModeService.isDarkMode()}">
+        Crear Curso
+      </button>
+    </div>
+
+    <div class="mx-4 items-center mt-5 ">
+      <button [routerLink]="['/admin/addsectioncourse']" class="btn w-80 h-16 lg:w-36  align-middle dark:bg-custom-light text-custom-light dark:text-custom-dark-purple rounded-[50px]"
+      [ngClass]="{'bg-custom-gradient-purple': !darkModeService.isDarkMode()}">
+        Añadir Sección a un Curso
+      </button>
+    </div>
+
+    <div class="mx-4 items-center mt-5">
+      <button (click)="logout()" class="btn w-80 h-16 lg:w-36  align-middle dark:bg-custom-light text-custom-light dark:text-custom-dark-purple rounded-[50px]"
+      [ngClass]="{'bg-custom-gradient-purple': !darkModeService.isDarkMode()}">
+        Logout
+      </button>
+    </div>
+
+  </section>
+
+</div>
