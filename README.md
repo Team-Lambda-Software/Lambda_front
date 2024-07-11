@@ -2,7 +2,7 @@
 
 
 <p align="center">
-  <img src="../Lambda_front/src/assets/icons/icon-512x512.png" width="200" alt="Descripción de la imagen" />
+  <img src="https://ginastic-center.web.app/assets/icons/512.png" width="200" alt="Descripción de la imagen" />
 </p>
 
 
@@ -32,7 +32,7 @@ $ npm intall
 ## Documentación
 
 ### Diagrama de Arquitectura Hexagonal
-![App Screenshot](./src/assets/Lambda_Hexagonal_Front.svg)
+![App Screenshot](https://ginastic-center.web.app/assets/Lambda_back_Diagrams-HexagonalFront.svg)
 
 ## Aportes de cada desarrollador
 
@@ -73,9 +73,7 @@ $ npm intall
 
 ## Autores
 | <img src="https://avatars.githubusercontent.com/u/116277334?v=4&size=64" width=115><br><sub>Alfredo Fung</sub> |  
-| :---: | 
 | <img src="https://avatars.githubusercontent.com/u/118032807?v=4&size=64" width=115><br><sub>Paul Gamboa</sub> |  
-| :---: | 
 | <img src="https://avatars.githubusercontent.com/u/117108052?v=4&size=64" width=115><br><sub>Eduardo Rumbos</sub> |  
 
 
