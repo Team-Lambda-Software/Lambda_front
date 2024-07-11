@@ -7,16 +7,15 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { DarkModeService } from '../../../shared/services/dark-mode/dark-mode.service';
 import { ILittleCard } from '../../interfaces/ILittleCard';
-import { CourseLitleCardAdapter, CoursesByUserProgressToILittleCard } from '../../adapters/LitleCardAdapter';
+import { CoursesByUserProgressToILittleCard } from '../../adapters/LitleCardAdapter';
 import { CoursesMyTrainingService } from '../../services/courses/getTraining/courses-mytraining.service';
 import { IUserProfile } from '../../interfaces/user-info-model';
 import { UserInfoService } from '../../services/user/getUserInfo/user-info.service';
 import { UserStatusService } from '../../../../core/user/infraestructure/services/user-status.service';
 import { HeaderCardComponent } from '../../components/header-card/header-card.component';
-import { ProgressCourseUseCaseProvider } from '../../../../core/progress/infraestructure/providers/progress-course-usecase.provider';
 import { ProgressByUserUseCaseProvider } from '../../../../core/progress/infraestructure/providers/progress-by-user-usecase.provider';
 import { finalize } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
+// import { MatSnackBar } from '@angular/material/snack-bar';
 import { SquareSkeletonComponent } from '../../../shared/components/square-skeleton/square-skeleton.component';
 
 
@@ -47,7 +46,7 @@ export class ProfilePageComponent implements OnInit{
   public courses = signal<ILittleCard[]>([]);
   public isLoading = signal(false);
   public isLoadingMoreCourses = signal(false);
-  private snackbar = inject(MatSnackBar);
+  // private snackbar = inject(MatSnackBar);
   public isErrorCourses = signal(false);
 
   public progressValue = 50;
@@ -129,7 +128,7 @@ export class ProfilePageComponent implements OnInit{
       .subscribe((result) => {
         if(result.isError()) {
           this.isErrorCourses.set(true);
-          this.snackbar.open('Error al cargar los cursos...', 'Cerrar');
+          //this.snackbar.open(result.getError().message, 'Cerrar');
         } else {
           let courses = result.getValue();
           this.courses.set([
@@ -138,9 +137,6 @@ export class ProfilePageComponent implements OnInit{
           ]);
         }
       })
-    this.progressService.usecase.execute('?perPage=3&page=1').subscribe((data) => {
-
-    });
   }
 
   public getUserInfoProfile(): IUserProfile {
