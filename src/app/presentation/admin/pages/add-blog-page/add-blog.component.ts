@@ -106,7 +106,7 @@ export class AddBlogPageComponent {
         },
         error:(error:Result<Error>)=>{
           this.isLoadingAddCourse=false
-          this.popupService.displayErrorModal(this.BlogCreatedError)
+          this.popupService.displayErrorModal(this.BlogCreatedSucsessfully)
         },
       })
     }
