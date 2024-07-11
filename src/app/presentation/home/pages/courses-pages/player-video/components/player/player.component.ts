@@ -37,7 +37,7 @@ export class PlayerComponent {
   private savedProgress = false;
 
   public videoUrl : string = ''
-  
+
 
   ngOnInit(){
     this.intervalId = interval(10000).subscribe(() => this.saveProgress())
@@ -65,10 +65,10 @@ export class PlayerComponent {
     effect(() => {
       console.log('Cambiando de video');
       console.log(this._properties());
-      
+
       this.videoEnded = false;
       this.savedProgress = false;
-      
+
       this.getProgress(this._properties().idCourse);
     })
   }
@@ -95,10 +95,10 @@ export class PlayerComponent {
 
         console.log('Antes de guardar progreso');
         console.log(`${this._properties().toString()} - ${currentTime}:time - ${this.videoEnded}:videoEnded`);
-        
-        
-        
-        
+
+
+
+
         console.log(`Guardando progreso del curso ${this._properties().idCourse} y lección ${this._properties().idLesson}`);
 
         this.saveProgressUseCaseService.usecase.execute({
@@ -114,11 +114,11 @@ export class PlayerComponent {
             this.videoEnded ? this.savedProgress = true : this.savedProgress = false;
             console.log('Progreso guardado correctamente');
             console.log();
-            
+
           }
-        
+
         })
-      
+
     }
   }
 
@@ -126,11 +126,11 @@ export class PlayerComponent {
     let req = await this.progressUseCaseService.usecase.execute(id);
 
     console.log(this._properties());
-    
-    
+
+
       req.subscribe( res=> {
         if (res.isError()){
-          this.popupService.displayErrorModal(res.getError().message)
+          // this.popupService.displayErrorModal(res.getError().message)
         }else{
           this.videoEnded = false;
           const progressCourse = res.getValue() as ProgressCourse;
@@ -143,7 +143,7 @@ export class PlayerComponent {
               this.savedProgress = true
             };
             console.log(`La lección ${lesson.lessonId} tiene un progreso de ${lesson.time} segundos`);
-            
+
             this.setVideoStartTime(lesson.time)
           }
           else{
@@ -189,7 +189,7 @@ export class PlayerComponent {
         this.videoUrl = newVideoUrl;
         this.videoPlayer.nativeElement.load();
       }
-  
+
       if (this.videoUrl) {
         try {
           this.videoPlayer.nativeElement.currentTime = seconds;

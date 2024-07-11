@@ -10,7 +10,7 @@ export class ValidatorService {
   public firstNameAndLastnamePattern: string = '^[A-Za-záéíóúÁÉÍÓÚüÜ]+(?: [A-Za-záéíóúÁÉÍÓÚüÜ]+)? [A-Za-záéíóúÁÉÍÓÚüÜ]+(?: [A-Za-záéíóúÁÉÍÓÚüÜ]+)?$';
   public emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
   public passwordPattern: string = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+=-])\\S{8,16}$";
-  public phoneNumberPattern: string = "^(0412|0414|0416|0424|0426)\\d{7}$";
+  public phoneNumberPattern: RegExp = /^(\(?\+58\)?\s?)?(0?4[1246]|424|414|412|416|426)?\s?\d[\d\s.-]{7,9}$/
   public numberPattern:string="\\d*";
   public isValidImageExtension = /\.(jpg|jpeg|png)$/i;
   public Base64ExtensionPattern = /\/9j\//;
