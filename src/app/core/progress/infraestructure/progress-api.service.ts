@@ -65,6 +65,7 @@ export default class ProgressApiComunication implements IProgressApiComunication
               lessons: res.lessons.map((lesson) => ({
                 lessonId: lesson.lessonId,
                 time: lesson.time,
+                percent: lesson.percent
               })),
             });
           }),
