@@ -9,6 +9,7 @@ import { PopupInfoModalService } from '../../../shared/services/popup-info-modal
 import { Result } from '../../../../common/helpers/Result';
 import { TrainerFollowUseCaseProvider } from '../../../../core/trainer/infrastructure/providers/trainer-follow-use-case';
 import { Subscription } from 'rxjs';
+import { ProgressTrendingUseCaseInfraestructure } from '../../../../core/progress/infraestructure/providers/progress-trending-use-case';
 
 @Component({
   selector: 'app-header-card',
@@ -28,7 +29,8 @@ export class HeaderCardComponent implements OnDestroy{
   public userStatusService = inject(UserStatusService)
   public user = this.userStatusService.currentUser();
   public userFollow=0
-  public progressValue=50;
+  public lastTime=0
+  public progressValue=0;
   public userObservable=UserStore.getInstance().getObservable()
   private userSubscription=this.userObservable.subscribe(
     {
@@ -40,6 +42,7 @@ export class HeaderCardComponent implements OnDestroy{
   private userFollowSubscription:Subscription
   private popupService=inject(PopupInfoModalService)
   public changePassword='Change Password'
+  public progressTrendingUseCase=inject(ProgressTrendingUseCaseInfraestructure)
   public userFollowUseCase=inject(TrainerFollowUseCaseProvider)
   constructor(){
     this.userFollowSubscription=this.userFollowUseCase.usecase.execute().subscribe({
@@ -49,6 +52,19 @@ export class HeaderCardComponent implements OnDestroy{
       },
       error:(error:Result<Error>)=>{
          this.popupService.displayErrorModal(error.getError().message)
+      }
+    })
+    this.progressTrendingUseCase.usecase.execute().subscribe({
+      next:(value)=>{
+        if(!value.isError()){{
+          console.log(value);
+
+          this.progressValue=value.getValue().Percent
+          this.lastTime=value.getValue().Percent
+        }}
+        else this.popupService.displayErrorModal(value.getError().message)
+      },
+      error:(error:Result<Error>)=>{
       }
     })
   }
