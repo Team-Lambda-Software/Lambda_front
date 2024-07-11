@@ -44,13 +44,15 @@ export class HomePageComponent implements OnInit{
     this.user = this.userStatusService.currentUser();
     this.progressTrendingUseCase.usecase.execute().subscribe({
       next:(value)=>{
-        if(!value.isError()) 
+        if(!value.isError()) {
+          console.log(value.getValue());
+
           this.progressTrending = {
             Percent: parseFloat(value.getValue().Percent.toFixed(1)),
             courseTitle: value.getValue().courseTitle,
             courseId: value.getValue().courseId,
             lastTime: value.getValue().lastTime
-          }
+          }}
         else this.popupService.displayErrorModal(value.getError().message)
       },
       error:(error:Result<Error>)=>{
