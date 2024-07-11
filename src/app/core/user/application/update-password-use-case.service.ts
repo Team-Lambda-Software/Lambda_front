@@ -15,11 +15,6 @@ export class UpdatePasswordUseCase implements IUseCase<string,Observable<Result<
     let code= this._authRepository.getCode();
     if (!email.hasValue()) return of(Result.makeError<number>(new Error('No se encuentra el email')));
     if (!code.hasValue()) return of(Result.makeError<number>(new Error('No se encuentra el codigo')));
-    return this._authApiComunication.updatePassword(email.getValue(),code.getValue(),password).pipe(
-      (observable)=>{
-        observable.subscribe()
-        return observable
-      }
-    )
+    return this._authApiComunication.updatePassword(email.getValue(),code.getValue(),password)
   }
 }

@@ -84,11 +84,13 @@ export class VerificationCodePageComponent{
     if (this.verificationCodeForm.valid){
       let code = this.getCode(this.verificationCodeForm)
       this.userStatus.setChecking()
+
       this.verificationCodeUseCase.execute(code).subscribe({
         next:(value)=>{
           if (!value.isError()){
-            let code=value.getValue();
-          if (code>=200 && code<=299){
+            let estatus=value.getValue();
+          if (estatus>=200 && estatus<=299){
+            this._authRepository.saveCode(code.toString())
             this.router.navigateByUrl('/auth/createpassword')
             this.popupService.displayBelowModal(this.codeSendSuccsessfully,'success')
           }

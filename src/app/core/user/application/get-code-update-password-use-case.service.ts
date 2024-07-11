@@ -19,7 +19,8 @@ export class GetCodeUpdatePasswordUseCase implements IUseCase<string,Observable<
               this._authRepository.saveDateCode(value.getValue())
               this._authRepository.saveEmail(email)
             }
-          }
+          },
+          error:(error:Result<Error>)=>{}
         })
         return observable
       }

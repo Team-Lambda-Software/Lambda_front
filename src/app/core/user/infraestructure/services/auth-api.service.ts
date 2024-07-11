@@ -103,6 +103,8 @@ export class AuthApiService implements IAuthApiComunication {
   verificateCode(email:string,code:string):Observable<Result<number>>{
     const url=`${this.BASE_URL}/code/validate`
     const body={email,code}
+    console.log(body);
+
     return this._httpClient.post<HttpResponseBase>(url,body,{ observe: 'response' })
       .pipe(
         map((response)=>{

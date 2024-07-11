@@ -11,19 +11,8 @@ export class VerificateCodeUseCase implements IUseCase<string,Observable<Result<
     private _authApiComunication:IAuthApiComunication) {}
 
   execute(code:string): Observable<Result<number>> {
-    this._userStatus.setChecking();
     let email= this._authRepository.getEmail();
     if (!email.hasValue()) return of(Result.makeError<number>(new Error('No se encuentra el email')))
-    return this._authApiComunication.verificateCode(email.getValue(),code).pipe(
-      (observable)=>{
-        observable.subscribe({
-          next:(value)=>{
-            if (!value.isError()) this._authRepository.saveCode(code)
-          }
-        })
-        this._userStatus.setNotAuthenticated();
-        return observable
-      }
-    )
+    return this._authApiComunication.verificateCode(email.getValue(),code)
   }
 }
