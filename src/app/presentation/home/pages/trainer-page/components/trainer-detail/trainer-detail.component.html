@@ -1,6 +1,6 @@
 <div class="animate__animated animate__fadeIn mt-6">
   @if (trainerDetail()) {
-    <img src="../../../../../assets/images/no-profile-img.jpg" class="block mx-auto w-[120px] h-[120px] rounded-full"/>
+    <img [src]="ramdonImage" class="block mx-auto w-[120px] h-[120px] rounded-full"/>
     <h1 class="dark:text-white text-center text-2xl font-semibold mt-4">{{trainerDetail()!.name}}</h1>
     <div class="dark:text-white flex justify-center items-center mt-4 gap-6">
       <div class="flex flex-col gap-1 items-center">

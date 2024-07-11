@@ -146,6 +146,17 @@ export class PlayerComponent {
 
             this.setVideoStartTime(lesson.time)
           }
+          else{
+
+            const newVideoUrl = this._properties().video;
+            if (newVideoUrl && this.videoUrl !== newVideoUrl) {
+              this.videoUrl = newVideoUrl;
+              this.videoPlayer.nativeElement.load();
+            }
+            this.savedProgress = true;
+            this.videoEnded = true;
+            this.popupService.displayBelowModal('Ups... No se encontro el progreso del video', 'info')
+          }
         }
 
       })
@@ -171,15 +182,21 @@ export class PlayerComponent {
     return Math.floor(sec);
   }
 
-  setVideoStartTime(seconds: number) {
+  async setVideoStartTime(seconds: number) {
     if (this.videoPlayer && this.videoPlayer.nativeElement) {
-      this.videoUrl = this._properties().video;
-
-      if(this.videoUrl){
-
+      const newVideoUrl = this._properties().video;
+      if (newVideoUrl && this.videoUrl !== newVideoUrl) {
+        this.videoUrl = newVideoUrl;
         this.videoPlayer.nativeElement.load();
-        this.videoPlayer.nativeElement.currentTime = seconds;
-        this.videoPlayer.nativeElement.play();
+      }
+
+      if (this.videoUrl) {
+        try {
+          this.videoPlayer.nativeElement.currentTime = seconds;
+          await this.videoPlayer.nativeElement.play();
+        } catch (error) {
+          console.error("Error al intentar reproducir el video:", error);
+        }
       }
     }
   }
