@@ -1,0 +1,35 @@
+<section class="mx-4 py-7">
+  <div class="flex justify-between items-end dark:text-white">
+    <h1 class="text-xl font-bold">{{'others-trainers'| transloco}}</h1>
+  </div>
+
+  <div 
+    class="grid grid-cols-2 mt-4 gap-y-4 justify-center"
+    infiniteScroll
+    [infiniteScrollContainer]="scrollContainer"
+    [infiniteScrollDistance]=".25"
+    [infiniteScrollThrottle]="300"
+    [horizontal]="false"
+    (scrolled)="!isLoadingTrainers() && !isLoadingMoreTrainers() && getTrainers()"
+  >
+    @if (isLoadingTrainers()) {
+      @for (item of [1,2,3,4]; track $index) {
+        <app-square-skeleton [dimensions]="{width: '164px', heigth: '150px'}" />
+      }
+    } @else {
+      @for (trainer of trainers(); track trainer.id) {
+        <app-litle-card class="flex justify-center" [item]="trainer" [route]="'/home/trainer'"/>
+      } @empty {
+        <div class="text-center text-gray-500 dark:text-gray-300 text-xl">
+          {{'no-trainers-to-show'| transloco}}
+        </div>
+      }
+      @if (isLoadingMoreTrainers()) {
+        @for (item of [1]; track $index) {
+          <app-square-skeleton [dimensions]="{width: '164px', heigth: '150px'}" />
+        }
+      }
+    }
+  </div>
+</section>
+
