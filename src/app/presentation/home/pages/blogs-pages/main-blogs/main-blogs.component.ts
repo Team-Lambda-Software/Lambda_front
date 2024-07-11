@@ -74,6 +74,7 @@ export class MainBlogsComponent implements OnInit {
 
   public getCategories(params?: string) {
     this.isLoadingCategories.set(true);
+    if(!params) params = '?perPage=10&page=1';
     this.categoryUseCaseService.usecase.getByParams(params ?? '')
       .pipe(finalize(() => this.isLoadingCategories.set(false)))
       .subscribe(c => {

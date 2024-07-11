@@ -88,5 +88,6 @@
   "followed-trainers": "Entrenadores seguidos",
   "others-trainers": "Otros entrenadores",
   "no-trainers-to-show": "No hay entrenadores para mostrar",
-  "no-followed-trainers": "No hay entrenadores seguidos"
+  "no-followed-trainers": "No hay entrenadores seguidos",
+  "mark-as-complete": "Completar"
 }

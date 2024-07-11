@@ -26,8 +26,17 @@ export class BasicHeaderNotificationComponent {
   private notificationUseCase = inject (NotificationUseCaseProvider)
 
   borrarNotificaciones(): void {
+    if (this.options.inbox === 0) return;
     this.popupService.displayInfoModal(this.notificationDeleteAll)
-    this.notificationUseCase.usecase.deleteAllNotifications().subscribe(
-    );
+    this.notificationUseCase.usecase.deleteAllNotifications().subscribe({
+      next: () => {
+        // Recargar la página después de borrar las notificaciones
+        window.location.reload();
+      },
+      error: (error) => {
+        this.popupService.displayErrorModal("Error deleting notifications")
+      }
+    });
+
   }
 }
