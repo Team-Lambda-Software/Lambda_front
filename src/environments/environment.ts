@@ -1,6 +1,6 @@
 export const enviroment = {
   production: true,
-  baseUrl: 'https://gymnastic-center-backend-production.up.railway.app/api',
+  baseUrl: 'https://lambda-team-back.agreeablesand-4e6566d1.eastus.azurecontainerapps.io',
   firebase: {
     apiKey: "AIzaSyCp7y6c0L-ea3PUOiwxv6tjAZxYgq30jFE",
     authDomain: "myawe-91958.firebaseapp.com",
