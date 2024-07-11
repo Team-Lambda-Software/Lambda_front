@@ -50,7 +50,6 @@ export class AddSectionPageComponent {
     public isLoadingSection=false
     private videoDuration = 0
 
-
     public addSectionForm :FormGroup<AddSectionForm>=this.fb.group<AddSectionForm>({
       course:new FormControl(null,{validators:[Validators.required]}),
       name:new FormControl(null,{validators:[Validators.required]}),
@@ -60,6 +59,7 @@ export class AddSectionPageComponent {
     })
 
     loadVideo(event:any):void{
+      this.videoDuration = 0 
       this.videosBase64=[]
       let files:any = []
       for ( let i of event.target.files ) { files.push( i ) }
@@ -72,10 +72,9 @@ export class AddSectionPageComponent {
           console.log(videosBase64);
         })
       })
+      this.videosBase64=videosBase64
       const url = window.URL.createObjectURL(files[0])
       document.getElementById('video_tester')?.setAttribute('src', url)
-      this.videosBase64=videosBase64
-      this.addSectionForm.get('duration')?.setValue(this.videoDuration)
       this.addSectionForm.get('video')?.setValue(cleanedFiles[0])
       // let duration=this.getVideoDuration(cleanedFiles)
       // console.log(duration);
@@ -87,7 +86,10 @@ export class AddSectionPageComponent {
       //const isValidImageExtension = this.validatorService.vali.test(file.name);
   }
 
-    onMetadata(e:any, video:any) { this.videoDuration = video.duration }
+    onMetadata(e:any, video:any) { 
+      this.videoDuration = video.duration 
+      this.addSectionForm.get('duration')?.setValue(this.videoDuration)
+    }
 
     private createDTO(): AddSectionAdminDto {
       let userForm=this.addSectionForm.value
