@@ -70,15 +70,20 @@ export class UpdatePageComponent {
   })
 
   private createDTOUpdate():UpdateUSerEntryApplicationDTO{
-    let image=''
-    if(this.UserPhotoUploadFile.hasValue()) image=this.previewUploadFile
-    if(image==='') image===undefined
+
+    let user=this.userStatusService.currentUser().getValue()
 
     let {email,name,phone}=this.updateUserForm.value
-    let Data={email:email||undefined,
-      name:name||undefined,
-      phone:phone||undefined,
-      image:image||undefined}
+
+    if(user.email===email) email=undefined
+    if(user.name===name) name=undefined
+    if(user.phone===phone) phone=undefined
+
+    let Data={
+      email,
+      name,
+      phone
+    }
     return Data
   }
 
@@ -128,13 +133,15 @@ export class UpdatePageComponent {
 
   public updateEmailPhoneName(){
     if(this.updateUserForm.valid){
-      this.isLoadingUpdateUserForm=true
-      this.sendUpdatePettition()
+      let dto=this.createDTOUpdate()
+      if(dto.email || dto.name || dto.phone)
+      this.sendUpdatePettition(dto)
     }
   }
 
-  private sendUpdatePettition(){
-    this.updateUserUseCase.execute(this.createDTOUpdate()).subscribe({
+  private sendUpdatePettition(data:UpdateUSerEntryApplicationDTO){
+    this.isLoadingUpdateUserForm=true
+    this.updateUserUseCase.execute(data).subscribe({
       next:(value)=>{
         this.isLoadingUpdateUserForm=false
         if(!value.isError()){ this.popupService.displayInfoModal(this.succsesUpdateUser) }
@@ -148,8 +155,14 @@ export class UpdatePageComponent {
   }
 
   public updatePhoto(){
-    this.isLoadingUpdateUserForm=true
-    this.sendUpdatePettition();
+    let image=''
+    let images:string[]=[]
+
+    if(this.UserPhotoUploadFile.hasValue()) images=this.previewUploadFile.split(',')
+      image=images[1]
+
+    if(image==='') image===undefined
+    this.sendUpdatePettition({image:image});
   }
   constructor(private sanitizer:DomSanitizer){}
 }

@@ -32,7 +32,7 @@ $ npm intall
 ## Documentación
 
 ### Diagrama de Arquitectura Hexagonal
-![App Screenshot](https://ginastic-center.web.app/assets/Lambda_back_Diagrams-HexagonalFront.svg)
+[App Screenshot](/public/Lambda_back_Diagrams%20-%20Hexagonal%20Front.svg)
 
 ## Aportes de cada desarrollador
 

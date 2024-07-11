@@ -22,5 +22,6 @@ export class AppUser implements IAppUser{
     const URLImage = /^(http:\/\/|https:\/\/).*\.(jpg|jpeg|png|com)$/i
     const isURLImage=URLImage.test(this.image)
     if(!isURLImage) this.image=base64.concat(this.image)}
+    console.log(this.image);
   }
 }

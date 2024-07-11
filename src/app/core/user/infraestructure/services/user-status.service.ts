@@ -72,6 +72,9 @@ export class UserStatusService implements IUserStatusProvider{
     if(user.hasValue()){
       let userData=user.getValue()
       let {id,email,name,phone,type}=userData
+
+      const base64='data:image/png;base64,'
+      image=base64.concat(image)
       this.setUser({id,email,name,phone,image,type})
     }
   }
