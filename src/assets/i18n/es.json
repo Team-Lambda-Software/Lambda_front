@@ -84,6 +84,10 @@
   "no-blogs-by-trainer": "No hay blogs del entrenador",
   "no-courses-by-trainer": "No hay cursos del entrenador",
   "completed": "Completado",
-  "mark-as-complete": "Completar",
-  "no-courses-by-user": "No hay cursos del usuario"
+  "no-courses-by-user": "No hay cursos del usuario",
+  "followed-trainers": "Entrenadores seguidos",
+  "others-trainers": "Otros entrenadores",
+  "no-trainers-to-show": "No hay entrenadores para mostrar",
+  "no-followed-trainers": "No hay entrenadores seguidos",
+  "mark-as-complete": "Completar"
 }

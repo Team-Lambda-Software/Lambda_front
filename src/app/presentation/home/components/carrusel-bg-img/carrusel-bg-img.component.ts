@@ -29,4 +29,5 @@ export class CarruselBgImgComponent {
   createArrayByNumber(): number[] {
     return new Array(this.loadingQuantity).fill(0);
   }
+
 }

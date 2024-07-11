@@ -18,6 +18,7 @@ import { UpdateLoginPageComponent } from './pages/update-login-page/update-login
 import { UpdateChangePasswordPageComponent } from './pages/update-change-password-page/update-change-password-page.component';
 import { hasConfirm } from './guards/hasConfirm.guard';
 import { TrainerPageComponent } from './pages/trainer-page/trainer-page.component';
+import { FollowedTrainersPageComponent } from './pages/followed-trainers-page/followed-trainers-page.component';
 
 export const HomeRoutes: Routes = [
   {
@@ -84,6 +85,10 @@ export const HomeRoutes: Routes = [
       {
         path:'update/login',
         component:UpdateLoginPageComponent
+      },
+      {
+        path:'followed-trainers',
+        component: FollowedTrainersPageComponent
       },
       {
         path:'trainer/:id',

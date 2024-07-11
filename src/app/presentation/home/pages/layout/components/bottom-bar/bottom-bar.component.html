@@ -9,8 +9,10 @@
     </span>
     <span 
       class="cursor-pointer fa-brands fa-accessible-icon"
-      [routerLink]="['/home/main-course']"
-      routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      [routerLink]="['/home/followed-trainers']"
+      routerLinkActive="active"
+      [ngClass]="darkModeService.isDarkMode() ? 'dark' : 'light'"
+      [routerLinkActiveOptions]="{exact: true}">
     </span>
     <span class=""></span>
     <span 

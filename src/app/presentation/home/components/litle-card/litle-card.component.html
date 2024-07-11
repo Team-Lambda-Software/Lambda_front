@@ -1,6 +1,6 @@
 <div class="text-white rounded-lg bg-cover bg-center h-[150px] w-[164px] flex flex-col justify-end p-4 cursor-pointer"
   [style.background-image]="'linear-gradient(45deg, #00000044, #00000044), url(' + item.thumbnail + ')'"
-  [routerLink]="[route]"
+  [routerLink]="[fixTrainerRoute()]"
   [queryParams]="{id: item.id}"
   >
   <h3 class="text-[14px] font-bold line-clamp-2">{{item.title}}</h3>
