@@ -129,7 +129,7 @@ export class AddCoursePageComponent {
     })
 
 
-    this.trainerMany.usecase.execute('?page=1&perPage=5').subscribe({
+    this.trainerMany.usecase.execute('?page=1&perPage=10').subscribe({
         next:(value)=>{ if(!value.isError())this.trainers=value.getValue()
           else this.popupService.displayErrorModal(value.getError().message)
         },
